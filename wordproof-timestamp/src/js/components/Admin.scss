@@ -33,16 +33,19 @@ th.column-wordproof {
       }
     }
   }
+  .vo-columns {
+    display: flex;
+  }
   .vo-col {
-    width: 48%;
     margin: 0;
     padding: 0;
-    &-left {
-      padding-right: 2%;
-    }
-    &-right {
-      padding-left: 2%;
-    }
+    display: inline-block;
+    width: 48%;
+    margin-right: 2%;
+  }
+
+  iframe {
+    max-width: 100%;
   }
 
   .nav-tab:focus {

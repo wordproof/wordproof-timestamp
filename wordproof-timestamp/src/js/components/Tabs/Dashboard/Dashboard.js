@@ -12,7 +12,7 @@ export default class Dashboard extends Component {
       <div>
         {!this.state.hasAccount ?
           <div className="vo-card">
-            <div class="vo-col vo-col-left">
+            <div className="vo-col vo-col-left">
               <h3>What is WordProof Timestamp?</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer diam risus, pulvinar a laoreet in,
                 semper at ligula. Vestibulum tempus, purus eu dictum tristique, nisi lectus consectetur mi, non pulvinar

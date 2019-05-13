@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Onboarding from '../../Onboarding/Onboarding';
 
 export default class Telos extends Component {
   render() {
@@ -10,7 +9,7 @@ export default class Telos extends Component {
           <p>Telos is the innovation district of the <a href="http://eos.io/" target="_blank" rel="noopener noreferrer">EOS.IO</a> ecosystem. Create your free Telos account with the form below.  If you want to learn more about the Telos ecosystem, click here for an introduction by Telos founder Douglas Horn. </p>
         </div>
 
-        <Onboarding />
+        <a href="https://wordproof.io/generate-telos-account" class="button" target="_blank">Create your own Telos account</a>
 
 		<div className="vo-card">
       <h3>Step 2: Created your account? Time to get a wallet!</h3>

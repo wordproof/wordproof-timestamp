@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import './Admin.scss'
 import Dashboard from './Tabs/Dashboard/Dashboard';
-import Telos from './Tabs/Telos/Telos';
+import Configure from './Tabs/Configure/Configure';
+import Customize from './Tabs/Customize/Customize';
+import Timestamp from './Tabs/Timestamp/Timestamp';
+import Support from './Tabs/Support/Support';
 import Learn from './Tabs/Learn/Learn';
-import EOS from './Tabs/EOS/EOS';
 
 export default class Admin extends Component {
 
@@ -36,12 +38,16 @@ export default class Admin extends Component {
 
   tabContent = (hash) => {
     switch(hash) {
-      case '#create-eos-account':
-        return <EOS />
-      case '#create-telos-account':
-        return <Telos />
-      case '#learn-blockchain-dev':
-        return <Learn />
+      case '#configure':
+        return <Configure />;
+      case '#customize':
+        return <Customize />;
+      case '#timestamp':
+        return <Timestamp />;
+      case '#support':
+        return <Support />;
+      case '#learn':
+        return <Learn />;
       default:
         return <Dashboard />
     }
@@ -52,9 +58,11 @@ export default class Admin extends Component {
       <div className='wordproof-admin-app'>
         <h2 className="nav-tab-wrapper">
           <a href="#dashboard" className={`nav-tab ${this.activeTab('', '#dashboard')}`}>Dashboard</a>
-          <a href="#create-eos-account" className={`nav-tab ${this.activeTab('#create-eos-account')}`}>Create an EOS Account</a>
-          <a href="#create-telos-account" className={`nav-tab ${this.activeTab('#create-telos-account')}`}>Create a Telos Account</a>
-          <a href="#learn-blockchain-dev" className={`nav-tab ${this.activeTab('#learn-blockchain-dev')}`}>Learn Blockchain Development</a>
+          <a href="#configure" className={`nav-tab ${this.activeTab('#configure')}`}>1. Configure</a>
+          <a href="#customize" className={`nav-tab ${this.activeTab('#customize')}`}>2. Customize</a>
+          <a href="#timestamp" className={`nav-tab ${this.activeTab('#timestamp')}`}>3. Timestamp</a>
+          <a href="#support" className={`nav-tab ${this.activeTab('#support')}`}>Support</a>
+          <a href="#learn" className={`nav-tab ${this.activeTab('#learn')}`}>Learn</a>
         </h2>
         <div className="tab-content">
           { this.tabContent(this.state.hash) }

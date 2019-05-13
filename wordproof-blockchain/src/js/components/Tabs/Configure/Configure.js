@@ -80,7 +80,7 @@ export default class Configure extends Component {
                      onChange={this.handleStoreRam}/> A hash of <em>the_title()</em> and <em>the_content()</em> in RAM
               (WARNING: costs you RAM for every time-stamp)
             </div>
-            
+
             { this.renderAccountCreation(this.state.network) }
 
             <input type="submit" name="submit" id="submit" className="button button-primary"

@@ -33,7 +33,17 @@ th.column-wordproof {
       }
     }
   }
-
+  .vo-col {
+    width: 48%;
+    margin: 0;
+    padding: 0;
+    &-left {
+      padding-right: 2%;
+    }
+    &-right {
+      padding-left: 2%;
+    }
+  }
 
   .nav-tab:focus {
     box-shadow: unset;

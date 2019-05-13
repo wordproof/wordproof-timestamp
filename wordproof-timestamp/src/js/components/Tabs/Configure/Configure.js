@@ -34,26 +34,30 @@ export default class Configure extends Component {
   }
 
   renderAccountCreation(network) {
-    switch(network) {
+    switch (network) {
       case 'eos_jungle':
-        return(
+        return (
           <div>
-            <h4>Create a new EOS Jungle account</h4>
-            <p>You can use the guide &apos;<a href="https://steemit.com/eos/@ajose01/scatter-and-the-jungle-testnet" target="_blank" rel="noopener noreferrer">Scatter and the EOS JUNGLE (testnet)!</a>&apos; to create an account.</p>
+            <p>You can use the guide &apos;<a href="https://steemit.com/eos/@ajose01/scatter-and-the-jungle-testnet"
+                                              target="_blank" rel="noopener noreferrer">Scatter and the EOS JUNGLE
+              (testnet)!</a>&apos; to create an account.</p>
           </div>
         );
       case 'eos_main':
-        return(
+        return (
           <div>
-            <h4>Buy an EOS account</h4>
-            <p>If you don&apos;t have an EOS account yet, you can purchase one at <a href="https://www.eosnameservice.io/" target="_blank" rel="noopener noreferrer">https://www.eosnameservice.io/</a>.</p>
+            <p>If you don&apos;t have an EOS account yet, you can purchase one at <a
+              href="https://www.eosnameservice.io/" target="_blank"
+              rel="noopener noreferrer">https://www.eosnameservice.io/</a>.</p>
           </div>
         );
       default: //telos_main
-        return(
+        return (
           <div>
-            <h4>Create a Telos account</h4>
-            <p>To create a brand new Telos account, head over to <a href="https://wordproof.io/free-telos-account" target="_blank" rel="noopener noreferrer">https://wordproof.io/free-telos-account</a>.</p>
+            <p>To create a brand new Telos account, head over to <a href="https://wordproof.io/free-telos-account"
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer">https://wordproof.io/free-telos-account</a>.
+            </p>
           </div>
         );
     }
@@ -73,27 +77,23 @@ export default class Configure extends Component {
         <p>EOS and Telos are both EOS.IO blockchains. If you are not sure what this means, no problem. We recommend you
           to choose the Telos blockchain to get started, since it is free to create an account.</p>
 
-          <div>
-            <div className="form-group">
-              <label className="label" id="label_wordproof_network" htmlFor="wordproof_network">In what blockchain do
-                you want to timestamp your content?</label>
-              <select name="wordproof_network" id="wordproof_network" value={this.state.network}
-                      onChange={this.handleNetwork}>
-                <option value="telos_main">Telos</option>
-                <option value="eos_main">EOS</option>
-                <option value="eos_jungle">EOS Jungle Testnet</option>
-              </select>
-            </div>
+        <div className="form-group">
+          <label className="label" id="label_wordproof_network" htmlFor="wordproof_network">In what blockchain do
+            you want to timestamp your content?</label>
+          <select name="wordproof_network" id="wordproof_network" value={this.state.network}
+                  onChange={this.handleNetwork}>
+            <option value="telos_main">Telos</option>
+            <option value="eos_main">EOS</option>
+            <option value="eos_jungle">EOS Jungle Testnet</option>
+          </select>
+        </div>
 
-            <div className=""></div>
+        {this.renderAccountCreation(this.state.network)}
 
-            { this.renderAccountCreation(this.state.network) }
-            </div>
-
-            <h3>Step 1.2. Download a wallet</h3>
-            <p></p>
-            <a href="" target="_blank" rel="noopener noreferrer"></a>
-            <p></p>
+        <h3>Step 1.2. Download a wallet</h3>
+        <p></p>
+        <a href="" target="_blank" rel="noopener noreferrer"></a>
+        <p></p>
 
         <h3>Advanced settings</h3>
         <div className="form-group">
@@ -112,6 +112,6 @@ export default class Configure extends Component {
 
       </div>
 
-  )
+    )
   }
-  }
+}

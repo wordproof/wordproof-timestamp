@@ -42,7 +42,7 @@ export default class Dashboard extends Component {
           <div className="vo-card">
 		  	<h3>Welcome, WordProof tester!</h3>
 			<button type="button" className="button dismiss" onClick={this.closePopup}><span className="dashicons dashicons-no-alt"></span></button>
-			<iframe width="560" height="315" src="https://www.youtube.com/embed/5GUlcfaKsyk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/5GUlcfaKsyk" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 			<br /><br />
             <label className="label">Do you already have an EOS or Telos blockchain account?</label>
 			<ul className="bullet-list">

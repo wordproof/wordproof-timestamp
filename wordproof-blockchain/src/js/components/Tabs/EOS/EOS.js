@@ -10,7 +10,7 @@ export default class EOS extends Component {
             To time-stamp your content, you need an EOS account (or a <a href="#create-telos-account">free Telos account</a>). Buy your EOS account on EOS Name Service. Here’s how:
           </p>
 
-		  <iframe width="560" height="315" src="https://www.youtube.com/embed/rQkrrLXjZH8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		  <iframe width="560" height="315" src="https://www.youtube.com/embed/rQkrrLXjZH8" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 
           <p>
             Now, import your new private key into one of these EOS wallets:

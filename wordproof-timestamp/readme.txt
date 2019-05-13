@@ -22,7 +22,7 @@ With WordProof, you can sign your WordPress content in any EOSIO blockchain from
 
 For more info on WordProof, WordPress, and Blockchain, check out the following:
 
-* The [WordProof Plugin official homepage](https://wordproof.io/ "WordProof: The WordPress Blockchain Plugin").
+* The [WordProof Plugin official homepage](https://wordproof.io/ "WordProof: The WordPress Timestamp Plugin").
 * [WordPress and Blockchain – The Manifest for a 100% Open Source Future](https://medium.com/wordproof "WordProof: WordPress and Blockchain") by Sebastiaan van der Lans.
 * Join the [WordProof Telegram](https://t.me/WordProof) for feedback, updates and support.
 
@@ -34,13 +34,13 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 
 1. Visit 'Plugins > Add New'
 1. Search for 'WordProof'
-1. Activate WordProof Blockchain from your Plugins page.
+1. Activate WordProof Timestamp from your Plugins page.
 1. Go to "after activation" below.
 
 === Manually ===
 
-1. Upload the `wordproof-blockchain` folder to the `/wp-content/plugins/` directory
-1. Activate the WordProof Blockchain plugin through the 'Plugins' menu in WordPress
+1. Upload the `wordproof-timestamp` folder to the `/wp-content/plugins/` directory
+1. Activate the WordProof Timestamp plugin through the 'Plugins' menu in WordPress
 1. Go to "after activation" below.
 
 === After activation ===

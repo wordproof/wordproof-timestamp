@@ -1,5 +1,5 @@
 {
-  "name": "wordproof-blockchain",
+  "name": "wordproof-timestamp",
   "version": "0.0.1",
   "description": "WordProof Concept",
   "main": "src/js/index.js",

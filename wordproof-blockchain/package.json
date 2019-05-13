@@ -1,0 +1,60 @@
+{
+  "name": "wordproof-blockchain",
+  "version": "0.0.1",
+  "description": "WordProof Concept",
+  "main": "src/js/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "development": "cross-env NODE_ENV=development webpack --progress --hide-modules --config webpack.config.js",
+    "dev": "npm run development",
+    "watch": "npm run development -- --watch",
+    "start": "npm run watch",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://app.buddy.works/vanons/wordproof-plugin"
+  },
+  "author": "VanOns",
+  "license": "GPL-2.0",
+  "browserslist": "> 0.25%, not dead",
+  "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^9.5.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "cross-env": "^5.2.0",
+    "css-loader": "^2.1.1",
+    "eslint": "^5.15.3",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-standard": "^4.0.0",
+    "mini-css-extract-plugin": "^0.5.0",
+    "node-sass": "^4.11.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "svg-inline-loader": "^0.8.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-notifier": "^1.7.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.4.3",
+    "crypto-js": "^3.1.9-1",
+    "eos-transit": "^3.0.1",
+    "eos-transit-scatter-provider": "^3.0.1",
+    "eosjs": "^20.0.0",
+    "eosjs-ecc": "^4.0.4",
+    "js-sha256": "^0.9.0",
+    "macaddress": "^0.2.9",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  }
+}

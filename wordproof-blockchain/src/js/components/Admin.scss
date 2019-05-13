@@ -1,0 +1,67 @@
+th.column-wordproof {
+  width: 10%;
+}
+
+.wordproof-admin-app {
+  .vo-card {
+    position: relative;
+    margin-top: 20px;
+    padding: 1em 2em;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    background: #fff;
+
+    .button.dismiss {
+      float: right;
+      width: 25px;
+      height: 25px;
+      margin-top: -0.5em;
+      margin-right: -1.5em;
+
+      @media screen and (max-width: 782px) {
+        padding: unset;
+        line-height: 26px;
+        font-size: 13px;
+      }
+  
+      .dashicons {
+        margin-top: 2px;
+        margin-left: -8px;
+        font-size: 20px;
+        width: 12px;
+        height: 12px;  
+      }
+    }
+  }
+
+
+  .nav-tab:focus {
+    box-shadow: unset;
+  }
+
+  .bullet-list {
+    list-style: disc;
+    li {
+      margin-left: 16px;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group:focus {
+    box-shadow: 0 0 0 1px #5b9dd9, 0 0 2px 1px rgba(30,140,190,.8);
+  }
+
+  .label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+
+  .textinput {
+    width: 100%;
+  }
+}

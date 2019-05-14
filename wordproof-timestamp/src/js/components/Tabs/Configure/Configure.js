@@ -78,21 +78,33 @@ export default class Configure extends Component {
           to choose the Telos blockchain to get started, since it is free to create an account.</p>
 
         <div className="form-group">
-          <label className="label" id="label_wordproof_network" htmlFor="wordproof_network">In what blockchain do
-            you want to timestamp your content?</label>
-          <select name="wordproof_network" id="wordproof_network" value={this.state.network}
-                  onChange={this.handleNetwork}>
-            <option value="telos_main">Telos</option>
-            <option value="eos_main">EOS</option>
-            <option value="eos_jungle">EOS Jungle Testnet</option>
-          </select>
+          <strong className="label">In what blockchain do you want to timestamp your content?</strong>
+          <div>
+            <input type="radio" id="wordproof_network_telos" name="wordproof_network" value="telos_main"
+                   checked={this.state.network === "telos_main"} onChange={this.handleNetwork} />
+            <label htmlFor="wordproof_network_telos">Telos</label>
+          </div>
+          <div>
+            <input type="radio" id="wordproof_network_eos" name="wordproof_network" value="eos_main"
+                   checked={this.state.network === "eos_main"} onChange={this.handleNetwork} />
+            <label htmlFor="wordproof_network_eos">EOS</label>
+          </div>
+          <div>
+            <input type="radio" id="wordproof_network_jungle" name="wordproof_network" value="eos_jungle"
+                   checked={this.state.network === "eos_jungle"} onChange={this.handleNetwork} />
+            <label htmlFor="wordproof_network_jungle">EOS Jungle Testnet</label>
+          </div>
         </div>
 
         {this.renderAccountCreation(this.state.network)}
 
         <h3>Step 1.2. Download a wallet</h3>
-        <strong><a href="https://get-scatter.com/" target="_blank" rel="noopener noreferrer">Go to Scatter.com and download the wallet.</a></strong>
-        <p>Now, open Scatter and set a password. Save the passphrase! On the next screen, click &apos;Import Private Keys&apos; and enter your <strong>Active Private Key</strong> which you received. Now the hard part is over! You are ready to go to the next step. Remember: every time you want to time-stamp something, the Scatter application must be open.</p>
+        <strong><a href="https://get-scatter.com/" target="_blank" rel="noopener noreferrer">Go to Scatter.com and
+          download the wallet.</a></strong>
+        <p>Now, open Scatter and set a password. Save the passphrase! On the next screen, click &apos;Import Private
+          Keys&apos; and enter your <strong>Active Private Key</strong> which you received. Now the hard part is over!
+          You are ready to go to the next step. Remember: every time you want to time-stamp something, the Scatter
+          application must be open.</p>
 
         <h3>Advanced settings</h3>
         <div className="form-group">

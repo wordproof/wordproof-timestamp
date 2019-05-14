@@ -4,7 +4,7 @@ import timestamp from '../../timestamp'
 
 export default class Metabox extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       loadingClass: '',
       connected: false,
@@ -18,12 +18,12 @@ export default class Metabox extends Component {
   }
 
   componentDidMount() {
-    this.getWallet()
+    this.getWallet();
   }
 
   handleClick = async () => {
-    this.startLoading()
-    const wallet = await this.getWallet()
+    this.startLoading();
+    const wallet = await this.getWallet();
     try {
       if (!wallet.connected) { await wallet.connect() }
       if (!wallet.authenticated) { await wallet.login() }
@@ -31,18 +31,21 @@ export default class Metabox extends Component {
           .then((result) => {
             console.log(result);
             if (result.success) {
+              this.stopLoading();
               this.setState({
                 success: true,
                 successData: result.data
               });
             }
           }) // JSON-string from `response.json()` call
-          .catch(error => console.error(error));
+          .catch(error => {
+            this.stopLoading();
+            console.error(error);
+          });
     } catch (error) {
-      this.setState({failed:true});
-      console.log(error)
-    } finally {
       this.stopLoading();
+      this.setState({failed:true});
+      console.log(error);
     }
   }
 
@@ -58,33 +61,34 @@ export default class Metabox extends Component {
   }
 
   startLoading = () => {
+    console.log('loading');
     this.setState({loadingClass: 'loading', disabled: true})
   }
 
   stopLoading = () => {
-    this.setState({loadingClass: '', disabled: false})
+    this.setState({loadingClass: '', disabled: false});
   }
 
   getWallet = async () => {
     if (this.state.wallet === null) {
-      const wallet = initWallet()
+      const wallet = initWallet();
       try {
-        await wallet.connect()
-        if (!wallet.authenticated) { await wallet.login() }
+        await wallet.connect();
+        if (!wallet.authenticated) { await wallet.login(); }
         this.setState({
           wallet: wallet,
           disabled: false
-        })
+        });
       } catch (error) {
-        this.setState({noScatter: true})
-        console.log(error)
+        this.setState({noScatter: true});
+        console.log(error);
       }
     }
-    return this.state.wallet
+    return this.state.wallet;
   }
   render() {
     return (
-      <div>
+      <div className="wordproof-metabox">
         { this.state.noScatter ? 
           <p>No EOSIO wallet detected. Open you wallet or <a href={wordproofData.settingsURL}>download an EOSIO wallet now</a>.</p> : ''
         }
@@ -93,13 +97,14 @@ export default class Metabox extends Component {
            <p>No EOSIO wallet detected. Open you wallet or <a href={wordproofData.settingsURL}>download an EOSIO wallet now</a>.</p> : ''
         }
 
-        { this.state.disabled ?
-          <div>Connecting...</div>: ''
-        }
-
         { this.state.wallet && this.state.wallet.authenticated ?
           <div>Logged in as <strong>{this.state.wallet.accountInfo.account_name}</strong></div> : ''
         }
+
+        { this.state.disabled ?
+          <div className="connecting"><img className="loading-spinner" height="64px" width="64px" src="/wp-admin/images/spinner-2x.gif" alt="loading" />Connecting...</div>: ''
+        }
+
         <br/>
         { !this.state.success ? 
           <div>

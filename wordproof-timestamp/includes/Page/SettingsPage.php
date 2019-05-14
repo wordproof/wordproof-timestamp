@@ -24,12 +24,12 @@ class SettingsPage {
 
     public function addSettingsPage() {
         add_menu_page(
-//            'tools.php',
             'WordProof',
             'WordProof',
             'manage_options',
             'wordproof',
-            array($this, 'generateSettingsPage')
+            array($this, 'generateSettingsPage'),
+            'dashicons-admin-network'
         );
     }
 

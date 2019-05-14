@@ -46,17 +46,17 @@ export default class Configure extends Component {
       case 'eos_main':
         return (
           <div>
-            <p>If you don&apos;t have an EOS account yet, you can purchase one at <a
+            <p>If you don&apos;t have an EOS account yet, you can purchase one. <br/>
+              <a className="button"
               href="https://www.eosnameservice.io/" target="_blank"
-              rel="noopener noreferrer">https://www.eosnameservice.io/</a>.</p>
+              rel="noopener noreferrer">Buy your account</a></p>
           </div>
         );
       default: //telos_main
         return (
           <div>
-            <p>To create a brand new Telos account, head over to <a href="https://wordproof.io/free-telos-account"
-                                                                    target="_blank"
-                                                                    rel="noopener noreferrer">https://wordproof.io/free-telos-account</a>.
+            <p>If you don&apos;t have a Telos account, click on the button below to use our tool to create a free account.<br/>
+              <a className="button" href="https://wordproof.io/free-telos-account" target="_blank" rel="noopener noreferrer">Create a free Telos account</a>
             </p>
           </div>
         );
@@ -82,12 +82,12 @@ export default class Configure extends Component {
           <div>
             <input type="radio" id="wordproof_network_telos" name="wordproof_network" value="telos_main"
                    checked={this.state.network === "telos_main"} onChange={this.handleNetwork} />
-            <label htmlFor="wordproof_network_telos">Telos</label>
+            <label htmlFor="wordproof_network_telos">Telos - create your free Telos account</label>
           </div>
           <div>
             <input type="radio" id="wordproof_network_eos" name="wordproof_network" value="eos_main"
                    checked={this.state.network === "eos_main"} onChange={this.handleNetwork} />
-            <label htmlFor="wordproof_network_eos">EOS</label>
+            <label htmlFor="wordproof_network_eos">EOS - buy your EOS account (around $1)</label>
           </div>
           <div>
             <input type="radio" id="wordproof_network_jungle" name="wordproof_network" value="eos_jungle"
@@ -99,8 +99,8 @@ export default class Configure extends Component {
         {this.renderAccountCreation(this.state.network)}
 
         <h3>Step 1.2. Download a wallet</h3>
-        <strong><a href="https://get-scatter.com/" target="_blank" rel="noopener noreferrer">Go to Scatter.com and
-          download the wallet.</a></strong>
+        <a href="https://get-scatter.com/" className="button" target="_blank" rel="noopener noreferrer">Go to Scatter.com and
+          download the wallet</a>
         <p>Now, open Scatter and set a password. Save the passphrase! On the next screen, click &apos;Import Private
           Keys&apos; and enter your <strong>Active Private Key</strong> which you received. Now the hard part is over!
           You are ready to go to the next step. Remember: every time you want to time-stamp something, the Scatter

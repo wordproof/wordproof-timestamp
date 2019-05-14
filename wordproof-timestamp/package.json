@@ -15,7 +15,7 @@
     "type": "git",
     "url": "https://app.buddy.works/vanons/wordproof-plugin"
   },
-  "author": "VanOns",
+  "author": "BlockProof",
   "license": "GPL-2.0",
   "browserslist": "> 0.25%, not dead",
   "devDependencies": {

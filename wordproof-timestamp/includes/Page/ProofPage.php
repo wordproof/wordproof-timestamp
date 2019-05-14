@@ -14,9 +14,15 @@ class ProofPage {
 
     public function generateProofPage() {
         if (!is_admin() && isset($_GET['wordproof'])) {
-          $post_id = url_to_postid( $_SERVER['REQUEST_URI']);
+            if ($_SERVER['REQUEST_URI'] == '/?wordproof') {
+                $post_id = get_option('page_on_front');
+            } else {
+                $post_id = url_to_postid( $_SERVER['REQUEST_URI']);
+            }
+
 	        if ($post_id && $post = get_post($post_id)) {
 	            $proof_date = get_post_meta($post_id, 'wordproof_date', true);
+
 	            if ($proof_date) {
 		            $proof_network          = get_post_meta($post_id, 'wordproof_network', true);
 		            $proof_transaction_id   = get_post_meta($post_id, 'wordproof_transaction_id', true);

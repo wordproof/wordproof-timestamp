@@ -3,7 +3,7 @@
 namespace WordProof\includes;
 
 class CertificateHelper {
-    private static $default_template = "<p><a target='_blank' href='CERTIFICATE_URL'>View this content's WordProof Timestamp Certificate</a></p>";
+    private static $default_template = "<p><a target='_blank' href='CERTIFICATE_URL'>View this content's WordProof Timestamp certificate</a></p>";
 
     static public function getCertificateTemplate() {
         $template = get_option('wordproof_certificate_template', null) ?: self::$default_template;

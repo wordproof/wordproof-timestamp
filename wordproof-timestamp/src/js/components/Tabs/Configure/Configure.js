@@ -33,6 +33,15 @@ export default class Configure extends Component {
     this.setState({hasAccount: true})
   }
 
+  handleWindowPopup = (event, url) => {
+    event.preventDefault();
+    window.open(
+      url,
+      'popUpWindow',
+      'height=600,width=900,left=50,top=50,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes'
+    );
+  }
+
   renderAccountCreation(network) {
     switch (network) {
       case 'eos_jungle':
@@ -46,7 +55,7 @@ export default class Configure extends Component {
       case 'eos_main':
         return (
           <div>
-            <p>If you don&apos;t have an EOS account yet, you can purchase one. <br/>
+            <p>If you don&apos;t have an EOS account yet, you can purchase one. <br/><br/>
               <a className="button"
               href="https://www.eosnameservice.io/" target="_blank"
               rel="noopener noreferrer">Buy your account</a></p>
@@ -56,7 +65,7 @@ export default class Configure extends Component {
         return (
           <div>
             <p>If you don&apos;t have a Telos account, click on the button below to use our tool to create a free account.<br/>
-              <a className="button" href="https://wordproof.io/free-telos-account" target="_blank" rel="noopener noreferrer">Create a free Telos account</a>
+              <button className="button" onClick={(e) => this.handleWindowPopup(e, 'https://wordproof.io/free-telos-account')}>Create a free Telos account</button>
             </p>
           </div>
         );

@@ -13,6 +13,7 @@ export default class Configure extends Component {
       <div>
         <div className="vo-card">
           <div className="form-group">
+            <p>You can change the way the link to the certificate is shown under your posts. In the future, more customization options will become available!</p>
             <label htmlFor="" className="label"
                    title="CERTIFICATE_URL will be replaced by the URL to the WordProof certificate.">How do you want to
               refer to the WordProof blockchain certificate? </label>

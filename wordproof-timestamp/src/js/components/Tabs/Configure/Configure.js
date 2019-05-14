@@ -91,9 +91,8 @@ export default class Configure extends Component {
         {this.renderAccountCreation(this.state.network)}
 
         <h3>Step 1.2. Download a wallet</h3>
-        <p></p>
-        <a href="" target="_blank" rel="noopener noreferrer"></a>
-        <p></p>
+        <strong><a href="https://get-scatter.com/" target="_blank" rel="noopener noreferrer">Go to Scatter.com and download the wallet.</a></strong>
+        <p>Now, open Scatter and set a password. Save the passphrase! On the next screen, click &apos;Import Private Keys&apos; and enter your <strong>Active Private Key</strong> which you received. Now the hard part is over! You are ready to go to the next step. Remember: every time you want to time-stamp something, the Scatter application must be open.</p>
 
         <h3>Advanced settings</h3>
         <div className="form-group">

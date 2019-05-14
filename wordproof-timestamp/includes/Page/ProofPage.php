@@ -14,11 +14,9 @@ class ProofPage {
 
     public function generateProofPage() {
         if (!is_admin() && isset($_GET['wordproof'])) {
-	        $post_id = url_to_postid( $_SERVER['REQUEST_URI']);
-
+          $post_id = url_to_postid( $_SERVER['REQUEST_URI']);
 	        if ($post_id && $post = get_post($post_id)) {
 	            $proof_date = get_post_meta($post_id, 'wordproof_date', true);
-
 	            if ($proof_date) {
 		            $proof_network          = get_post_meta($post_id, 'wordproof_network', true);
 		            $proof_transaction_id   = get_post_meta($post_id, 'wordproof_transaction_id', true);
@@ -69,7 +67,7 @@ class ProofPage {
 						}
 
                     </style>
-					<h1>WordProof Blockchain certificate</h1>
+					<h1>WordProof Timestamp certificate</h1>
                     <table>
                         <tr>
                             <th>Post Title</th>
@@ -96,7 +94,10 @@ class ProofPage {
                             <td><a target="_blank" href="<?php echo esc_html($transaction_url)?>"><?php echo esc_html($transaction_url)?></a></td>
                         </tr>
                     </table>
-					<p><small>Time-stamped via <a href="https://wordproof.io" target="_blank">WordProof.io, bringing WordPress to the blockchain</a>.</small></p>
+					<p>
+                        <small>WordProof Timestamp with WordProof.io, bringing WordPress to the blockchain.</small><br>
+                        <small>Download the <a href="https://wordproof.io/timestamp-plugin/" target="_blank" rel="noopener noreferrer">WordProof Timestamp plugin</a> for free to timestamp your WordPress content too.</small>
+                    </p>
 
 		            <?php
                 } else {

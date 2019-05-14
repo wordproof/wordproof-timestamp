@@ -98,13 +98,22 @@ export default class Configure extends Component {
 
         {this.renderAccountCreation(this.state.network)}
 
-        <h3>Step 1.2. Download a wallet</h3>
-        <a href="https://get-scatter.com/" className="button" target="_blank" rel="noopener noreferrer">Go to Scatter.com and
-          download the wallet</a>
-        <p>Now, open Scatter and set a password. Save the passphrase! On the next screen, click &apos;Import Private
-          Keys&apos; and enter your <strong>Active Private Key</strong> which you received. Now the hard part is over!
-          You are ready to go to the next step. Remember: every time you want to time-stamp something, the Scatter
-          application must be open.</p>
+        <div className="vo-columns">
+          <div className="vo-col">
+            <h3>Step 1.2. Download a wallet</h3>
+            <a href="https://get-scatter.com/" className="button" target="_blank" rel="noopener noreferrer">Go to Scatter.com and
+              download the wallet</a>
+            <p>Now, open Scatter and set a password. Save the passphrase! On the next screen, click &apos;Import Private
+              Keys&apos; and enter your <strong>Active Private Key</strong> which you received. Now the hard part is over!
+              You are ready to go to the next step. Remember: every time you want to time-stamp something, the Scatter
+              application must be open.</p>
+          </div>
+          <div className="vo-col">
+            <iframe width="380" height="170" src="https://www.youtube.com/embed/oVRDojYmaFo?start=301" frameBorder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen></iframe>
+          </div>
+        </div>
 
         <h3>Advanced settings</h3>
         <div className="form-group">

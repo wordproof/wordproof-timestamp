@@ -47,15 +47,13 @@ export default class Configure extends Component {
       case 'eos_jungle':
         return (
           <div>
-            <p>You can use the guide &apos;<a href="https://steemit.com/eos/@ajose01/scatter-and-the-jungle-testnet"
-                                              target="_blank" rel="noopener noreferrer">Scatter and the EOS JUNGLE
-              (testnet)!</a>&apos; to create an account.</p>
+            <p>You can use the guide &apos;<a href="https://steemit.com/eos/@ajose01/scatter-and-the-jungle-testnet" target="_blank" rel="noopener noreferrer">Scatter and the EOS JUNGLE (testnet)!</a>&apos; to create an account.</p>
           </div>
         );
       case 'eos_main':
         return (
           <div>
-            <p>If you don&apos;t have an EOS account yet, you can purchase one. <br/><br/>
+            <p>If you don&apos;t have an EOS account yet, you can purchase one using eosnameservice.<br/><br/>
               <a className="button"
               href="https://www.eosnameservice.io/" target="_blank"
               rel="noopener noreferrer">Buy your account</a></p>
@@ -64,14 +62,13 @@ export default class Configure extends Component {
       default: //telos_main
         return (
           <div>
-            <p>If you don&apos;t have a Telos account, click on the button below to use our tool to create a free account.<br/>
+            <p>Telos is the innovation district of the <a href="http://eos.io/" target="_blank" rel="noopener noreferrer">EOS.IO</a> ecosystem. If you don&apos;t have a Telos account yet, click on the button below to use our tool to create a free account. If you want to learn more about the Telos ecosystem, <a href="https://medium.com/goodblock-io/welcome-to-telos-wordproof-user-fd719b171341" target="_blank" rel="noopener noreferrer">click here for an introduction by Telos founder Douglas Horn</a>.<br/><br/>
               <button className="button" onClick={(e) => this.handleWindowPopup(e, 'https://wordproof.io/free-telos-account')}>Create a free Telos account</button>
             </p>
           </div>
         );
     }
   }
-
 
   render() {
     return (

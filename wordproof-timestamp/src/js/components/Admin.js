@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './Admin.scss'
 import Dashboard from './Tabs/Dashboard/Dashboard';
-import Configure from './Tabs/Configure/Configure';
+import Setup from './Tabs/Setup/Setup';
 import Customize from './Tabs/Customize/Customize';
 import Timestamp from './Tabs/Timestamp/Timestamp';
 import Support from './Tabs/Support/Support';
@@ -38,8 +38,8 @@ export default class Admin extends Component {
 
   tabContent = (hash) => {
     switch(hash) {
-      case '#configure':
-        return <Configure />;
+      case '#setup':
+        return <Setup />;
       case '#customize':
         return <Customize />;
       case '#timestamp':
@@ -58,9 +58,9 @@ export default class Admin extends Component {
       <div className='wordproof-admin-app'>
         <h2 className="nav-tab-wrapper">
           <a href="#dashboard" className={`nav-tab ${this.activeTab('', '#dashboard')}`}>Dashboard</a>
-          <a href="#configure" className={`nav-tab ${this.activeTab('#configure')}`}>1. Configure</a>
-          <a href="#customize" className={`nav-tab ${this.activeTab('#customize')}`}>2. Customize</a>
-          <a href="#timestamp" className={`nav-tab ${this.activeTab('#timestamp')}`}>3. Timestamp</a>
+          <a href="#setup" className={`nav-tab ${this.activeTab('#setup')}`}>Setup</a>
+          <a href="#customize" className={`nav-tab ${this.activeTab('#customize')}`}>Customize</a>
+          <a href="#timestamp" className={`nav-tab ${this.activeTab('#timestamp')}`}>Timestamp</a>
           <a href="#support" className={`nav-tab ${this.activeTab('#support')}`}>Support</a>
           <a href="#learn" className={`nav-tab ${this.activeTab('#learn')}`}>Learn</a>
         </h2>

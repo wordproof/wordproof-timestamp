@@ -16,7 +16,7 @@ Timestamp your WordPress content into the blockchain. Instant and forever free. 
 
 > “In five years from now, if you don’t timestamp your articles on the blockchain, you’re going to be considered a fraud.” - Brendan Blumer
 
-With WordProof, you can sign your WordPress content in any EOSIO blockchain from the comfort of your WordPress Configure. This works without any middlemen and will be free forever.
+With WordProof, you can sign your WordPress content in any EOSIO blockchain from the comfort of your WordPress site. This works without any middlemen and will be free forever.
 
 ### Further Reading on WordProof, WordPress, and Blockchain
 

@@ -102,7 +102,7 @@ export default class Metabox extends Component {
         }
 
         { this.state.disabled ?
-          <div className="connecting"><img className="loading-spinner" height="64px" width="64px" src="/wp-admin/images/spinner-2x.gif" alt="loading" />Connecting...</div>: ''
+          <div className="connecting-to-wallet"><img className="loading-spinner" height="64px" width="64px" src="/wp-admin/images/spinner-2x.gif" alt="loading" />Connecting...</div>: ''
         }
 
         <br/>

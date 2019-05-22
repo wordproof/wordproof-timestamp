@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-export default class Configure extends Component {
+export default class Customize extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -13,10 +13,10 @@ export default class Configure extends Component {
       <div>
         <div className="vo-card">
           <div className="form-group">
-            <p>You can change the way the link to the certificate is shown under your posts. In the future, more customization options will become available!</p>
+            <p>You can customize the appearance of a few WordProof Timestamp aspects. More options will be added in the near future.</p>
             <label htmlFor="" className="label"
                    title="CERTIFICATE_URL will be replaced by the URL to the WordProof certificate.">How do you want to
-              refer to the WordProof blockchain certificate? </label>
+              refer to the WordProof timestamp certificate? </label>
             <input type="text" className="textinput" name="wordproof_certificate_template"
                    value={this.state.certificateTemplate}
                    onChange={e => this.setState({certificateTemplate: e.target.value})}/>

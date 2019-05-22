@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-export default class Configure extends Component {
+export default class Setup extends Component {
   constructor(props) {
     super(props)
     this.state = {

@@ -40,13 +40,13 @@ th.column-wordproof {
   }
 
   .box {
-    padding: 10px 15px;
+    padding: 15px;
     border-radius: 2px;
     background: $grey-light;
     border: 1px solid darken($grey-light, 10);
 
     p {
-      padding: 0;
+      margin: 0;
     }
 
     &.box-success {

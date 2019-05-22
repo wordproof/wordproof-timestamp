@@ -50,11 +50,11 @@ export default class Timestamp extends Component {
 
           <div className={this.state.boxClasses}>
             { this.state.isLoading ?
-              <div className="connecting-to-wallet"><img className="loading-spinner" height="64px" width="64px" src="/wp-admin/images/spinner-2x.gif" alt="loading" />Connecting...</div>: ''
+              <p><div className="connecting-to-wallet"><img className="loading-spinner" height="64px" width="64px" src="/wp-admin/images/spinner-2x.gif" alt="loading" />Connecting...</div></p> : ''
             }
 
             { this.state.walletAvailable === true ?
-              <p>All set! You are ready to time-stamp. Make sure to keep your Scatter wallet open and unlocked!</p> : ''
+              <p><span className="dashicons dashicons-yes-alt"></span> All set! You are ready to time-stamp. Make sure to keep your Scatter wallet open and unlocked!</p> : ''
             }
 
             { this.state.walletAvailable === false ?

@@ -1,4 +1,7 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
+// import telosIcon from '../../../../../assets/images/telos.png';
+// import { ReactComponent as EosIcon } from '../../../../assets/Eos.svg';
+
 
 export default class Setup extends Component {
   constructor(props) {
@@ -38,7 +41,7 @@ export default class Setup extends Component {
     window.open(
       url,
       'popUpWindow',
-      'height=600,width=900,left=50,top=50,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes'
+      'height=1000,width=900,left=50,top=50,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes'
     );
   }
 
@@ -46,26 +49,15 @@ export default class Setup extends Component {
     switch (network) {
       case 'eos_jungle':
         return (
-          <div>
-            <p>You can use the guide &apos;<a href="https://steemit.com/eos/@ajose01/scatter-and-the-jungle-testnet" target="_blank" rel="noopener noreferrer">Scatter and the EOS JUNGLE (testnet)!</a>&apos; to create an account.</p>
-          </div>
+            <p>To use the EOS Jungle testnet, you should have your wallet setup already. Headover to &apos;Timestamp&apos; to test your connection.</p>
         );
       case 'eos_main':
         return (
-          <div>
-            <p>If you don&apos;t have an EOS account yet, you can purchase one using eosnameservice.<br/><br/>
-              <a className="button"
-              href="https://www.eosnameservice.io/" target="_blank"
-              rel="noopener noreferrer">Buy your account</a></p>
-          </div>
+            <p>To use EOS, you need to buy an EOS account. The Wizard will walk you through the entire process.</p>
         );
       default: //telos_main
         return (
-          <div>
-            <p>Telos is the innovation district of the <a href="http://eos.io/" target="_blank" rel="noopener noreferrer">EOS.IO</a> ecosystem. If you don&apos;t have a Telos account yet, click on the button below to use our tool to create a free account. If you want to learn more about the Telos ecosystem, <a href="https://medium.com/goodblock-io/welcome-to-telos-wordproof-user-fd719b171341" target="_blank" rel="noopener noreferrer">click here for an introduction by Telos founder Douglas Horn</a>.<br/><br/>
-              <button className="button" onClick={(e) => this.handleWindowPopup(e, 'https://wordproof.io/free-telos-account')}>Create a free Telos account</button>
-            </p>
-          </div>
+            <p>Telos is the innovation district of the EOS.IO ecosystem. If you want to know more about Telos, read this introduction article by Telos founder Douglas Horn.</p>
         );
     }
   }
@@ -73,53 +65,42 @@ export default class Setup extends Component {
   render() {
     return (
       <div className="vo-card">
-        <p>This set-up consists out of two steps:</p>
+        <p>The WordProof Timestamp set-up consists of three steps and takes about 5 minutes. You only need to do this once using the Setup Wizard, which will guide you through the process!</p>
         <ol>
-          <li>Create an EOS or Telos account</li>
-          <li>Download a wallet to manage your credentials</li>
+          <li>Create a blockchain account</li>
+          <li>Download a Wallet to sign your content</li>
+          <li>Configure the Wallet</li>
         </ol>
 
-        <h3>Step 1.1. Create an EOS or Telos account</h3>
-        <p>EOS and Telos are both EOS.IO blockchains. If you are not sure what this means, no problem. We recommend you
-          to choose the Telos blockchain to get started, since it is free to create an account.</p>
+        <h3>Pick a Blockchain</h3>
+        <p>Choose on which blockchain you want to timestamp your content. If you are not sure what this means, don’t worry! We recommend to start on the Telos blockchain, since accounts are free.</p>
 
         <div className="form-group">
-          <strong className="label">In what blockchain do you want to timestamp your content?</strong>
-          <div>
+          <label htmlFor="wordproof_network_telos" className="radio-box">
             <input type="radio" id="wordproof_network_telos" name="wordproof_network" value="telos_main"
                    checked={this.state.network === "telos_main"} onChange={this.handleNetwork} />
-            <label htmlFor="wordproof_network_telos">Telos - create your free Telos account</label>
-          </div>
-          <div>
+            <img src="https://i.ibb.co/RYg4MJZ/Telos-Icon-200px.png" alt="telos"/>
+            <span>Telos</span>
+          </label>
+          <label htmlFor="wordproof_network_eos" className="radio-box">
             <input type="radio" id="wordproof_network_eos" name="wordproof_network" value="eos_main"
                    checked={this.state.network === "eos_main"} onChange={this.handleNetwork} />
-            <label htmlFor="wordproof_network_eos">EOS - buy your EOS account (around $1)</label>
-          </div>
-          <div>
+            <img src="https://i.ibb.co/RYg4MJZ/Telos-Icon-200px.png" alt="telos"/>
+            <span>EOS</span>
+          </label>
+          <label htmlFor="wordproof_network_jungle" className="radio-box">
             <input type="radio" id="wordproof_network_jungle" name="wordproof_network" value="eos_jungle"
                    checked={this.state.network === "eos_jungle"} onChange={this.handleNetwork} />
-            <label htmlFor="wordproof_network_jungle">EOS Jungle Testnet</label>
-          </div>
+            <img src="https://i.ibb.co/RYg4MJZ/Telos-Icon-200px.png" alt="telos"/>
+            <span>EOS Jungle<br/>Testnet</span>
+          </label>
         </div>
 
         {this.renderAccountCreation(this.state.network)}
 
-        <div className="vo-columns">
-          <div className="vo-col">
-            <h3>Step 1.2. Download a wallet</h3>
-            <a href="https://get-scatter.com/" className="button" target="_blank" rel="noopener noreferrer">Go to Scatter.com and
-              download the wallet</a>
-            <p>Now, open Scatter and set a password. Save the passphrase! On the next screen, click &apos;Import Private
-              Keys&apos; and enter your <strong>Active Private Key</strong> which you received. Now the hard part is over!
-              You are ready to go to the next step. Remember: every time you want to time-stamp something, the Scatter
-              application must be open.</p>
-          </div>
-          <div className="vo-col">
-            <iframe width="380" height="170" src="https://www.youtube.com/embed/oVRDojYmaFo?start=301" frameBorder="0"
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen></iframe>
-          </div>
-        </div>
+        <p>The Setup Wizard will open in a pop-up. You will automatically return to your WordPress dashboard at the end of the steps!</p>
+
+        <button className="button button-primary" onClick={(e) => this.handleWindowPopup(e, 'https://wordproof.io/timestamp-setup-wizard')}>Open Setup Wizard</button>
 
         <h3>Advanced settings</h3>
         <div className="form-group">

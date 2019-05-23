@@ -1,3 +1,9 @@
+@import "../../../../node_modules/bulma/sass/utilities/_all.sass";
+@import "../../../../node_modules/bulma/sass/base/_all.sass";
+@import "../../../../node_modules/bulma/sass/components/modal.sass";
+@import "../../../../node_modules/bulma/sass/components/pagination.sass";
+@import "../../../../node_modules/bulma/sass/elements/content.sass";
+
 #wordproof-popup-container {
   position: fixed;
   top: 0;
@@ -44,6 +50,12 @@
     transition: all 0.1s ease-in-out;
 
     &-content {
+      h2 {
+
+      }
+      h3 {
+
+      }
 
     }
 

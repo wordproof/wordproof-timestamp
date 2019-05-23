@@ -11,6 +11,7 @@ export default class Setup extends Component {
       storeContent: wordproofSettings.storeContent,
       storeRam: wordproofSettings.storeRam,
       hasAccount: window.localStorage.getItem('wordproof-has-account') === 'true' ? true : false,
+      selectedBlockchainIndex: 0
     }
   }
 
@@ -45,21 +46,16 @@ export default class Setup extends Component {
     );
   }
 
-  renderAccountCreation(network) {
-    switch (network) {
-      case 'eos_jungle':
-        return (
-            <p>To use the EOS Jungle testnet, you should have your wallet setup already. Headover to &apos;Timestamp&apos; to test your connection.</p>
-        );
-      case 'eos_main':
-        return (
-            <p>To use EOS, you need to buy an EOS account. The Wizard will walk you through the entire process.</p>
-        );
-      default: //telos_main
-        return (
-            <p>Telos is the innovation district of the EOS.IO ecosystem. If you want to know more about Telos, read this introduction article by Telos founder Douglas Horn.</p>
-        );
-    }
+  checkActiveRadio = (name) => {
+    return this.state.network === name;
+  }
+
+  addClassToSelectedRadio = () => {
+    console.log('hello');
+    console.log('hello');
+  }
+  isActive = () => {
+    console.log('hello');
   }
 
   render() {
@@ -76,19 +72,22 @@ export default class Setup extends Component {
         <p>Choose on which blockchain you want to timestamp your content. If you are not sure what this means, don’t worry! We recommend to start on the Telos blockchain, since accounts are free.</p>
 
         <div className="form-group">
-          <label htmlFor="wordproof_network_telos" className="radio-box">
+          <label htmlFor="wordproof_network_telos" onChange={this.addClassToSelectedRadio}
+                 className={`radio-box ${ this.checkActiveRadio('telos_main') ? 'selected' : '' }`}>
             <input type="radio" id="wordproof_network_telos" name="wordproof_network" value="telos_main"
                    checked={this.state.network === "telos_main"} onChange={this.handleNetwork} />
             <img src="https://i.ibb.co/RYg4MJZ/Telos-Icon-200px.png" alt="telos"/>
             <span>Telos</span>
           </label>
-          <label htmlFor="wordproof_network_eos" className="radio-box">
-            <input type="radio" id="wordproof_network_eos" name="wordproof_network" value="eos_main"
+          <label htmlFor="wordproof_network_eos" onChange={this.addClassToSelectedRadio}
+                 className={`radio-box ${ this.checkActiveRadio('eos_main') ? 'selected' : '' }`}>
+          <input type="radio" id="wordproof_network_eos" name="wordproof_network" value="eos_main"
                    checked={this.state.network === "eos_main"} onChange={this.handleNetwork} />
             <img src="https://i.ibb.co/RYg4MJZ/Telos-Icon-200px.png" alt="telos"/>
             <span>EOS</span>
           </label>
-          <label htmlFor="wordproof_network_jungle" className="radio-box">
+          <label htmlFor="wordproof_network_jungle" onChange={this.addClassToSelectedRadio}
+                 className={`radio-box ${ this.checkActiveRadio('eos_jungle') ? 'selected' : '' }`}>
             <input type="radio" id="wordproof_network_jungle" name="wordproof_network" value="eos_jungle"
                    checked={this.state.network === "eos_jungle"} onChange={this.handleNetwork} />
             <img src="https://i.ibb.co/RYg4MJZ/Telos-Icon-200px.png" alt="telos"/>
@@ -96,11 +95,20 @@ export default class Setup extends Component {
           </label>
         </div>
 
-        {this.renderAccountCreation(this.state.network)}
+        {(() => {
+          switch(this.state.network) {
+            case 'eos_main':
+              return <p>To use EOS, you need to buy an EOS account. The Wizard will walk you through the entire process.</p>;
+            case 'eos_jungle':
+              return <p>To use the EOS Jungle testnet, you should have your wallet setup already. Headover to &apos;Timestamp&apos; to test your connection.</p>;
+            default:
+              return <p>Telos is the innovation district of the EOS.IO ecosystem. If you want to know more about Telos, read this introduction article by Telos founder Douglas Horn.</p>
+          }
+        })()}
 
-        <p>The Setup Wizard will open in a pop-up. You will automatically return to your WordPress dashboard at the end of the steps!</p>
+        <p>After making your choice, you are ready to set up WordProof! Click the button below to open our wizard, which will guide you through the rest of our process.</p>
 
-        <button className="button button-primary" onClick={(e) => this.handleWindowPopup(e, 'https://wordproof.io/timestamp-setup-wizard')}>Open Setup Wizard</button>
+        <button className="button button-primary" onClick={(e) => this.handleWindowPopup(e, 'https://wordproof.io/timestamp-setup-wizard')}>Launch the Setup Wizard</button>
 
         <h3>Advanced settings</h3>
         <div className="form-group">

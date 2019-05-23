@@ -5,9 +5,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  entry: './src/js/admin.js',
+  entry: {
+    admin: './src/js/admin.js',
+    frontend: './src/js/frontend.js'
+  },
   output: {
-    filename: 'admin.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'assets/js')
   },
   devtool: 'source-map',
@@ -56,6 +59,6 @@ module.exports = {
     new WebpackNotifierPlugin({
       alwaysNotify: true
     }),
-    new MiniCssExtractPlugin({ filename: '../css/admin.css' })
+    new MiniCssExtractPlugin({ filename: '../css/[name].css' })
   ]
 }

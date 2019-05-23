@@ -34,7 +34,9 @@ class WordProof {
 	    add_filter('manage_posts_columns', array($this, 'addColumn'));
 	    add_action('manage_posts_custom_column', array($this, 'addColumnContent'), 10, 2);
 	    add_filter('the_content', array($this, 'addProofLink'), 999, 1);
-        add_action('admin_enqueue_scripts', array($this, 'loadAdminAssets'), 999);
+	    add_action('admin_enqueue_scripts', array($this, 'loadAdminAssets'), 999);
+      add_action('wp_footer', array($this, 'addProofPopupHtml'), 999);
+      add_action('wp_enqueue_scripts', array($this, 'addProofPopupScripts'), 999);
     }
 
 	public function addColumn($defaults) {
@@ -66,13 +68,21 @@ class WordProof {
 		    $proof_date = get_post_meta($post->ID, 'wordproof_date', true);
 
 		    if ($proof_date) {
-		    	$content .= CertificateHelper::getCertificate(get_permalink($post->ID).'?wordproof');
+		    	$content .= CertificateHelper::getCertificate('#wordproof');
 		    }
 	    }
 
     	return $content;
 	}
 
+	public function addProofPopupHtml() {
+    echo '<div class="wordproof-popup">HELLO</div>';
+  }
+
+  public function addProofPopupScripts() {
+      wp_enqueue_style('wordproof.frontend.css', WORDPROOF_URI_CSS . '/frontend.css', array(), filemtime(WORDPROOF_DIR_CSS . '/frontend.css'));
+      wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', array(), filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
+  }
 
 	public function loadAdminAssets() {
         global $post;

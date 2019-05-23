@@ -1,7 +1,4 @@
 import React, {Component} from 'react';
-// import telosIcon from '../../../../../assets/images/telos.png';
-// import { ReactComponent as EosIcon } from '../../../../assets/Eos.svg';
-
 
 export default class Setup extends Component {
   constructor(props) {
@@ -73,21 +70,21 @@ export default class Setup extends Component {
                  className={`radio-box ${ this.checkActiveRadio('telos_main') ? 'selected' : '' }`}>
             <input type="radio" id="wordproof_network_telos" name="wordproof_network" value="telos_main"
                    checked={this.state.network === "telos_main"} onChange={this.handleNetwork} />
-            <img src="https://i.ibb.co/RYg4MJZ/Telos-Icon-200px.png" alt="telos"/>
+            <img src={`${wordproofData.pluginDirUrl}assets/images/telos.png`} alt="telos"/>
             <span>Telos</span>
           </label>
           <label htmlFor="wordproof_network_eos"
                  className={`radio-box ${ this.checkActiveRadio('eos_main') ? 'selected' : '' }`}>
-          <input type="radio" id="wordproof_network_eos" name="wordproof_network" value="eos_main"
+            <input type="radio" id="wordproof_network_eos" name="wordproof_network" value="eos_main"
                    checked={this.state.network === "eos_main"} onChange={this.handleNetwork} />
-            <img src="https://i.ibb.co/RYg4MJZ/Telos-Icon-200px.png" alt="telos"/>
+            <img src={`${wordproofData.pluginDirUrl}assets/images/eos.png`} alt="telos"/>
             <span>EOS</span>
           </label>
           <label htmlFor="wordproof_network_jungle"
                  className={`radio-box ${ this.checkActiveRadio('eos_jungle') ? 'selected' : '' } ${ this.state.hideAdvanced ? 'hidden' : '' }`}>
             <input type="radio" id="wordproof_network_jungle" name="wordproof_network" value="eos_jungle"
                    checked={this.state.network === "eos_jungle"} onChange={this.handleNetwork} />
-            <img src="https://i.ibb.co/RYg4MJZ/Telos-Icon-200px.png" alt="telos"/>
+            <img src={`${wordproofData.pluginDirUrl}assets/images/eos.png`} alt="telos"/>
             <span>EOS Jungle<br/>Testnet</span>
           </label>
         </div>
@@ -99,7 +96,7 @@ export default class Setup extends Component {
             case 'eos_jungle':
               return <p>To use the EOS Jungle testnet, you should have your wallet setup already. Headover to &apos;Timestamp&apos; to test your connection.</p>;
             default:
-              return <p>Telos is the innovation district of the EOS.IO ecosystem. If you want to know more about Telos, read this introduction article by Telos founder Douglas Horn.</p>
+              return <p>Telos is the innovation district of the EOS.IO ecosystem. If you want to know more about Telos, read <a href="https://medium.com/goodblock-io/welcome-to-telos-wordproof-user-fd719b171341" target="_blank" rel="noopener noreferrer">this introduction article by Telos founder Douglas Horn</a>.</p>
           }
         })()}
 

@@ -86,7 +86,8 @@ class WordProof {
             'postId' => (!empty($post->ID)) ? $post->ID: false,
             'network' => get_option('wordproof_network', 'eos_main'),
             'storeRam' => get_option('wordproof_store_ram', false),
-            'storeContent' => get_option('wordproof_store_content', false)
+            'storeContent' => get_option('wordproof_store_content', false),
+            'pluginDirUrl' => plugin_dir_url( __FILE__ )
         ));
     }
 

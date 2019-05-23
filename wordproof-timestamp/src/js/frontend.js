@@ -14,8 +14,7 @@ import Popup from './components/Popup/Popup';
 })();
 
 function addCertificateLinkEventListener() {
-  document.querySelector('.wordproof-certificate-helper').addEventListener('click', function (event) {
-    event.preventDefault();
+  document.querySelector('.wordproof-certificate-helper').addEventListener('click', function () {
     getModal().classList.add('is-active');
   }, false);
 }

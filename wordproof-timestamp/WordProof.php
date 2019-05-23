@@ -35,7 +35,7 @@ class WordProof {
 	    add_action('manage_posts_custom_column', array($this, 'addColumnContent'), 10, 2);
 	    add_filter('the_content', array($this, 'addProofLink'), 999, 1);
 	    add_action('admin_enqueue_scripts', array($this, 'loadAdminAssets'), 999);
-      add_action('wp_footer', array($this, 'addProofPopupHtml'), 999);
+      add_action('wp_footer', array($this, 'addProofPopupHtml'), 10);
       add_action('wp_enqueue_scripts', array($this, 'addProofPopupScripts'), 999);
     }
 
@@ -76,7 +76,7 @@ class WordProof {
 	}
 
 	public function addProofPopupHtml() {
-    echo '<div class="wordproof-popup">HELLO</div>';
+    echo '<div id="wordproof-popup"></div>';
   }
 
   public function addProofPopupScripts() {

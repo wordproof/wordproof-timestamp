@@ -80,7 +80,6 @@ class WordProof {
   }
 
   public function addProofPopupScripts() {
-      wp_enqueue_style('wordproof.frontend.css', WORDPROOF_URI_CSS . '/frontend.css', array(), filemtime(WORDPROOF_DIR_CSS . '/frontend.css'));
       wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', array(), filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
       wp_localize_script('wordproof.frontend.js', 'wordproofData', array(
         'wordProofCssDir' => WORDPROOF_URI_CSS

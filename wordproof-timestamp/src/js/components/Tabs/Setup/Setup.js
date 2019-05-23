@@ -16,7 +16,7 @@ export default class Setup extends Component {
   }
 
   handleNetwork = (event) => {
-    this.setState({network: event.target.value})
+    this.setState({network: event.target.value});
   }
 
   handleStoreContent = () => {
@@ -37,10 +37,10 @@ export default class Setup extends Component {
     this.setState({hasAccount: true})
   }
 
-  handleWindowPopup = (event, url) => {
+  handleWindowPopup = (event, url, network) => {
     event.preventDefault();
     window.open(
-      url,
+      url + '?b=' + network,
       'popUpWindow',
       'height=1000,width=900,left=50,top=50,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes'
     );
@@ -52,9 +52,6 @@ export default class Setup extends Component {
 
   addClassToSelectedRadio = () => {
     console.log('hello');
-    console.log('hello');
-  }
-  isActive = () => {
     console.log('hello');
   }
 
@@ -108,7 +105,7 @@ export default class Setup extends Component {
 
         <p>After making your choice, you are ready to set up WordProof! Click the button below to open our wizard, which will guide you through the rest of our process.</p>
 
-        <button className="button button-primary" onClick={(e) => this.handleWindowPopup(e, 'https://wordproof.io/timestamp-setup-wizard')}>Launch the Setup Wizard</button>
+        <button className="button button-primary" onClick={(e) => this.handleWindowPopup(e, 'https://wordproof.io/timestamp-setup-wizard', this.state.network)}>Launch the Setup Wizard</button>
 
         <h3>Advanced settings</h3>
         <div className="form-group">

@@ -17,7 +17,7 @@ export default class Popup extends Component {
       <ShadowDOM include={`${wordproofData.wordProofCssDir}/frontend.css`}>
         <div className="shadowHost">
 
-          <div className="modal">
+          <div className="modal is-family-primary">
             <div className="modal-background"></div>
             <div className="modal-card">
               <header className="modal-card-head"></header>
@@ -25,20 +25,19 @@ export default class Popup extends Component {
                 <h2 className="title has-text-centered">Blockchain Certificate</h2>
                 <h3 className="subtitle has-text-centered">Validated by WordProof</h3>
 
-                <section className="mockup-browser" data-url="http://www.bowie-to-bowie.io/this-is-the-url">
-                  <div className="mockup-browser-content">
-                    <h3>hi there</h3>
-                    <p>Hehehe</p>
+                <section className="mockup-browser" data-url={wordproofData.postData.post_link}>
+                  <div className="mockup-browser-content content">
+                    <h3>{wordproofData.postData.post_title}</h3>
+                    <p>{wordproofData.postData.content}</p>
                   </div>
                   <div className="mockup-browser-footer">
-                    <p>content</p>
+                    <p>View on blockchain</p>
                   </div>
                 </section>
 
               </section>
               <footer className="modal-card-foot">
-                <button className="button is-success">Save changes</button>
-                <button className="button">Cancel</button>
+
               </footer>
             </div>
           </div>

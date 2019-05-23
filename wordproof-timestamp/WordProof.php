@@ -80,10 +80,12 @@ class WordProof {
   }
 
   public function addProofPopupScripts() {
-      wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', array(), filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
-      wp_localize_script('wordproof.frontend.js', 'wordproofData', array(
-        'wordProofCssDir' => WORDPROOF_URI_CSS
-      ));
+    global $post;
+    wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', array(), filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
+    wp_localize_script('wordproof.frontend.js', 'wordproofData', array(
+      'postData' => ['post_id' => $post->ID, 'post_title' => $post->post_title, 'post_content' => $post->post_excerpt, 'post_link' => get_permalink($post->ID)],
+      'wordProofCssDir' => WORDPROOF_URI_CSS
+    ));
   }
 
 	public function loadAdminAssets() {

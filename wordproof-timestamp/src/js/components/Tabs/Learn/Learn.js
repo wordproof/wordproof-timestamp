@@ -16,7 +16,7 @@ export default class Learn extends Component {
 
           <iframe width="560" height="315" src="https://www.youtube.com/embed/EUcOY-UpRq0" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
           <p>
-            Subscribe TODAY via <a href="https://everythingeos.io/dev" rel="noopener noreferrer" target="_blank">this link</a> to get notified once the course releases.
+            Enter the course TODAY via <a href="https://www.everythingeos.io/eos-course-wordproof" rel="noopener noreferrer" target="_blank">this link</a> to get FREE access as a WordProof user.
           </p>
           <p>
             <strong>There might be a special coupon for WordProof beta testers soon!</strong>

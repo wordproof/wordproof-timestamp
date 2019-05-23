@@ -18,25 +18,39 @@ th.column-wordproof {
     box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
     background: #fff;
 
-    .button.dismiss {
-      float: right;
-      width: 25px;
-      height: 25px;
-      margin-top: -0.5em;
-      margin-right: -1.5em;
+    .button {
 
-      @media screen and (max-width: 782px) {
-        padding: unset;
-        line-height: 26px;
-        font-size: 13px;
+      &.button-modest {
+        background: none;
+        border: none;
+        padding: 0;
+        box-shadow: none;
+        display: block;
+        font-style: italic;
+        text-decoration: underline;
+        color: #858585;
       }
 
-      .dashicons {
-        margin-top: 2px;
-        margin-left: -8px;
-        font-size: 20px;
-        width: 12px;
-        height: 12px;
+      &.dismiss {
+        float: right;
+        width: 25px;
+        height: 25px;
+        margin-top: -0.5em;
+        margin-right: -1.5em;
+
+        @media screen and (max-width: 782px) {
+          padding: unset;
+          line-height: 26px;
+          font-size: 13px;
+        }
+
+        .dashicons {
+          margin-top: 2px;
+          margin-left: -8px;
+          font-size: 20px;
+          width: 12px;
+          height: 12px;
+        }
       }
     }
   }
@@ -141,6 +155,10 @@ th.column-wordproof {
     display: block;
     margin-bottom: 5px;
     font-size: 14px;
+  }
+
+  .hidden {
+    display: none !important;
   }
 
   .textinput {

@@ -11,7 +11,7 @@ export default class Setup extends Component {
       storeContent: wordproofSettings.storeContent,
       storeRam: wordproofSettings.storeRam,
       hasAccount: window.localStorage.getItem('wordproof-has-account') === 'true' ? true : false,
-      selectedBlockchainIndex: 0
+      hideAdvanced: true
     }
   }
 
@@ -50,9 +50,9 @@ export default class Setup extends Component {
     return this.state.network === name;
   }
 
-  addClassToSelectedRadio = () => {
-    console.log('hello');
-    console.log('hello');
+  handleAdvancedOptions = (e) => {
+    e.preventDefault();
+    this.setState({hideAdvanced: false});
   }
 
   render() {
@@ -69,22 +69,22 @@ export default class Setup extends Component {
         <p>Choose on which blockchain you want to timestamp your content. If you are not sure what this means, don’t worry! We recommend to start on the Telos blockchain, since accounts are free.</p>
 
         <div className="form-group">
-          <label htmlFor="wordproof_network_telos" onChange={this.addClassToSelectedRadio}
+          <label htmlFor="wordproof_network_telos"
                  className={`radio-box ${ this.checkActiveRadio('telos_main') ? 'selected' : '' }`}>
             <input type="radio" id="wordproof_network_telos" name="wordproof_network" value="telos_main"
                    checked={this.state.network === "telos_main"} onChange={this.handleNetwork} />
             <img src="https://i.ibb.co/RYg4MJZ/Telos-Icon-200px.png" alt="telos"/>
             <span>Telos</span>
           </label>
-          <label htmlFor="wordproof_network_eos" onChange={this.addClassToSelectedRadio}
+          <label htmlFor="wordproof_network_eos"
                  className={`radio-box ${ this.checkActiveRadio('eos_main') ? 'selected' : '' }`}>
           <input type="radio" id="wordproof_network_eos" name="wordproof_network" value="eos_main"
                    checked={this.state.network === "eos_main"} onChange={this.handleNetwork} />
             <img src="https://i.ibb.co/RYg4MJZ/Telos-Icon-200px.png" alt="telos"/>
             <span>EOS</span>
           </label>
-          <label htmlFor="wordproof_network_jungle" onChange={this.addClassToSelectedRadio}
-                 className={`radio-box ${ this.checkActiveRadio('eos_jungle') ? 'selected' : '' }`}>
+          <label htmlFor="wordproof_network_jungle"
+                 className={`radio-box ${ this.checkActiveRadio('eos_jungle') ? 'selected' : '' } ${ this.state.hideAdvanced ? 'hidden' : '' }`}>
             <input type="radio" id="wordproof_network_jungle" name="wordproof_network" value="eos_jungle"
                    checked={this.state.network === "eos_jungle"} onChange={this.handleNetwork} />
             <img src="https://i.ibb.co/RYg4MJZ/Telos-Icon-200px.png" alt="telos"/>
@@ -107,20 +107,24 @@ export default class Setup extends Component {
 
         <button className="button button-primary" onClick={(e) => this.handleWindowPopup(e, 'https://wordproof.io/timestamp-setup-wizard', this.state.network)}>Launch the Setup Wizard</button>
 
-        <h3>Advanced settings</h3>
-        <div className="form-group">
-          <label htmlFor="" className="label">What information do you want to store on the blockchain?</label>
-          <input type="checkbox" name="" id="" checked disabled/> A hash
-          of <em>the_title()</em> and <em>the_content()</em> in a memo <br/>
-          <input type="checkbox" name="wordproof_store_content" checked={this.state.storeContent}
-                 onChange={this.handleStoreContent}/> <em>the_content()</em> <br/>
-          <input type="checkbox" name="wordproof_store_ram" checked={this.state.storeRam}
-                 onChange={this.handleStoreRam}/> A hash of <em>the_title()</em> and <em>the_content()</em> in RAM
-          (WARNING: costs you RAM for every time-stamp)
+        <div className={`advanced-settings ${ this.state.hideAdvanced ? 'hidden' : '' }`}>
+          <h3>Advanced settings</h3>
+          <div className="form-group">
+            <label htmlFor="" className="label">What information do you want to store on the blockchain?</label>
+            <input type="checkbox" name="" id="" checked disabled/> A hash
+            of <em>the_title()</em> and <em>the_content()</em> in a memo <br/>
+            <input type="checkbox" name="wordproof_store_content" checked={this.state.storeContent}
+                   onChange={this.handleStoreContent}/> <em>the_content()</em> <br/>
+            <input type="checkbox" name="wordproof_store_ram" checked={this.state.storeRam}
+                   onChange={this.handleStoreRam}/> A hash of <em>the_title()</em> and <em>the_content()</em> in RAM
+            (WARNING: costs you RAM for every time-stamp)
+          </div>
         </div>
 
         <input type="submit" name="submit" id="submit" className="button button-primary"
                value={wordproofSettings.saveChanges}/>
+
+        <button className={`button button-modest ${ this.state.hideAdvanced ? '' : 'hidden' }`} onClick={this.handleAdvancedOptions}>Show advanced settings</button>
 
       </div>
 

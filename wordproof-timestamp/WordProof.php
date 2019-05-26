@@ -82,8 +82,46 @@ class WordProof {
   public function addProofPopupScripts() {
     global $post;
     wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', array(), filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
+
+    $postData = [];
+
+    $proof_date = get_post_meta($post->ID, 'wordproof_date', true);
+    if ($proof_date) {
+      $proof_network = get_post_meta($post->ID, 'wordproof_network', true);
+      $proof_transaction_id = get_post_meta($post->ID, 'wordproof_transaction_id', true);
+
+      switch ($proof_network) {
+        case 'eos_main':
+          $transaction_url = 'https://bloks.io/transaction/' . $proof_transaction_id;
+          break;
+        case 'telos_main':
+          $transaction_url = 'https://telos.eosx.io/tx/' . $proof_transaction_id;
+          break;
+        case 'eos_jungle':
+          $transaction_url = 'https://jungle.bloks.io/transaction/' . $proof_transaction_id;
+          break;
+        default:
+          $transaction_url = '';
+      }
+
+      $postData = [
+        'post_id' => $post->ID,
+        'post_title' => $post->post_title,
+        'post_content' => $post->post_content,
+        'post_link' => get_permalink($post->ID),
+        'transaction_url' => $transaction_url,
+        'dates' => [
+          'proofDate' => $proof_date,
+          'postDate' => $post->post_date,
+          'modifiedDate' => $post->post_modified,
+        ]
+      ];
+    }
+
+
+    //TODO: postData should be handled via an Ajax call
     wp_localize_script('wordproof.frontend.js', 'wordproofData', array(
-      'postData' => ['post_id' => $post->ID, 'post_title' => $post->post_title, 'post_content' => $post->post_excerpt, 'post_link' => get_permalink($post->ID)],
+      'postData' => $postData,
       'wordProofCssDir' => WORDPROOF_URI_CSS
     ));
   }

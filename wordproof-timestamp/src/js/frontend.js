@@ -3,15 +3,12 @@ import ReactDOM from 'react-dom';
 import Popup from './components/Popup/Popup';
 
 (function() {
-
   if (document.querySelector('#wordproof-popup-container')) {
     ReactDOM.render(<Popup />, document.querySelector('#wordproof-popup-container'));
   }
-
   checkUrlForWordproof();
   addCertificateLinkEventListener();
   addCloseModalEventListener();
-
 })();
 
 function addCertificateLinkEventListener() {
@@ -27,19 +24,23 @@ function addCloseModalEventListener() {
   }, false);
 }
 
+/*
+Show modal if the url contains #wordproof
+ */
 function checkUrlForWordproof() {
   if(window.location.href.indexOf("#wordproof") > -1) {
     showModal();
   }
 }
 
+function getModal() {
+  return document.querySelector('#wordproof-popup-container .shadowHost').shadowRoot.querySelector('.modal');
+}
+
 function hideModal() {
   getModal().classList.remove('is-active');
 }
+
 function showModal() {
   getModal().classList.add('is-active');
-}
-
-function getModal() {
-  return document.querySelector('#wordproof-popup-container .shadowHost').shadowRoot.querySelector('.modal');
 }

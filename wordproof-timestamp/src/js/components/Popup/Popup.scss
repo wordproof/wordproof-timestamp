@@ -117,6 +117,11 @@ Color can be changed inline (search for %23, which equals #)
       text-decoration: underline;
     }
 
+    ul {
+      text-align: right;
+      color: $black;
+    }
+
     li, p {
       font-size: 0.65em;
       span {

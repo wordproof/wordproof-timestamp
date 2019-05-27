@@ -49,7 +49,7 @@ class Ajax {
             echo json_encode(array(
             	'success' => true,
             	'data' => array(
-            		'url' => get_permalink($post_id) . '?wordproof'
+            		'url' => get_permalink($post_id) . '#wordproof'
 	            ),
             ));
             exit;

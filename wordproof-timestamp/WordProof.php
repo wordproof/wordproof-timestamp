@@ -50,9 +50,9 @@ class WordProof {
 
 			if ($proof_date) {
 				if ($proof_date === get_the_modified_date('Y-m-d H:i:s',$post_id)){
-					echo '<a target="_blank" href="'.get_permalink($post_id).'?wordproof">Stamped</a>';
+					echo '<a target="_blank" href="'.get_permalink($post_id).'#wordproof">Stamped</a>';
 				} else {
-					echo '<a target="_blank" href="'.get_permalink($post_id).'?wordproof">Outdated</a>';
+					echo '<a target="_blank" href="'.get_permalink($post_id).'#wordproof">Outdated</a>';
 				}
 			} else {
 				echo '—';

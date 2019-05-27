@@ -68,7 +68,7 @@ class WordProof {
 		    $proof_date = get_post_meta($post->ID, 'wordproof_date', true);
 
 		    if ($proof_date) {
-		    	$content .= CertificateHelper::getCertificateHtml($post->id);
+		    	$content .= CertificateHelper::getCertificateHtml($post->ID);
 		    }
 	    }
 

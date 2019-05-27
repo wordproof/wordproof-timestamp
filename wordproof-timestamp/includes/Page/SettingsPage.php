@@ -19,7 +19,7 @@ class SettingsPage {
         register_setting( 'wordproof-options', 'wordproof_network' );
         register_setting( 'wordproof-options', 'wordproof_store_content' );
         register_setting( 'wordproof-options', 'wordproof_store_ram' );
-        register_setting( 'wordproof-options', 'wordproof_certificate_template' );
+        register_setting( 'wordproof-options', 'wordproof_certificate_text' );
     }
 
     public function addSettingsPage() {
@@ -38,7 +38,7 @@ class SettingsPage {
             'network' => get_option('wordproof_network', 'eos_main'),
             'storeContent' => get_option('wordproof_store_content', false),
             'storeRam' => get_option('wordproof_store_ram', false),
-            'certificateTemplate' => CertificateHelper::getCertificateTemplate(),
+            'certificateText' => CertificateHelper::getCertificateText(),
             'saveChanges' => __('Save Changes')
         ]);
 

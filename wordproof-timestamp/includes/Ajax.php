@@ -37,6 +37,8 @@ class Ajax {
 
         $post_id = intval($_REQUEST['post_id']);
 
+        do_action('wordproof_before_saving_timestamp_meta_data', $post_id);
+
         if (current_user_can('manage_options') && !empty($post_id)) {
             update_post_meta($post_id, 'wordproof_date', !empty($_REQUEST['date'])? sanitize_text_field($_REQUEST['date']): '');
             update_post_meta($post_id, 'wordproof_title', !empty($_REQUEST['title'])? sanitize_title($_REQUEST['title']): '');
@@ -54,5 +56,7 @@ class Ajax {
             ));
             exit;
         }
+
+      do_action('wordproof_after_saving_timestamp_meta_data', $post_id);
     }
 }

@@ -5,10 +5,10 @@ import Popup from './components/Popup/Popup';
 (function() {
   if (document.querySelector('#wordproof-popup-container')) {
     ReactDOM.render(<Popup />, document.querySelector('#wordproof-popup-container'));
+    checkUrlForWordproof();
+    addCertificateLinkEventListener();
+    addCloseModalEventListener();
   }
-  checkUrlForWordproof();
-  addCertificateLinkEventListener();
-  addCloseModalEventListener();
 })();
 
 function addCertificateLinkEventListener() {
@@ -18,10 +18,14 @@ function addCertificateLinkEventListener() {
 }
 
 function addCloseModalEventListener() {
-  getModal().querySelector('.modal-background').addEventListener('click', function (event) {
-    event.preventDefault();
-    hideModal();
-  }, false);
+  let modal = getModal();
+  modal.querySelector('.wordproof-modal-background').addEventListener('click', (e) => handleCloseModalEvent(e), false);
+  modal.querySelector('.wordproof-modal-close').addEventListener('click', (e) => handleCloseModalEvent(e), false);
+}
+
+function handleCloseModalEvent(event) {
+  event.preventDefault();
+  hideModal();
 }
 
 /*

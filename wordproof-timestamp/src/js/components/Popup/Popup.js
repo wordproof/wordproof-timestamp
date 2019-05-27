@@ -38,10 +38,11 @@ export default class Popup extends Component {
         <div className="shadowHost">
 
           <div className="modal is-family-primary">
-            <div className="modal-background"></div>
+            <div className="modal-background wordproof-modal-background"></div>
             <div className="modal-card">
               <section className="modal-card-body">
-                <h2 className="title has-text-centered">Blockchain Certificate</h2>
+                <button className="wordproof-modal-close">&times;</button>
+                <h2 className="title has-text-centered">Timestamp Certificate</h2>
                 <h3 className="subtitle has-text-centered">Validated by WordProof</h3>
 
                 <section className="mockup-browser" data-url={wordproofData.postData.post_link}>
@@ -67,7 +68,7 @@ export default class Popup extends Component {
 
               </section>
               <footer className="modal-card-foot">
-                <a href="https://wordproof.io" target="_blank" rel="noopener noreferrer">Learn more about this free WordProof Timestamp plugin</a>
+                <a href="https://wordproof.io" target="_blank" rel="noopener noreferrer">Claim your WordPress content with the WordProof Timestamp plugin</a>
               </footer>
             </div>
           </div>

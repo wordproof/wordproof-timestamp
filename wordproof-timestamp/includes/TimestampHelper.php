@@ -6,22 +6,20 @@ class TimestampHelper {
 
   private static $postMetaFields = ['wordproof_date', 'wordproof_title', 'wordproof_content', 'wordproof_transaction_id', 'wordproof_block_num', 'wordproof_block_time', 'wordproof_network'];
 
-  /**
-   * Function static if callable by premium
-   */
   public function __construct()
   {
   }
 
-  private static function generatePostHash($postId) {
+  public static function generatePostHash($postId) {
     $post = get_post($postId);
     $title = $post->post_title;
     $content = $post->post_content;
     $encodedContent = json_encode(["title" => $title, "content" => $content]);
     $hash = hash('sha256', $encodedContent);
+    return $hash;
   }
 
-  private static function buildPostMetaArray($date, $title, $content, $transactionId, $blockNum, $blockTime, $hash) {
+  public static function buildPostMetaArray($date, $title, $content, $transactionId, $blockNum, $blockTime, $hash) {
     $meta = self::$postMetaFields;
     $meta['wordproof_date'] = sanitize_text_field($date);
     $meta['wordproof_title'] = sanitize_title($title);
@@ -33,9 +31,7 @@ class TimestampHelper {
     return $meta;
   }
 
-  public static function saveTimestampPostMeta($postId, $args) {
-//    $meta = buildPostMetaArray();
-    $meta = [];
+  public static function saveTimestampPostMeta($postId, $meta) {
     do_action('wordproof_before_saving_timestamp_meta_data', $postId, $meta);
 
     update_post_meta($postId, 'wordproof_timestamp_data', $meta);
@@ -43,9 +39,22 @@ class TimestampHelper {
     do_action('wordproof_after_saving_timestamp_meta_data', $postId);
   }
 
-  public static function retrieveTimestampPostMeta($postId) {
+  public static function getTimestampPostMeta($postId) {
     $meta = get_post_meta($postId, 'wordproof_timestamp_data', true);
+
+    // Get old metadata structure (<0.6)    
+    if (empty($meta)) {
+      $meta = [];
+      $postMeta = get_post_meta($postId);
+      $meta['wordproof_date'] = $postMeta['wordproof_date'];
+      $meta['wordproof_title'] = $postMeta['wordproof_title'];
+      $meta['wordproof_content'] = $postMeta['wordproof_content'];
+      $meta['wordproof_transaction_id'] = $postMeta['wordproof_transaction_id'];
+      $meta['wordproof_block_num'] = $postMeta['wordproof_block_num'];
+      $meta['wordproof_block_time'] = $postMeta['wordproof_block_time'];
+      $meta['wordproof_hash'] = "";
+    }
+
     return $meta;
   }
-
 }

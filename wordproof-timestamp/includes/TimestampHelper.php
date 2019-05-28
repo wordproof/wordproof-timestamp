@@ -74,14 +74,6 @@ class TimestampHelper {
 
   private static function decodePostContent($content) {
     $content = html_entity_decode($content);
-
-//    //Replace </p> with our var
-//    $content = str_replace('</p>', 'WORDPROOF_CONTENT_REPLACEMENT_MARKER', $content);
-//    //Remove HTML entities
-//    $content = preg_replace('/(<([^>]+)>)/i', '', $content);
-//    //Replace </p> with our var
-//    $content = str_replace('WORDPROOF_CONTENT_REPLACEMENT_MARKER', '\n\n', $content);
-
     return $content;
   }
 }

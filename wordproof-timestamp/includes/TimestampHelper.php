@@ -23,7 +23,7 @@ class TimestampHelper {
     $meta['wordproof_date'] = (isset($args['wordproof_date'])) ? sanitize_text_field($args['wordproof_date']) : '';
     $meta['wordproof_post_date'] = (isset($args['wordproof_post_date'])) ? sanitize_text_field($args['wordproof_post_date']) : '';
     $meta['wordproof_title'] = (isset($args['wordproof_title'])) ? sanitize_text_field($args['wordproof_title']) : '';
-      $meta['wordproof_content'] = (isset($args['wordproof_content'])) ? self::sanitizePostContent($args['wordproof_content']) : ''; //TODO: add linebreaks
+      $meta['wordproof_content'] = (isset($args['wordproof_content'])) ? sanitize_text_field(htmlentities($args['wordproof_content'])) : '';
     $meta['wordproof_link'] = (isset($args['wordproof_link'])) ? sanitize_text_field(($args['wordproof_link'])) : '';
     $meta['wordproof_transaction_id'] = (isset($args['wordproof_transaction_id'])) ? sanitize_text_field($args['wordproof_transaction_id']) : '';
     $meta['wordproof_block_num'] = (isset($args['wordproof_block_num'])) ? sanitize_text_field($args['wordproof_block_num']) : '';
@@ -45,7 +45,7 @@ class TimestampHelper {
 
   public static function getTimestampPostMeta($postId) {
     $meta = get_post_meta($postId, 'wordproof_timestamp_data', true);
-    $meta['wordproof_content'] = self::preparePostContent($meta['wordproof_content']);
+    $meta['wordproof_content'] = self::decodePostContent($meta['wordproof_content']);
 
     // Get old metadata structure (<0.6)    
     if (empty($meta)) {
@@ -72,15 +72,15 @@ class TimestampHelper {
     return $hash;
   }
 
-  private static function preparePostContent($content) {
+  private static function decodePostContent($content) {
     $content = html_entity_decode($content);
 
-    //Replace </p> with our var
-    $content = $content.str_replace('</p>', 'WORDPROOF_CONTENT_REPLACEMENT_MARKER');
-    //Remove HTML entities
-    $content = $content.preg_replace('/(<([^>]+)>)/ig', '');
-    //Replace </p> with our var
-    $content = $content.str_replace('WORDPROOF_CONTENT_REPLACEMENT_MARKER', '\n\n');
+//    //Replace </p> with our var
+//    $content = str_replace('</p>', 'WORDPROOF_CONTENT_REPLACEMENT_MARKER', $content);
+//    //Remove HTML entities
+//    $content = preg_replace('/(<([^>]+)>)/i', '', $content);
+//    //Replace </p> with our var
+//    $content = str_replace('WORDPROOF_CONTENT_REPLACEMENT_MARKER', '\n\n', $content);
 
     return $content;
   }

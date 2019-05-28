@@ -10,16 +10,15 @@ class TimestampHelper {
   {
   }
 
-  public static function generatePostHash($postId) {
+  public static function generatePostHashById($postId) {
     $post = get_post($postId);
     $title = $post->post_title;
     $content = $post->post_content;
-    $encodedContent = json_encode(["title" => $title, "content" => $content]);
-    $hash = hash('sha256', $encodedContent);
+    $hash = self::generatePostHash($title, $content);
     return $hash;
   }
 
-  public static function buildPostMetaArray($date, $title, $content, $transactionId, $blockNum, $blockTime, $hash) {
+  public static function buildPostMetaArray($date, $title, $content, $transactionId, $blockNum, $blockTime, $network, $hash) {
     $meta = self::$postMetaFields;
     $meta['wordproof_date'] = sanitize_text_field($date);
     $meta['wordproof_title'] = sanitize_title($title);
@@ -27,16 +26,19 @@ class TimestampHelper {
     $meta['wordproof_transaction_id'] = sanitize_text_field($transactionId);
     $meta['wordproof_block_num'] = sanitize_text_field($blockNum);
     $meta['wordproof_block_time'] = sanitize_text_field($blockTime);
+    $meta['wordproof_network'] = sanitize_text_field($network);
     $meta['wordproof_hash'] = sanitize_text_field($hash);
     return $meta;
   }
 
   public static function saveTimestampPostMeta($postId, $meta) {
-    do_action('wordproof_before_saving_timestamp_meta_data', $postId, $meta);
-
-    update_post_meta($postId, 'wordproof_timestamp_data', $meta);
-
-    do_action('wordproof_after_saving_timestamp_meta_data', $postId);
+    if (current_user_can('manage_options')) {
+      do_action('wordproof_before_saving_timestamp_meta_data', $postId);
+      $result = update_post_meta($postId, 'wordproof_timestamp_data', $meta);
+      do_action('wordproof_after_saving_timestamp_meta_data', $postId);
+      return $result;
+    }
+    return false;
   }
 
   public static function getTimestampPostMeta($postId) {
@@ -54,7 +56,12 @@ class TimestampHelper {
       $meta['wordproof_block_time'] = $postMeta['wordproof_block_time'];
       $meta['wordproof_hash'] = "";
     }
-
     return $meta;
+  }
+
+  private static function generatePostHash($title, $content) {
+    $encodedContent = json_encode(["title" => $title, "content" => $content]);
+    $hash = hash('sha256', $encodedContent);
+    return $hash;
   }
 }

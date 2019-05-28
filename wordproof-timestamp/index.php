@@ -13,7 +13,7 @@
  Domain Path: /languages
 */
 
-namespace WordProof;
+namespace WordProofTimestampFree;
 
 // If this file is called directly, abort.
 if (!defined('WPINC')) {
@@ -39,16 +39,16 @@ define('WORDPROOF_URI_SVG', WORDPROOF_URI_ASSETS . '/svg');
 
 // Init plugin
 spl_autoload_register(__NAMESPACE__ . '\\autoload');
-add_action('plugins_loaded', array(WordProof::getInstance(), 'init'));
+add_action('plugins_loaded', array(WordProofTimestampFree::getInstance(), 'init'));
 
 /**
  * @param string $class
  */
 function autoload($class = '') {
-    if (!strstr($class, 'WordProof')) {
+    if (!strstr($class, 'WordProofTimestampFree')) {
         return;
     }
-    $result = str_replace('WordProof\\', '', $class);
+    $result = str_replace('WordProofTimestampFree\\', '', $class);
     $result = str_replace('\\', '/', $result);
     require $result . '.php';
 }

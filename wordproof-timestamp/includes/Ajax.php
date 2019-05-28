@@ -1,10 +1,10 @@
 <?php
 
-namespace WordProof\includes;
+namespace WordProofTimestampFree\includes;
 
 /**
  * Class Ajax
- * @package WordProof\includes
+ * @package WordProofTimestampFree\includes
  */
 class Ajax {
     /**

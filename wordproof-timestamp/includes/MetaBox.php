@@ -1,10 +1,10 @@
 <?php
 
-namespace WordProof\includes;
+namespace WordProofTimestampFree\includes;
 
 /**
  * Class MetaBox
- * @package WordProof\includes
+ * @package WordProofTimestampFree\includes
  */
 class MetaBox {
 

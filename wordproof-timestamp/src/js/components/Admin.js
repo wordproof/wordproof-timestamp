@@ -54,6 +54,7 @@ export default class Admin extends Component {
   }
 
   render () {
+    //TODO: Add &tab=xxx to keep the current page when saving
     return (
       <div className='wordproof-admin-app'>
         <h2 className="nav-tab-wrapper">

@@ -1,6 +1,6 @@
 <?php
 
-namespace WordProof\includes;
+namespace WordProofTimestampFree\includes;
 
 class CertificateHelper {
     private static $default_template = "<p><a class='wordproof-certificate-helper' data-post-id='POST_ID' href='CERTIFICATE_URL'>CERTIFICATE_TEXT</a></p>";

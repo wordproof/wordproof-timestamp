@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: van-ons
+Contributors: wordproof
 Tags: blockchain, timestamps, eosio, eos, telos, web30, timestamp, timestamping, copyright, scatter, lynx, decentralisation, proof
 Requires at least: 4.5
 Tested up to: 5.1

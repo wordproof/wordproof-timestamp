@@ -1,10 +1,10 @@
 <?php
 
-namespace WordProof\includes\Page;
+namespace WordProofTimestampFree\includes\Page;
 
 /**
  * Class ProofPage
- * @package WordProof\includes\Page
+ * @package WordProofTimestampFree\includes\Page
  */
 class ProofPage
 {

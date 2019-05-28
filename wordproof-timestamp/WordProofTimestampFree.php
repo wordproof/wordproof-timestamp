@@ -1,19 +1,19 @@
 <?php
 
-namespace WordProof;
+namespace WordProofTimestampFree;
 
-use WordProof\includes\Ajax;
-use WordProof\includes\Page\HelpPage;
-use WordProof\includes\MetaBox;
-use WordProof\includes\Page\ProofPage;
-use WordProof\includes\Page\SettingsPage;
-use WordProof\includes\CertificateHelper;
+use WordProofTimestampFree\includes\Ajax;
+use WordProofTimestampFree\includes\Page\HelpPage;
+use WordProofTimestampFree\includes\MetaBox;
+use WordProofTimestampFree\includes\Page\ProofPage;
+use WordProofTimestampFree\includes\Page\SettingsPage;
+use WordProofTimestampFree\includes\CertificateHelper;
 
 /**
- * Class WordProof
- * @package WordProof
+ * Class WordProofTimestampFree
+ * @package WordProofTimestampFree
  */
-class WordProof {
+class WordProofTimestampFree {
 
     /** @var null */
     private static $instance = null;

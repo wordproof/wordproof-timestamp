@@ -2,7 +2,6 @@
 
 namespace WordProofTimestampFree\includes;
 
-
 class TimestampAjaxHelper
 {
 
@@ -18,9 +17,21 @@ class TimestampAjaxHelper
     check_ajax_referer('wordproof', 'security');
 
     $postId = intval($_REQUEST['post_id']);
-    $meta = TimestampHelper::buildPostMetaArray($_REQUEST['date'], $_REQUEST['title'], $_REQUEST['content'], $_REQUEST['transaction_id'], $_REQUEST['block_num'], $_REQUEST['block_time'], $_REQUEST['network'], $_REQUEST['hash']);
-    if (!empty($meta)) {
+    $args = [
+      'wordproof_date' => isset($_REQUEST['date']) ? $_REQUEST['date'] : '',
+      'wordproof_post_date' => isset($_REQUEST['post_date']) ? $_REQUEST['post_date'] : '',
+      'wordproof_title' => isset($_REQUEST['title']) ? $_REQUEST['title'] : '',
+      'wordproof_content' => isset($_REQUEST['content']) ? $_REQUEST['content'] : '',
+      'wordproof_transaction_id' => isset($_REQUEST['transaction_id']) ? $_REQUEST['transaction_id'] : '',
+      'wordproof_block_num' => isset($_REQUEST['block_num']) ? $_REQUEST['block_num'] : '',
+      'wordproof_block_time' => isset($_REQUEST['block_time']) ? $_REQUEST['block_time'] : '',
+      'wordproof_network' => isset($_REQUEST['network']) ? $_REQUEST['network'] : '',
+      'wordproof_hash' => isset($_REQUEST['hash']) ? $_REQUEST['hash'] : ''
+    ];
 
+    $meta = TimestampHelper::buildPostMetaArray($args);
+
+    if (!empty($meta)) {
       TimestampHelper::saveTimestampPostMeta($postId, $meta);
 
       echo json_encode(array(

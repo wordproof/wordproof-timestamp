@@ -62,7 +62,7 @@ function getTransactionData(post, hash, wallet) {
     hash: hash,
     saveToTable: storeRam,
     content: storeContent ? post.post_content : '',
-    memo: `${post.guid} - time-stamped via WordProof.io, bringing WordPress to the blockchain!`,
+    memo: `${post.link} - time-stamped via WordProof.io, bringing WordPress to the blockchain!`,
     receiver: wallet.auth.accountName,
     bytes: parseInt(1024)
   }
@@ -88,6 +88,7 @@ function savePostMeta(post, resultData, hash) {
       '&date='+ post.post_date +
       '&title='+ post.post_title +
       '&content='+ post.post_content +
+      '&link='+ post.link +
       '&transaction_id='+ resultData.id +
       '&block_num='+ resultData.block_num +
       '&block_time='+ resultData.block_time +

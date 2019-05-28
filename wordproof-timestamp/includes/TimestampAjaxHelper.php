@@ -22,6 +22,7 @@ class TimestampAjaxHelper
       'wordproof_post_date' => isset($_REQUEST['post_date']) ? $_REQUEST['post_date'] : '',
       'wordproof_title' => isset($_REQUEST['title']) ? $_REQUEST['title'] : '',
       'wordproof_content' => isset($_REQUEST['content']) ? $_REQUEST['content'] : '',
+      'wordproof_link' => isset($_REQUEST['link']) ? $_REQUEST['link'] : '',
       'wordproof_transaction_id' => isset($_REQUEST['transaction_id']) ? $_REQUEST['transaction_id'] : '',
       'wordproof_block_num' => isset($_REQUEST['block_num']) ? $_REQUEST['block_num'] : '',
       'wordproof_block_time' => isset($_REQUEST['block_time']) ? $_REQUEST['block_time'] : '',
@@ -67,9 +68,11 @@ class TimestampAjaxHelper
     if (current_user_can('manage_options') && !empty($postId)) {
       $post = get_post($postId);
 
-//      if (!empty($post)) {
-//        $post['permalink'] = get_permalink($postId);
-//      }
+      if (!empty($post)) {
+        $post = (array)$post;
+        $post['link'] = get_permalink($postId);
+        $post = (object)$post;
+      }
 
       echo json_encode($post);
       exit;

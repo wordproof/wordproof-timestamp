@@ -4,7 +4,7 @@ namespace WordProofTimestampFree\includes;
 
 class TimestampHelper {
 
-  private static $postMetaFields = ['wordproof_date', 'wordproof_post_date', 'wordproof_title', 'wordproof_content', 'wordproof_transaction_id', 'wordproof_block_num', 'wordproof_block_time', 'wordproof_network', 'wordproof_hash'];
+  private static $postMetaFields = ['wordproof_date', 'wordproof_post_date', 'wordproof_title', 'wordproof_content', 'wordproof_link', 'wordproof_transaction_id', 'wordproof_block_num', 'wordproof_block_time', 'wordproof_network', 'wordproof_hash'];
 
   public function __construct()
   {
@@ -24,6 +24,7 @@ class TimestampHelper {
     $meta['wordproof_post_date'] = (isset($args['post_date'])) ? sanitize_text_field($args['post_date']) : '';
     $meta['wordproof_title'] = (isset($args['title'])) ? sanitize_title($args['title']) : '';
     $meta['wordproof_content'] = (isset($args['content'])) ? sanitize_text_field(htmlentities($args['content'])) : ''; //TODO: add linebreaks
+    $meta['wordproof_link'] = (isset($args['link'])) ? sanitize_text_field(htmlentities($args['link'])) : '';
     $meta['wordproof_transaction_id'] = (isset($args['transactionId'])) ? sanitize_text_field($args['transactionId']) : '';
     $meta['wordproof_block_num'] = (isset($args['blockNum'])) ? sanitize_text_field($args['blockNum']) : '';
     $meta['wordproof_block_time'] = (isset($args['blockTime'])) ? sanitize_text_field($args['blockTime']) : '';
@@ -54,6 +55,7 @@ class TimestampHelper {
       $meta['wordproof_post_date'] = $post->post_date;
       $meta['wordproof_title'] = $postMeta['wordproof_title'];
       $meta['wordproof_content'] = $postMeta['wordproof_content'];
+      $meta['wordproof_link'] = get_permalink();
       $meta['wordproof_transaction_id'] = $postMeta['wordproof_transaction_id'];
       $meta['wordproof_block_num'] = $postMeta['wordproof_block_num'];
       $meta['wordproof_block_time'] = $postMeta['wordproof_block_time'];

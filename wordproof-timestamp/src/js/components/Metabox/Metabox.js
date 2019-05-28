@@ -24,6 +24,7 @@ export default class Metabox extends Component {
   handleClick = async () => {
     this.startLoading();
     const wallet = await this.getWallet();
+
     try {
       if (!wallet.connected) {
         await wallet.connect()
@@ -31,6 +32,7 @@ export default class Metabox extends Component {
       if (!wallet.authenticated) {
         await wallet.login()
       }
+
       timestamp(wallet).then(response => response.json())
       .then((result) => {
         console.log(result);

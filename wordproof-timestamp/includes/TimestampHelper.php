@@ -23,7 +23,7 @@ class TimestampHelper {
     $meta['wordproof_date'] = (isset($args['wordproof_date'])) ? sanitize_text_field($args['wordproof_date']) : '';
     $meta['wordproof_post_date'] = (isset($args['wordproof_post_date'])) ? sanitize_text_field($args['wordproof_post_date']) : '';
     $meta['wordproof_title'] = (isset($args['wordproof_title'])) ? sanitize_text_field($args['wordproof_title']) : '';
-      $meta['wordproof_content'] = (isset($args['wordproof_content'])) ? sanitize_text_field(htmlentities($args['wordproof_content'])) : '';
+    $meta['wordproof_content'] = (isset($args['wordproof_content'])) ? sanitize_text_field(htmlentities($args['wordproof_content'])) : '';
     $meta['wordproof_link'] = (isset($args['wordproof_link'])) ? sanitize_text_field(($args['wordproof_link'])) : '';
     $meta['wordproof_transaction_id'] = (isset($args['wordproof_transaction_id'])) ? sanitize_text_field($args['wordproof_transaction_id']) : '';
     $meta['wordproof_block_num'] = (isset($args['wordproof_block_num'])) ? sanitize_text_field($args['wordproof_block_num']) : '';
@@ -45,9 +45,7 @@ class TimestampHelper {
 
   public static function getTimestampPostMeta($postId) {
     $meta = get_post_meta($postId, 'wordproof_timestamp_data', true);
-    $meta['wordproof_content'] = self::decodePostContent($meta['wordproof_content']);
-
-    // Get old metadata structure (<0.6)    
+    // Get old metadata structure (<0.6)
     if (empty($meta)) {
       $meta = [];
       $post = get_post($postId);
@@ -55,7 +53,7 @@ class TimestampHelper {
       $meta['wordproof_date'] = $postMeta['wordproof_date'];
       $meta['wordproof_post_date'] = $post->post_date;
       $meta['wordproof_title'] = $postMeta['wordproof_title'];
-      $meta['wordproof_content'] = $postMeta['wordproof_content'];
+      $meta['wordproof_content'] = self::preparePostContent($postMeta['wordproof_content']);
       $meta['wordproof_link'] = get_permalink($postId);
       $meta['wordproof_transaction_id'] = $postMeta['wordproof_transaction_id'];
       $meta['wordproof_block_num'] = $postMeta['wordproof_block_num'];
@@ -63,6 +61,8 @@ class TimestampHelper {
       $meta['wordproof_network'] = $postMeta['wordproof_network'];
       $meta['wordproof_hash'] = "";
     }
+
+    $meta['wordproof_content'] = self::preparePostContent($meta['wordproof_content']);
     return $meta;
   }
 
@@ -72,8 +72,16 @@ class TimestampHelper {
     return $hash;
   }
 
-  private static function decodePostContent($content) {
+  private static function preparePostContent($content) {
+    //Decode html entities
     $content = html_entity_decode($content);
+    //Replace </p> with our var
+    $content = str_replace("</p>", "WORDPROOF_CONTENT_REPLACEMENT_MARKER", $content);
+    //Remove HTML entities
+    $content = preg_replace("/(<([^>]+)>)/i", "", $content);
+    //Replace </p> with our var
+    $content = str_replace("WORDPROOF_CONTENT_REPLACEMENT_MARKER", "\n\n", $content);
+    
     return $content;
   }
 }

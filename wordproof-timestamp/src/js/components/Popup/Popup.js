@@ -13,19 +13,6 @@ export default class Popup extends Component {
   componentDidMount() {
   }
 
-  //String HTML but keep linebreaks
-  stripHtmlFromString = (string) => {
-    //Remove linebreaks etc
-    string = string.replace(/\r?\n|\r/g, '');
-    //Replace </p> with our var
-    string = string.replace('</p>', 'WORDPROOF_CONTENT_REPLACEMENT_MARKER');
-    //Remove HTML entities
-    string = string.replace(/(<([^>]+)>)/ig,"");
-    //Replace the marker with line breaks
-    string = string.replace('WORDPROOF_CONTENT_REPLACEMENT_MARKER', '\n\n');
-    return string;
-  }
-
   shortenString = (string) => {
     if (string.length > 500) {
       return string.substring(0, 500) + '...';
@@ -60,8 +47,8 @@ export default class Popup extends Component {
 
                 <section className="mockup-browser" data-url={wordproofData.timestampMeta.wordproof_link}>
                   <div className="mockup-browser-content content">
-                    <h3>{wordproofData.timestampMeta.wordproof_title}</h3>
-                    <p>{ this.shortenString(this.stripHtmlFromString(wordproofData.timestampMeta.wordproof_content))}</p>
+                    <h3>{ wordproofData.timestampMeta.wordproof_title }</h3>
+                    <p>{ this.shortenString(wordproofData.timestampMeta.wordproof_content) }</p>
                   </div>
                   <div className="mockup-browser-footer">
                     <div className="columns">

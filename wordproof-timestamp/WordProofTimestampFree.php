@@ -8,6 +8,7 @@ use WordProofTimestampFree\includes\MetaBox;
 use WordProofTimestampFree\includes\Page\ProofPage;
 use WordProofTimestampFree\includes\Page\SettingsPage;
 use WordProofTimestampFree\includes\CertificateHelper;
+use WordProofTimestampFree\includes\TimestampAjaxHelper;
 
 /**
  * Class WordProofTimestampFree
@@ -26,7 +27,9 @@ class WordProofTimestampFree {
         new SettingsPage();
 //        new HelpPage();
         new MetaBox();
-        new Ajax();
+//        new Ajax();
+        new TimestampAjaxHelper();
+
 
         /**
          * Actions

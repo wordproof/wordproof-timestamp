@@ -55,7 +55,7 @@ class TimestampHelper {
       $meta['wordproof_post_date'] = $post->post_date;
       $meta['wordproof_title'] = $postMeta['wordproof_title'];
       $meta['wordproof_content'] = $postMeta['wordproof_content'];
-      $meta['wordproof_link'] = get_permalink();
+      $meta['wordproof_link'] = get_permalink($postId);
       $meta['wordproof_transaction_id'] = $postMeta['wordproof_transaction_id'];
       $meta['wordproof_block_num'] = $postMeta['wordproof_block_num'];
       $meta['wordproof_block_time'] = $postMeta['wordproof_block_time'];

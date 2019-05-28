@@ -7,6 +7,7 @@ export default class Popup extends Component {
   constructor(props) {
     super(props);
     this.state = {}
+    console.log(wordproofData.timestampMeta);
   }
 
   componentDidMount() {
@@ -32,6 +33,18 @@ export default class Popup extends Component {
     return string;
   }
 
+  getTransactionUrl(network, transactionId) {
+    switch(network) {
+      case 'eos_main':
+        return 'https://bloks.io/transaction/' + transactionId;
+      case 'eos_jungle':
+        return 'https://jungle.bloks.io/transaction/' + transactionId;
+      default:
+        return 'https://telos.eosx.io/tx/' + transactionId;
+    }
+  }
+
+
   render() {
     return (
       <ShadowDOM include={`${wordproofData.wordProofCssDir}/frontend.css`}>
@@ -45,21 +58,21 @@ export default class Popup extends Component {
                 <h2 className="title has-text-centered">Timestamp Certificate</h2>
                 <h3 className="subtitle has-text-centered">Validated by WordProof</h3>
 
-                <section className="mockup-browser" data-url={wordproofData.postData.post_link}>
+                <section className="mockup-browser" data-url={wordproofData.timestampMeta.wordproof_link}>
                   <div className="mockup-browser-content content">
-                    <h3>{wordproofData.postData.post_title}</h3>
-                    <p>{ this.shortenString(this.stripHtmlFromString(wordproofData.postData.post_content))}</p>
+                    <h3>{wordproofData.timestampMeta.wordproof_title}</h3>
+                    <p>{ this.shortenString(this.stripHtmlFromString(wordproofData.timestampMeta.wordproof_content))}</p>
                   </div>
                   <div className="mockup-browser-footer">
                     <div className="columns">
                       <div className="column">
-                        <a href={wordproofData.postData.transaction_url} target="_blank" rel="noopener noreferrer">View on the blockchain</a>
+                        <a href={ this.getTransactionUrl(wordproofData.timestampMeta.wordproof_network, wordproofData.timestampMeta.wordproof_transaction_id) } target="_blank" rel="noopener noreferrer">View on the blockchain</a>
                       </div>
                       <div className="column">
                         <ul>
-                          <li><span>Post Date: </span>{wordproofData.postData.dates.postDate}</li>
-                          <li><span>Modified Date: </span>{wordproofData.postData.dates.modifiedDate}</li>
-                          <li><span>Proof Date: </span>{wordproofData.postData.dates.proofDate}</li>
+                          <li><span>Post Date: </span>{wordproofData.timestampMeta.wordproof_post_date}</li>
+                          <li><span>Modified Date: </span>{wordproofData.timestampMeta.current_post_modified}</li>
+                          <li><span>Proof Date: </span>{wordproofData.timestampMeta.wordproof_date}</li>
                         </ul>
                       </div>
                     </div>

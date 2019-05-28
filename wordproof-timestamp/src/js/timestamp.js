@@ -1,9 +1,14 @@
-import sha256 from 'js-sha256'
-
 export default async function timestamp(wallet) {
-  const post = await getPost()
-  const data = getData(post, wallet)
-  console.log(post)
+  const postId = wordproofData.postId;
+  const post = await getPostById(postId);
+  const hash = await getHashById(postId);
+  console.log(post);
+  console.log(hash);
+  const transactionData = getTransactionData(post, hash, wallet);
+
+  /**
+   * Interact with the EOS API and save this post onto the blockchain
+   */
   try {
     let result = await wallet.eosApi.transact({
       actions: [
@@ -16,33 +21,45 @@ export default async function timestamp(wallet) {
               permission: wallet.auth.permission
             }
           ],
-          data: data
+          data: transactionData
         }
       ]
     },
     {
       blocksBehind: 3,
       expireSeconds: 30
-    })
-  
-    console.log('Success', result)
+    });
+
+    /**
+     * The Post is timestamped
+     */
+    console.log('Success', result);
     if (typeof result.processed !== 'undefined') {
-      return postMetaData(post, result.processed)
+      return savePostMeta(post, result.processed, hash);
     }
 
   } catch (error) {
-    console.log('Fail', error)
+    /**
+     * Something went wrong
+     */
+    console.log('Fail', error);
   }
 }
 
-function getData(post, wallet) {
+/**
+ * Get data for the blockchain transaction
+ * @param post
+ * @param wallet
+ * @returns {{user: *, name: *, hash, saveToTable: boolean, content: string, memo: string, receiver: *, bytes: number}}
+ */
+function getTransactionData(post, hash, wallet) {
   let storeRam = wordproofData.storeRam ? true : false
   let storeContent = wordproofData.storeContent ? true : false
   
   return {
     user: wallet.auth.accountName,
     name: wallet.auth.accountName,
-    hash: sha256(JSON.stringify({title: post.post_title, content: post.post_content})),
+    hash: hash,
     saveToTable: storeRam,
     content: storeContent ? post.post_content : '',
     memo: `${post.guid} - time-stamped via WordProof.io, bringing WordPress to the blockchain!`,
@@ -51,29 +68,21 @@ function getData(post, wallet) {
   }
 }
 
-function getPost() {
+/**
+ * Save Post metadata
+ * @param post
+ * @param resultData
+ * @returns {Promise<Response>}
+ */
+function savePostMeta(post, resultData, hash) {
+  console.log('saving post meta')
   return fetch(wordproofData.ajaxURL, {
     method: "POST",
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
     },
     body:
-      'action=wordproof_get_post' +
-      '&security='+ wordproofData.ajaxSecurity +
-      '&post_id='+ wordproofData.postId,
-  }).then(response => response.json())
-      .then(data => data) // JSON-string from `response.json()` call
-      .catch(error => console.error(error));
-}
-
-function postMetaData(post, resultData) {
-  return fetch(wordproofData.ajaxURL, {
-    method: "POST",
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-    },
-    body:
-      'action=wordproof_post_meta_data' +
+      'action=wordproof_save_meta' +
       '&post_id='+ post.ID +
       '&date='+ post.post_modified +
       '&title='+ post.post_title +
@@ -82,6 +91,47 @@ function postMetaData(post, resultData) {
       '&block_num='+ resultData.block_num +
       '&block_time='+ resultData.block_time +
       '&network='+ wordproofData.network +
+      '&hash='+ hash +
       '&security='+ wordproofData.ajaxSecurity,
   });
+}
+
+/**
+ * Get the post data
+ * @returns {Promise<Response | void>}
+ */
+function getPostById($postId) {
+  return fetch(wordproofData.ajaxURL, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+    },
+    body:
+    'action=wordproof_get_post_by_id' +
+    '&security='+ wordproofData.ajaxSecurity +
+    '&post_id='+ $postId,
+  }).then((response) => {
+    return response.json();
+  })
+  .catch(error => console.error(error));
+}
+
+/**
+ * Get the generated hash
+ * @returns {Promise<Response | void>}
+ */
+function getHashById($postId) {
+  return fetch(wordproofData.ajaxURL, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+    },
+    body:
+    'action=wordproof_get_hash_by_id' +
+    '&security='+ wordproofData.ajaxSecurity +
+    '&post_id='+ $postId,
+  }).then((response) => {
+    return response.json();
+  })
+  .catch(error => console.error(error));
 }

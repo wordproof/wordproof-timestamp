@@ -85,7 +85,7 @@ function savePostMeta(post, resultData, hash) {
       'action=wordproof_save_meta' +
       '&post_id='+ post.ID +
       '&date='+ post.post_modified +
-      '&date='+ post.post_date +
+      '&post_date='+ post.post_date +
       '&title='+ post.post_title +
       '&content='+ post.post_content +
       '&link='+ post.link +

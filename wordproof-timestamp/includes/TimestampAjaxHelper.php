@@ -18,35 +18,27 @@ class TimestampAjaxHelper
 
     $postId = intval($_REQUEST['post_id']);
     $args = [
-      'wordproof_date' => isset($_REQUEST['date']) ? $_REQUEST['date'] : '',
-      'wordproof_post_date' => isset($_REQUEST['post_date']) ? $_REQUEST['post_date'] : '',
-      'wordproof_title' => isset($_REQUEST['title']) ? $_REQUEST['title'] : '',
-      'wordproof_content' => isset($_REQUEST['content']) ? $_REQUEST['content'] : '',
-      'wordproof_link' => isset($_REQUEST['link']) ? $_REQUEST['link'] : '',
-      'wordproof_transaction_id' => isset($_REQUEST['transaction_id']) ? $_REQUEST['transaction_id'] : '',
-      'wordproof_block_num' => isset($_REQUEST['block_num']) ? $_REQUEST['block_num'] : '',
-      'wordproof_block_time' => isset($_REQUEST['block_time']) ? $_REQUEST['block_time'] : '',
-      'wordproof_network' => isset($_REQUEST['network']) ? $_REQUEST['network'] : '',
-      'wordproof_hash' => isset($_REQUEST['hash']) ? $_REQUEST['hash'] : ''
+      'wordproof_date' => !empty($_REQUEST['date']) ? $_REQUEST['date'] : '',
+      'wordproof_post_date' => !empty($_REQUEST['post_date']) ? $_REQUEST['post_date'] : '',
+      'wordproof_title' => !empty($_REQUEST['title']) ? $_REQUEST['title'] : '',
+      'wordproof_content' => !empty($_REQUEST['content']) ? $_REQUEST['content'] : '',
+      'wordproof_link' => !empty($_REQUEST['link']) ? $_REQUEST['link'] : '',
+      'wordproof_transaction_id' => !empty($_REQUEST['transaction_id']) ? $_REQUEST['transaction_id'] : '',
+      'wordproof_block_num' => !empty($_REQUEST['block_num']) ? $_REQUEST['block_num'] : '',
+      'wordproof_block_time' => !empty($_REQUEST['block_time']) ? $_REQUEST['block_time'] : '',
+      'wordproof_network' => !empty($_REQUEST['network']) ? $_REQUEST['network'] : '',
+      'wordproof_hash' => !empty($_REQUEST['hash']) ? $_REQUEST['hash'] : ''
     ];
 
     $meta = TimestampHelper::buildPostMetaArray($args);
 
-    if (!empty($meta)) {
-      TimestampHelper::saveTimestampPostMeta($postId, $meta);
-
-      echo json_encode(array(
-        'success' => true,
-        'data' => array(
-          'url' => get_permalink($postId) . '#wordproof'
-        ),
-      ));
-      exit;
-    }
+    TimestampHelper::saveTimestampPostMeta($postId, $meta);
 
     echo json_encode(array(
-      'success' => false,
-      'message' => 'Meta array is empty'
+      'success' => true,
+      'data' => array(
+        'url' => get_permalink($postId) . '#wordproof'
+      ),
     ));
     exit;
   }

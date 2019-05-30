@@ -2,7 +2,6 @@
 
 namespace WordProofTimestampFree;
 
-use WordProofTimestampFree\includes\Ajax;
 use WordProofTimestampFree\includes\MetaBox;
 use WordProofTimestampFree\includes\Page\ProofPage;
 use WordProofTimestampFree\includes\Page\SettingsPage;
@@ -17,9 +16,10 @@ use WordProofTimestampFree\includes\TimestampAjaxHelper;
 class WordProofTimestampFree {
 
     /** @var null */
-    private static $instance = null;
+  private static $instance = null;
+  private static $timestampMeta = null;
 
-    public function init() {
+  public function init() {
         /**
          * Bootstrap
          */
@@ -49,7 +49,7 @@ class WordProofTimestampFree {
 
 	public function addColumnContent($column_name, $post_id) {
 		if ($column_name == 'wordproof') {
-			$proof_date = get_post_meta($post_id, 'wordproof_date', true);
+      $proof_date = self::getTimestampMeta($post_id)['wordproof_date'];
 
 			if ($proof_date) {
 				if ($proof_date === get_the_modified_date('Y-m-d H:i:s',$post_id)){
@@ -68,7 +68,7 @@ class WordProofTimestampFree {
     	global $post;
 
     	if (!empty($post)) {
-		    $proof_date = get_post_meta($post->ID, 'wordproof_date', true);
+        $proof_date = self::getTimestampMeta($post->ID)['wordproof_date'];
 
 		    if ($proof_date) {
 		    	$content .= CertificateHelper::getCertificateHtml($post->ID);
@@ -111,6 +111,17 @@ class WordProofTimestampFree {
             'pluginDirUrl' => plugin_dir_url( __FILE__ )
         ));
     }
+
+  /**
+   * @param $postId
+   * @return array|mixed|null
+   */
+  public static function getTimestampMeta($postId) {
+    if (!isset(self::$timestampMeta)) {
+      self::$instance = TimestampHelper::getTimestampPostMeta($postId);
+    }
+    return self::$instance;
+  }
 
     /**
      * @return null|WordProof

@@ -3,7 +3,6 @@
 namespace WordProofTimestampFree;
 
 use WordProofTimestampFree\includes\MetaBox;
-use WordProofTimestampFree\includes\Page\ProofPage;
 use WordProofTimestampFree\includes\Page\SettingsPage;
 use WordProofTimestampFree\includes\CertificateHelper;
 use WordProofTimestampFree\includes\TimestampHelper;
@@ -25,7 +24,6 @@ class WordProofTimestampFree
     /**
      * Bootstrap
      */
-    new ProofPage();
     new SettingsPage();
     new MetaBox();
     new TimestampAjaxHelper();
@@ -82,7 +80,15 @@ class WordProofTimestampFree
 
   public function addProofPopupHtml()
   {
-    echo '<div id="wordproof-popup-container"></div>';
+    global $post;
+
+    if (!empty($post)) {
+      $meta = self::getTimestampMeta($post->ID);
+
+      if (isset($meta['wordproof_date'])) {
+        echo '<div id="wordproof-popup-container"></div>';
+      }
+    }
   }
 
   public function addProofPopupScripts()

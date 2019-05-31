@@ -82,7 +82,15 @@ class WordProofTimestampFree
 
   public function addProofPopupHtml()
   {
-    echo '<div id="wordproof-popup-container"></div>';
+    global $post;
+
+    if (!empty($post)) {
+      $meta = self::getTimestampMeta($post->ID);
+
+      if (isset($meta['wordproof_date'])) {
+        echo '<div id="wordproof-popup-container"></div>';
+      }
+    }
   }
 
   public function addProofPopupScripts()

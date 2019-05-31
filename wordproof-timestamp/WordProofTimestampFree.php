@@ -50,10 +50,10 @@ class WordProofTimestampFree
   public function addColumnContent($column_name, $post_id)
   {
     if ($column_name == 'wordproof') {
-      $proof_date = self::getTimestampMeta($post_id)['wordproof_date'];
+      $meta = self::getTimestampMeta($post_id);
 
-      if ($proof_date) {
-        if ($proof_date === get_the_modified_date('Y-m-d H:i:s', $post_id)) {
+      if (isset($meta['wordproof_date'])) {
+        if ($meta['wordproof_date'] === get_the_modified_date('Y-m-d H:i:s', $post_id)) {
           echo '<a target="_blank" href="' . get_permalink($post_id) . '#wordproof">Stamped</a>';
         } else {
           echo '<a target="_blank" href="' . get_permalink($post_id) . '#wordproof">Outdated</a>';
@@ -70,9 +70,9 @@ class WordProofTimestampFree
     global $post;
 
     if (!empty($post)) {
-      $proof_date = self::getTimestampMeta($post->ID)['wordproof_date'];
+      $meta = self::getTimestampMeta($post->ID);
 
-      if ($proof_date) {
+      if (isset($meta['wordproof_date'])) {
         $content .= CertificateHelper::getCertificateHtml($post->ID);
       }
     }

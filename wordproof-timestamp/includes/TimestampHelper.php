@@ -45,21 +45,25 @@ class TimestampHelper {
 
   public static function getTimestampPostMeta($postId) {
     $meta = get_post_meta($postId, 'wordproof_timestamp_data', true);
+
     // Get old metadata structure (<0.6)
     if (empty($meta)) {
       $meta = [];
       $post = get_post($postId);
       $postMeta = get_post_meta($postId);
-      $meta['wordproof_date'] = $postMeta['wordproof_date'];
-      $meta['wordproof_post_date'] = $post->post_date;
-      $meta['wordproof_title'] = $postMeta['wordproof_title'];
-      $meta['wordproof_content'] = self::preparePostContent($postMeta['wordproof_content']);
-      $meta['wordproof_link'] = get_permalink($postId);
-      $meta['wordproof_transaction_id'] = $postMeta['wordproof_transaction_id'];
-      $meta['wordproof_block_num'] = $postMeta['wordproof_block_num'];
-      $meta['wordproof_block_time'] = $postMeta['wordproof_block_time'];
-      $meta['wordproof_network'] = $postMeta['wordproof_network'];
-      $meta['wordproof_hash'] = "";
+
+      if (isset($postMeta['wordproof_date'])) {
+        $meta['wordproof_date'] = isset($postMeta['wordproof_date']) ? $postMeta['wordproof_date'] : '';
+        $meta['wordproof_post_date'] = $post->post_date;
+        $meta['wordproof_title'] = isset($postMeta['wordproof_title']) ? $postMeta['wordproof_title'] : '';
+        $meta['wordproof_content'] = isset($postMeta['wordproof_content']) ? self::preparePostContent($postMeta['wordproof_content']) : '';
+        $meta['wordproof_link'] = get_permalink($postId);
+        $meta['wordproof_transaction_id'] = isset($postMeta['wordproof_transaction_id']) ? $postMeta['wordproof_transaction_id'] : '';
+        $meta['wordproof_block_num'] = isset($postMeta['wordproof_block_num']) ? $postMeta['wordproof_block_num'] : '';
+        $meta['wordproof_block_time'] = isset($postMeta['wordproof_block_time']) ? $postMeta['wordproof_block_time'] : '';
+        $meta['wordproof_network'] = isset($postMeta['wordproof_network']) ? $postMeta['wordproof_network'] : '';
+        $meta['wordproof_hash'] = "";
+      }
     }
 
     $meta['wordproof_content'] = self::preparePostContent($meta['wordproof_content']);

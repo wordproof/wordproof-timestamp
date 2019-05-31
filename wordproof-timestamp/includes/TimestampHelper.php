@@ -64,9 +64,10 @@ class TimestampHelper {
         $meta['wordproof_network'] = isset($postMeta['wordproof_network']) ? $postMeta['wordproof_network'] : '';
         $meta['wordproof_hash'] = "";
       }
+    } else {
+      $meta['wordproof_content'] = self::preparePostContent($meta['wordproof_content']);
     }
 
-    $meta['wordproof_content'] = self::preparePostContent($meta['wordproof_content']);
     return $meta;
   }
 

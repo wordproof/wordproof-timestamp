@@ -3,7 +3,6 @@
 namespace WordProofTimestampFree;
 
 use WordProofTimestampFree\includes\MetaBox;
-use WordProofTimestampFree\includes\Page\ProofPage;
 use WordProofTimestampFree\includes\Page\SettingsPage;
 use WordProofTimestampFree\includes\CertificateHelper;
 use WordProofTimestampFree\includes\TimestampHelper;
@@ -25,7 +24,6 @@ class WordProofTimestampFree
     /**
      * Bootstrap
      */
-    new ProofPage();
     new SettingsPage();
     new MetaBox();
     new TimestampAjaxHelper();

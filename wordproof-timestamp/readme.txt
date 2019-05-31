@@ -4,11 +4,11 @@ Tags: blockchain, timestamp, eosio, eos, telos, web30, copyright, scatter, decen
 Requires at least: 4.5
 Tested up to: 5.2.1
 Requires PHP: 5.3
-Stable tag: 0.6
+Stable tag: 0.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Timestamp your WordPress content into the blockchain. Instant and forever free. Without any middle layer solution. No blockchain knowledge needed.
+Timestamp your WordPress content on the blockchain to proof trust. No blockchain knowledge needed.
 
 == Description ==
 
@@ -16,7 +16,16 @@ Timestamp your WordPress content into the blockchain. Instant and forever free. 
 
 > “In five years from now, if you don’t timestamp your articles on the blockchain, you’re going to be considered a fraud.” - Brendan Blumer
 
-With WordProof, you can sign your WordPress content on any EOSIO blockchain from the comfort of your WordPress site. 
+With WordProof Timestamp, you can sign your WordPress content on any EOSIO blockchain from the comfort of your WordPress site. No prior blockchain experience necessary: the WordProof Setup Wizard helps you with everything, right from your WordPress dashboard.
+
+### Why do I need to timestamp my content?
+
+There are hundreds of millions of websites. However, there are only a few websites visitors accept information from, let alone do business with. This is because they trust those websites. You gain the trust of your visitors by doing two things differently than your competition:
+
+* Claim ownership of your content
+* Show transparency to your visitors
+
+WordProof Timestamp makes both these things possible with the power of blockchain.
 
 ### Further Reading on WordProof, WordPress, and Blockchain
 
@@ -69,3 +78,7 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 * Redesigned plugin Options
 * WordProof Setup Wizard added
 * Front-end blockchain certificate 
+
+= 0.6.1 =
+*Release date: May 31th, 2019*
+* Bugfix

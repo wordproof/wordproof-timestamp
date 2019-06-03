@@ -17,7 +17,6 @@ class WordProofTimestampFree
 
   /** @var null */
   private static $instance = null;
-  private static $timestampMeta = null;
 
   public function init()
   {
@@ -129,7 +128,7 @@ class WordProofTimestampFree
    */
   public static function getTimestampMeta($postId)
   {
-    return self::$timestampMeta = TimestampHelper::getTimestampPostMeta($postId);
+    return TimestampHelper::getTimestampPostMeta($postId);
   }
 
   /**

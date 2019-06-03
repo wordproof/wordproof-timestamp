@@ -26,6 +26,7 @@ $grey-light: darken($grey-light, 10);
 }
 
 .modal {
+  z-index: 9999;
   &-card {
     &-body {
       padding: 10px 20px 0px 20px;

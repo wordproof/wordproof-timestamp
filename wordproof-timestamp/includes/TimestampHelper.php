@@ -50,18 +50,18 @@ class TimestampHelper {
     if (empty($meta)) {
       $meta = [];
       $post = get_post($postId);
-      $postMeta = get_post_meta($postId);
+      $wordproof_date = get_post_meta($postId, 'wordproof_date', true);
 
-      if (isset($postMeta['wordproof_date'])) {
-        $meta['wordproof_date'] = isset($postMeta['wordproof_date']) ? $postMeta['wordproof_date'] : '';
+      if (isset($wordproof_date) && !empty($wordproof_date)) {
+        $meta['wordproof_date'] = $wordproof_date;
         $meta['wordproof_post_date'] = $post->post_date;
-        $meta['wordproof_title'] = isset($postMeta['wordproof_title']) ? $postMeta['wordproof_title'] : '';
-        $meta['wordproof_content'] = isset($postMeta['wordproof_content']) ? self::preparePostContent($postMeta['wordproof_content']) : '';
+        $meta['wordproof_title'] = get_post_meta($postId, 'wordproof_title', true);
+        $meta['wordproof_content'] = self::preparePostContent(get_post_meta($postId, 'wordproof_content', true));
         $meta['wordproof_link'] = get_permalink($postId);
-        $meta['wordproof_transaction_id'] = isset($postMeta['wordproof_transaction_id']) ? $postMeta['wordproof_transaction_id'] : '';
-        $meta['wordproof_block_num'] = isset($postMeta['wordproof_block_num']) ? $postMeta['wordproof_block_num'] : '';
-        $meta['wordproof_block_time'] = isset($postMeta['wordproof_block_time']) ? $postMeta['wordproof_block_time'] : '';
-        $meta['wordproof_network'] = isset($postMeta['wordproof_network']) ? $postMeta['wordproof_network'] : '';
+        $meta['wordproof_transaction_id'] = get_post_meta($postId, 'wordproof_transaction_id', true);
+        $meta['wordproof_block_num'] = get_post_meta($postId, 'wordproof_block_num', true);
+        $meta['wordproof_block_time'] = get_post_meta($postId, 'wordproof_block_time', true);
+        $meta['wordproof_network'] = get_post_meta($postId, 'wordproof_network', true);
         $meta['wordproof_hash'] = "";
       }
     } else {

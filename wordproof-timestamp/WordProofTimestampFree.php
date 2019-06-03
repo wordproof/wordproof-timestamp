@@ -129,10 +129,7 @@ class WordProofTimestampFree
    */
   public static function getTimestampMeta($postId)
   {
-    if (!isset(self::$timestampMeta)) {
-      self::$timestampMeta = TimestampHelper::getTimestampPostMeta($postId);
-    }
-    return self::$timestampMeta;
+    return self::$timestampMeta = TimestampHelper::getTimestampPostMeta($postId);
   }
 
   /**

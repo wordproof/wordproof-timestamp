@@ -100,7 +100,8 @@ class WordProofTimestampFree
 
     wp_localize_script('wordproof.frontend.js', 'wordproofData', array(
       'timestampMeta' => $timestampPostMeta,
-      'wordProofCssDir' => WORDPROOF_URI_CSS
+      'wordProofCssDir' => WORDPROOF_URI_CSS,
+      'pluginDirUrl' => WORDPROOF_URI
     ));
   }
 

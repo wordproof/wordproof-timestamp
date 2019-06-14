@@ -37,12 +37,22 @@ $grey-light: darken($grey-light, 10);
         padding-top: 30px;
         font-size: 1.5rem;
         color: $black;
+        margin-bottom: 0.2rem;
       }
 
-      h3.subtitle {
-        font-size: 1rem;
-        font-weight: 600;
-        color: $grey-light;
+      .subtitle-container {
+        display: flex;
+
+        h3.subtitle {
+          font-size: 1rem;
+          font-weight: 600;
+          color: $grey-light;
+          margin-bottom: 0;
+        }
+        img {
+          max-height: 20px;
+          padding-left: 5px;
+        }
       }
 
       .wordproof-modal-close {

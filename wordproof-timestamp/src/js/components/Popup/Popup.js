@@ -42,7 +42,10 @@ export default class Popup extends Component {
               <section className="modal-card-body">
                 <button className="wordproof-modal-close">&times;</button>
                 <h2 className="title has-text-centered">Timestamp Certificate</h2>
-                <h3 className="subtitle has-text-centered">Validated by WordProof</h3>
+                <div class="subtitle-container">
+                  <h3 className="subtitle has-text-centered">Validated by </h3>
+                  <img src={`${wordproofData.pluginDirUrl}assets/images/wordproof-logo.png`} alt="WordProof logo" />
+                </div>
 
                 <section className="mockup-browser" data-url={wordproofData.timestampMeta.wordproof_link}>
                   <div className="mockup-browser-content content">

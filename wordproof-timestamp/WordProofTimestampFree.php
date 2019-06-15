@@ -97,6 +97,7 @@ class WordProofTimestampFree
 
     $timestampPostMeta = TimestampHelper::getTimestampPostMeta($post->ID);
     $timestampPostMeta['current_post_modified'] = $post->post_modified;
+    $timestampPostMeta['hash_raw'] = TimestampHelper::generatePostHashById($post->ID, true);
 
     wp_localize_script('wordproof.frontend.js', 'wordproofData', array(
       'timestampMeta' => $timestampPostMeta,

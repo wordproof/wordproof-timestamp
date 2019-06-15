@@ -6,7 +6,10 @@ export default class Popup extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      rawButtonText: 'Raw',
+      state: 'content'
+    }
   }
 
   componentDidMount() {
@@ -17,6 +20,23 @@ export default class Popup extends Component {
       return string.substring(0, 500) + '...';
     }
     return string;
+  }
+
+  changeState = () => {
+    switch(this.state.state) {
+      case 'content':
+        this.setState({
+          state: 'raw',
+          rawButtonText: 'Content',
+        });
+        break;
+      default:
+        this.setState({
+          state: 'content',
+          rawButtonText: 'Raw',
+        });
+        break;
+    }
   }
 
   getTransactionUrl(network, transactionId) {
@@ -48,10 +68,23 @@ export default class Popup extends Component {
                 </div>
 
                 <section className="mockup-browser" data-url={wordproofData.timestampMeta.wordproof_link}>
+
                   <div className="mockup-browser-content content">
-                    <h3>{ wordproofData.timestampMeta.wordproof_title }</h3>
-                    <p>{ this.shortenString(wordproofData.timestampMeta.wordproof_content) }</p>
+                    <div className="mockup-browser-content-inner">
+                      <button className="button button-raw is-light is-small" onClick={this.changeState}>{this.state.rawButtonText}</button>
+                      {this.state.state === 'content' &&
+                        <div>
+                          <h3>{ wordproofData.timestampMeta.wordproof_title }</h3>
+                          <p>{ this.shortenString(wordproofData.timestampMeta.wordproof_content) }</p>
+                        </div>
+                      }
+
+                      {this.state.state === 'raw' &&
+                          <textarea className="textarea" readOnly rows="10">{wordproofData.timestampMeta.hash_raw}</textarea>
+                      }
+                    </div>
                   </div>
+
                   <div className="mockup-browser-footer">
                     <div className="columns">
                       <div className="column">

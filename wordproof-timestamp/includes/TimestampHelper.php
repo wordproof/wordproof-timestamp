@@ -15,7 +15,7 @@ class TimestampHelper {
     $title = $post->post_title;
     $content = $post->post_content; //TODO: Do something with content?
     $dateModified = $post->post_modified; //TODO: do something with date?
-    $hash = self::generatePostHash($title, $content, $dateModified);
+    $hash = self::generatePostHash($title, $content, $dateModified, $getRaw);
     return $hash;
   }
 

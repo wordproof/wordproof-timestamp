@@ -2,8 +2,11 @@
 @import "../../../../node_modules/bulma/sass/base/all";
 @import "../../../../node_modules/bulma/sass/components/modal";
 @import "../../../../node_modules/bulma/sass/components/pagination";
+@import "../../../../node_modules/bulma/sass/elements/button";
 @import "../../../../node_modules/bulma/sass/elements/content";
 @import "../../../../node_modules/bulma/sass/elements/title";
+@import "../../../../node_modules/bulma/sass/form/shared";
+@import "../../../../node_modules/bulma/sass/form/input-textarea";
 @import "../../../../node_modules/bulma/sass/grid/columns";
 
 $black: #1a1a1a;
@@ -98,6 +101,10 @@ Color can be changed inline (search for %23, which equals #)
     border: 1px solid $grey-lighter;
     border-bottom: 0;
 
+    &-inner {
+      position: relative;
+    }
+
     &.content {
       padding-bottom: 0.3rem;
       margin-bottom: 0;
@@ -115,6 +122,20 @@ Color can be changed inline (search for %23, which equals #)
       color: $grey-light;
       white-space: pre-wrap;
       padding-bottom: 10px;
+    }
+
+    textarea {
+      font-size: 0.55rem;
+    }
+
+    .button-raw {
+      position: absolute;
+      z-index: 1;
+      right: 0;
+
+      &.is-small {
+        font-size: 0.55rem;
+      }
     }
   }
 

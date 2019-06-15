@@ -10,11 +10,12 @@ class TimestampHelper {
   {
   }
 
-  public static function generatePostHashById($postId) {
+  public static function generatePostHashById($postId, $getRaw = false) {
     $post = get_post($postId);
     $title = $post->post_title;
-    $content = $post->post_content;
-    $hash = self::generatePostHash($title, $content);
+    $content = $post->post_content; //TODO: Do something with content?
+    $dateModified = $post->post_modified; //TODO: do something with date?
+    $hash = self::generatePostHash($title, $content, $dateModified);
     return $hash;
   }
 
@@ -71,10 +72,10 @@ class TimestampHelper {
     return $meta;
   }
 
-  private static function generatePostHash($title, $content) {
-    $encodedContent = json_encode(["title" => $title, "content" => $content]);
+  private static function generatePostHash($title, $content, $dateMotified, $getRaw = false) {
+    $encodedContent = json_encode(["title" => $title, "content" => $content, "date" => $dateMotified]);
     $hash = hash('sha256', $encodedContent);
-    return $hash;
+    return $getRaw ? $encodedContent : $hash;
   }
 
   private static function preparePostContent($content) {

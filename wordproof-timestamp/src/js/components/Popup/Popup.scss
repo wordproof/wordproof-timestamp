@@ -64,7 +64,9 @@ $grey-light: darken($grey-light, 10);
         font-weight: 800;
         color: $red;
         font-size: 1.4em;
-        float: right;
+        position: absolute;
+        right: 10px;
+        top: 10px;
         border: none;
         cursor: pointer;
       }

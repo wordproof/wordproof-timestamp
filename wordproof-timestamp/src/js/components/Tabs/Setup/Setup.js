@@ -13,6 +13,7 @@ export default class Setup extends Component {
   }
 
   handleNetwork = (event) => {
+    //TODO: Save
     this.setState({network: event.target.value});
   }
 

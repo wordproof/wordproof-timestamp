@@ -33,6 +33,8 @@ export default class Metabox extends Component {
         await wallet.login()
       }
 
+      this.registerWalletConnection();
+
       timestamp(wallet).then(response => response.json())
       .then((result) => {
         if (result.success) {
@@ -83,6 +85,7 @@ export default class Metabox extends Component {
         if (!wallet.authenticated) {
           await wallet.login();
         }
+        this.registerWalletConnection();
         this.setState({
           wallet: wallet,
           disabled: false
@@ -93,6 +96,21 @@ export default class Metabox extends Component {
       }
     }
     return this.state.wallet;
+  }
+
+  registerWalletConnection = () => {
+    return fetch(wordproofData.ajaxURL, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+      },
+      body:
+      'action=wordproof_wallet_connection' +
+      '&security='+ wordproofData.ajaxSecurity,
+    }).then((response) => {
+      return response.json();
+    })
+    .catch(error => console.error(error));
   }
 
   render() {

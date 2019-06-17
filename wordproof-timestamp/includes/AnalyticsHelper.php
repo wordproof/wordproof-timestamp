@@ -13,7 +13,7 @@ class AnalyticsHelper
   public function __construct()
   {
     add_action('wp_ajax_wordproof_setup_start', array($this, 'handleSetupStart'));
-    add_action('wp_ajax_wordproof_setup_start', array($this, 'onWalletConnected'));
+    add_action('wp_ajax_wordproof_wallet_connection', array($this, 'onWalletConnected'));
 
     add_action('wordproof_after_saving_timestamp_meta_data', array($this, 'onNewTimestamp'));
     add_action('wordproof_connected_to_wallet', array($this, 'onNewTimestamp'));

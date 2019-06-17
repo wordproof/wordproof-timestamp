@@ -29,6 +29,8 @@ export default class Timestamp extends Component {
           isLoading: false,
           boxClasses: 'box box-success'
         });
+        this.registerWalletConnection();
+        //wallet connected
       } catch (error) {
         this.setState({
           walletAvailable: false,
@@ -38,6 +40,21 @@ export default class Timestamp extends Component {
       }
     }
     return this.state.wallet;
+  }
+
+  registerWalletConnection = () => {
+    return fetch(wordproofData.ajaxURL, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+      },
+      body:
+      'action=wordproof_wallet_connection' +
+      '&security='+ wordproofData.ajaxSecurity,
+    }).then((response) => {
+      return response.json();
+    })
+    .catch(error => console.error(error));
   }
 
   render() {

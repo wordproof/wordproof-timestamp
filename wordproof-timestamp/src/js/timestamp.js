@@ -11,7 +11,7 @@ export default async function timestamp(wallet) {
     let result = await wallet.eosApi.transact({
       actions: [
         {
-          account: 'wordproofdev',
+          account: 'wordtoken111',
           name: 'stamp',
           quantity: '1 WORD', //TODO: decimals
           authorization: [
@@ -53,12 +53,11 @@ export default async function timestamp(wallet) {
  */
 function getTransactionData(post, hash, wallet) {
   return {
-    user: wallet.auth.accountName,
-    name: wallet.auth.accountName,
-    hash: hash,
+    from: wallet.auth.accountName,
+    to: 'wordproofdev',
+    quantity: '1 WORD',
     memo: `${post.link} - time-stamped via WordProof.io, bringing WordPress to the blockchain!`,
-    receiver: wallet.auth.accountName,
-    bytes: parseInt(1024)
+    hash: hash,
   }
 }
 

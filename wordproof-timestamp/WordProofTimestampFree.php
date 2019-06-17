@@ -2,7 +2,9 @@
 
 namespace WordProofTimestampFree;
 
+use WordProofTimestampFree\includes\AnalyticsHelper;
 use WordProofTimestampFree\includes\MetaBox;
+use WordProofTimestampFree\includes\NotificationHelper;
 use WordProofTimestampFree\includes\Page\SettingsPage;
 use WordProofTimestampFree\includes\AdminAjaxHelper;
 use WordProofTimestampFree\includes\CertificateHelper;
@@ -24,8 +26,12 @@ class WordProofTimestampFree
     /**
      * Bootstrap
      */
-    new SettingsPage();
-    new MetaBox();
+    if (is_admin()) {
+      new SettingsPage();
+      new MetaBox();
+      new NotificationHelper();
+    }
+    new AnalyticsHelper();
     new AdminAjaxHelper();
     new TimestampAjaxHelper();
 

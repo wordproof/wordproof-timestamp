@@ -1,4 +1,6 @@
 // Variables
+$brand: #00D5B1;
+$brand-light: #F2FFFD;
 $grey-light: #F7F8FC;
 $red-light: #ffd5ca;
 $green-light: #c7e9b9;
@@ -170,6 +172,20 @@ th.column-wordproof {
   }
 }
 
+.wp-admin {
+  .wordproof-notice {
+    border: 2px #00D5B1 solid;
+    background: #F2FFFD;
+    padding: 10px 20px;
+    font-size: 14px;
+    &--success {}
+    &--info {}
+    &--warning {}
+    &--danger {}
+  }
+}
+
+//TODO: Add metabox.scss
 .connecting-to-wallet {
   display: flex;
   align-items: center;

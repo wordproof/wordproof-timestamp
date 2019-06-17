@@ -4,6 +4,7 @@ namespace WordProofTimestampFree;
 
 use WordProofTimestampFree\includes\MetaBox;
 use WordProofTimestampFree\includes\Page\SettingsPage;
+use WordProofTimestampFree\includes\AdminAjaxHelper;
 use WordProofTimestampFree\includes\CertificateHelper;
 use WordProofTimestampFree\includes\TimestampHelper;
 use WordProofTimestampFree\includes\TimestampAjaxHelper;
@@ -25,6 +26,7 @@ class WordProofTimestampFree
      */
     new SettingsPage();
     new MetaBox();
+    new AdminAjaxHelper();
     new TimestampAjaxHelper();
 
     /**

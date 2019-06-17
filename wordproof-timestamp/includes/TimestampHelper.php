@@ -4,12 +4,6 @@ namespace WordProofTimestampFree\includes;
 
 class TimestampHelper {
 
-  private static $postMetaFields = ['wordproof_date', 'wordproof_post_date', 'wordproof_title', 'wordproof_content', 'wordproof_link', 'wordproof_transaction_id', 'wordproof_block_num', 'wordproof_block_time', 'wordproof_network', 'wordproof_hash'];
-
-  public function __construct()
-  {
-  }
-
   public static function generatePostHashById($postId, $getRaw = false) {
     $post = get_post($postId);
     $title = $post->post_title;

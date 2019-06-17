@@ -27,7 +27,6 @@ export default function getWallet() {
   const selectedProvider = walletProviders[0]
 
   function initAccess() {
-    console.log(networks[wordproofData.network]);
     let appName = 'wordproof_'
     appName += (typeof wordproofData.network === 'string')? wordproofData.network : 'eos_main'
 

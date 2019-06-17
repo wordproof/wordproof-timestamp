@@ -69,7 +69,6 @@ function getTransactionData(post, hash, wallet) {
  * @returns {Promise<Response>}
  */
 function savePostMeta(post, resultData, hash) {
-  console.log('saving post meta')
   return fetch(wordproofData.ajaxURL, {
     method: "POST",
     headers: {

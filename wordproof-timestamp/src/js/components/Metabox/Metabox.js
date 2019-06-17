@@ -35,7 +35,6 @@ export default class Metabox extends Component {
 
       timestamp(wallet).then(response => response.json())
       .then((result) => {
-        console.log(result);
         if (result.success) {
           this.stopLoading();
           this.setState({
@@ -69,7 +68,6 @@ export default class Metabox extends Component {
   }
 
   startLoading = () => {
-    console.log('loading');
     this.setState({loadingClass: 'loading', disabled: true})
   }
 

@@ -56,7 +56,6 @@ export default class Setup extends Component {
   saveOption = (e) => {
     const option = e.target.name;
     const value = e.target.value;
-    console.log(option, value);
     return fetch(wordproofData.ajaxURL, {
       method: "POST",
       headers: {

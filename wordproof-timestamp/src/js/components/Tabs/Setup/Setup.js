@@ -42,6 +42,22 @@ export default class Setup extends Component {
       'popUpWindow',
       'height=1000,width=900,left=50,top=50,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes'
     );
+    this.registerSetupWizardOpened();
+  }
+
+  registerSetupWizardOpened = () => {
+    return fetch(wordproofData.ajaxURL, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+      },
+      body:
+      'action=wordproof_setup_start' +
+      '&security='+ wordproofData.ajaxSecurity,
+    }).then((response) => {
+      return response.json();
+    })
+    .catch(error => console.error(error));
   }
 
   checkActiveRadio = (name) => {

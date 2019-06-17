@@ -67,7 +67,7 @@ export default class Timestamp extends Component {
 
           <div className={this.state.boxClasses}>
             { this.state.isLoading ?
-              <p><div className="connecting-to-wallet"><img className="loading-spinner" height="64px" width="64px" src="/wp-admin/images/spinner-2x.gif" alt="loading" />Connecting...</div></p> : ''
+              <div><div className="connecting-to-wallet"><img className="loading-spinner" height="64px" width="64px" src="/wp-admin/images/spinner-2x.gif" alt="loading" />Connecting...</div></div> : ''
             }
 
             { this.state.walletAvailable === true ?

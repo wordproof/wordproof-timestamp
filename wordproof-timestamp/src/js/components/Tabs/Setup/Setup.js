@@ -13,7 +13,7 @@ export default class Setup extends Component {
   }
 
   handleNetwork = (event) => {
-    //TODO: Save
+    this.saveOption(event);
     this.setState({network: event.target.value});
   }
 
@@ -51,6 +51,26 @@ export default class Setup extends Component {
   handleAdvancedOptions = (e) => {
     e.preventDefault();
     this.setState({hideAdvanced: false});
+  }
+
+  saveOption = (e) => {
+    const option = e.target.name;
+    const value = e.target.value;
+    console.log(option, value);
+    return fetch(wordproofData.ajaxURL, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+      },
+      body:
+      'action=wordproof_save_option' +
+      '&security='+ wordproofData.ajaxSecurity +
+      '&option='+ option +
+      '&value='+ value,
+    }).then((response) => {
+      return response.json();
+    })
+    .catch(error => console.error(error));
   }
 
   render() {

@@ -8,7 +8,7 @@ class TimestampHelper {
     $post = get_post($postId);
     $title = $post->post_title;
     $content = $post->post_content; //TODO: Do something with content?
-    $dateModified = $post->post_modified; //TODO: do something with date?
+    $dateModified = get_the_modified_date('c', $post);
     $hash = self::generatePostHash($title, $content, $dateModified, $getRaw);
     return $hash;
   }

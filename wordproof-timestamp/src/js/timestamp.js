@@ -56,7 +56,7 @@ function getTransactionData(post, hash, wallet) {
     from: wallet.auth.accountName,
     to: 'wordproofdev',
     quantity: '1 WORD',
-    memo: `${post.link} - time-stamped via WordProof.io, bringing WordPress to the blockchain!`,
+    memo: `${post.link} - content protected with WordProof Timestamp, WordProof.io`,
     hash: hash,
   }
 }

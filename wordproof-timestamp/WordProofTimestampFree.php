@@ -3,6 +3,7 @@
 namespace WordProofTimestampFree;
 
 use WordProofTimestampFree\includes\AnalyticsHelper;
+use WordProofTimestampFree\includes\ChainHelper;
 use WordProofTimestampFree\includes\MetaBox;
 use WordProofTimestampFree\includes\NotificationHelper;
 use WordProofTimestampFree\includes\Page\SettingsPage;
@@ -30,6 +31,7 @@ class WordProofTimestampFree
       new SettingsPage();
       new MetaBox();
       new NotificationHelper();
+      new ChainHelper();
     }
     new AnalyticsHelper();
     new AdminAjaxHelper();
@@ -128,6 +130,8 @@ class WordProofTimestampFree
       'network' => get_option('wordproof_network', 'eos_main'),
       'storeRam' => get_option('wordproof_store_ram', false),
       'storeContent' => get_option('wordproof_store_content', false),
+      'accountName' => get_option('wordproof_accountname', ''),
+      'wordBalance' => get_option('wordproof_balance', 0),
       'pluginDirUrl' => plugin_dir_url(__FILE__)
     ));
   }

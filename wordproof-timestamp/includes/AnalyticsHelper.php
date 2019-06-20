@@ -9,6 +9,8 @@ class AnalyticsHelper
   public static $optionSetupStarted = 'wordproof_setup_started';
   public static $optionWalletConnected = 'wordproof_wallet_connected';
   public static $optionNetwork = 'wordproof_network';
+  public static $optionAccountName = 'wordproof_accountname';
+  public static $optionWordBalance = 'wordproof_balance';
 
   public function __construct()
   {

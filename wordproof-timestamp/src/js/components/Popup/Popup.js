@@ -111,16 +111,10 @@ export default class Popup extends Component {
                           href={this.getTransactionUrl(wordproofData.timestampMeta.wordproof_network, wordproofData.timestampMeta.wordproof_transaction_id)}
                           target="_blank" rel="noopener noreferrer">View on the blockchain</a>
 
-
                         {this.state.state === 'help' ?
                           <a onClick={() => this.changeStateTo('content')}>Back to Timestamp Certificate</a> :
                           <a onClick={() => this.changeStateTo('help')}>About this Timestamp Certificate</a>
                         }
-
-
-
-
-
 
                       </div>
                       <div className="column">

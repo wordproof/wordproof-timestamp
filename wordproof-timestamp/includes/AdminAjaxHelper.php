@@ -7,6 +7,7 @@ class AdminAjaxHelper
 
   const allowedOptions = [
     'wordproof_network',
+    'wordproof_accountname'
   ];
 
   public function __construct()

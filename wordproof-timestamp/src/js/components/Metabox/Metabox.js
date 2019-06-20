@@ -10,6 +10,7 @@ export default class Metabox extends Component {
       connected: false,
       disabled: true,
       wallet: null,
+      accountName: null,
       noScatter: false,
       failed: false,
       success: false,
@@ -32,8 +33,6 @@ export default class Metabox extends Component {
       if (!wallet.authenticated) {
         await wallet.login()
       }
-
-      this.registerWalletConnection();
 
       timestamp(wallet).then(response => response.json())
       .then((result) => {
@@ -77,6 +76,17 @@ export default class Metabox extends Component {
     this.setState({loadingClass: '', disabled: false});
   }
 
+  getBalance = (accountName) => {
+    console.log(accountName === wordproofData.accountName);
+    if (accountName === wordproofData.accountName) {
+      console.log('balance', wordproofData.wordBalance);
+      return wordproofData.wordBalance;
+    } else {
+      return false;
+      //retrieve balance;
+    }
+  }
+
   getWallet = async () => {
     if (this.state.wallet === null) {
       const wallet = initWallet();
@@ -85,8 +95,14 @@ export default class Metabox extends Component {
         if (!wallet.authenticated) {
           await wallet.login();
         }
+
         this.registerWalletConnection();
+        this.registerAccountname(wallet.accountInfo.account_name);
+        const balance = this.getBalance(wallet.accountInfo.account_name);
+
         this.setState({
+          accountName: wallet.accountInfo.account_name,
+          balance: balance,
           wallet: wallet,
           disabled: false
         });
@@ -113,6 +129,23 @@ export default class Metabox extends Component {
     .catch(error => console.error(error));
   }
 
+  registerAccountname = (accountName) => {
+    return fetch(wordproofData.ajaxURL, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+      },
+      body:
+      'action=wordproof_save_option' +
+      '&security='+ wordproofData.ajaxSecurity +
+      '&option='+ 'wordproof_accountname' +
+      '&value='+ accountName,
+    }).then((response) => {
+      return response.json();
+    })
+    .catch(error => console.error(error));
+  }
+
   render() {
     return (
       <div className="wordproof-metabox">
@@ -126,8 +159,11 @@ export default class Metabox extends Component {
             now</a>.</p> : ''
         }
 
-        {this.state.wallet && this.state.wallet.authenticated ?
+        {this.state.accountName ?
           <div>Logged in as <strong>{this.state.wallet.accountInfo.account_name}</strong></div> : ''
+        }
+        {this.state.balance ?
+          <div>You have <strong>{this.state.balance}</strong></div> : "It seems you don't have WORD stamps yet."
         }
 
         {this.state.disabled ?

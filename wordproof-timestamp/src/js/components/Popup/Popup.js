@@ -7,8 +7,9 @@ export default class Popup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rawButtonText: 'Raw',
-      state: 'content'
+      switchStateText: 'Raw',
+      state: 'content',
+      nextState: 'raw'
     }
   }
 
@@ -22,25 +23,34 @@ export default class Popup extends Component {
     return string;
   }
 
-  changeState = () => {
-    switch(this.state.state) {
+  changeStateTo = (nextState) => {
+    switch (nextState) {
+      case 'help':
+        this.setState({
+          state: 'help',
+          nextState: 'content',
+          switchStateText: 'Content',
+        });
+        break;
       case 'content':
         this.setState({
-          state: 'raw',
-          rawButtonText: 'Content',
+          state: 'content',
+          nextState: 'raw',
+          switchStateText: 'Raw',
         });
         break;
       default:
         this.setState({
-          state: 'content',
-          rawButtonText: 'Raw',
+          state: 'raw',
+          nextState: 'content',
+          switchStateText: 'Content',
         });
         break;
     }
   }
 
-  getTransactionUrl(network, transactionId) {
-    switch(network) {
+  getTransactionUrl = (network, transactionId) => {
+    switch (network) {
       case 'eos_main':
         return 'https://bloks.io/transaction/' + transactionId;
       case 'eos_jungle':
@@ -64,23 +74,32 @@ export default class Popup extends Component {
                 <h2 className="title has-text-centered">Timestamp Certificate</h2>
                 <div className="subtitle-container">
                   <h3 className="subtitle has-text-centered">Validated by </h3>
-                  <img src={`${wordproofData.pluginDirUrl}assets/images/wordproof-logo.png`} alt="WordProof logo" />
+                  <img src={`${wordproofData.pluginDirUrl}assets/images/wordproof-logo.png`} alt="WordProof logo"/>
                 </div>
 
                 <section className="mockup-browser" data-url={wordproofData.timestampMeta.wordproof_link}>
 
                   <div className="mockup-browser-content content">
                     <div className="mockup-browser-content-inner">
-                      <button className="button button-raw is-light is-small" onClick={this.changeState}>{this.state.rawButtonText}</button>
+                      <button className="button button-raw is-light is-small"
+                              onClick={() => this.changeStateTo(this.state.nextState)}>{this.state.switchStateText}</button>
                       {this.state.state === 'content' &&
-                        <div>
-                          <h3>{ wordproofData.timestampMeta.wordproof_title }</h3>
-                          <p>{ this.shortenString(wordproofData.timestampMeta.wordproof_content) }</p>
-                        </div>
+                      <div>
+                        <h3>{wordproofData.timestampMeta.wordproof_title}</h3>
+                        <p>{this.shortenString(wordproofData.timestampMeta.wordproof_content)}</p>
+                      </div>
                       }
 
                       {this.state.state === 'raw' &&
-                          <textarea className="textarea" readOnly rows="10">{wordproofData.timestampMeta.hash_raw}</textarea>
+                      <textarea className="textarea" readOnly
+                                rows="10">{wordproofData.timestampMeta.hash_raw}</textarea>
+                      }
+
+                      {this.state.state === 'help' &&
+                        <div>
+                          <h3>What is this Timestamp Certificate?</h3>
+                          <p>This content is protected with WordProof, a new web standard for a more trustworthy internet. This timestamp exists of a unique hash (summary) based on the title, date and content of this page. It is stored in the blockchain and can never be altered. You can verify this Timestamp Certificate yourself with the WordProof Timestamp Checker.</p>
+                        </div>
                       }
                     </div>
                   </div>
@@ -88,7 +107,21 @@ export default class Popup extends Component {
                   <div className="mockup-browser-footer">
                     <div className="columns">
                       <div className="column">
-                        <a href={ this.getTransactionUrl(wordproofData.timestampMeta.wordproof_network, wordproofData.timestampMeta.wordproof_transaction_id) } target="_blank" rel="noopener noreferrer">View on the blockchain</a>
+                        <a
+                          href={this.getTransactionUrl(wordproofData.timestampMeta.wordproof_network, wordproofData.timestampMeta.wordproof_transaction_id)}
+                          target="_blank" rel="noopener noreferrer">View on the blockchain</a>
+
+
+                        {this.state.state === 'help' ?
+                          <a onClick={() => this.changeStateTo('content')}>Back to Timestamp Certificate</a> :
+                          <a onClick={() => this.changeStateTo('help')}>About this Timestamp Certificate</a>
+                        }
+
+
+
+
+
+
                       </div>
                       <div className="column">
                         <ul>
@@ -103,7 +136,8 @@ export default class Popup extends Component {
 
               </section>
               <footer className="modal-card-foot">
-                <a href="https://wordproof.io" target="_blank" rel="noopener noreferrer">Claim your WordPress content with the WordProof Timestamp plugin</a>
+                <a href="https://wordproof.io" target="_blank" rel="noopener noreferrer">Protect your content on the
+                  blockchain with WordProof Timestamp</a>
               </footer>
             </div>
           </div>

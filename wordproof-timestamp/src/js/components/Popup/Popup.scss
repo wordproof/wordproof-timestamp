@@ -77,7 +77,7 @@ $grey-light: darken($grey-light, 10);
       justify-content: center;
 
       a {
-        font-size: 0.5em;
+        font-size: 0.49em;
         text-decoration: underline;
       }
     }
@@ -157,6 +157,7 @@ Color can be changed inline (search for %23, which equals #)
       font-size: 0.65em;
       font-weight: 600;
       text-decoration: underline;
+      display: block;
     }
 
     ul {

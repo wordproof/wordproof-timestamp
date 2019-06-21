@@ -31,6 +31,8 @@ $grey-light: darken($grey-light, 10);
 .modal {
   z-index: 9999;
   &-card {
+    font-size: 20px;
+
     &-body {
       padding: 10px 20px 0px 20px;
       border-top-left-radius: 6px;
@@ -38,7 +40,7 @@ $grey-light: darken($grey-light, 10);
 
       h2.title {
         padding-top: 30px;
-        font-size: 1.5rem;
+        font-size: 1.5em;
         color: $black;
         margin-bottom: 0.2rem;
       }
@@ -49,7 +51,7 @@ $grey-light: darken($grey-light, 10);
         align-items: center;
 
         h3.subtitle {
-          font-size: 1rem;
+          font-size: 1em;
           font-weight: 600;
           color: $grey-light;
           margin-bottom: 0;
@@ -77,7 +79,7 @@ $grey-light: darken($grey-light, 10);
       justify-content: center;
 
       a {
-        font-size: 0.49em;
+        font-size: 0.6em;
         text-decoration: underline;
       }
     }
@@ -119,8 +121,8 @@ Color can be changed inline (search for %23, which equals #)
     }
 
     p {
-      font-size: 0.65em;
-      line-height: 1.2;
+      font-size: 0.73em;
+      line-height: 1.2em;
       color: $grey-light;
       white-space: pre-wrap;
       padding-bottom: 10px;
@@ -136,7 +138,18 @@ Color can be changed inline (search for %23, which equals #)
       right: 0;
 
       &.is-small {
-        font-size: 0.55rem;
+        font-size: 0.55em;
+      }
+    }
+
+    .box {
+      background: #f7f7f7;
+      padding: 15px 20px;
+      border-radius: 4px;
+      margin: 10px 0;
+
+      p {
+        color: #555555;
       }
     }
   }

@@ -96,7 +96,7 @@ export default class Popup extends Component {
                       }
 
                       {this.state.state === 'help' &&
-                        <div>
+                        <div className="box">
                           <h3>What is this Timestamp Certificate?</h3>
                           <p>This content is protected with WordProof, a new web standard for a more trustworthy internet. This timestamp exists of a unique hash (summary) based on the title, date and content of this page. It is stored in the blockchain and can never be altered. You can verify this Timestamp Certificate yourself with the WordProof Timestamp Checker.</p>
                         </div>

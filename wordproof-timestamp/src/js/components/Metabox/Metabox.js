@@ -60,16 +60,25 @@ export default class Metabox extends Component {
   }
 
   handleDisconnectClick = async () => {
-    const wallet = await this.getWallet()
+    this.startLoading();
+    const wallet = await this.getWallet();
     try {
       if (!wallet.connected) {
         await wallet.connect()
       }
-      await wallet.terminate()
-      this.setState({failed: false})
+      await wallet.terminate();
+      this.setState({failed: false, wallet: null})
+      this.stopLoading();
     } catch (error) {
       console.log(error)
+      this.stopLoading();
     }
+  }
+
+  handleConnectClick = async () => {
+    this.startLoading();
+    await this.getWallet();
+    this.stopLoading();
   }
 
   startLoading = () => {
@@ -97,8 +106,6 @@ export default class Metabox extends Component {
         if (!wallet.authenticated) {
           await wallet.login();
         }
-
-        console.log(wallet);
 
         this.registerWalletConnection();
         this.registerAccountname(wallet.accountInfo.account_name);
@@ -179,13 +186,15 @@ export default class Metabox extends Component {
             now</a>.</p> : ''
         }
 
-        {this.state.accountName ?
-          <div>Logged in as <strong>{this.state.wallet.accountInfo.account_name}</strong></div> : ''
+        {this.state.wallet && this.state.wallet.accountInfo.account_name ?
+          <div>
+            <div>Logged in as <strong>{this.state.wallet.accountInfo.account_name}</strong></div>
+            {this.state.balance ?
+              <div>You have <strong>{this.state.balance}</strong></div> : "It seems you don't have WORD stamps yet."
+            }
+          </div> : ''
         }
-        {this.state.balance ?
-          <div>You have <strong>{this.state.balance}</strong></div> : "It seems you don't have WORD stamps yet."
-        }
-
+        
         {(this.state.bonusStatus === 'success' || this.state.bonusStatus === 'failed') ?
           <p>{this.state.bonusMessage}</p> : ''}
 
@@ -198,12 +207,21 @@ export default class Metabox extends Component {
         <br/>
         {!this.state.success ?
           <div>
-            <button type="button" className={`button ${this.state.loadingClass}`} onClick={this.handleClick}
-                    disabled={this.state.disabled}>Timestamp Post
-            </button>
-            <button type="button" className={`button ${this.state.loadingClass}`} onClick={this.handleDisconnectClick}
-                    disabled={this.state.disabled}>Disconnect
-            </button>
+
+            { (this.state.wallet !== null) ?
+              <div>
+                <button type="button" className={`button ${this.state.loadingClass}`} onClick={this.handleClick}
+                        disabled={this.state.disabled}>Timestamp Post
+                </button>
+                <button type="button" className={`button ${this.state.loadingClass}`} onClick={this.handleDisconnectClick}
+                        disabled={this.state.disabled}>Disconnect
+                </button>
+              </div>
+              :
+              <button type="button" className={`button ${this.state.loadingClass}`} onClick={this.handleConnectClick}
+                      disabled={this.state.disabled}>Connect
+              </button>
+            }
           </div>
           :
           <p>Success! <a target="_blank" rel="noopener noreferrer" href={this.state.successData.url}>Link to proof</a>

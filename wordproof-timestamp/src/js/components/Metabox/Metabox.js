@@ -60,10 +60,9 @@ export default class Metabox extends Component {
 
         this.registerWalletConnection();
         this.registerAccountname(wallet.accountInfo.account_name);
-        const balance = await this.getBalance(wallet.accountInfo.account_name);
+        this.setBalance(wallet.accountInfo.account_name);
 
         this.setState({
-          balance: balance,
           wallet: wallet,
           accountName: wallet.accountInfo.account_name,
           widgetStatus: 'success',
@@ -115,26 +114,23 @@ export default class Metabox extends Component {
   }
 
 
-  getBalance = async (accountName) => {
-    // if (accountName === wordproofData.accountName) {
-    //   return wordproofData.wordBalance.replace('.0000','');
-    // } else {
-      let result = await fetch(wordproofData.ajaxURL, {
-        method: "POST",
-        headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
-        body:
-        'action=wordproof_get_balance' +
-        '&security=' + wordproofData.ajaxSecurity +
-        '&accountName=' + accountName,
-      }).then((response) => {
-        return response.json();
-      })
-      .catch(error => console.error(error));
+  setBalance = async (accountName) => {
+    let result = await fetch(wordproofData.ajaxURL, {
+      method: "POST",
+      headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
+      body:
+      'action=wordproof_get_balance' +
+      '&security=' + wordproofData.ajaxSecurity +
+      '&accountName=' + accountName,
+    }).then((response) => {
+      return response.json();
+    })
+    .catch(error => console.error(error));
 
-      if (result.success) {
-        return result.balance.replace('.0000','');
-      }
-    // }
+    if (result.success) {
+      const word = result.balance.replace('.0000', '');
+      this.setState({balance: word});
+    }
   }
 
   disconnect = async () => {
@@ -162,19 +158,25 @@ export default class Metabox extends Component {
     return (
       <div className="wordproof-metabox">
 
-        <ConnectionWidget status={this.state.widgetStatus} balance={this.state.balance} accountName={this.state.accountName}/>
+        <ConnectionWidget status={this.state.widgetStatus} balance={this.state.balance}
+                          accountName={this.state.accountName}/>
 
         {this.state.timestampStatus !== 'success' ?
-        <div className="buttons">
-          {this.state.widgetStatus === 'success' && this.state.wallet !== null ?
-            <div className="button-container">
-              <button onClick={this.timestamp} disabled={this.state.buttonsDisabled} className={`button is-primary ${this.state.timestampStatus === 'connecting' ? 'is-loading' :''} `}>Timestamp</button>
-              <button onClick={this.disconnect} disabled={this.state.buttonsDisabled} className={`button ${this.state.widgetStatus === 'connecting' ? 'is-loading' :''}`}>Logout</button>
-            </div>
-            :
-            <button onClick={this.connect} disabled={this.state.buttonsDisabled} className={`button ${this.state.widgetStatus === 'connecting' ? 'is-loading' :''}`}>Login</button>
-          }
-        </div>
+          <div className="buttons">
+            {this.state.widgetStatus === 'success' && this.state.wallet !== null ?
+              <div className="button-container">
+                <button onClick={this.timestamp} disabled={this.state.buttonsDisabled}
+                        className={`button is-primary ${this.state.timestampStatus === 'connecting' ? 'is-loading' : ''} `}>Timestamp
+                </button>
+                <button onClick={this.disconnect} disabled={this.state.buttonsDisabled}
+                        className={`button ${this.state.widgetStatus === 'connecting' ? 'is-loading' : ''}`}>Logout
+                </button>
+              </div>
+              :
+              <button onClick={this.connect} disabled={this.state.buttonsDisabled}
+                      className={`button ${this.state.widgetStatus === 'connecting' ? 'is-loading' : ''}`}>Login</button>
+            }
+          </div>
           :
           <div className="timestamped">
             <p>Your post is timestamped! <a href={this.state.timestampCertificateLink}>View your certificate</a>.</p>

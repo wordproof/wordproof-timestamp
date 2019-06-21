@@ -1,12 +1,15 @@
-import React, {Component} from 'react'
-import initWallet from '../../wallet'
-import timestamp from '../../timestamp'
+import React, {Component} from 'react';
+import initWallet from '../../wallet';
+import timestamp from '../../timestamp';
+import getBonus from '../../bonus';
 
 export default class Metabox extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loadingClass: '',
+      bonusStatus: null,
+      bonusMessage: null,
       connected: false,
       disabled: true,
       wallet: null,
@@ -25,6 +28,7 @@ export default class Metabox extends Component {
   handleClick = async () => {
     this.startLoading();
     const wallet = await this.getWallet();
+    await this.checkBonus(wallet.auth.accountName, wordproofData.network);
 
     try {
       if (!wallet.connected) {
@@ -122,7 +126,7 @@ export default class Metabox extends Component {
       },
       body:
       'action=wordproof_wallet_connection' +
-      '&security='+ wordproofData.ajaxSecurity,
+      '&security=' + wordproofData.ajaxSecurity,
     }).then((response) => {
       return response.json();
     })
@@ -137,13 +141,29 @@ export default class Metabox extends Component {
       },
       body:
       'action=wordproof_save_option' +
-      '&security='+ wordproofData.ajaxSecurity +
-      '&option='+ 'wordproof_accountname' +
-      '&value='+ accountName,
+      '&security=' + wordproofData.ajaxSecurity +
+      '&option=' + 'wordproof_accountname' +
+      '&value=' + accountName,
     }).then((response) => {
       return response.json();
     })
     .catch(error => console.error(error));
+  }
+
+  checkBonus = async (accountName, chain) => {
+    const bonus = await getBonus(accountName, chain);
+    console.log(bonus);
+    if (bonus.status === 'success') {
+      this.setState({
+        bonusStatus: 'success',
+        bonusMessage: bonus.message,
+      });
+    } else if (bonus.status === 'failed') {
+      this.setState({
+        bonusStatus: 'failed',
+        bonusMessage: bonus.message,
+      });
+    }
   }
 
   render() {
@@ -165,6 +185,9 @@ export default class Metabox extends Component {
         {this.state.balance ?
           <div>You have <strong>{this.state.balance}</strong></div> : "It seems you don't have WORD stamps yet."
         }
+
+        {(this.state.bonusStatus === 'success' || this.state.bonusStatus === 'failed') ?
+          <p>{this.state.bonusMessage}</p> : ''}
 
         {this.state.disabled ?
           <div className="wordproof-connecting"><img className="loading-spinner" height="64px" width="64px"

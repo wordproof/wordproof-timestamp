@@ -60,7 +60,7 @@ export default class Metabox extends Component {
 
         this.registerWalletConnection();
         this.registerAccountname(wallet.accountInfo.account_name);
-        const balance = this.getBalance(wallet.accountInfo.account_name);
+        const balance = await this.getBalance(wallet.accountInfo.account_name);
 
         this.setState({
           balance: balance,
@@ -115,13 +115,26 @@ export default class Metabox extends Component {
   }
 
 
-  getBalance = (accountName) => {
-    if (accountName === wordproofData.accountName) {
-      return wordproofData.wordBalance.replace('.0000','');
-    } else {
-      return false;
-      //retrieve balance;
-    }
+  getBalance = async (accountName) => {
+    // if (accountName === wordproofData.accountName) {
+    //   return wordproofData.wordBalance.replace('.0000','');
+    // } else {
+      let result = await fetch(wordproofData.ajaxURL, {
+        method: "POST",
+        headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
+        body:
+        'action=wordproof_get_balance' +
+        '&security=' + wordproofData.ajaxSecurity +
+        '&accountName=' + accountName,
+      }).then((response) => {
+        return response.json();
+      })
+      .catch(error => console.error(error));
+
+      if (result.success) {
+        return result.balance.replace('.0000','');
+      }
+    // }
   }
 
   disconnect = async () => {

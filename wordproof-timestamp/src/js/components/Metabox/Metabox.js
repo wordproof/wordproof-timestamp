@@ -9,10 +9,12 @@ export default class Metabox extends Component {
     super(props);
     this.state = {
       wallet: null,
+      accountName: null,
       balance: null,
       buttonsDisabled: true,
       widgetStatus: 'connecting',
-      timestampStatus: null
+      timestampStatus: null,
+      timestampCertificateLink: null
     }
   }
 
@@ -35,7 +37,10 @@ export default class Metabox extends Component {
     timestamp(wallet).then(response => response.json())
     .then((result) => {
       if (result.success) {
-        this.setState({timestampStatus: 'success'});        // result.data
+        this.setState({
+          timestampStatus: 'success',
+          timestampCertificateLink: result.data.url
+        });        // result.data
       }
     })
     .catch(error => {
@@ -60,6 +65,7 @@ export default class Metabox extends Component {
         this.setState({
           balance: balance,
           wallet: wallet,
+          accountName: wallet.accountInfo.account_name,
           widgetStatus: 'success',
           buttonsDisabled: false
         });
@@ -102,17 +108,16 @@ export default class Metabox extends Component {
   checkBonus = async (accountName, chain) => {
     const bonus = await getBonus(accountName, chain);
     if (bonus.status === 'success') {
-      console.log('hi')
+      console.log('You received your bonus');
     } else if (bonus.status === 'failed') {
-      console.log('hi')
-
+      console.log('Something went wrong');
     }
   }
 
 
   getBalance = (accountName) => {
     if (accountName === wordproofData.accountName) {
-      return wordproofData.wordBalance;
+      return wordproofData.wordBalance.replace('.0000','');
     } else {
       return false;
       //retrieve balance;
@@ -127,7 +132,7 @@ export default class Metabox extends Component {
         await wallet.connect()
       }
       await wallet.terminate();
-      this.setState({wallet: null, buttonsDisabled: false, widgetStatus: 'failed'});
+      this.setState({wallet: null, accountName: null, buttonsDisabled: false, widgetStatus: 'failed'});
     } catch (error) {
       console.log(error)
     }
@@ -144,7 +149,7 @@ export default class Metabox extends Component {
     return (
       <div className="wordproof-metabox">
 
-        <ConnectionWidget status={this.state.widgetStatus}/>
+        <ConnectionWidget status={this.state.widgetStatus} balance={this.state.balance} accountName={this.state.accountName}/>
 
         {this.state.timestampStatus !== 'success' ?
         <div className="buttons">
@@ -159,7 +164,7 @@ export default class Metabox extends Component {
         </div>
           :
           <div className="timestamped">
-            <p>Congrats</p>
+            <p>Your post is timestamped! <a href={this.state.timestampCertificateLink}>View your certificate</a>.</p>
           </div>
         }
       </div>

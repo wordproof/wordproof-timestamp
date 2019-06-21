@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import initWallet from "../../../wallet";
+import initWallet from '../../../wallet';
+import getBonus from '../../../bonus';
 
 export default class Timestamp extends Component {
   constructor(props) {
@@ -8,12 +9,15 @@ export default class Timestamp extends Component {
       wallet: null,
       walletAvailable: '',
       isLoading: true,
-      boxClasses: 'box'
+      boxClasses: 'box',
+      bonusStatus: null,
+      bonusIsLoading: null,
+      bonusMessage: null,
+      bonusBoxClasses: 'box'
     }
   }
 
   componentDidMount() {
-
     this.getWallet();
   }
 
@@ -23,14 +27,16 @@ export default class Timestamp extends Component {
       try {
         await wallet.connect();
         if (!wallet.authenticated) { await wallet.login(); }
+
+        this.registerWalletConnection();
         this.setState({
           wallet: wallet,
           walletAvailable: true,
           isLoading: false,
-          boxClasses: 'box box-success'
+          boxClasses: 'box box-success',
+          bonusIsLoading: true
         });
-        this.registerWalletConnection();
-        //wallet connected
+        this.checkBonus(wallet.accountInfo.account_name, wordproofData.network);
       } catch (error) {
         this.setState({
           walletAvailable: false,
@@ -57,6 +63,36 @@ export default class Timestamp extends Component {
     .catch(error => console.error(error));
   }
 
+   checkBonus = async(accountName, chain) => {
+    const bonus = await getBonus(accountName, chain);
+    switch(bonus.status) {
+      case 'success':
+        this.setState({
+          bonusStatus: 'success',
+          bonusBoxClasses: 'box box-success',
+          bonusMessage: bonus.message,
+          bonusIsLoading: false
+        });
+        break;
+      case 'failed':
+        this.setState({
+          bonusStatus: 'failed',
+          bonusBoxClasses: 'box box-success',
+          bonusMessage: bonus.message,
+          bonusIsLoading: false
+        });
+        break;
+      default: //no_change
+        this.setState({
+          bonusStatus: 'no_change',
+          bonusBoxClasses: 'box',
+          bonusMessage: bonus.message,
+          bonusIsLoading: false,
+        });
+    }
+    console.log('bonus', bonus);
+  }
+
   render() {
     return (
       <div>
@@ -67,17 +103,29 @@ export default class Timestamp extends Component {
 
           <div className={this.state.boxClasses}>
             { this.state.isLoading ?
-              <div><div className="connecting-to-wallet"><img className="loading-spinner" height="64px" width="64px" src="/wp-admin/images/spinner-2x.gif" alt="loading" />Connecting...</div></div> : ''
+              <div><div className="wordproof-connecting"><img className="loading-spinner" height="64px" width="64px" src="/wp-admin/images/spinner-2x.gif" alt="loading" />Connecting...</div></div> : ''
             }
-
             { this.state.walletAvailable === true ?
-              <p><span className="dashicons dashicons-yes-alt"></span> All set! You are ready to time-stamp. Make sure to keep your Scatter wallet open and unlocked!</p> : ''
+              <p><span className="dashicons dashicons-yes-alt"></span> All set! There is a connection with your Scatter wallet.</p> : ''
             }
 
             { this.state.walletAvailable === false ?
               <p>WordProof Timestamp can&apos;t connect to the Scatter wallet. Open & unlock the wallet and refresh this page to try again.</p> : ''
             }
           </div>
+
+          { (this.state.bonusIsLoading !== null) ?
+          <div className={this.state.bonusBoxClasses}>
+            { this.state.bonusIsLoading ?
+              <div><div className="wordproof-connecting"><img className="loading-spinner" height="64px" width="64px" src="/wp-admin/images/spinner-2x.gif" alt="loading" />Connecting...</div></div> : ''
+            }
+            { this.state.bonusStatus !== null ?
+              <p>
+                { (this.state.bonusStatus !== 'failed') ? <span className="dashicons dashicons-yes-alt"></span> : <span className="dashicons dashicons-no-alt"></span>}
+                { this.state.bonusMessage }
+                { (this.state.bonusStatus !== 'failed') ? " You are ready to time-stamp. Make sure to keep your Scatter wallet open and unlocked!" : "" }</p> : ''
+            }
+          </div> : ''}
 
           <h3>Help! WordProof Timestamp does not connect to my Scatter Wallet!</h3>
           <p>Blockchain is not an easy subject and uses accounts, wallets and transactions. This is what makes the technology so safe, but also what makes it challenging to create easy-to-use blockchain applications. If the set-up did not work properly, here are a few steps you can take:</p>

@@ -3,7 +3,7 @@
 namespace WordProofTimestampFree\includes;
 
 class CertificateHelper {
-    private static $default_template = "<p class='wordproof-certificate-link' style='display: flex; align-items: center;'><img src='". WORDPROOF_URI . "assets/images/wordproof-icon.png" . "' style='max-width: 30px; max-height: 30px; display: inline-block; margin-right: 10px;' alt='WordProof timestamp'/><a class='wordproof-certificate-helper' data-post-id='POST_ID' href='CERTIFICATE_URL'>CERTIFICATE_TEXT</a></p>";
+    private static $default_template = "<div><p class='wordproof-certificate-link' style='display: flex; align-items: center;'><img src='". WORDPROOF_URI . "assets/images/wordproof-icon.png" . "' style='max-width: 30px; max-height: 30px; display: inline-block; margin-right: 10px;' alt='WordProof timestamp'/><a class='wordproof-certificate-helper' data-post-id='POST_ID' href='CERTIFICATE_URL'>CERTIFICATE_TEXT</a></p></div>";
     private static $default_text = "View this content's WordProof Timestamp certificate";
     private static $default_url = '#wordproof';
 

@@ -33,7 +33,7 @@ class ChainHelper
     $endpoint = self::getEndpoint('getCurrencyBalance');
 
     $body = [
-      'code' => 'wordtoken111',
+      'code' => 'wordtokeneos', //TODO PAYBACK ACCOUNT
       'account' => $accountName,
       'symbol' => 'WORD',
 

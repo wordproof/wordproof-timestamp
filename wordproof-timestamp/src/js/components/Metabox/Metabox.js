@@ -77,9 +77,7 @@ export default class Metabox extends Component {
   }
 
   getBalance = (accountName) => {
-    console.log(accountName === wordproofData.accountName);
     if (accountName === wordproofData.accountName) {
-      console.log('balance', wordproofData.wordBalance);
       return wordproofData.wordBalance;
     } else {
       return false;
@@ -95,6 +93,8 @@ export default class Metabox extends Component {
         if (!wallet.authenticated) {
           await wallet.login();
         }
+
+        console.log(wallet);
 
         this.registerWalletConnection();
         this.registerAccountname(wallet.accountInfo.account_name);

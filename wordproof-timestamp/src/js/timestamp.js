@@ -11,9 +11,8 @@ export default async function timestamp(wallet) {
     let result = await wallet.eosApi.transact({
       actions: [
         {
-          account: 'wordtoken111',
+          account: 'wordtokeneos', //TODO TOKEN ACCOUNT
           name: 'stamp',
-          quantity: '1 WORD', //TODO: decimals
           authorization: [
             {
               actor: wallet.auth.accountName,
@@ -45,6 +44,16 @@ export default async function timestamp(wallet) {
   }
 }
 
+function getPaybackAccount(network) {
+  if (network === 'eos_jungle') {
+    return 'wordproofdev';
+  } else if (network === 'telos_main') {
+    return 'wordproofio1';
+  } else {
+    return 'wordproof.io';
+  }
+}
+
 /**
  * Get data for the blockchain transaction
  * @param post
@@ -52,10 +61,11 @@ export default async function timestamp(wallet) {
  * @returns {{user: *, name: *, hash, saveToTable: boolean, content: string, memo: string, receiver: *, bytes: number}}
  */
 function getTransactionData(post, hash, wallet) {
+  const paybackAccount = getPaybackAccount(wordproofData.network);
   return {
     from: wallet.auth.accountName,
-    to: 'wordproofdev',
-    quantity: '1 WORD',
+    to: paybackAccount,
+    quantity: '1.0000 WORD',
     memo: `${post.link} - content protected with WordProof Timestamp, WordProof.io`,
     hash: hash,
   }

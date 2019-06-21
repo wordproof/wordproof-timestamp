@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ConnectionWidget from '../ConnectionWidget/ConnectionWidget';
 import initWallet from '../../wallet';
 import timestamp from '../../timestamp';
 import getBonus from '../../bonus';
@@ -7,17 +8,11 @@ export default class Metabox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loadingClass: '',
-      bonusStatus: null,
-      bonusMessage: null,
-      connected: false,
-      disabled: true,
       wallet: null,
-      accountName: null,
-      noScatter: false,
-      failed: false,
-      success: false,
-      successData: null,
+      balance: null,
+      buttonsDisabled: true,
+      widgetStatus: 'connecting',
+      timestampStatus: null
     }
   }
 
@@ -25,77 +20,28 @@ export default class Metabox extends Component {
     this.getWallet();
   }
 
-  handleClick = async () => {
-    this.startLoading();
+  timestamp = async () => {
+    this.setState({timestampStatus: 'connecting', buttonsDisabled: true});
     const wallet = await this.getWallet();
     await this.checkBonus(wallet.auth.accountName, wordproofData.network);
 
-    try {
-      if (!wallet.connected) {
-        await wallet.connect()
-      }
-      if (!wallet.authenticated) {
-        await wallet.login()
-      }
-
-      timestamp(wallet).then(response => response.json())
-      .then((result) => {
-        if (result.success) {
-          this.stopLoading();
-          this.setState({
-            success: true,
-            successData: result.data
-          });
-        }
-      }) // JSON-string from `response.json()` call
-      .catch(error => {
-        this.stopLoading();
-        console.error(error);
-      });
-    } catch (error) {
-      this.stopLoading();
-      this.setState({failed: true});
-      console.log(error);
+    if (!wallet.connected) {
+      await wallet.connect()
     }
-  }
+    if (!wallet.authenticated) {
+      await wallet.login()
+    }
 
-  handleDisconnectClick = async () => {
-    this.startLoading();
-    const wallet = await this.getWallet();
-    try {
-      if (!wallet.connected) {
-        await wallet.connect()
+    timestamp(wallet).then(response => response.json())
+    .then((result) => {
+      if (result.success) {
+        this.setState({timestampStatus: 'success'});        // result.data
       }
-      await wallet.terminate();
-      this.setState({failed: false, wallet: null})
-      this.stopLoading();
-    } catch (error) {
-      console.log(error)
-      this.stopLoading();
-    }
-  }
-
-  handleConnectClick = async () => {
-    this.startLoading();
-    await this.getWallet();
-    this.stopLoading();
-  }
-
-  startLoading = () => {
-    this.setState({loadingClass: 'loading', disabled: true})
-  }
-
-  stopLoading = () => {
-    this.setState({loadingClass: '', disabled: false});
-  }
-
-  getBalance = (accountName) => {
-    if (accountName === wordproofData.accountName) {
-      return wordproofData.wordBalance;
-    } else {
-      return false;
-      //retrieve balance;
-    }
+    })
+    .catch(error => {
+      this.setState({timestampStatus: 'failed'});
+      console.error(error);
+    });
   }
 
   getWallet = async () => {
@@ -112,13 +58,15 @@ export default class Metabox extends Component {
         const balance = this.getBalance(wallet.accountInfo.account_name);
 
         this.setState({
-          accountName: wallet.accountInfo.account_name,
           balance: balance,
           wallet: wallet,
-          disabled: false
+          widgetStatus: 'success',
+          buttonsDisabled: false
         });
       } catch (error) {
-        this.setState({noScatter: true});
+        this.setState({
+          widgetStatus: 'failed',
+        });
         console.log(error);
       }
     }
@@ -128,12 +76,8 @@ export default class Metabox extends Component {
   registerWalletConnection = () => {
     return fetch(wordproofData.ajaxURL, {
       method: "POST",
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-      },
-      body:
-      'action=wordproof_wallet_connection' +
-      '&security=' + wordproofData.ajaxSecurity,
+      headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
+      body: 'action=wordproof_wallet_connection&security=' + wordproofData.ajaxSecurity,
     }).then((response) => {
       return response.json();
     })
@@ -143,9 +87,7 @@ export default class Metabox extends Component {
   registerAccountname = (accountName) => {
     return fetch(wordproofData.ajaxURL, {
       method: "POST",
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-      },
+      headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
       body:
       'action=wordproof_save_option' +
       '&security=' + wordproofData.ajaxSecurity +
@@ -159,73 +101,66 @@ export default class Metabox extends Component {
 
   checkBonus = async (accountName, chain) => {
     const bonus = await getBonus(accountName, chain);
-    console.log(bonus);
     if (bonus.status === 'success') {
-      this.setState({
-        bonusStatus: 'success',
-        bonusMessage: bonus.message,
-      });
+      console.log('hi')
     } else if (bonus.status === 'failed') {
-      this.setState({
-        bonusStatus: 'failed',
-        bonusMessage: bonus.message,
-      });
+      console.log('hi')
+
     }
+  }
+
+
+  getBalance = (accountName) => {
+    if (accountName === wordproofData.accountName) {
+      return wordproofData.wordBalance;
+    } else {
+      return false;
+      //retrieve balance;
+    }
+  }
+
+  disconnect = async () => {
+    this.setState({buttonsDisabled: true});
+    const wallet = await this.getWallet();
+    try {
+      if (!wallet.connected) {
+        await wallet.connect()
+      }
+      await wallet.terminate();
+      this.setState({wallet: null, buttonsDisabled: false, widgetStatus: 'failed'});
+    } catch (error) {
+      console.log(error)
+    }
+    console.log('done');
+
+  }
+
+  connect = async () => {
+    this.setState({widgetStatus: 'connecting', buttonsDisabled: true});
+    await this.getWallet();
   }
 
   render() {
     return (
       <div className="wordproof-metabox">
-        {this.state.noScatter ?
-          <p>No EOSIO wallet detected. Open you wallet or <a href={wordproofData.settingsURL}>download an EOSIO wallet
-            now</a>.</p> : ''
-        }
 
-        {this.state.failed ?
-          <p>No EOSIO wallet detected. Open you wallet or <a href={wordproofData.settingsURL}>download an EOSIO wallet
-            now</a>.</p> : ''
-        }
+        <ConnectionWidget status={this.state.widgetStatus}/>
 
-        {this.state.wallet && this.state.wallet.accountInfo.account_name ?
-          <div>
-            <div>Logged in as <strong>{this.state.wallet.accountInfo.account_name}</strong></div>
-            {this.state.balance ?
-              <div>You have <strong>{this.state.balance}</strong></div> : "It seems you don't have WORD stamps yet."
-            }
-          </div> : ''
-        }
-        
-        {(this.state.bonusStatus === 'success' || this.state.bonusStatus === 'failed') ?
-          <p>{this.state.bonusMessage}</p> : ''}
-
-        {this.state.disabled ?
-          <div className="wordproof-connecting"><img className="loading-spinner" height="64px" width="64px"
-                                                     src="/wp-admin/images/spinner-2x.gif" alt="loading"/>Connecting...
-          </div> : ''
-        }
-
-        <br/>
-        {!this.state.success ?
-          <div>
-
-            { (this.state.wallet !== null) ?
-              <div>
-                <button type="button" className={`button ${this.state.loadingClass}`} onClick={this.handleClick}
-                        disabled={this.state.disabled}>Timestamp Post
-                </button>
-                <button type="button" className={`button ${this.state.loadingClass}`} onClick={this.handleDisconnectClick}
-                        disabled={this.state.disabled}>Disconnect
-                </button>
-              </div>
-              :
-              <button type="button" className={`button ${this.state.loadingClass}`} onClick={this.handleConnectClick}
-                      disabled={this.state.disabled}>Connect
-              </button>
-            }
-          </div>
+        {this.state.timestampStatus !== 'success' ?
+        <div className="buttons">
+          {this.state.widgetStatus === 'success' && this.state.wallet !== null ?
+            <div className="button-container">
+              <button onClick={this.timestamp} disabled={this.state.buttonsDisabled} className={`button is-primary ${this.state.timestampStatus === 'connecting' ? 'is-loading' :''} `}>Timestamp</button>
+              <button onClick={this.disconnect} disabled={this.state.buttonsDisabled} className={`button ${this.state.widgetStatus === 'connecting' ? 'is-loading' :''}`}>Logout</button>
+            </div>
+            :
+            <button onClick={this.connect} disabled={this.state.buttonsDisabled} className={`button ${this.state.widgetStatus === 'connecting' ? 'is-loading' :''}`}>Login</button>
+          }
+        </div>
           :
-          <p>Success! <a target="_blank" rel="noopener noreferrer" href={this.state.successData.url}>Link to proof</a>
-          </p>
+          <div className="timestamped">
+            <p>Congrats</p>
+          </div>
         }
       </div>
     )

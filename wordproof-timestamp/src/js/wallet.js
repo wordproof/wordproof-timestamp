@@ -4,7 +4,7 @@ import scatter from 'eos-transit-scatter-provider'
 export default function getWallet() {
   const networks = {
     eos_main: {
-      host: 'api.eosdetroit.io',
+      host: 'eos.greymass.com',
       port: 443,
       protocol: 'https',
       chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'

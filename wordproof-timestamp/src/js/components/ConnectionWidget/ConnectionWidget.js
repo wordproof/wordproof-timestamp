@@ -11,9 +11,10 @@ export default class HomePage extends Component {
 
   getText() {
     switch(this.props.status) {
-      case 'success':
+      case 'success': {
         const balance = (this.props.balance === null) ? '' : ' (' + this.props.balance + ')';
         return {message: 'Connected to account', messageStrong: this.props.accountName + balance};
+      }
       case 'failed':
         return {message: 'Failed to connect.', messageStrong: 'Please open Scatter.'};
       case 'connecting':

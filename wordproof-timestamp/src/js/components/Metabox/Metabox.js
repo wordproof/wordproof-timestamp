@@ -113,7 +113,6 @@ export default class Metabox extends Component {
     }
   }
 
-
   setBalance = async (accountName) => {
     let result = await fetch(wordproofData.ajaxURL, {
       method: "POST",

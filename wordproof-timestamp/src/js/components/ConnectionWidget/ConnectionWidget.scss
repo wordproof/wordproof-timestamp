@@ -1,4 +1,4 @@
-$success-color: #00d5b1;
+$success-color: #00d1b1;
 $progress-color: #ffbe00;
 $failed-color: #e7694f;
 $transition: 0.4s ease-in-out;
@@ -6,7 +6,8 @@ $transition: 0.4s ease-in-out;
 .widget {
   background-color: #fff;
   padding: 20px;
-  margin: 0 auto 10px auto;
+  margin: 0 0 10px 0;
+  max-width: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;

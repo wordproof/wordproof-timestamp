@@ -22,7 +22,7 @@ export default class Customize extends Component {
                    onChange={e => this.setState({certificateText: e.target.value})}/>
           </div>
 
-          <input type="submit" name="submit" id="submit" className="button button-primary"
+          <input type="submit" name="submit" id="submit" className="button is-primary"
                  value={wordproofSettings.saveChanges}/>
         </div>
       </div>

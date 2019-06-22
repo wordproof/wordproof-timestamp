@@ -2,7 +2,7 @@
 @import "./ConnectionWidget/ConnectionWidget";
 
 // Variables
-$brand: #00D5B1;
+$brand: #00d1b1;
 $brand-light: #F2FFFD;
 $grey-light: #F7F8FC;
 $red-light: #ffd5ca;
@@ -24,6 +24,18 @@ th.column-wordproof {
     background: #fff;
 
     .button {
+      background: $grey-lighter;
+      box-shadow: 0px 2px 0px 0px darken($grey-lighter, 10);
+      position: relative;
+      font-weight: 500;
+      padding: 4px 25px 31px 25px;
+      border: none;
+
+      &.is-primary {
+        background: $brand;
+        color: #ffffff;
+        box-shadow: 0px 2px 0px 0px darken($brand, 10);
+      }
 
       &.button-modest {
         background: none;

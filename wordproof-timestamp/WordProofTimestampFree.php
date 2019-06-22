@@ -127,7 +127,7 @@ class WordProofTimestampFree
       'settingsURL' => admin_url('admin.php?page=wordproof'),
       'ajaxSecurity' => wp_create_nonce('wordproof'),
       'postId' => (!empty($post->ID)) ? $post->ID : false,
-      'network' => get_option('wordproof_network', 'eos_main'),
+      'network' => get_option('wordproof_network', false),
       'storeRam' => get_option('wordproof_store_ram', false),
       'storeContent' => get_option('wordproof_store_content', false),
       'accountName' => get_option('wordproof_accountname', ''),

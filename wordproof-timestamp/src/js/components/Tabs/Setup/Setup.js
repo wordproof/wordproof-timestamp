@@ -131,8 +131,9 @@ export default class Setup extends Component {
               return <p>To use EOS, you need to buy an EOS account. The Wizard will walk you through the entire process.</p>;
             case 'eos_jungle':
               return <p>To use the EOS Jungle testnet, you should have your wallet setup already. Headover to &apos;Timestamp&apos; to test your connection.</p>;
-            default:
+            case 'telos_main':
               return <p>Telos is the innovation district of the EOS.IO ecosystem. If you want to know more about Telos, read <a href="https://medium.com/goodblock-io/welcome-to-telos-wordproof-user-fd719b171341" target="_blank" rel="noopener noreferrer">this introduction article by Telos founder Douglas Horn</a>.</p>
+            default:
           }
         })()}
 

@@ -95,7 +95,7 @@ class NotificationHelper
       <div class="notice notice-<?php echo $type; ?> <?php echo ($isDismissible) ? 'is-dismissible' : ''; ?>">
           <p><?php _e($message, WORDPROOF_SLUG); ?></p>
         <?php if (!empty($buttonLink)): ?>
-            <p><a target="_blank" rel="noopener noreferrer" href="<?php echo $buttonLink; ?>"><?php _e($buttonText, WORDPROOF_SLUG); ?></a></p>
+            <p><a href="<?php echo $buttonLink; ?>"><?php _e($buttonText, WORDPROOF_SLUG); ?></a></p>
         <?php endif; ?>
       </div>
     <?php

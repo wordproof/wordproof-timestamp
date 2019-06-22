@@ -35,7 +35,7 @@ class SettingsPage {
 
     public function generateSettingsPage() {
         wp_localize_script('wordproof.admin.js', 'wordproofSettings', [
-            'network' => get_option('wordproof_network', 'eos_main'),
+            'network' => get_option('wordproof_network', false),
             'storeContent' => get_option('wordproof_store_content', false),
             'storeRam' => get_option('wordproof_store_ram', false),
             'certificateText' => CertificateHelper::getCertificateText(),

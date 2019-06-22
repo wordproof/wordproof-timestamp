@@ -92,7 +92,9 @@ export default class Popup extends Component {
 
                       {this.state.state === 'raw' &&
                       <textarea className="textarea" readOnly
-                                rows="10">{wordproofData.timestampMeta.hash_raw}</textarea>
+                                rows="10" defaultValue={wordproofData.timestampMeta.hash_raw}>
+
+                      </textarea>
                       }
 
                       {this.state.state === 'help' &&

@@ -90,11 +90,12 @@ export default class Timestamp extends Component {
       <div>
         <div className="vo-card">
           <h3>You need WORD to Timestamp (it’s free!)</h3>
-          <p>Both as an anti-SPAM measurement and to make sure every timestamp is valuable (all timestamps needs to be processed by nodes in the blockchain and stay there forever), WordProof uses WORD - The digital postage stamp. Think of 1 WORD as 1 postage stamp. For every timestamp you place, you need 1 WORD.</p>
-          <p>Every timestamp ‘costs’ 1 WORD, but you get 1 WORD back for every timestamp you place, up to 5 per day. In other words: you can timestamp 5 pieces of content per day for free. This allows websites to get started with timestamping and is an effective measure against SPAM!</p>
-          <p>To get started with WordProof Timestamp, you can claim 100 WORD for free. Make sure you create a blockchain account first, because the WORD stamps will be added to your account.</p>
+          <p>Both as an anti-SPAM measurement and to make sure every timestamp is valuable (all timestamps needs to be processed by nodes in the blockchain and stay there forever), WordProof uses WORD - The digital postage stamp. Think of <strong>1 WORD as 1 postage stamp</strong>. For every timestamp you place, you need 1 WORD.</p>
+          <p>Every timestamp ‘costs’ 1 WORD, but you get 1 WORD back for every timestamp you place, up to 5 per day. In other words: <strong>you can timestamp 5 pieces of content per day for free</strong>strong>. This allows websites to get started with timestamping and is an effective measure against SPAM!</p>
+          <p>To get started with WordProof Timestamp, you can claim <strong>100 WORD</strong> for free. Make sure you create a blockchain account first, because the WORD stamps will be added to your account.</p>
           <a href="https://stamps.wordproof.io" target="_blank" rel="noopener noreferrer" className="button is-primary">Claim 100 WORD for free</a>
           <h3>Scatter connection check & WORD balance</h3>
+          <p>Open and unlock your Scatter wallet to check if the setup was successfull: the widget below should color GREEN. You can also see your WORD balance (after timestamping your first post).</p>
 
           <ConnectionWidget status={this.state.widgetStatus} balance={this.state.balance}
                             accountName={this.state.accountName}/>

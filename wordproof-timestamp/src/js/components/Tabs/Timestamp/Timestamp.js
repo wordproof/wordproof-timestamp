@@ -1,19 +1,26 @@
 import React, {Component} from 'react'
 import initWallet from '../../../wallet';
 import getBonus from '../../../bonus';
+import ConnectionWidget from '../../ConnectionWidget/ConnectionWidget';
 
 export default class Timestamp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      wallet: null,
       walletAvailable: '',
       isLoading: true,
       boxClasses: 'box',
       bonusStatus: null,
       bonusIsLoading: null,
       bonusMessage: null,
-      bonusBoxClasses: 'box'
+      bonusBoxClasses: 'box',
+      wallet: null,
+      accountName: null,
+      balance: null,
+      buttonsDisabled: true,
+      widgetStatus: 'connecting',
+      timestampStatus: null,
+      timestampCertificateLink: null
     }
   }
 
@@ -26,23 +33,24 @@ export default class Timestamp extends Component {
       const wallet = initWallet();
       try {
         await wallet.connect();
-        if (!wallet.authenticated) { await wallet.login(); }
+        if (!wallet.authenticated) {
+          await wallet.login();
+        }
 
         this.registerWalletConnection();
+        this.setBalance(wallet.accountInfo.account_name);
+
         this.setState({
           wallet: wallet,
-          walletAvailable: true,
-          isLoading: false,
-          boxClasses: 'box box-success',
-          bonusIsLoading: true
+          accountName: wallet.accountInfo.account_name,
+          widgetStatus: 'success',
+          buttonsDisabled: false
         });
-        this.checkBonus(wallet.accountInfo.account_name, wordproofData.network);
       } catch (error) {
         this.setState({
-          walletAvailable: false,
-          isLoading: false,
-          boxClasses: 'box box-failed'
+          widgetStatus: 'failed',
         });
+        console.log(error);
       }
     }
     return this.state.wallet;
@@ -93,26 +101,38 @@ export default class Timestamp extends Component {
     console.log('bonus', bonus);
   }
 
+  setBalance = async (accountName) => {
+    let result = await fetch(wordproofData.ajaxURL, {
+      method: "POST",
+      headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
+      body:
+      'action=wordproof_get_balance' +
+      '&security=' + wordproofData.ajaxSecurity +
+      '&accountName=' + accountName,
+    }).then((response) => {
+      return response.json();
+    })
+    .catch(error => console.error(error));
+
+    if (result.success) {
+      const word = result.balance.replace('.0000', '');
+      this.setState({balance: word});
+    }
+  }
+
   render() {
     return (
       <div>
         <div className="vo-card">
-          <h3>You are ready to timestamp your content!</h3>
-          <p>Each time you timestamp content, you need the Scatter Wallet to sign your transaction. Thus, make sure that the Scatter application is opened and unlocked before you load the page.</p>
-          <p>To verify whether the set-up has been successful, you can use this tab. The box below shows whether WordProof Timestamp has successfully connected to your Scatter Wallet.</p>
+          <h3>You need WORD to Timestamp (it’s free!)</h3>
+          <p>Both as an anti-SPAM measurement and to make sure every timestamp is valuable (all timestamps needs to be processed by nodes in the blockchain and stay there forever), WordProof uses WORD - The digital postage stamp. Think of 1 WORD as 1 postage stamp. For every timestamp you place, you need 1 WORD.</p>
+          <p>Every timestamp ‘costs’ 1 WORD, but you get 1 WORD back for every timestamp you place, up to 5 per day. In other words: you can timestamp 5 pieces of content per day for free. This allows websites to get started with timestamping and is an effective measure against SPAM!</p>
+          <p>To get started with WordProof Timestamp, you can claim 100 WORD for free. Make sure you create a blockchain account first, because the WORD stamps will be added to your account.</p>
+          <a href="https://stamps.wordproof.io" target="_blank" rel="noopener noreferrer" className="button is-primary">Claim 100 WORD for free</a>
+          <h3>Scatter connection check & WORD balance</h3>
 
-          <div className={this.state.boxClasses}>
-            { this.state.isLoading ?
-              <div><div className="wordproof-connecting"><img className="loading-spinner" height="64px" width="64px" src="/wp-admin/images/spinner-2x.gif" alt="loading" />Connecting...</div></div> : ''
-            }
-            { this.state.walletAvailable === true ?
-              <p><span className="dashicons dashicons-yes-alt"></span> All set! There is a connection with your Scatter wallet.</p> : ''
-            }
-
-            { this.state.walletAvailable === false ?
-              <p>WordProof Timestamp can&apos;t connect to the Scatter wallet. Open & unlock the wallet and refresh this page to try again.</p> : ''
-            }
-          </div>
+          <ConnectionWidget status={this.state.widgetStatus} balance={this.state.balance}
+                            accountName={this.state.accountName}/>
 
           { (this.state.bonusIsLoading !== null) ?
           <div className={this.state.bonusBoxClasses}>

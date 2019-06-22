@@ -59,9 +59,9 @@ export default class Admin extends Component {
       <div className='wordproof-admin-app'>
         <h2 className="nav-tab-wrapper">
           <a href="#dashboard" className={`nav-tab ${this.activeTab('', '#dashboard')}`}>Dashboard</a>
-          <a href="#setup" className={`nav-tab ${this.activeTab('#setup')}`}>Setup</a>
-          <a href="#customize" className={`nav-tab ${this.activeTab('#customize')}`}>Customize</a>
-          <a href="#timestamp" className={`nav-tab ${this.activeTab('#timestamp')}`}>Timestamp</a>
+          <a href="#setup" className={`nav-tab ${this.activeTab('#setup')}`}>1. Setup</a>
+          <a href="#timestamp" className={`nav-tab ${this.activeTab('#timestamp')}`}>2. Timestamp & WORD</a>
+          <a href="#customize" className={`nav-tab ${this.activeTab('#customize')}`}>3. Customize</a>
           <a href="#support" className={`nav-tab ${this.activeTab('#support')}`}>Support</a>
           <a href="#learn" className={`nav-tab ${this.activeTab('#learn')}`}>Learn</a>
         </h2>

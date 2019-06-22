@@ -138,7 +138,7 @@ export default class Setup extends Component {
 
         <p>After making your choice, you are ready to set up WordProof! Click the button below to open our wizard, which will guide you through the rest of our process.</p>
 
-        <button className="button is-primary" onClick={(e) => this.handleWindowPopup(e, 'https://wordproof.io/timestamp-setup-wizard', this.state.network)}>Launch the Setup Wizard</button>
+        <button className="button is-primary" onClick={(e) => this.handleWindowPopup(e, 'https://wordproof.io/setup', this.state.network)}>Launch the Setup Wizard</button>
 
         <button className={`button button-modest ${ this.state.hideAdvanced ? '' : 'hidden' }`} onClick={this.handleAdvancedOptions}>Show advanced settings</button>
 

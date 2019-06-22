@@ -32,7 +32,7 @@ export default class Dashboard extends Component {
               <p>Once you have completed the set-up, go to any post of page and make sure the Scatter wallet is opened (on your computer) and unlocked. The WordProof Timestamp plugin will detect the Scatter wallet and show a ‘Timestamp’ button above the ‘Publish’ section on every post or page.</p>
             </div>
             <div className="vo-col">
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/5GUlcfaKsyk" frameBorder="0"
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/Wby7hsSuua0" frameBorder="0"
                       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen></iframe>
             </div>

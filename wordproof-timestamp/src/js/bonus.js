@@ -1,5 +1,5 @@
 //Constants
-const bonusApi = 'https://wordtokenportal.herokuapp.com/api/';
+const bonusApi = 'https://api.wordproof.io/api/';
 const endpoints = {
   'GET_OR_CREATE_USER': 'user/get_or_create',
   'VALIDATE_USER_FOR_BONUS': 'bonus/validate',

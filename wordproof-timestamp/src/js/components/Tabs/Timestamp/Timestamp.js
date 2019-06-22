@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import initWallet from '../../../wallet';
-import getBonus from '../../../bonus';
 import ConnectionWidget from '../../ConnectionWidget/ConnectionWidget';
 
 export default class Timestamp extends Component {
@@ -10,10 +9,6 @@ export default class Timestamp extends Component {
       walletAvailable: '',
       isLoading: true,
       boxClasses: 'box',
-      bonusStatus: null,
-      bonusIsLoading: null,
-      bonusMessage: null,
-      bonusBoxClasses: 'box',
       wallet: null,
       accountName: null,
       balance: null,
@@ -71,36 +66,6 @@ export default class Timestamp extends Component {
     .catch(error => console.error(error));
   }
 
-   checkBonus = async(accountName, chain) => {
-    const bonus = await getBonus(accountName, chain);
-    switch(bonus.status) {
-      case 'success':
-        this.setState({
-          bonusStatus: 'success',
-          bonusBoxClasses: 'box box-success',
-          bonusMessage: bonus.message,
-          bonusIsLoading: false
-        });
-        break;
-      case 'failed':
-        this.setState({
-          bonusStatus: 'failed',
-          bonusBoxClasses: 'box box-success',
-          bonusMessage: bonus.message,
-          bonusIsLoading: false
-        });
-        break;
-      default: //no_change
-        this.setState({
-          bonusStatus: 'no_change',
-          bonusBoxClasses: 'box',
-          bonusMessage: bonus.message,
-          bonusIsLoading: false,
-        });
-    }
-    console.log('bonus', bonus);
-  }
-
   setBalance = async (accountName) => {
     let result = await fetch(wordproofData.ajaxURL, {
       method: "POST",
@@ -133,19 +98,6 @@ export default class Timestamp extends Component {
 
           <ConnectionWidget status={this.state.widgetStatus} balance={this.state.balance}
                             accountName={this.state.accountName}/>
-
-          { (this.state.bonusIsLoading !== null) ?
-          <div className={this.state.bonusBoxClasses}>
-            { this.state.bonusIsLoading ?
-              <div><div className="wordproof-connecting"><img className="loading-spinner" height="64px" width="64px" src="/wp-admin/images/spinner-2x.gif" alt="loading" />Connecting...</div></div> : ''
-            }
-            { this.state.bonusStatus !== null ?
-              <p>
-                { (this.state.bonusStatus !== 'failed') ? <span className="dashicons dashicons-yes-alt"></span> : <span className="dashicons dashicons-no-alt"></span>}
-                { this.state.bonusMessage }
-                { (this.state.bonusStatus !== 'failed') ? " You are ready to time-stamp. Make sure to keep your Scatter wallet open and unlocked!" : "" }</p> : ''
-            }
-          </div> : ''}
 
           <h3>Help! WordProof Timestamp does not connect to my Scatter Wallet!</h3>
           <p>Blockchain is not an easy subject and uses accounts, wallets and transactions. This is what makes the technology so safe, but also what makes it challenging to create easy-to-use blockchain applications. If the set-up did not work properly, here are a few steps you can take:</p>

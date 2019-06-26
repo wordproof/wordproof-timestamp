@@ -20,6 +20,7 @@ if (!defined('WPINC')) {
     die();
 }
 
+define('WORDPROOF_VERSION', 1.0);
 define('WORDPROOF_SLUG', 'wordproof');
 define('WORDPROOF_PREFIX', 'wordproof');
 define('WORDPROOF_ROOT_FILE', __FILE__);

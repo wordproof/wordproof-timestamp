@@ -48,7 +48,7 @@ class TimestampAjaxHelper
   {
     check_ajax_referer('wordproof', 'security');
     $postId = intval($_REQUEST['post_id']);
-    $hash = TimestampHelper::generatePostHashById($postId);
+    $hash = TimestampHelper::generatePostHash($postId);
     echo json_encode($hash);
     exit;
   }
@@ -57,7 +57,7 @@ class TimestampAjaxHelper
   {
     check_ajax_referer('wordproof', 'security');
     $postId = intval($_REQUEST['post_id']);
-    $json = TimestampHelper::generatePostHashById($postId, true);
+    $json = TimestampHelper::generatePostHash($postId, true);
     echo $json;
     exit;
   }

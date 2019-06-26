@@ -4,13 +4,16 @@ namespace WordProofTimestampFree\includes;
 
 class TimestampHelper {
 
-  public static function generatePostHashById($postId, $getRaw = false) {
-    $post = get_post($postId);
+  public static function generatePostHash($post, $getRaw = false) {
+    if (is_int($post)) {
+      $post = get_post($post);
+    }
     $title = $post->post_title;
     $content = $post->post_content;
     $dateModified = get_the_modified_date('c', $post);
-    $hash = self::generatePostHash($title, $content, $dateModified, $getRaw);
-    return $hash;
+    $encodedContent = json_encode(["title" => $title, "content" => $content, "date" => $dateModified]);
+    $hash = hash('sha256', $encodedContent);
+    return $getRaw ? $encodedContent : $hash;
   }
 
   public static function buildPostMetaArray($args) {
@@ -44,7 +47,7 @@ class TimestampHelper {
 
     //Add required fields
     $meta['current_post_modified'] = $post->post_modified;
-    $meta['hash_raw'] = TimestampHelper::generatePostHashById($post->ID, true);
+    $meta['hash_raw'] = TimestampHelper::generatePostHash($post, true);
 
     //Prepare fields
     if (isset($meta['wordproof_content'])) {
@@ -77,12 +80,6 @@ class TimestampHelper {
     }
 
     return $meta;
-  }
-
-  private static function generatePostHash($title, $content, $dateMotified, $getRaw = false) {
-    $encodedContent = json_encode(["title" => $title, "content" => $content, "date" => $dateMotified]);
-    $hash = hash('sha256', $encodedContent);
-    return $getRaw ? $encodedContent : $hash;
   }
 
   private static function preparePostContent($content) {

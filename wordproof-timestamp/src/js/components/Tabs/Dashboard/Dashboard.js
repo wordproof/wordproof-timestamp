@@ -29,7 +29,11 @@ export default class Dashboard extends Component {
               <p>The Set-Up takes 5 minutes: 1) Create a blockchain account 2) Download a ‘Wallet’ 3) Configure the Wallet. You only need to do the set-up once!</p>
               <a href="#setup" className="button is-primary">Start The Setup</a>
               <h3>How do I timestamp?</h3>
-              <p>Once you have completed the set-up, go to any post of page and make sure the Scatter wallet is opened (on your computer) and unlocked. The WordProof Timestamp plugin will detect the Scatter wallet and show a ‘Timestamp’ button above the ‘Publish’ section on every post or page.</p>
+              <p>Once you have completed the set-up, go to any post of page and make sure the Scatter wallet is opened (on your computer) and unlocked. The WordProof Timestamp plugin will detect the Scatter wallet and show a &apos;Timestamp&apos; button above the &apos;Publish&apos; section on every post or page.</p>
+              <h3>GUIDE: WordProof Timestamp</h3>
+              <p>We have written an article &apos;WordProof Timestamp Guide&apos; on how to setup WordProof Timestamp. It covers everything from activating the plugin to your first timestamp!</p>
+              <a target="_blank" rel="noopener noreferrer" href="https://wordproof.io/guide" className="button">Installation Guide</a>
+
             </div>
             <div className="vo-col">
               <iframe width="560" height="315" src="https://www.youtube.com/embed/Wby7hsSuua0" frameBorder="0"

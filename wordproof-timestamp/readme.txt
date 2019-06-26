@@ -90,3 +90,7 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 = 0.6.3 =
 *Release date: June 4rd, 2019*
 * Backwards compatibility fix
+
+= 1.0.0 =
+*Release date: June 22th, 2019*
+* Our biggest release yet! Please share your experience with us!

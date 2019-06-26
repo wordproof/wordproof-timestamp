@@ -54,16 +54,17 @@ class WordProofTimestampFree
     return $defaults;
   }
 
-  public function addColumnContent($column_name, $post_id)
+  public function addColumnContent($column_name)
   {
+    global $post;
     if ($column_name == 'wordproof') {
-      $meta = self::getTimestampMeta($post_id);
+      $meta = self::getTimestampMeta($post);
 
       if (isset($meta['wordproof_date'])) {
-        if ($meta['wordproof_date'] === get_the_modified_date('Y-m-d H:i:s', $post_id)) {
-          echo '<a target="_blank" href="' . get_permalink($post_id) . '#wordproof">Stamped</a>';
+        if ($meta['wordproof_date'] === get_the_modified_date('Y-m-d H:i:s', $post->ID)) {
+          echo '<a target="_blank" href="' . get_permalink($post->ID) . '#wordproof">Stamped</a>';
         } else {
-          echo '<a target="_blank" href="' . get_permalink($post_id) . '#wordproof">Outdated</a>';
+          echo '<a target="_blank" href="' . get_permalink($post->ID) . '#wordproof">Outdated</a>';
         }
       } else {
         echo '—';
@@ -77,7 +78,7 @@ class WordProofTimestampFree
     global $post;
 
     if (!empty($post)) {
-      $meta = self::getTimestampMeta($post->ID);
+      $meta = self::getTimestampMeta($post);
 
       if (isset($meta['wordproof_date'])) {
         $content .= CertificateHelper::getCertificateHtml($post->ID);
@@ -92,7 +93,7 @@ class WordProofTimestampFree
     global $post;
 
     if (!empty($post)) {
-      $meta = self::getTimestampMeta($post->ID);
+      $meta = self::getTimestampMeta($post);
 
       if (isset($meta['wordproof_date'])) {
         echo '<div id="wordproof-popup-container"></div>';
@@ -105,9 +106,7 @@ class WordProofTimestampFree
     global $post;
     wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', array(), filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
 
-    $timestampPostMeta = TimestampHelper::getTimestampPostMeta($post->ID);
-    $timestampPostMeta['current_post_modified'] = $post->post_modified;
-    $timestampPostMeta['hash_raw'] = TimestampHelper::generatePostHashById($post->ID, true);
+    $timestampPostMeta = TimestampHelper::getPopupMeta($post);
 
     wp_localize_script('wordproof.frontend.js', 'wordproofData', array(
       'timestampMeta' => $timestampPostMeta,
@@ -137,12 +136,12 @@ class WordProofTimestampFree
   }
 
   /**
-   * @param $postId
+   * @param $post
    * @return array|mixed|null
    */
-  public static function getTimestampMeta($postId)
+  public static function getTimestampMeta($post)
   {
-    return TimestampHelper::getTimestampPostMeta($postId);
+    return TimestampHelper::getPopupMeta($post);
   }
 
   /**

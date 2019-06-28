@@ -4,7 +4,7 @@ Tags: blockchain, timestamp, eosio, eos, telos, web30, copyright, scatter, decen
 Requires at least: 4.5
 Tested up to: 5.2.2
 Requires PHP: 5.3
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,3 +94,8 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 = 1.0.0 =
 *Release date: June 22th, 2019*
 * Our biggest release yet! Please share your experience with us!
+
+= 1.0.1 =
+*Release date: June 28th, 2019*
+* Code Optimization
+* Page load Optimization

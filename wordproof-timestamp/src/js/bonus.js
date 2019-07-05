@@ -81,7 +81,8 @@ async function requestTransaction(accountName, chain) {
     body: JSON.stringify({
       'accountName': accountName,
       'chain': chain,
-      'bonusName': 'bonusOne'
+      'bonusName': 'bonusOne',
+      'actionToUse': 'transfer'
     })
   }).then(response => response.json())
   .then((data) => {

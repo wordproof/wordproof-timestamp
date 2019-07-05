@@ -73,7 +73,7 @@ export default class Popup extends Component {
                 <button className="wordproof-modal-close">&times;</button>
                 <h2 className="title has-text-centered">Timestamp Certificate</h2>
                 <div className="subtitle-container">
-                  <h3 className="subtitle has-text-centered">Validated by </h3>
+                  <h3 className="subtitle has-text-centered">Protected with </h3>
                   <img src={`${wordproofData.pluginDirUrl}assets/images/wordproof-logo.png`} alt="WordProof logo"/>
                 </div>
 
@@ -117,6 +117,8 @@ export default class Popup extends Component {
                           <a onClick={() => this.changeStateTo('content')}>Back to Timestamp Certificate</a> :
                           <a onClick={() => this.changeStateTo('help')}>About this Timestamp Certificate</a>
                         }
+
+                        <a target="_blank" rel="noopener noreferrer" href="https://wordproof.io/check/">Timestamp Checker</a>
 
                       </div>
                       <div className="column">

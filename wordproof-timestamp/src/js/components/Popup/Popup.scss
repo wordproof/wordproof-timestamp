@@ -30,6 +30,11 @@ $grey-light: darken($grey-light, 10);
 
 .modal {
   z-index: 9999;
+
+  &-background {
+    background: rgba(10, 10, 10, 0.75);
+  }
+
   &-card {
     font-size: 20px;
 

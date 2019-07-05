@@ -118,6 +118,7 @@ Color can be changed inline (search for %23, which equals #)
     &.content {
       padding-bottom: 0.3rem;
       margin-bottom: 0;
+      min-height: 300px;
     }
 
     h3 {
@@ -175,7 +176,7 @@ Color can be changed inline (search for %23, which equals #)
     a {
       font-size: 0.65em;
       font-weight: 600;
-      text-decoration: underline;
+      text-decoration: none;
       display: block;
     }
 

@@ -98,10 +98,16 @@ export default class Popup extends Component {
                       }
 
                       {this.state.state === 'help' &&
-                        <div className="box">
-                          <h3>What is this Timestamp Certificate?</h3>
-                          <p>This content is protected with WordProof, a new web standard for a more trustworthy internet. This timestamp exists of a unique hash (summary) based on the title, date and content of this page. It is stored in the blockchain and can never be altered. You can verify this Timestamp Certificate yourself with the <a target="_blank" rel="noopener noreferrer" href="https://wordproof.io/check/">WordProof Timestamp Checker</a>.</p>
-                        </div>
+                      <div>
+                        <h3>What is this Timestamp Certificate?</h3>
+                        <p>This content is protected with WordProof, a new web standard for a more trustworthy internet.
+                          This timestamp exists of a unique hash (summary) based on the title, date and content of this
+                          page. It is stored in the blockchain and can never be altered.</p> <p>You can verify this
+                        Timestamp Certificate yourself with the <a target="_blank" rel="noopener noreferrer"
+                                                                   href="https://wordproof.io/check/">WordProof
+                          Timestamp Checker</a>. The hash of this post is {wordproofData.timestampMeta.wordproof_hash}
+                      </p>
+                      </div>
                       }
                     </div>
                   </div>
@@ -111,14 +117,15 @@ export default class Popup extends Component {
                       <div className="column">
                         <a
                           href={this.getTransactionUrl(wordproofData.timestampMeta.wordproof_network, wordproofData.timestampMeta.wordproof_transaction_id)}
-                          target="_blank" rel="noopener noreferrer">View on the blockchain</a>
+                          target="_blank" rel="noopener noreferrer nofollow">View on the blockchain</a>
 
                         {this.state.state === 'help' ?
                           <a onClick={() => this.changeStateTo('content')}>Back to Timestamp Certificate</a> :
                           <a onClick={() => this.changeStateTo('help')}>About this Timestamp Certificate</a>
                         }
 
-                        <a target="_blank" rel="noopener noreferrer" href="https://wordproof.io/check/">Timestamp Checker</a>
+                        <a target="_blank" rel="noopener noreferrer nofollow" href="https://wordproof.io/check/">Timestamp
+                          Checker</a>
 
                       </div>
                       <div className="column">
@@ -134,7 +141,8 @@ export default class Popup extends Component {
 
               </section>
               <footer className="modal-card-foot">
-                <a href="https://wordproof.io" target="_blank" rel="noopener noreferrer">Protect your content on the
+                <a href="https://wordproof.io" target="_blank" rel="noopener noreferrer nofollow">Protect your content
+                  on the
                   blockchain with WordProof Timestamp</a>
               </footer>
             </div>

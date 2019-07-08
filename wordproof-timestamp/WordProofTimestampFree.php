@@ -127,7 +127,6 @@ class WordProofTimestampFree
       'ajaxSecurity' => wp_create_nonce('wordproof'),
       'postId' => (!empty($post->ID)) ? $post->ID : false,
       'network' => get_option('wordproof_network', false),
-      'storeRam' => get_option('wordproof_store_ram', false),
       'storeContent' => get_option('wordproof_store_content', false),
       'accountName' => get_option('wordproof_accountname', ''),
       'wordBalance' => get_option('wordproof_balance', 0),

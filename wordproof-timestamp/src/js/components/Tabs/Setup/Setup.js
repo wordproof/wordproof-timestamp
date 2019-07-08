@@ -5,9 +5,6 @@ export default class Setup extends Component {
     super(props)
     this.state = {
       network: wordproofSettings.network,
-      storeContent: wordproofSettings.storeContent,
-      storeRam: wordproofSettings.storeRam,
-      hasAccount: window.localStorage.getItem('wordproof-has-account') === 'true' ? true : false,
       hideAdvanced: true,
       notificationMessage: null
     }
@@ -31,24 +28,6 @@ export default class Setup extends Component {
     setTimeout(() => {
       this.setState({notificationMessage: null});
     }, 5000)
-  }
-
-  handleStoreContent = () => {
-    this.setState({storeContent: !this.state.storeContent})
-  }
-
-  handleStoreRam = () => {
-    this.setState({storeRam: !this.state.storeRam})
-  }
-
-  handleYes = () => {
-    document.querySelector('#wordproof_network').focus()
-    this.closePopup()
-  }
-
-  closePopup = () => {
-    window.localStorage.setItem('wordproof-has-account', 'true')
-    this.setState({hasAccount: true})
   }
 
   handleWindowPopup = (event, url, network) => {

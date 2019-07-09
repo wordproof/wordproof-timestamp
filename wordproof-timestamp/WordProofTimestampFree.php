@@ -106,7 +106,7 @@ class WordProofTimestampFree
     global $post;
     wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', array(), filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
 
-    $timestampPostMeta = TimestampHelper::getPopupMeta($post);
+    $timestampPostMeta = self::getTimestampMeta($post);
 
     wp_localize_script('wordproof.frontend.js', 'wordproofData', array(
       'timestampMeta' => $timestampPostMeta,

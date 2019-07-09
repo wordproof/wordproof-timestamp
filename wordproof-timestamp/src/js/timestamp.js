@@ -11,7 +11,7 @@ export default async function timestamp(wallet) {
     let result = await wallet.eosApi.transact({
       actions: [
         {
-          account: 'wordtokeneos', //TODO TOKEN ACCOUNT
+          account: 'wordtokeneos',
           name: 'stamp',
           authorization: [
             {

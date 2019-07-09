@@ -2,19 +2,9 @@
 
 namespace WordProofTimestampFree\includes;
 
-class TimestampHelper {
+use WordProofTimestampFree\includes\Controller\HashController;
 
-  public static function generatePostHash($post, $getRaw = false) {
-    if (is_int($post)) {
-      $post = get_post($post);
-    }
-    $title = $post->post_title;
-    $content = $post->post_content;
-    $dateModified = get_the_modified_date('c', $post);
-    $encodedContent = json_encode(["title" => $title, "content" => $content, "date" => $dateModified]);
-    $hash = hash('sha256', $encodedContent);
-    return $getRaw ? $encodedContent : $hash;
-  }
+class PostMetaHelper {
 
   public static function buildPostMetaArray($args) {
     $meta = [];
@@ -47,7 +37,7 @@ class TimestampHelper {
 
     //Add required fields
     $meta['current_post_modified'] = $post->post_modified;
-    $meta['hash_raw'] = TimestampHelper::generatePostHash($post, true);
+    $meta['hash_raw'] = new HashController($post, true);
 
     //Prepare fields
     if (isset($meta['wordproof_content'])) {

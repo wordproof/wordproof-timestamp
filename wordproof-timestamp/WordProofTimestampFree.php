@@ -9,7 +9,7 @@ use WordProofTimestampFree\includes\NotificationHelper;
 use WordProofTimestampFree\includes\Page\SettingsPage;
 use WordProofTimestampFree\includes\AdminAjaxHelper;
 use WordProofTimestampFree\includes\CertificateHelper;
-use WordProofTimestampFree\includes\TimestampHelper;
+use WordProofTimestampFree\includes\PostMetaHelper;
 use WordProofTimestampFree\includes\TimestampAjaxHelper;
 
 /**
@@ -58,7 +58,7 @@ class WordProofTimestampFree
   {
     global $post;
     if ($column_name == 'wordproof') {
-      $meta = self::getTimestampMeta($post);
+      $meta = PostMetaHelper::getPopupMeta($post);
 
       if (isset($meta['wordproof_date'])) {
         if ($meta['wordproof_date'] === get_the_modified_date('Y-m-d H:i:s', $post->ID)) {
@@ -78,7 +78,7 @@ class WordProofTimestampFree
     global $post;
 
     if (!empty($post)) {
-      $meta = self::getTimestampMeta($post);
+      $meta = PostMetaHelper::getPopupMeta($post);
 
       if (isset($meta['wordproof_date'])) {
         $content .= CertificateHelper::getCertificateHtml($post->ID);
@@ -93,7 +93,7 @@ class WordProofTimestampFree
     global $post;
 
     if (!empty($post)) {
-      $meta = self::getTimestampMeta($post);
+      $meta = PostMetaHelper::getPopupMeta($post);
 
       if (isset($meta['wordproof_date'])) {
         echo '<div id="wordproof-popup-container"></div>';
@@ -106,7 +106,7 @@ class WordProofTimestampFree
     global $post;
     wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', array(), filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
 
-    $timestampPostMeta = self::getTimestampMeta($post);
+    $timestampPostMeta = PostMetaHelper::getPopupMeta($post);
 
     wp_localize_script('wordproof.frontend.js', 'wordproofData', array(
       'timestampMeta' => $timestampPostMeta,
@@ -132,15 +132,6 @@ class WordProofTimestampFree
       'wordBalance' => get_option('wordproof_balance', 0),
       'pluginDirUrl' => plugin_dir_url(__FILE__)
     ));
-  }
-
-  /**
-   * @param $post
-   * @return array|mixed|null
-   */
-  public static function getTimestampMeta($post)
-  {
-    return TimestampHelper::getPopupMeta($post);
   }
 
   /**

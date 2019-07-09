@@ -2,9 +2,10 @@
 
 namespace WordProofTimestampFree\includes;
 
+use WordProofTimestampFree\includes\Controller\HashController;
+
 class TimestampAjaxHelper
 {
-
   public function __construct()
   {
     add_action('wp_ajax_wordproof_save_meta', array($this, 'saveMeta'));
@@ -28,12 +29,16 @@ class TimestampAjaxHelper
       'wordproof_block_num' => !empty($_REQUEST['block_num']) ? $_REQUEST['block_num'] : '',
       'wordproof_block_time' => !empty($_REQUEST['block_time']) ? $_REQUEST['block_time'] : '',
       'wordproof_network' => !empty($_REQUEST['network']) ? $_REQUEST['network'] : '',
-      'wordproof_hash' => !empty($_REQUEST['hash']) ? $_REQUEST['hash'] : ''
+      'wordproof_hash' => !empty($_REQUEST['hash']) ? $_REQUEST['hash'] : '',
     ];
 
-    $meta = TimestampHelper::buildPostMetaArray($args);
+    $meta = PostMetaHelper::buildPostMetaArray($args);
 
-    TimestampHelper::saveTimestampPostMeta($postId, $meta);
+    //Save new posts with the web article standard, this should be dynamic in the future
+    $args['wordproof_type'] = WEB_ARTICLE_TIMESTAMP;
+    $args['wordproof_version'] = 0.1;
+
+    PostMetaHelper::saveTimestampPostMeta($postId, $meta);
 
     echo json_encode(array(
       'success' => true,
@@ -48,7 +53,7 @@ class TimestampAjaxHelper
   {
     check_ajax_referer('wordproof', 'security');
     $postId = intval($_REQUEST['post_id']);
-    $hash = TimestampHelper::generatePostHash($postId);
+    $hash = new HashController($postId, false);
     echo json_encode($hash);
     exit;
   }
@@ -57,7 +62,7 @@ class TimestampAjaxHelper
   {
     check_ajax_referer('wordproof', 'security');
     $postId = intval($_REQUEST['post_id']);
-    $json = TimestampHelper::generatePostHash($postId, true);
+    $json = new HashController($postId, true);
     echo $json;
     exit;
   }

@@ -35,8 +35,8 @@ class TimestampAjaxHelper
     $meta = PostMetaHelper::buildPostMetaArray($args);
 
     //Save new posts with the web article standard, this should be dynamic in the future
-    $args['wordproof_type'] = WEB_ARTICLE_TIMESTAMP;
-    $args['wordproof_version'] = 0.1;
+    $meta['type'] = WEB_ARTICLE_TIMESTAMP;
+    $meta['version'] = 0.1;
 
     PostMetaHelper::saveTimestampPostMeta($postId, $meta);
 
@@ -53,7 +53,7 @@ class TimestampAjaxHelper
   {
     check_ajax_referer('wordproof', 'security');
     $postId = intval($_REQUEST['post_id']);
-    $hash = new HashController($postId, false);
+    $hash = HashController::getHash($postId, false);
     echo json_encode($hash);
     exit;
   }
@@ -62,7 +62,7 @@ class TimestampAjaxHelper
   {
     check_ajax_referer('wordproof', 'security');
     $postId = intval($_REQUEST['post_id']);
-    $json = new HashController($postId, true);
+    $json = HashController::getHash($postId, true);
     echo $json;
     exit;
   }

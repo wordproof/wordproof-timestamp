@@ -2,32 +2,36 @@
 
 namespace WordProofTimestampFree\includes\Controller;
 
+use WordProofTimestampFree\includes\PostMetaHelper;
+
 class HashController
 {
   /**
-   * HashController constructor.
-   * @param int|\WP_Post $post
-   * @param bool $getRaw
-   * @param string $type
-   * @param string $version
+   * @param $post
+   * @param bool $raw
+   * @return bool|object|string
    */
-  public function __construct($post, $getRaw = false)
+  public static function getHash($post, $raw = false)
   {
     if (is_int($post)) {
       $post = get_post($post);
     }
 
-    $standard = $this->getTypeAndVersion($post);
-    switch ($standard['type']) {
+    list($type, $version) = PostMetaHelper::getPostMetaValues($post, ['type', 'version']);
+    switch ($type) {
       case WEB_ARTICLE_TIMESTAMP:
-        $object = $this->generateJsonForWebArticleTimestamp($post, $standard['version']);
+        $object = self::generateJsonForWebArticleTimestamp($post, $version);
         break;
       default:
-        $object = $this->generateLegacyTimestamp($post);
+        $object = self::generateLegacyTimestamp($post);
         break;
     }
 
-    if ($getRaw) {
+    if (!$object) {
+      return false;
+    }
+
+    if ($raw) {
       return $object;
     }
 
@@ -37,21 +41,22 @@ class HashController
   /**
    * @param $post
    * @param $version
-   * @return object
-   * TODO: Implement attributes
+   * @return object|bool
    * More info: https://github.com/wordproof/timestamp-standard/blob/master/WebArticleTimestamp.md
    */
-  private function generateJsonForWebArticleTimestamp($post, $version)
+  private static function generateJsonForWebArticleTimestamp($post, $version)
   {
     switch ($version) {
+      case 0.1:
+        $array = [];
+        $array['type'] = WEB_ARTICLE_TIMESTAMP;
+        $array['version'] = $version;
+        $array['title'] = $post->post_title;
+        $array['content'] = $post->post_content;
+        $array['date'] = get_the_modified_date('c', $post);
+        return json_encode($array);
       default:
-        $object = [];
-        $object['type'] = WEB_ARTICLE_TIMESTAMP;
-        $object['version'] = $version;
-        $object['title'] = $post->post_title;
-        $object['content'] = $post->post_content;
-        $object['date'] = get_the_modified_date('c', $post);
-        return json_encode($object);
+        return false;
     }
   }
 
@@ -59,21 +64,12 @@ class HashController
    * @param $post
    * @return object
    */
-  private function generateLegacyTimestamp($post)
+  private static function generateLegacyTimestamp($post)
   {
-    $object = [];
-    $object['title'] = $post->post_title;
-    $object['content'] = $post->post_content;
-    $object['date'] = get_the_modified_date('c', $post);
-    return json_encode($object);
-  }
-
-  private function getTypeAndVersion($post) {
-    $meta = get_post_meta($post->ID, 'wordproof_timestamp_data', true);
-    if (isset($meta['wordproof_type']) && isset($meta['wordproof_version'])) {
-      return ['type' => $meta['wordproof_type'], 'version' => $meta['wordproof_version']];
-    } else {
-      return ['type' => '', 'version' => ''];
-    }
+    $array = [];
+    $array['title'] = $post->post_title;
+    $array['content'] = $post->post_content;
+    $array['date'] = get_the_modified_date('c', $post);
+    return json_encode($array);
   }
 }

@@ -37,7 +37,7 @@ class PostMetaHelper {
 
     //Add required fields
     $meta['current_post_modified'] = $post->post_modified;
-    $meta['hash_raw'] = new HashController($post, true);
+    $meta['hash_raw'] = HashController::getHash($post, true);
 
     //Prepare fields
     if (isset($meta['wordproof_content'])) {
@@ -56,11 +56,15 @@ class PostMetaHelper {
     $meta = self::getTimestampPostMeta($post);
     $values = [];
     foreach($keys as $key) {
-        $values[$key] = (isset($meta[$key])) ? $meta[$key] : '';
+        $values[] = (isset($meta[$key])) ? $meta[$key] : '';
     }
     return $values;
   }
 
+  /**
+   * @param $post
+   * @return array
+   */
   private static function getTimestampPostMeta($post) {
     $meta = get_post_meta($post->ID, 'wordproof_timestamp_data', true);
 

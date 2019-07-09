@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Popup from './components/Popup/Popup';
+import Certificate from './components/Certficate/Certificate';
 
 (function() {
-  if (document.querySelector('#wordproof-popup-container')) {
-    ReactDOM.render(<Popup />, document.querySelector('#wordproof-popup-container'));
-    checkUrlForWordproof();
-    addCertificateLinkEventListener();
-    addCloseModalEventListener();
+  let schema = document.querySelector('.wordproof-schema');
+  if (schema) {
+    schema = JSON.parse(schema.innerHTML);
+    if (document.querySelector('#wordproof-certificate-container')) {
+      ReactDOM.render(<Certificate schema={schema} />, document.querySelector('#wordproof-certificate-container'));
+      checkUrlForWordproof();
+      addCertificateLinkEventListener();
+      addCloseModalEventListener();
+    }
   }
 })();
 
@@ -38,7 +42,7 @@ function checkUrlForWordproof() {
 }
 
 function getModal() {
-  return document.querySelector('#wordproof-popup-container .shadowHost').shadowRoot.querySelector('.modal');
+  return document.querySelector('#wordproof-certificate-container .shadowHost').shadowRoot.querySelector('.modal');
 }
 
 function hideModal() {

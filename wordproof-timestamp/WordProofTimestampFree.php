@@ -98,7 +98,7 @@ class WordProofTimestampFree
     if (!empty($post)) {
       $meta = PostMetaHelper::getPostMeta($post, ['wordproof_date']);
       if (isset($meta->wordproof_date)) {
-        echo '<div id="wordproof-popup-container"></div>';
+        echo '<div id="wordproof-certificate-container"></div>';
       }
     }
   }

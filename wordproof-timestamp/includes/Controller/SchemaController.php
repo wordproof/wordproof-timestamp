@@ -32,7 +32,7 @@ class SchemaController
       return false;
     }
 
-    $schema = "<script type='application/ld+json' class='wordproof-schema'>";
+    $schema = '<script type="application/ld+json" class="wordproof-schema">';
     $schema .= $object;
     $schema .= "</script>";
     return $schema;

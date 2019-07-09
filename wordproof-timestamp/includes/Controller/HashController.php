@@ -17,10 +17,10 @@ class HashController
       $post = get_post($post);
     }
 
-    list($type, $version) = PostMetaHelper::getPostMetaValues($post, ['type', 'version']);
-    switch ($type) {
+    $meta = PostMetaHelper::getPostMeta($post, ['type', 'version']);
+    switch ($meta->type) {
       case WEB_ARTICLE_TIMESTAMP:
-        $object = self::generateJsonForWebArticleTimestamp($post, $version);
+        $object = self::generateJsonForWebArticleTimestamp($post, $meta->version);
         break;
       default:
         $object = self::generateLegacyTimestamp($post);

@@ -7,17 +7,17 @@ class CertificateHelper {
     private static $default_text = "View this content's WordProof Timestamp certificate";
     private static $default_url = '#wordproof';
 
-    static public function getCertificateTemplate() {
+    public static function getCertificateTemplate() {
         $template = self::$default_template;
         return $template;
     }
 
-    static public function getCertificateText() {
+    public static function getCertificateText() {
         $text = get_option('wordproof_certificate_text', null) ?: self::$default_text;
         return $text;
     }
 
-    static public function getCertificateUrl() {
+    public static function getCertificateUrl() {
         $url = self::$default_url;
         return $url;
     }
@@ -27,7 +27,7 @@ class CertificateHelper {
    * @param $postId
    * @return mixed|string
    */
-    static public function getCertificateHtml($postId) {
+    public static function getCertificateHtml($postId) {
         $html = self::getCertificateTemplate();
         $text = self::getCertificateText();
         $url = self::getCertificateUrl();

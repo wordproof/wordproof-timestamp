@@ -44,7 +44,7 @@ class PostMetaHelper {
       foreach ($keys as $key) {
         $values[$key] = (isset($meta[$key])) ? $meta[$key] : '';
       }
-      $meta = $values;
+      return (object) $values;
     }
 
     return (object) $meta;

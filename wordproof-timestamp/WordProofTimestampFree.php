@@ -64,8 +64,8 @@ class WordProofTimestampFree
     if ($column_name == 'wordproof') {
       
       $meta = PostMetaHelper::getPostMeta($post, ['wordproof_date']);
-      if (isset($meta->date)) {
-        if ($meta->date === get_the_modified_date('Y-m-d H:i:s', $post->ID)) {
+      if (isset($meta->wordproof_date)) {
+        if ($meta->wordproof_date === get_the_modified_date('Y-m-d H:i:s', $post->ID)) {
           echo '<a target="_blank" href="' . get_permalink($post->ID) . '#wordproof">Stamped</a>';
         } else {
           echo '<a target="_blank" href="' . get_permalink($post->ID) . '#wordproof">Outdated</a>';
@@ -83,7 +83,7 @@ class WordProofTimestampFree
 
     if (!empty($post)) {
       $meta = PostMetaHelper::getPostMeta($post, ['wordproof_date']);
-      if (isset($meta->date)) {
+      if (isset($meta->wordproof_date)) {
         $content .= CertificateHelper::getCertificateHtml($post->ID);
       }
     }
@@ -97,7 +97,7 @@ class WordProofTimestampFree
 
     if (!empty($post)) {
       $meta = PostMetaHelper::getPostMeta($post, ['wordproof_date']);
-      if (isset($meta->date)) {
+      if (isset($meta->wordproof_date)) {
         echo '<div id="wordproof-popup-container"></div>';
       }
     }
@@ -111,7 +111,7 @@ class WordProofTimestampFree
       'pluginDirUrl' => WORDPROOF_URI
     ));
   }
-  
+
   public function addCertificateSchema()
   {
     global $post;

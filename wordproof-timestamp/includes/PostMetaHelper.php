@@ -2,8 +2,6 @@
 
 namespace WordProofTimestampFree\includes;
 
-use WordProofTimestampFree\includes\Controller\HashController;
-
 class PostMetaHelper {
 
   public static function buildPostMetaArray($args) {
@@ -18,10 +16,12 @@ class PostMetaHelper {
     $meta['wordproof_block_time'] = (isset($args['wordproof_block_time'])) ? sanitize_text_field($args['wordproof_block_time']) : '';
     $meta['wordproof_network'] = (isset($args['wordproof_network'])) ? sanitize_text_field($args['wordproof_network']) : '';
     $meta['wordproof_hash'] = (isset($args['wordproof_hash'])) ? sanitize_text_field($args['wordproof_hash']) : '';
+    $meta['type'] = (isset($args['type'])) ? sanitize_text_field($args['type']) : '';
+    $meta['version'] = (isset($args['version'])) ? floatval($args['version']) : '';
     return $meta;
   }
 
-  public static function saveTimestampPostMeta($postId, $meta) {
+  public static function savePostMeta($postId, $meta) {
     if (current_user_can('manage_options')) {
       do_action('wordproof_before_saving_timestamp_meta_data', $postId);
       $result = update_post_meta($postId, 'wordproof_timestamp_data', $meta);
@@ -31,34 +31,23 @@ class PostMetaHelper {
     return false;
   }
 
-  public static function getPopupMeta($post)
-  {
-    $meta = self::getTimestampPostMeta($post);
-
-    //Add required fields
-    $meta['current_post_modified'] = $post->post_modified;
-    $meta['hash_raw'] = HashController::getHash($post, true);
-
-    //Prepare fields
-    if (isset($meta['wordproof_content'])) {
-      $meta['wordproof_content'] = self::preparePostContent($meta['wordproof_content']);
-    }
-
-    return $meta;
-  }
-
   /**
-   * @param \WP_Post $post
+   * @param $post
    * @param array $keys
-   * @return array
+   * @return object
    */
-  public static function getPostMetaValues($post, $keys) {
+  public static function getPostMeta($post, $keys = []) {
     $meta = self::getTimestampPostMeta($post);
-    $values = [];
-    foreach($keys as $key) {
-        $values[] = (isset($meta[$key])) ? $meta[$key] : '';
+
+    if (!empty($keys)) {
+      $values = [];
+      foreach ($keys as $key) {
+        $values[$key] = (isset($meta[$key])) ? $meta[$key] : '';
+      }
+      $meta = $values;
     }
-    return $values;
+
+    return (object) $meta;
   }
 
   /**

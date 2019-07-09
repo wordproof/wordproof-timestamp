@@ -119,33 +119,33 @@ Color can be changed inline (search for %23, which equals #)
       padding-bottom: 0.3rem;
       margin-bottom: 0;
       min-height: 300px;
-    }
 
-    h3 {
-      font-size: 1em;
-      margin: 0.3em 0 0.8em 0;
-      color: $black;
-    }
+      h3 {
+        font-size: 1em;
+        margin: 0 0 0.8em 0 !important;
+        color: $black;
+      }
 
-    p {
-      font-size: 0.73em;
-      line-height: 1.2em;
-      color: $grey-light;
-      white-space: pre-wrap;
-      padding-bottom: 10px;
-    }
+      p {
+        font-size: 0.73em;
+        line-height: 1.2em;
+        color: $grey-light;
+        white-space: pre-wrap;
+        padding-bottom: 10px;
+      }
 
-    textarea {
-      font-size: 0.55rem;
-    }
+      textarea {
+        font-size: 0.55rem;
+      }
 
-    .button-raw {
-      position: absolute;
-      z-index: 1;
-      right: 0;
+      .button-raw {
+        position: absolute;
+        z-index: 1;
+        right: 0;
 
-      &.is-small {
-        font-size: 0.55em;
+        &.is-small {
+          font-size: 0.55em;
+        }
       }
     }
 

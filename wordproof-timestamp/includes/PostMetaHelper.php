@@ -47,6 +47,20 @@ class PostMetaHelper {
     return $meta;
   }
 
+  /**
+   * @param \WP_Post $post
+   * @param array $keys
+   * @return array
+   */
+  public static function getPostMetaValues($post, $keys) {
+    $meta = self::getTimestampPostMeta($post);
+    $values = [];
+    foreach($keys as $key) {
+        $values[$key] = (isset($meta[$key])) ? $meta[$key] : '';
+    }
+    return $values;
+  }
+
   private static function getTimestampPostMeta($post) {
     $meta = get_post_meta($post->ID, 'wordproof_timestamp_data', true);
 

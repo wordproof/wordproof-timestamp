@@ -44,6 +44,7 @@ class WordProofTimestampFree
     add_filter('the_content', array($this, 'addCertificateLink'), 999, 1);
     add_action('wp_footer', array($this, 'addCertificateHtml'), 10);
     add_action('wp_enqueue_scripts', array($this, 'addCertificateScript'), 999);
+    add_action('wp_head', array($this, 'addCertificateSchema'), 999);
 
     add_filter('manage_posts_columns', array($this, 'addColumn'));
     add_action('admin_enqueue_scripts', array($this, 'loadAdminAssets'), 999);
@@ -109,6 +110,12 @@ class WordProofTimestampFree
       'wordProofCssDir' => WORDPROOF_URI_CSS,
       'pluginDirUrl' => WORDPROOF_URI
     ));
+  }
+  
+  public function addCertificateSchema()
+  {
+    global $post;
+    echo SchemaController::getSchema($post);
   }
 
   public function loadAdminAssets()

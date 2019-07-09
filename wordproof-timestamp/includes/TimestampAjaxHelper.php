@@ -30,15 +30,13 @@ class TimestampAjaxHelper
       'wordproof_block_time' => !empty($_REQUEST['block_time']) ? $_REQUEST['block_time'] : '',
       'wordproof_network' => !empty($_REQUEST['network']) ? $_REQUEST['network'] : '',
       'wordproof_hash' => !empty($_REQUEST['hash']) ? $_REQUEST['hash'] : '',
+      'type' => WEB_ARTICLE_TIMESTAMP,
+      'version' => 0.1,
     ];
 
     $meta = PostMetaHelper::buildPostMetaArray($args);
 
-    //Save new posts with the web article standard, this should be dynamic in the future
-    $meta['type'] = WEB_ARTICLE_TIMESTAMP;
-    $meta['version'] = 0.1;
-
-    PostMetaHelper::saveTimestampPostMeta($postId, $meta);
+    PostMetaHelper::savePostMeta($postId, $meta);
 
     echo json_encode(array(
       'success' => true,

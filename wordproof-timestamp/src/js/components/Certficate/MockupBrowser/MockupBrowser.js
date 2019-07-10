@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { DateTime } from "luxon";
 
 export default class MockupBrowser extends Component {
   constructor(props) {
@@ -21,6 +22,15 @@ export default class MockupBrowser extends Component {
       showReadMore: false,
       currentContent: this.props.data.content
     });
+  }
+
+  /**
+   * TODO: Should get WP date format
+   * @param iso
+   * @returns {string}
+   */
+  getDateInFormat(iso) {
+    return DateTime.fromISO(iso).toLocaleString(DateTime.DATETIME_SHORT);
   }
 
   render() {
@@ -90,7 +100,7 @@ export default class MockupBrowser extends Component {
             </div>
             <div className="column">
               <ul>
-                {(data.date) ? <li><span>Modified Date:</span> {data.date}</li> : ''}
+                {(data.date) ? <li><span>Modification Date:</span> {this.getDateInFormat(data.date)}</li> : ''}
               </ul>
             </div>
           </div>

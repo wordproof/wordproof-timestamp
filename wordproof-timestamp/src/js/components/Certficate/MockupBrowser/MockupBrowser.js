@@ -11,8 +11,8 @@ export default class MockupBrowser extends Component {
   }
 
   shrinkContent(content) {
-    if (content.length > 550) {
-      return content = content.substring(0, 550) + '...';
+    if (content.length > 500) {
+      return content = content.substring(0, 500) + '...';
     }
   }
 

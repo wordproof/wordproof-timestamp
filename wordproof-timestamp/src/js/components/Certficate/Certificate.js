@@ -9,9 +9,9 @@ export default class Certificate extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    props.schema.json = getJSON(props.schema);
     props.schema.content = this.prepareContent(props.schema.content);
     props.schema.transactionUrl = this.getTransactionUrl(props.schema.blockchain, props.schema.transactionId);
-    props.schema.json = getJSON(props.schema);
     console.log(props.schema);
   }
 

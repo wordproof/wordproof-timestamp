@@ -11,9 +11,6 @@
 
 $black: #1a1a1a;
 
-$wordpress-blue: #3884B5;
-$wordpress-blue-light: #e7f5ff;
-
 $browser-head: #EDF0F5;
 $browser-url: #F8F9FB;
 
@@ -118,7 +115,7 @@ Color can be changed inline (search for %23, which equals #)
     &.content {
       padding-bottom: 0.3rem;
       margin-bottom: 0;
-      min-height: 300px;
+      min-height: 350px;
 
       h3 {
         font-size: 1em;
@@ -131,7 +128,14 @@ Color can be changed inline (search for %23, which equals #)
         line-height: 1.2em;
         color: $grey-light;
         white-space: pre-wrap;
-        padding-bottom: 10px;
+        margin-bottom: 10px;
+
+        .read-more {
+          text-decoration: underline;
+          cursor: pointer;
+          color: $grey;
+          font-size: 0.8em;
+        }
       }
 
       textarea {

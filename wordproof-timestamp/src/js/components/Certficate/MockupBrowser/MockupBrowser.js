@@ -4,8 +4,23 @@ export default class MockupBrowser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nextView: null
+      nextView: null,
+      showReadMore: true,
+      currentContent: this.shrinkContent(props.data.content),
     }
+  }
+
+  shrinkContent(content) {
+    if (content.length > 550) {
+      return content = content.substring(0, 550) + '...';
+    }
+  }
+
+  readMore = () => {
+    this.setState({
+      showReadMore: false,
+      currentContent: this.props.data.content
+    });
   }
 
   render() {
@@ -28,14 +43,15 @@ export default class MockupBrowser extends Component {
                   return (
                     <>
                       <h3>{data.title}</h3>
-                      <p>{data.content}</p>
+                      <p>{this.state.currentContent}</p>
+                      {(this.state.showReadMore) ? <p><span className="read-more" onClick={this.readMore}>Read More</span></p> : '' }
                     </>
                   );
                 case 'raw':
                   //Get Raw
                   return (
                     <>
-                      <textarea className="textarea" cols="10" readOnly value={JSON.stringify(data.json)}>
+                      <textarea className="textarea" rows="13" readOnly value={JSON.stringify(data.json)}>
                       </textarea>
                     </>
                   )

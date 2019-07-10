@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from 'react'
+import striptags from 'striptags'
 import CertificateModal from './CertificateModal/CertificateModal';
 import './Certificate.scss'
 import getJSON from "../../lib/WebArticleTimestamp";
@@ -8,7 +9,7 @@ export default class Certificate extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    props.schema.content = this.renderContent(props.schema.content);
+    props.schema.content = this.prepareContent(props.schema.content);
     props.schema.transactionUrl = this.getTransactionUrl(props.schema.blockchain, props.schema.transactionId);
     props.schema.json = getJSON(props.schema);
     console.log(props.schema);
@@ -29,10 +30,11 @@ export default class Certificate extends Component {
     }
   }
 
-  renderContent = (content) => {
-    if (content.length > 500) {
-      return content.substring(0, 500) + '...';
-    }
+  prepareContent = (content) => {
+    content = content.replace(/<\/p>/g, 'WORDPROOF_PARAGRAPH_END');
+    content = content.replace(/(\r\n|\n|\r)/gm, "");
+    content = striptags(content);
+    content = content.replace(/WORDPROOF_PARAGRAPH_END/g, '\n\n');
     return content;
   }
 

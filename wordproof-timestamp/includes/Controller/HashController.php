@@ -21,6 +21,7 @@ class HashController
     switch ($meta->type) {
       case WEB_ARTICLE_TIMESTAMP:
         $object = self::generateJsonForWebArticleTimestamp($post, $meta->version);
+        $object = apply_filters('wordproof_web_article_timestamp_hash_object', $object);
         break;
       default:
         $object = self::generateLegacyTimestamp($post);
@@ -35,6 +36,7 @@ class HashController
       return $object;
     }
 
+    $object = apply_filters('wordproof_hash_object', $object);
     return hash('sha256', $object);
   }
 

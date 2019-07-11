@@ -62,7 +62,7 @@ class SchemaController
         foreach ($attributes as $key => $value) {
           $array[$key] = $value;
         }
-        return json_encode($array, JSON_UNESCAPED_SLASHES);
+        return json_encode($array, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
       default:
         return false;
     }
@@ -83,6 +83,6 @@ class SchemaController
     $array['content'] = $post->post_content;
     $array['date'] = get_the_modified_date('c', $post);
     $array['url'] = $meta->wordproof_link;
-    return json_encode($array, JSON_UNESCAPED_SLASHES);
+    return json_encode($array);
   }
 }

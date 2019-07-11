@@ -32,11 +32,11 @@ class HashController
       case WEB_ARTICLE_TIMESTAMP:
         $fields = self::getFieldsArticle($post);
         $fields = array_merge($fields[0], $fields[1]);
-        $object = json_encode($fields, JSON_UNESCAPED_SLASHES);
+        $object = json_encode($fields, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
         break;
       default:
         $array = self::getFieldsLegacy($post);
-        $object = json_encode($array, JSON_UNESCAPED_SLASHES);
+        $object = json_encode($array);
         break;
     }
 

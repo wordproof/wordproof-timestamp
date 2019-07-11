@@ -78,9 +78,9 @@ class Metabox extends Component {
           await wallet.login();
         }
 
-        // this.registerWalletConnection();
-        // this.registerAccountname(wallet.accountInfo.account_name);
-        // this.setBalance(wallet.accountInfo.account_name);
+        this.registerWalletConnection();
+        this.registerAccountname(wallet.accountInfo.account_name);
+        this.setBalance(wallet.accountInfo.account_name);
 
         this.setState({
           wallet: wallet,

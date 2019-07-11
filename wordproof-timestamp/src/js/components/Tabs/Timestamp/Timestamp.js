@@ -1,8 +1,15 @@
 import React, {Component} from 'react'
+import {instanceOf} from 'prop-types';
+import {withCookies, Cookies} from 'react-cookie';
 import initWallet from '../../../wallet';
 import ConnectionWidget from '../../ConnectionWidget/ConnectionWidget';
 
-export default class Timestamp extends Component {
+class Timestamp extends Component {
+
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -20,14 +27,26 @@ export default class Timestamp extends Component {
   }
 
   componentDidMount() {
-    this.getWallet();
-  }
+    const {cookies} = this.props;
+    const networkChanged = cookies.get('admin_network_changed', {path: '/'});
+    if (networkChanged) {
+      cookies.remove('admin_network_changed', {path: '/'});
+      this.getWallet(true);
+    } else {
+      this.getWallet();
+    }  }
 
-  getWallet = async () => {
+  getWallet = async ($terminateBeforeConnect = false) => {
     if (this.state.wallet === null) {
       const wallet = initWallet();
       try {
         await wallet.connect();
+
+        if ($terminateBeforeConnect) {
+          await wallet.terminate();
+          await wallet.connect();
+        }
+
         if (!wallet.authenticated) {
           await wallet.login();
         }
@@ -43,6 +62,7 @@ export default class Timestamp extends Component {
         });
       } catch (error) {
         this.setState({
+          wallet: null,
           widgetStatus: 'failed',
         });
         console.log(error);
@@ -101,8 +121,6 @@ export default class Timestamp extends Component {
           <ConnectionWidget status={this.state.widgetStatus} balance={this.state.balance}
                             accountName={this.state.accountName}/>
 
-          <input type="submit" onClick={this.props.nextStep} name="submit" id="submit" className="button is-primary" value='Next step'/>
-
           <h3>Help! WordProof Timestamp does not connect to my Scatter Wallet.</h3>
           <p>Blockchain is no easy technology and requires accounts, wallets and transactions. This is what makes the technology so safe, but also what makes it challenging to create easy-to-use blockchain applications. If the set-up did not work properly, here are a few steps you can take:</p>
           <ol>
@@ -115,3 +133,5 @@ export default class Timestamp extends Component {
     )
   }
 }
+
+export default withCookies(Timestamp);

@@ -19,10 +19,14 @@ class TimestampAjaxHelper
     $postId = intval($_REQUEST['post_id']);
     $transactionId = sanitize_text_field($_REQUEST['transaction_id']);
 
-    $metaFields = HashController::getFields($postId);
+    $metaFields = HashController::getFieldsArticle($postId);
 
     $meta = $metaFields[0];
     $meta['attributes'] = $metaFields[1];
+
+    $meta['blockchain'] = get_option('wordproof_network');
+    $meta['transactionId'] = $transactionId;
+    $meta['hash'] = HashController::getHash($postId);
 
     PostMetaHelper::savePostMeta($postId, $meta);
 

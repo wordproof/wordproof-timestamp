@@ -32,7 +32,7 @@ export default async function timestamp(wallet) {
      */
     console.log('Success', result);
     if (typeof result.processed !== 'undefined') {
-      return saveTimestamp(result.processed.id);
+      return saveTimestamp(postId, result.processed.id);
     }
 
   } catch (error) {
@@ -75,7 +75,7 @@ function getTransactionData(wallet, hash) {
  * @param transactionId
  * @returns {Promise<Response>}
  */
-function saveTimestamp(transactionId) {
+function saveTimestamp(postId, transactionId) {
   return fetch(wordproofData.ajaxURL, {
     method: "POST",
     headers: {

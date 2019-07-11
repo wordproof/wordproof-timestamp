@@ -59,6 +59,6 @@ class PostMetaHelper {
       }
     }
 
-    return $meta;
+    return (empty($meta)) ? [] : $meta;
   }
 }

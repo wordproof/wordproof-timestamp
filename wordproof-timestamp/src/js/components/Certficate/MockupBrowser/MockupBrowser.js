@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { DateTime } from "luxon";
+import {DateTime} from "luxon";
 
 export default class MockupBrowser extends Component {
   constructor(props) {
@@ -36,7 +36,7 @@ export default class MockupBrowser extends Component {
   render() {
     const data = this.props.data;
     return (
-      <section className="mockup-browser" data-url='test'>
+      <section className="mockup-browser" data-url={(data.url) ? data.url : ''}>
         <div className="mockup-browser-content content">
           <div className="mockup-browser-content-inner">
 
@@ -54,7 +54,8 @@ export default class MockupBrowser extends Component {
                     <>
                       <h3>{data.title}</h3>
                       <p>{this.state.currentContent}</p>
-                      {(this.state.showReadMore) ? <p><span className="read-more" onClick={this.readMore}>Read More</span></p> : '' }
+                      {(this.state.showReadMore) ?
+                        <p><span className="read-more" onClick={this.readMore}>Read More</span></p> : ''}
                     </>
                   );
                 case 'raw':
@@ -73,10 +74,11 @@ export default class MockupBrowser extends Component {
                       <p>This content is protected with WordProof, a new web standard for a more trustworthy internet.
                         This timestamp exists of a unique hash (summary) based on the title, date and content of this
                         page. It is stored in the blockchain and can never be altered.</p>
-                      <p>You can verify this Timestamp Certificate yourself with the
-                        <a target="_blank" rel="noopener noreferrer" href="https://wordproof.io/check/">WordProof Timestamp Checker</a>.
-                        The hash of this post is {data.hash}
-                    </p>
+                      <p>You can verify this Timestamp Certificate yourself with
+                        the <a target="_blank" rel="noopener noreferrer" href="https://wordproof.io/check/">WordProof
+                          Timestamp Checker</a>.
+                        The hash of this post is {data.hash}.
+                      </p>
                     </>
 
                   )

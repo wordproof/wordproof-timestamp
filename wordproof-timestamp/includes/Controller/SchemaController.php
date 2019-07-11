@@ -40,8 +40,8 @@ class SchemaController
   }
 
   /**
-   * @param $post
    * @param $meta
+   * @param $attributes
    * @return object|bool
    * More info: https://github.com/wordproof/timestamp-standard/blob/master/WebArticleTimestamp.md
    */
@@ -53,7 +53,7 @@ class SchemaController
         $array['@context']['@type'] = WEB_ARTICLE_TIMESTAMP;
         $array['@context']['@version'] = $meta->version;
         $array['blockchain'] = $meta->blockchain;
-        $array['transactionId'] = $meta->transaction_id;
+        $array['transactionId'] = $meta->transactionId;
         $array['hash'] = $meta->hash;
         $array['title'] = $meta->title;
         $array['content'] = $meta->content;

@@ -18,11 +18,21 @@ class HashController
       $post = get_post($post);
     }
 
-    $type = WEB_ARTICLE_TIMESTAMP;
+    $type = false;
+    $meta = (array) PostMetaHelper::getPostMeta($post);
+    if (!empty($meta)) {
+      if (isset($meta['type'])) {
+        $type = $meta['type'];
+      }
+    } else {
+      $type = WEB_ARTICLE_TIMESTAMP;
+    }
+
     switch ($type) {
       case WEB_ARTICLE_TIMESTAMP:
-        $array = array_merge(self::getFieldsArticle($post));
-        $object = json_encode($array, JSON_UNESCAPED_SLASHES);
+        $fields = self::getFieldsArticle($post);
+        $fields = array_merge($fields[0], $fields[1]);
+        $object = json_encode($fields, JSON_UNESCAPED_SLASHES);
         break;
       default:
         $array = self::getFieldsLegacy($post);

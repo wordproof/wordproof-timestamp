@@ -1,5 +1,8 @@
-import React, { Component } from 'react'
-import './Admin.scss'
+import React, {Component} from 'react'
+import {instanceOf} from 'prop-types';
+import {withCookies, Cookies} from 'react-cookie';
+import './Admin.scss';
+
 import Dashboard from './Tabs/Dashboard/Dashboard';
 import Setup from './Tabs/Setup/Setup';
 import Customize from './Tabs/Customize/Customize';
@@ -7,7 +10,11 @@ import Timestamp from './Tabs/Timestamp/Timestamp';
 import Support from './Tabs/Support/Support';
 import Learn from './Tabs/Learn/Learn';
 
-export default class Admin extends Component {
+class Admin extends Component {
+
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  };
 
   constructor(props) {
     super(props)
@@ -18,10 +25,22 @@ export default class Admin extends Component {
   }
 
   componentDidMount() {
+    const {cookies} = this.props;
     window.addEventListener("hashchange", () => {
-      this.setState({hash: window.location.hash})
+      this.setState({hash: window.location.hash});
+      this.setCookie('admin_hash', window.location.hash);
     }, false)
-    this.setState({hash: window.location.hash})
+    this.setState({hash: window.location.hash});
+
+    let cookie = cookies.get('admin_hash');
+    if (cookie !== undefined) {
+      this.setState({hash: cookie});
+    }
+  }
+
+  setCookie = (key, value) => {
+    const {cookies} = this.props;
+    cookies.set(key, value, {path: '/', maxAge: 3600})
   }
 
   isActive = (tab) => {
@@ -36,25 +55,35 @@ export default class Admin extends Component {
     }
   }
 
-  tabContent = (hash) => {
-    switch(hash) {
+  nextStep = () => {
+    switch (this.state.hash) {
       case '#setup':
-        return <Setup />;
-      case '#customize':
-        return <Customize />;
+        return this.setCookie('admin_hash', '#timestamp');
       case '#timestamp':
-        return <Timestamp />;
-      case '#support':
-        return <Support />;
-      case '#learn':
-        return <Learn />;
+        return this.setCookie('admin_hash', '#customize');
       default:
-        return <Dashboard />
+        return this.setCookie('admin_hash', '#dashboard');
     }
   }
 
-  render () {
-    //TODO: Add &tab=xxx to keep the current page when saving
+  tabContent = (hash) => {
+    switch (hash) {
+      case '#setup':
+        return <Setup setCookie={this.setCookie} nextStep={this.nextStep} />;
+      case '#customize':
+        return <Customize/>;
+      case '#timestamp':
+        return <Timestamp nextStep={this.nextStep} />;
+      case '#support':
+        return <Support/>;
+      case '#learn':
+        return <Learn/>;
+      default:
+        return <Dashboard/>
+    }
+  }
+
+  render() {
     return (
       <div className='wordproof-admin-app'>
         <h2 className="nav-tab-wrapper">
@@ -66,9 +95,11 @@ export default class Admin extends Component {
           <a href="#learn" className={`nav-tab ${this.activeTab('#learn')}`}>Learn</a>
         </h2>
         <div className="tab-content">
-          { this.tabContent(this.state.hash) }
+          {this.tabContent(this.state.hash)}
         </div>
       </div>
     )
   }
 }
+
+export default withCookies(Admin);

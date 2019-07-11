@@ -1,10 +1,17 @@
 import React, {Component} from 'react';
+import {instanceOf} from 'prop-types';
+import {withCookies, Cookies} from 'react-cookie';
 import ConnectionWidget from '../ConnectionWidget/ConnectionWidget';
 import initWallet from '../../wallet';
 import timestamp from '../../timestamp';
 import getBonus from '../../bonus';
 
-export default class Metabox extends Component {
+class Metabox extends Component {
+
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +26,14 @@ export default class Metabox extends Component {
   }
 
   componentDidMount() {
-    this.getWallet();
+    const {cookies} = this.props;
+    const networkChanged = cookies.get('admin_network_changed', {path: '/'});
+    if (networkChanged) {
+      cookies.remove('admin_network_changed', {path: '/'});
+      this.getWallet(true);
+    } else {
+      this.getWallet();
+    }
   }
 
   timestamp = async () => {
@@ -49,11 +63,17 @@ export default class Metabox extends Component {
     });
   }
 
-  getWallet = async () => {
+  getWallet = async ($terminateBeforeConnect = false) => {
     if (this.state.wallet === null) {
       const wallet = initWallet();
       try {
         await wallet.connect();
+
+        if ($terminateBeforeConnect) {
+          await wallet.terminate();
+          await wallet.connect();
+        }
+
         if (!wallet.authenticated) {
           await wallet.login();
         }
@@ -70,6 +90,7 @@ export default class Metabox extends Component {
         });
       } catch (error) {
         this.setState({
+          wallet: null,
           widgetStatus: 'failed',
         });
         console.log(error);
@@ -185,3 +206,5 @@ export default class Metabox extends Component {
     )
   }
 }
+
+export default withCookies(Metabox);

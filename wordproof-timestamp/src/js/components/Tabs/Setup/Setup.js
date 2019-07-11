@@ -11,15 +11,15 @@ export default class Setup extends Component {
   }
 
   handleNetwork = async (e) => {
-    this.setState({notificationMessage: ''});
     let option = e.target.name;
     let network = e.target.value;
     let name = e.target.getAttribute('data-readable-name');
+    this.props.setCookie('admin_network_changed', true);
     let result = await this.saveOption(option, network);
     if (result && result.success !== undefined && result.success === true) {
       this.setState({network: network, notificationMessage: 'Your selected blockchain ' + name + ' has been saved.'});
     } else {
-      this.setState({network: null, notificationMessage: 'Something went wrong. Please try again.'});
+      this.setState({network: null, notificationMessage: 'Something went wrong. Please save your network using the save button below.'});
     }
     this.startRemoveNotificationTimer();
   }
@@ -134,6 +134,7 @@ export default class Setup extends Component {
         <p>After making your choice, you are ready to set up WordProof! Click the button below to open our wizard, which will guide you through the rest of our process.</p>
 
         <button className="button is-primary" onClick={(e) => this.handleWindowPopup(e, 'https://wordproof.io/setup', this.state.network)}>Launch the Setup Wizard</button>
+        <input type="submit" onClick={this.props.nextStep} name="submit" id="submit" className="button is-primary" value='Save and next step'/>
 
         <button className={`button button-modest ${ this.state.hideAdvanced ? '' : 'hidden' }`} onClick={this.handleAdvancedOptions}>Show advanced settings</button>
 

@@ -1,8 +1,15 @@
 import React, {Component} from 'react'
+import {instanceOf} from 'prop-types';
+import {withCookies, Cookies} from 'react-cookie';
 import initWallet from '../../../wallet';
 import ConnectionWidget from '../../ConnectionWidget/ConnectionWidget';
 
-export default class Timestamp extends Component {
+class Timestamp extends Component {
+
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -20,14 +27,26 @@ export default class Timestamp extends Component {
   }
 
   componentDidMount() {
-    this.getWallet();
-  }
+    const {cookies} = this.props;
+    const networkChanged = cookies.get('admin_network_changed', {path: '/'});
+    if (networkChanged) {
+      cookies.remove('admin_network_changed', {path: '/'});
+      this.getWallet(true);
+    } else {
+      this.getWallet();
+    }  }
 
-  getWallet = async () => {
+  getWallet = async ($terminateBeforeConnect = false) => {
     if (this.state.wallet === null) {
       const wallet = initWallet();
       try {
         await wallet.connect();
+
+        if ($terminateBeforeConnect) {
+          await wallet.terminate();
+          await wallet.connect();
+        }
+
         if (!wallet.authenticated) {
           await wallet.login();
         }
@@ -43,6 +62,7 @@ export default class Timestamp extends Component {
         });
       } catch (error) {
         this.setState({
+          wallet: null,
           widgetStatus: 'failed',
         });
         console.log(error);
@@ -89,25 +109,29 @@ export default class Timestamp extends Component {
     return (
       <div>
         <div className="vo-card">
-          <h3>You need WORD to Timestamp (it&apos;s free!)</h3>
-          <p>Both as an anti-SPAM measurement and to make sure every timestamp is valuable (all timestamps needs to be processed by nodes in the blockchain and stay there forever), WordProof uses WORD - The digital postage stamp. Think of <strong>1 WORD as 1 postage stamp</strong>. For every timestamp you place, you need 1 WORD.</p>
-          <p>Every timestamp &apos;costs&apos; 1 WORD, but you get 1 WORD back for every timestamp you place, up to 5 per day. In other words: <strong>you can timestamp 5 pieces of content per day for free</strong>. This allows websites to get started with timestamping and is an effective measure against SPAM!</p>
-          <p>To get started with WordProof Timestamp, you can claim <strong>100 WORD</strong> for free. Make sure you create a blockchain account first, because the WORD stamps will be added to your account.</p>
+          <h3>How to Timestamp?</h3>
+          <p>Go to any WordPress post or page to secure your content with blockchain.</p>
+          <h3>You need WORD stamps to Timestamp (it&apos;s free!)</h3>
+          <p>Both as an anti-SPAM measurement and to make sure every timestamp is valuable, WordProof uses &apos;WORD&apos; stamps. Think of 1 WORD as 1 (digital) postage stamp. For every timestamp you place, you need 1 WORD stamp.</p>
+          <p>You can timestamp 5 pieces of content per day without &apos;paying&apos; any WORD stamps. As soon as you timestamp your first content, your blockchain account will automatically reiceive 10 WORD stamps. Use the button below to claim 90 additional WORD stamps.</p>
           <a href="https://stamps.wordproof.io" target="_blank" rel="noopener noreferrer" className="button is-primary">Claim 100 WORD for free</a>
-          <h3>Scatter connection check & WORD balance</h3>
-          <p>Open and unlock your Scatter wallet to check if the setup was successfull: the widget below should color GREEN. You can also see your WORD balance (after timestamping your first post).</p>
+          <h3>Scatter connection check & WORD stamps balance</h3>
+          <p>Open and unlock your Scatter wallet to check if the setup was successfull: the widget below should color GREEN. If it does, you are ready to timestamp your content by going to any WordPress page/post. </p>
 
           <ConnectionWidget status={this.state.widgetStatus} balance={this.state.balance}
                             accountName={this.state.accountName}/>
 
-          <h3>Help! WordProof Timestamp does not connect to my Scatter Wallet!</h3>
-          <p>Blockchain is not an easy subject and uses accounts, wallets and transactions. This is what makes the technology so safe, but also what makes it challenging to create easy-to-use blockchain applications. If the set-up did not work properly, here are a few steps you can take:</p>
+          <h3>Help! WordProof Timestamp does not connect to my Scatter Wallet.</h3>
+          <p>Blockchain is no easy technology and requires accounts, wallets and transactions. This is what makes the technology so safe, but also what makes it challenging to create easy-to-use blockchain applications. If the set-up did not work properly, here are a few steps you can take:</p>
           <ol>
             <li>Make sure the Scatter Wallet application is open on your computer and that you unlocked it (entered your passphrase).</li>
             <li>Run the Setup Wizard again and follow each step very carefully. Make sure to save your keys!</li>
+            <li>Join the <a href="https://wordproof.io/telegram" target="_blank" rel="noopener noreferrer">WordProof Telegram</a> to ask fellow WordProof users for help.</li>
           </ol>
         </div>
       </div>
     )
   }
 }
+
+export default withCookies(Timestamp);

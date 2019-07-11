@@ -30,6 +30,7 @@ th.column-wordproof {
       font-weight: 500;
       padding: 4px 25px 31px 25px;
       border: none;
+      margin-right: 10px;
 
       &.is-primary {
         background: $brand;
@@ -46,10 +47,6 @@ th.column-wordproof {
         font-style: italic;
         text-decoration: underline;
         color: #858585;
-      }
-
-      &.button-primary {
-        margin-right: 10px;
       }
 
       &.dismiss {

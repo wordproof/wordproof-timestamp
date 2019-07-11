@@ -13,7 +13,7 @@ export default class Setup extends Component {
   }
 
   handleNetwork = (event) => {
-    this.saveOption(event);
+    //this.saveOption(event);
     this.setState({network: event.target.value});
   }
 

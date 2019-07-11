@@ -28,7 +28,7 @@ export default function getWallet() {
 
   function initAccess() {
     let appName = 'wordproof_'
-    appName += (typeof wordproofData.network === 'string')? wordproofData.network : 'eos_main'
+    appName += (typeof wordproofData.network === 'string') ? wordproofData.network : 'eos_main'
 
     let network = typeof networks[wordproofData.network] !== 'undefined'
         ? networks[wordproofData.network]

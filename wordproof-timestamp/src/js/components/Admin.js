@@ -28,7 +28,7 @@ class Admin extends Component {
     const {cookies} = this.props;
     window.addEventListener("hashchange", () => {
       this.setState({hash: window.location.hash});
-      this.setCookie(window.location.hash);
+      this.setCookie('admin_hash', window.location.hash);
     }, false)
     this.setState({hash: window.location.hash});
 
@@ -38,9 +38,9 @@ class Admin extends Component {
     }
   }
 
-  setCookie = (hash) => {
+  setCookie = (key, value) => {
     const {cookies} = this.props;
-    cookies.set('admin_hash', hash, {path: '/', maxAge: 3600})
+    cookies.set(key, value, {path: '/', maxAge: 3600})
   }
 
   isActive = (tab) => {
@@ -58,18 +58,18 @@ class Admin extends Component {
   nextStep = () => {
     switch (this.state.hash) {
       case '#setup':
-        return this.setCookie('#timestamp');
+        return this.setCookie('admin_hash', '#timestamp');
       case '#timestamp':
-        return this.setCookie('#customize');
+        return this.setCookie('admin_hash', '#customize');
       default:
-        return this.setCookie('#dashboard');
+        return this.setCookie('admin_hash', '#dashboard');
     }
   }
 
   tabContent = (hash) => {
     switch (hash) {
       case '#setup':
-        return <Setup nextStep={this.nextStep} />;
+        return <Setup setCookie={this.setCookie} nextStep={this.nextStep} />;
       case '#customize':
         return <Customize/>;
       case '#timestamp':

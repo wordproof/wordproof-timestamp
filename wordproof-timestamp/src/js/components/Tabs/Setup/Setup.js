@@ -13,6 +13,7 @@ export default class Setup extends Component {
   }
 
   handleNetwork = (event) => {
+    this.props.setCookie('admin_network_changed', true);
     //this.saveOption(event);
     this.setState({network: event.target.value});
   }

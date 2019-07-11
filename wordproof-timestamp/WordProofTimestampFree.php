@@ -120,6 +120,7 @@ class WordProofTimestampFree
 
   public function loadAdminAssets()
   {
+    //TODO: Only on necessary pages
     global $post;
     wp_enqueue_style('wordproof.admin.css', WORDPROOF_URI_CSS . '/admin.css', array(), filemtime(WORDPROOF_DIR_CSS . '/admin.css'));
 
@@ -129,8 +130,8 @@ class WordProofTimestampFree
       'settingsURL' => admin_url('admin.php?page=wordproof'),
       'ajaxSecurity' => wp_create_nonce('wordproof'),
       'postId' => (!empty($post->ID)) ? $post->ID : false,
+      'permalink' => (!empty($post->ID)) ? get_permalink($post) : false,
       'network' => get_option('wordproof_network', false),
-      'storeContent' => get_option('wordproof_store_content', false),
       'accountName' => get_option('wordproof_accountname', ''),
       'wordBalance' => get_option('wordproof_balance', 0),
       'pluginDirUrl' => plugin_dir_url(__FILE__)

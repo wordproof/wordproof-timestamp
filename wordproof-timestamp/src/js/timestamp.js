@@ -65,7 +65,7 @@ function getTransactionData(wallet, hash) {
     from: wallet.auth.accountName,
     to: paybackAccount,
     quantity: '1.0000 WORD',
-    memo: `${`permalink`} - content protected with WordProof Timestamp, WordProof.io`,
+    memo: `${wordproofData.permalink} - content protected with WordProof Timestamp, WordProof.io`,
     hash: hash,
   }
 }

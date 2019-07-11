@@ -4,6 +4,7 @@ import Certificate from './components/Certficate/Certificate';
 
 (function() {
   let schema = document.querySelector('.wordproof-schema');
+
   if (schema) {
     schema = JSON.parse(schema.innerHTML);
     if (document.querySelector('#wordproof-certificate-container')) {

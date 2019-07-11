@@ -110,6 +110,6 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 * Improved network selection
 
 = 1.1.0 =
-*Release date: Juliy 11th, 2019*
+*Release date: Juliy 12th, 2019*
 * Implement Timestamp Standard
 * Various performance and page load improvements

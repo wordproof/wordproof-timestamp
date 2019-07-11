@@ -11,9 +11,6 @@
 
 $black: #1a1a1a;
 
-$wordpress-blue: #3884B5;
-$wordpress-blue-light: #e7f5ff;
-
 $browser-head: #EDF0F5;
 $browser-url: #F8F9FB;
 
@@ -30,6 +27,11 @@ $grey-light: darken($grey-light, 10);
 
 .modal {
   z-index: 9999;
+
+  &-background {
+    background: rgba(10, 10, 10, 0.75);
+  }
+
   &-card {
     font-size: 20px;
 
@@ -113,33 +115,41 @@ Color can be changed inline (search for %23, which equals #)
     &.content {
       padding-bottom: 0.3rem;
       margin-bottom: 0;
-    }
+      min-height: 350px;
 
-    h3 {
-      font-size: 1em;
-      margin: 0.3em 0 0.8em 0;
-      color: $black;
-    }
+      h3 {
+        font-size: 1em;
+        margin: 0 0 0.8em 0 !important;
+        color: $black;
+      }
 
-    p {
-      font-size: 0.73em;
-      line-height: 1.2em;
-      color: $grey-light;
-      white-space: pre-wrap;
-      padding-bottom: 10px;
-    }
+      p {
+        font-size: 0.73em;
+        line-height: 1.2em;
+        color: $grey-light;
+        white-space: pre-wrap;
+        margin-bottom: 10px;
 
-    textarea {
-      font-size: 0.55rem;
-    }
+        .read-more {
+          text-decoration: underline;
+          cursor: pointer;
+          color: $grey;
+          font-size: 0.8em;
+        }
+      }
 
-    .button-raw {
-      position: absolute;
-      z-index: 1;
-      right: 0;
+      textarea {
+        font-size: 0.55rem;
+      }
 
-      &.is-small {
-        font-size: 0.55em;
+      .button-raw {
+        position: absolute;
+        z-index: 1;
+        right: 0;
+
+        &.is-small {
+          font-size: 0.55em;
+        }
       }
     }
 
@@ -170,7 +180,7 @@ Color can be changed inline (search for %23, which equals #)
     a {
       font-size: 0.65em;
       font-weight: 600;
-      text-decoration: underline;
+      text-decoration: none;
       display: block;
     }
 

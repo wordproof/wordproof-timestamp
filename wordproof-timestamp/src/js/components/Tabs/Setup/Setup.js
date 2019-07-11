@@ -5,35 +5,29 @@ export default class Setup extends Component {
     super(props)
     this.state = {
       network: wordproofSettings.network,
-      storeContent: wordproofSettings.storeContent,
-      storeRam: wordproofSettings.storeRam,
-      hasAccount: window.localStorage.getItem('wordproof-has-account') === 'true' ? true : false,
-      hideAdvanced: true
+      hideAdvanced: true,
+      notificationMessage: null
     }
   }
 
-  handleNetwork = (event) => {
+  handleNetwork = async (e) => {
+    let option = e.target.name;
+    let network = e.target.value;
+    let name = e.target.getAttribute('data-readable-name');
     this.props.setCookie('admin_network_changed', true);
-    //this.saveOption(event);
-    this.setState({network: event.target.value});
+    let result = await this.saveOption(option, network);
+    if (result && result.success !== undefined && result.success === true) {
+      this.setState({network: network, notificationMessage: 'Your selected blockchain ' + name + ' has been saved.'});
+    } else {
+      this.setState({network: null, notificationMessage: 'Something went wrong. Please save your network using the save button below.'});
+    }
+    this.startRemoveNotificationTimer();
   }
 
-  handleStoreContent = () => {
-    this.setState({storeContent: !this.state.storeContent})
-  }
-
-  handleStoreRam = () => {
-    this.setState({storeRam: !this.state.storeRam})
-  }
-
-  handleYes = () => {
-    document.querySelector('#wordproof_network').focus()
-    this.closePopup()
-  }
-
-  closePopup = () => {
-    window.localStorage.setItem('wordproof-has-account', 'true')
-    this.setState({hasAccount: true})
+  startRemoveNotificationTimer = () => {
+    setTimeout(() => {
+      this.setState({notificationMessage: null});
+    }, 5000)
   }
 
   handleWindowPopup = (event, url, network) => {
@@ -70,9 +64,7 @@ export default class Setup extends Component {
     this.setState({hideAdvanced: false});
   }
 
-  saveOption = (e) => {
-    const option = e.target.name;
-    const value = e.target.value;
+  saveOption = (option, value) => {
     return fetch(wordproofData.ajaxURL, {
       method: "POST",
       headers: {
@@ -92,6 +84,7 @@ export default class Setup extends Component {
   render() {
     return (
       <div className="vo-card">
+        { (this.state.notificationMessage !== null) ? <p className="simpleNotification">{this.state.notificationMessage}</p> : ''}
         <p>The WordProof Timestamp set-up consists of three steps and takes about 5 minutes. You only need to do this once using the Setup Wizard, which will guide you through the process!</p>
         <ol>
           <li>Create a blockchain account</li>
@@ -105,21 +98,21 @@ export default class Setup extends Component {
         <div className="form-group">
           <label htmlFor="wordproof_network_telos"
                  className={`radio-box ${ this.checkActiveRadio('telos_main') ? 'selected' : '' }`}>
-            <input type="radio" id="wordproof_network_telos" name="wordproof_network" value="telos_main"
+            <input type="radio" id="wordproof_network_telos" name="wordproof_network" data-readable-name="Telos" value="telos_main"
                    checked={this.state.network === "telos_main"} onChange={this.handleNetwork} />
             <img src={`${wordproofData.pluginDirUrl}assets/images/telos.png`} alt="telos"/>
             <span>Telos</span>
           </label>
           <label htmlFor="wordproof_network_eos"
                  className={`radio-box ${ this.checkActiveRadio('eos_main') ? 'selected' : '' }`}>
-            <input type="radio" id="wordproof_network_eos" name="wordproof_network" value="eos_main"
+            <input type="radio" id="wordproof_network_eos" name="wordproof_network" data-readable-name="EOS" value="eos_main"
                    checked={this.state.network === "eos_main"} onChange={this.handleNetwork} />
             <img src={`${wordproofData.pluginDirUrl}assets/images/eos.png`} alt="telos"/>
             <span>EOS</span>
           </label>
           <label htmlFor="wordproof_network_jungle"
                  className={`radio-box ${ this.checkActiveRadio('eos_jungle') ? 'selected' : '' } ${ this.state.hideAdvanced ? 'hidden' : '' }`}>
-            <input type="radio" id="wordproof_network_jungle" name="wordproof_network" value="eos_jungle"
+            <input type="radio" id="wordproof_network_jungle" name="wordproof_network" data-readable-name="EOS Jungle" value="eos_jungle"
                    checked={this.state.network === "eos_jungle"} onChange={this.handleNetwork} />
             <img src={`${wordproofData.pluginDirUrl}assets/images/eos.png`} alt="telos"/>
             <span>EOS Jungle<br/>Testnet</span>

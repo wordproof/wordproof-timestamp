@@ -1,8 +1,7 @@
 export default async function timestamp(wallet) {
   const postId = wordproofData.postId;
-  const post = await getPostById(postId);
   const hash = await getHashById(postId);
-  const transactionData = getTransactionData(post, hash, wallet);
+  const transactionData = getTransactionData(wallet, hash);
 
   /**
    * Interact with the EOS API and save this post onto the blockchain
@@ -11,7 +10,7 @@ export default async function timestamp(wallet) {
     let result = await wallet.eosApi.transact({
       actions: [
         {
-          account: 'wordtokeneos', //TODO TOKEN ACCOUNT
+          account: 'wordtokeneos',
           name: 'stamp',
           authorization: [
             {
@@ -33,7 +32,7 @@ export default async function timestamp(wallet) {
      */
     console.log('Success', result);
     if (typeof result.processed !== 'undefined') {
-      return savePostMeta(post, result.processed, hash);
+      return saveTimestamp(postId, result.processed.id);
     }
 
   } catch (error) {
@@ -56,68 +55,38 @@ function getPaybackAccount(network) {
 
 /**
  * Get data for the blockchain transaction
- * @param post
  * @param wallet
+ * @param hash
  * @returns {{user: *, name: *, hash, saveToTable: boolean, content: string, memo: string, receiver: *, bytes: number}}
  */
-function getTransactionData(post, hash, wallet) {
+function getTransactionData(wallet, hash) {
   const paybackAccount = getPaybackAccount(wordproofData.network);
   return {
     from: wallet.auth.accountName,
     to: paybackAccount,
     quantity: '1.0000 WORD',
-    memo: `${post.link} - content protected with WordProof Timestamp, WordProof.io`,
+    memo: `${wordproofData.permalink} - content protected with WordProof Timestamp, WordProof.io`,
     hash: hash,
   }
 }
 
 /**
  * Save Post metadata
- * @param post
- * @param resultData
+ * @param transactionId
  * @returns {Promise<Response>}
  */
-function savePostMeta(post, resultData, hash) {
+function saveTimestamp(postId, transactionId) {
   return fetch(wordproofData.ajaxURL, {
     method: "POST",
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
     },
     body:
-      'action=wordproof_save_meta' +
-      '&post_id='+ post.ID +
-      '&date='+ post.post_modified +
-      '&post_date='+ post.post_date +
-      '&title='+ post.post_title +
-      '&content='+ post.post_content +
-      '&link='+ post.link +
-      '&transaction_id='+ resultData.id +
-      '&block_num='+ resultData.block_num +
-      '&block_time='+ resultData.block_time +
-      '&network='+ wordproofData.network +
-      '&hash='+ hash +
+      'action=wordproof_save_timestamp' +
+      '&post_id='+ postId +
+      '&transaction_id='+ transactionId +
       '&security='+ wordproofData.ajaxSecurity,
   });
-}
-
-/**
- * Get the post data
- * @returns {Promise<Response | void>}
- */
-function getPostById($postId) {
-  return fetch(wordproofData.ajaxURL, {
-    method: "POST",
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-    },
-    body:
-    'action=wordproof_get_post_by_id' +
-    '&security='+ wordproofData.ajaxSecurity +
-    '&post_id='+ $postId,
-  }).then((response) => {
-    return response.json();
-  })
-  .catch(error => console.error(error));
 }
 
 /**

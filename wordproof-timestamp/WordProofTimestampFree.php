@@ -9,8 +9,9 @@ use WordProofTimestampFree\includes\NotificationHelper;
 use WordProofTimestampFree\includes\Page\SettingsPage;
 use WordProofTimestampFree\includes\AdminAjaxHelper;
 use WordProofTimestampFree\includes\CertificateHelper;
-use WordProofTimestampFree\includes\TimestampHelper;
+use WordProofTimestampFree\includes\PostMetaHelper;
 use WordProofTimestampFree\includes\TimestampAjaxHelper;
+use WordProofTimestampFree\includes\Controller\SchemaController;
 
 /**
  * Class WordProofTimestampFree
@@ -38,14 +39,17 @@ class WordProofTimestampFree
     new TimestampAjaxHelper();
 
     /**
-     * Actions
+     * Filters and Actions
      */
+    add_filter('the_content', array($this, 'addCertificateLink'), 999, 1);
+    add_action('wp_footer', array($this, 'addCertificateHtml'), 10);
+    add_action('wp_enqueue_scripts', array($this, 'addCertificateScript'), 999);
+    add_action('wp_head', array($this, 'addCertificateSchema'), 999);
+
     add_filter('manage_posts_columns', array($this, 'addColumn'));
-    add_action('manage_posts_custom_column', array($this, 'addColumnContent'), 10, 2);
-    add_filter('the_content', array($this, 'addProofLink'), 999, 1);
     add_action('admin_enqueue_scripts', array($this, 'loadAdminAssets'), 999);
-    add_action('wp_footer', array($this, 'addProofPopupHtml'), 10);
-    add_action('wp_enqueue_scripts', array($this, 'addProofPopupScripts'), 999);
+    add_action('manage_posts_custom_column', array($this, 'addColumnContent'), 10, 2);
+
   }
 
   public function addColumn($defaults)
@@ -58,10 +62,10 @@ class WordProofTimestampFree
   {
     global $post;
     if ($column_name == 'wordproof') {
-      $meta = self::getTimestampMeta($post);
-
-      if (isset($meta['wordproof_date'])) {
-        if ($meta['wordproof_date'] === get_the_modified_date('Y-m-d H:i:s', $post->ID)) {
+      
+      $meta = PostMetaHelper::getPostMeta($post, ['wordproof_date']); //TODO: HEY WELCOME BACK. ADD 'date
+      if (isset($meta->wordproof_date)) {
+        if ($meta->wordproof_date === get_the_modified_date('Y-m-d H:i:s', $post->ID)) {
           echo '<a target="_blank" href="' . get_permalink($post->ID) . '#wordproof">Stamped</a>';
         } else {
           echo '<a target="_blank" href="' . get_permalink($post->ID) . '#wordproof">Outdated</a>';
@@ -73,14 +77,13 @@ class WordProofTimestampFree
     }
   }
 
-  public function addProofLink($content)
+  public function addCertificateLink($content)
   {
     global $post;
 
     if (!empty($post)) {
-      $meta = self::getTimestampMeta($post);
-
-      if (isset($meta['wordproof_date'])) {
+      $meta = PostMetaHelper::getPostMeta($post, ['wordproof_date']);
+      if (isset($meta->wordproof_date)) {
         $content .= CertificateHelper::getCertificateHtml($post->ID);
       }
     }
@@ -88,35 +91,36 @@ class WordProofTimestampFree
     return $content;
   }
 
-  public function addProofPopupHtml()
+  public function addCertificateHtml()
   {
     global $post;
 
     if (!empty($post)) {
-      $meta = self::getTimestampMeta($post);
-
-      if (isset($meta['wordproof_date'])) {
-        echo '<div id="wordproof-popup-container"></div>';
+      $meta = PostMetaHelper::getPostMeta($post, ['wordproof_date']);
+      if (isset($meta->wordproof_date)) {
+        echo '<div id="wordproof-certificate-container"></div>';
       }
     }
   }
 
-  public function addProofPopupScripts()
+  public function addCertificateScript()
   {
-    global $post;
     wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', array(), filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
-
-    $timestampPostMeta = TimestampHelper::getPopupMeta($post);
-
     wp_localize_script('wordproof.frontend.js', 'wordproofData', array(
-      'timestampMeta' => $timestampPostMeta,
       'wordProofCssDir' => WORDPROOF_URI_CSS,
       'pluginDirUrl' => WORDPROOF_URI
     ));
   }
 
+  public function addCertificateSchema()
+  {
+    global $post;
+    echo SchemaController::getSchema($post);
+  }
+
   public function loadAdminAssets()
   {
+    //TODO: Only on necessary pages
     global $post;
     wp_enqueue_style('wordproof.admin.css', WORDPROOF_URI_CSS . '/admin.css', array(), filemtime(WORDPROOF_DIR_CSS . '/admin.css'));
 
@@ -126,22 +130,12 @@ class WordProofTimestampFree
       'settingsURL' => admin_url('admin.php?page=wordproof'),
       'ajaxSecurity' => wp_create_nonce('wordproof'),
       'postId' => (!empty($post->ID)) ? $post->ID : false,
+      'permalink' => (!empty($post->ID)) ? get_permalink($post) : false,
       'network' => get_option('wordproof_network', false),
-      'storeRam' => get_option('wordproof_store_ram', false),
-      'storeContent' => get_option('wordproof_store_content', false),
       'accountName' => get_option('wordproof_accountname', ''),
       'wordBalance' => get_option('wordproof_balance', 0),
       'pluginDirUrl' => plugin_dir_url(__FILE__)
     ));
-  }
-
-  /**
-   * @param $post
-   * @return array|mixed|null
-   */
-  public static function getTimestampMeta($post)
-  {
-    return TimestampHelper::getPopupMeta($post);
   }
 
   /**

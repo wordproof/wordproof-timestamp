@@ -26,9 +26,9 @@ export default class HomePage extends Component {
 
   render() {
     return (
-      <div className="widget" data-wordproof-connection-status={this.props.status}>
-        <div className="widget__connection" aria-hidden="true">
-        <span className="widget__logo widget__logo--scatter"
+      <div className="wordproof-connection-widget" data-wordproof-connection-status={this.props.status}>
+        <div className="wordproof-connection-widget__connection" aria-hidden="true">
+        <span className="wordproof-connection-widget__logo wordproof-connection-widget__logo--scatter"
         ><svg viewBox="0 0 33 33" xmlns="http://www.w3.org/2000/svg">
             <g stroke="#191E22" fill="none" fillRule="evenodd">
               <path
@@ -41,7 +41,7 @@ export default class HomePage extends Component {
               />
             </g></svg
         ></span>
-          <span className="widget__icon"
+          <span className="wordproof-connection-widget__icon"
           ><svg
             viewBox="0 0 120 30"
             xmlns="http://www.w3.org/2000/svg"
@@ -114,7 +114,7 @@ export default class HomePage extends Component {
               />
             </circle></svg
           ></span>
-          <div className="widget__logo widget__logo--wordproof">
+          <div className="wordproof-connection-widget__logo wordproof-connection-widget__logo--wordproof">
             <svg viewBox="0 0 348 273" xmlns="http://www.w3.org/2000/svg">
               <g fill="#191E22" fillRule="nonzero">
                 <path
@@ -128,7 +128,7 @@ export default class HomePage extends Component {
             </svg>
           </div>
         </div>
-        <span className="widget__status">{this.getText().message} <strong>{this.getText().messageStrong}</strong></span>
+        <span className="wordproof-connection-widget__status">{this.getText().message} <strong>{this.getText().messageStrong}</strong></span>
       </div>
     );
   }

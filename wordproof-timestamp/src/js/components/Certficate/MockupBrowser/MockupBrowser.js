@@ -7,14 +7,21 @@ export default class MockupBrowser extends Component {
     this.state = {
       nextView: null,
       showReadMore: true,
-      currentContent: this.shrinkContent(props.data.content),
+      currentContent: ''
     }
+  }
+
+  componentDidMount() {
+    this.setState({currentContent: this.shrinkContent(this.props.data.content)});
   }
 
   shrinkContent(content) {
     if (content.length > 500) {
       return content = content.substring(0, 500) + '...';
     }
+
+    this.setState({showReadMore: false});
+    return content;
   }
 
   readMore = () => {

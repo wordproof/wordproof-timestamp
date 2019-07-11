@@ -92,8 +92,8 @@ export default class Timestamp extends Component {
           <h3>How to Timestamp?</h3>
           <p>Go to any WordPress post or page to secure your content with blockchain.</p>
           <h3>You need WORD stamps to Timestamp (it&apos;s free!)</h3>
-          <p>Both as an anti-SPAM measurement and to make sure every timestamp is valuable, WordProof uses 'WORD' stamps. Think of 1 WORD as 1 (digital) postage stamp. For every timestamp you place, you need 1 WORD stamp.</p>
-          <p>You can timestamp 5 pieces of content per day without 'paying' any WORD stamps. As soon as you timestamp your first content, your blockchain account will automatically reiceive 10 WORD stamps. Use the button below to claim 90 additional WORD stamps.</p>
+          <p>Both as an anti-SPAM measurement and to make sure every timestamp is valuable, WordProof uses &apos;WORD&apos; stamps. Think of 1 WORD as 1 (digital) postage stamp. For every timestamp you place, you need 1 WORD stamp.</p>
+          <p>You can timestamp 5 pieces of content per day without &apos;paying&apos; any WORD stamps. As soon as you timestamp your first content, your blockchain account will automatically reiceive 10 WORD stamps. Use the button below to claim 90 additional WORD stamps.</p>
           <a href="https://stamps.wordproof.io" target="_blank" rel="noopener noreferrer" className="button is-primary">Claim 100 WORD for free</a>
           <h3>Scatter connection check & WORD stamps balance</h3>
           <p>Open and unlock your Scatter wallet to check if the setup was successfull: the widget below should color GREEN. If it does, you are ready to timestamp your content by going to any WordPress page/post. </p>

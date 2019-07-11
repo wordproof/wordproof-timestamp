@@ -26,7 +26,7 @@ export default class Certificate extends Component {
       case 'eos_jungle':
         return 'https://jungle.bloks.io/transaction/' + transactionId;
       default:
-        return 'https://telos.eosx.io/tx/' + transactionId;
+        return 'https://telos.bloks.io/transaction/' + transactionId;
     }
   }
 

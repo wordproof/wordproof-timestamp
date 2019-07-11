@@ -101,6 +101,8 @@ export default class Timestamp extends Component {
           <ConnectionWidget status={this.state.widgetStatus} balance={this.state.balance}
                             accountName={this.state.accountName}/>
 
+          <input type="submit" onClick={this.props.nextStep} name="submit" id="submit" className="button is-primary" value='Next step'/>
+
           <h3>Help! WordProof Timestamp does not connect to my Scatter Wallet.</h3>
           <p>Blockchain is no easy technology and requires accounts, wallets and transactions. This is what makes the technology so safe, but also what makes it challenging to create easy-to-use blockchain applications. If the set-up did not work properly, here are a few steps you can take:</p>
           <ol>

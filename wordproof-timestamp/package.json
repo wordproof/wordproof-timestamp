@@ -57,6 +57,7 @@
     "eosjs-ecc": "^4.0.4",
     "macaddress": "^0.2.9",
     "react": "^16.8.6",
+    "react-cookie": "^4.0.1",
     "react-dom": "^16.8.6",
     "react-shadow": "^16.3.2"
   }

@@ -18,13 +18,14 @@ class SchemaController
 
     $meta = PostMetaHelper::getPostMeta($post);
     $type = (isset($meta->type)) ? $meta->type : '';
+    $attributes = (isset($meta->attributes)) ? $meta->attributes : [];
 
     switch ($type) {
       case WEB_ARTICLE_TIMESTAMP:
-        $object = self::generateSchemaForWebArticleTimestamp($post, $meta);
+        $object = self::generateSchemaForArticle($meta, $attributes);
         break;
       default:
-        $object = self::generateLegacySchema($post, $meta);
+        $object = self::generateSchemaLegacy($post, $meta);
         break;
     }
 
@@ -44,20 +45,24 @@ class SchemaController
    * @return object|bool
    * More info: https://github.com/wordproof/timestamp-standard/blob/master/WebArticleTimestamp.md
    */
-  private static function generateSchemaForWebArticleTimestamp($post, $meta)
+  private static function generateSchemaForArticle($meta, $attributes)
   {
     switch ($meta->version) {
       case 0.1:
         $array = [];
         $array['@context']['@type'] = WEB_ARTICLE_TIMESTAMP;
         $array['@context']['@version'] = $meta->version;
-        $array['blockchain'] = $meta->wordproof_network;
-        $array['transactionId'] = $meta->wordproof_transaction_id;
-        $array['hash'] = $meta->wordproof_hash;
-        $array['title'] = $post->post_title;
-        $array['content'] = $post->post_content;
-        $array['date'] = get_the_modified_date('c', $post);
-        return json_encode($array);
+        $array['blockchain'] = $meta->blockchain;
+        $array['transactionId'] = $meta->transaction_id;
+        $array['hash'] = $meta->hash;
+        $array['title'] = $meta->title;
+        $array['content'] = $meta->content;
+        $array['date'] = $meta->date;
+
+        foreach ($attributes as $key => $value) {
+          $array[$key] = $value;
+        }
+        return json_encode($array, JSON_UNESCAPED_SLASHES);
       default:
         return false;
     }
@@ -68,7 +73,7 @@ class SchemaController
    * @param $meta
    * @return object
    */
-  private static function generateLegacySchema($post, $meta)
+  private static function generateSchemaLegacy($post, $meta)
   {
     $array = [];
     $array['blockchain'] = $meta->wordproof_network;
@@ -77,6 +82,7 @@ class SchemaController
     $array['title'] = $post->post_title;
     $array['content'] = $post->post_content;
     $array['date'] = get_the_modified_date('c', $post);
-    return json_encode($array);
+    $array['url'] = $meta->wordproof_link;
+    return json_encode($array, JSON_UNESCAPED_SLASHES);
   }
 }

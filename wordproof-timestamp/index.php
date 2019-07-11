@@ -40,6 +40,7 @@ define('WORDPROOF_URI_SVG', WORDPROOF_URI_ASSETS . '/svg');
 
 //Web Standards
 define('WEB_ARTICLE_TIMESTAMP', 'WebArticleTimestamp');
+define('CURRENT_WEB_ARTICLE_TIMESTAMP_VERSION', 0.1);
 
 // Init plugin
 spl_autoload_register(__NAMESPACE__ . '\\autoload');

@@ -12,7 +12,6 @@ export default class CertificateModal extends Component {
   }
 
   changeView(view) {
-    console.log('here', view);
     this.setState({view});
   }
 

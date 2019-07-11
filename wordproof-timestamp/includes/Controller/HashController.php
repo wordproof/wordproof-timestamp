@@ -6,6 +6,7 @@ use WordProofTimestampFree\includes\PostMetaHelper;
 
 class HashController
 {
+
   /**
    * @param $post
    * @param bool $raw
@@ -17,61 +18,76 @@ class HashController
       $post = get_post($post);
     }
 
-    $meta = PostMetaHelper::getPostMeta($post, ['type', 'version']);
-    switch ($meta->type) {
+    $type = WEB_ARTICLE_TIMESTAMP;
+    switch ($type) {
       case WEB_ARTICLE_TIMESTAMP:
-        $object = self::generateJsonForWebArticleTimestamp($post, $meta->version);
-        $object = apply_filters('wordproof_web_article_timestamp_hash_object', $object);
+        $array = array_merge(self::getFieldsArticle($post));
+        $object = json_encode($array, JSON_UNESCAPED_SLASHES);
         break;
       default:
-        $object = self::generateLegacyTimestamp($post);
+        $array = self::getFieldsLegacy($post);
+        $object = json_encode($array, JSON_UNESCAPED_SLASHES);
         break;
     }
 
-    if (!$object) {
-      return false;
-    }
-
-    if ($raw) {
+    if (!$object || $raw) {
       return $object;
     }
 
-    $object = apply_filters('wordproof_hash_object', $object);
     return hash('sha256', $object);
   }
 
   /**
    * @param $post
-   * @param $version
-   * @return object|bool
-   * More info: https://github.com/wordproof/timestamp-standard/blob/master/WebArticleTimestamp.md
+   * @return array
    */
-  private static function generateJsonForWebArticleTimestamp($post, $version)
-  {
-    switch ($version) {
-      case 0.1:
-        $array = [];
-        $array['type'] = WEB_ARTICLE_TIMESTAMP;
-        $array['version'] = $version;
-        $array['title'] = $post->post_title;
-        $array['content'] = $post->post_content;
-        $array['date'] = get_the_modified_date('c', $post);
-        return json_encode($array);
-      default:
-        return false;
-    }
-  }
-
-  /**
-   * @param $post
-   * @return object
-   */
-  private static function generateLegacyTimestamp($post)
+  private static function getFieldsLegacy($post)
   {
     $array = [];
     $array['title'] = $post->post_title;
     $array['content'] = $post->post_content;
     $array['date'] = get_the_modified_date('c', $post);
-    return json_encode($array);
+    return $array;
+  }
+
+  public static function getFieldsArticle($post)
+  {
+    if (is_int($post)) {
+      $post = get_post($post);
+    }
+
+    $properties = self::getPropertiesArticle($post);
+    $attributes = self::getAttributesArticle($post);
+    return [$properties, $attributes];
+  }
+
+  /**
+   * WEB_ARTICLE_TIMESTAMP properties, to be expanded in the future
+   * @param $post
+   * @return array
+   */
+  private static function getPropertiesArticle($post)
+  {
+    $array = [];
+    $array['type'] = WEB_ARTICLE_TIMESTAMP;
+    $array['version'] = CURRENT_WEB_ARTICLE_TIMESTAMP_VERSION;
+    $array['title'] = $post->post_title;
+    $array['content'] = $post->post_content;
+    $array['date'] = get_the_modified_date('c', $post);
+    return $array;
+  }
+
+  /**
+   * WEB_ARTICLE_TIMESTAMP attributes, to be expanded in the future
+   * @param $post
+   * @return array
+   */
+  private static function getAttributesArticle($post)
+  {
+    $array = [];
+    //TODO: Get selected attributes
+    $array['url'] = get_permalink($post);
+    $array = apply_filters('wordproof_hash_attributes', $array);
+    return $array;
   }
 }

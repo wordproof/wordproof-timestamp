@@ -1,5 +1,5 @@
 export default function getJSON(schema) {
-  const type = (schema['@context']['@type']) ? schema['@context']['@type'] : '';
+  const type = (schema['@context']) ? schema['@context']['@type'] : '';
 
   let object = {};
   switch(type) {

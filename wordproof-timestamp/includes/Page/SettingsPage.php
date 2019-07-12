@@ -12,14 +12,7 @@ class SettingsPage {
 
     public function __construct() {
         add_action('admin_menu', array($this, 'addSettingsPage'));
-	    add_action('admin_init', array($this, 'registerSettings'));
-    }
-
-    public function registerSettings() {
-        register_setting( 'wordproof-options', 'wordproof_network' );
-        register_setting( 'wordproof-options', 'wordproof_store_content' );
-        register_setting( 'wordproof-options', 'wordproof_store_ram' );
-        register_setting( 'wordproof-options', 'wordproof_certificate_text' );
+	    add_action('admin_post_wordproof_form_action', array($this, 'saveSettings'));
     }
 
     public function addSettingsPage() {
@@ -43,12 +36,25 @@ class SettingsPage {
         ?>
         <div class="wrap">
             <h1>WordProof Settings</h1>
-            <form method="post" action="options.php">
-                <?php settings_fields( 'wordproof-options' ); ?>
-                <?php do_settings_sections( 'wordproof-options' ); ?>
+            <form action="<?php echo esc_url( admin_url('admin-post.php')); ?>" method="post" id="wordproof_admin_form" >
+                <input type="hidden" name="action" value="wordproof_form_action">
+                <input type="hidden" name="wordproof_admin_form_nonce" value="<?php echo wp_create_nonce('wordproof_admin_form'); ?>" />
                 <div id="wordproof-admin-app"></div>
             </form>
         </div>
         <?php
     }
+
+    public function saveSettings() {
+        if (isset($_POST['wordproof_network'])) {
+            $value = sanitize_text_field($_POST['wordproof_network']);
+            update_option('wordproof_network', $value);
+        }
+        if (isset($_POST['wordproof_certificate_text'])) {
+            $value = sanitize_text_field($_POST['wordproof_certificate_text']);
+            update_option('wordproof_certificate_text', $value);
+        }
+        wp_redirect(admin_url('admin.php?page=wordproof'));
+        die();
+  }
 }

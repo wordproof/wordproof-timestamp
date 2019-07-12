@@ -10,9 +10,9 @@ export default class Setup extends Component {
     }
   }
 
-  handleNetwork = async () => {
+  handleNetwork = async (e) => {
     this.props.setCookie('admin_network_changed', true);
-    this.setState({network: network});
+    this.setState({network: e.target.value});
   }
 
   startRemoveNotificationTimer = () => {

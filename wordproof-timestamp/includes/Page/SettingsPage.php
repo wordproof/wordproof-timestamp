@@ -45,16 +45,19 @@ class SettingsPage {
         <?php
     }
 
-    public function saveSettings() {
+    public function saveSettings()
+    {
+      if (isset($_POST['wordproof_admin_form_nonce']) && wp_verify_nonce($_POST['wordproof_admin_form_nonce'], 'wordproof_admin_form_nonce')) {
         if (isset($_POST['wordproof_network'])) {
-            $value = sanitize_text_field($_POST['wordproof_network']);
-            update_option('wordproof_network', $value);
+          $value = sanitize_text_field($_POST['wordproof_network']);
+          update_option('wordproof_network', $value);
         }
         if (isset($_POST['wordproof_certificate_text'])) {
-            $value = sanitize_text_field($_POST['wordproof_certificate_text']);
-            update_option('wordproof_certificate_text', $value);
+          $value = sanitize_text_field($_POST['wordproof_certificate_text']);
+          update_option('wordproof_certificate_text', $value);
         }
         wp_redirect(admin_url('admin.php?page=wordproof'));
-        die();
-  }
+      }
+      die();
+    }
 }

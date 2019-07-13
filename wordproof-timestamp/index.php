@@ -9,7 +9,7 @@
  Author URI:  https://wordproof.io
  License:     GPL2
  License URI: https://www.gnu.org/licenses/gpl-2.0.html
- Text Domain: wordproof
+ Text Domain: wordproof-timestamp
  Domain Path: /languages
 */
 

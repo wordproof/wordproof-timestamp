@@ -17,7 +17,7 @@ class MetaBox {
     public function addMetaBox() {
         add_meta_box(
                 'wordproof-meta-box',
-                'WordProof',
+                __( 'WordProof', 'wordproof-timestamp' ),
                 array($this, 'generateMetaBox'),
                 null,
                 'side',

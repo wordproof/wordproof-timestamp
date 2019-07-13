@@ -17,7 +17,7 @@ class SettingsPage {
 
     public function addSettingsPage() {
         add_menu_page(
-            'WordProof',
+            __( 'WordProof', 'wordproof-timestamp' ),
             'WordProof',
             'manage_options',
             'wordproof',
@@ -30,12 +30,12 @@ class SettingsPage {
         wp_localize_script('wordproof.admin.js', 'wordproofSettings', [
             'network' => get_option('wordproof_network', false),
             'certificateText' => CertificateHelper::getCertificateText(),
-            'saveChanges' => __('Save Changes')
+            'saveChanges' => __('Save Changes', 'wordproof-timestamp')
         ]);
 
         ?>
         <div class="wrap">
-            <h1>WordProof Settings</h1>
+            <h1><?php __( 'WordProof Settings', 'wordproof-timestamp' ); ?></h1>
             <form action="<?php echo esc_url( admin_url('admin-post.php')); ?>" method="post" id="wordproof_admin_form" >
                 <input type="hidden" name="action" value="wordproof_form_action">
                 <input type="hidden" name="wordproof_admin_form_nonce" value="<?php echo wp_create_nonce('wordproof_admin_form'); ?>" />

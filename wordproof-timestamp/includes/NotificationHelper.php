@@ -48,43 +48,43 @@ class NotificationHelper
 
   public function changePostUpdateMessages($labels)
   {
-      $labels->item_updated = __( 'Your post has been updated but is at risk. Timestamp your content now to claim ownership.' );
-      $labels->item_published = __( 'Your post is published. Timestamp your content to claim ownership.' );
+      $labels->item_updated = __( 'Your post has been updated but is at risk. Timestamp your content now to claim ownership.', 'wordproof-timestamp' );
+      $labels->item_published = __( 'Your post is published. Timestamp your content to claim ownership.', 'wordproof-timestamp' );
       return $labels;
   }
   public function changePageUpdateMessages($labels)
   {
-      $labels->item_updated = __( 'Your page has been updated but is at risk. Timestamp your content now to claim ownership.' );
-      $labels->item_published = __( 'Your page is published. Timestamp your content to claim ownership.' );
+      $labels->item_updated = __( 'Your page has been updated but is at risk. Timestamp your content now to claim ownership.', 'wordproof-timestamp' );
+      $labels->item_published = __( 'Your page is published. Timestamp your content to claim ownership.', 'wordproof-timestamp' );
       return $labels;
   }
 
   private function setupPlugin()
   {
-    $message = 'Protect your content and proof the authenticity of your content to visitors and search engines. Start the Wizard to get you started with WordProof!';
+    $message = __( 'Protect your content and proof the authenticity of your content to visitors and search engines. Start the Wizard to get you started with WordProof!', 'wordproof-timestamp' );
     $type = 'info';
-    $buttonText = 'Setup WordProof Timestamp';
+    $buttonText = __( 'Setup WordProof Timestamp', 'wordproof-timestamp' );
     $buttonLink = menu_page_url('wordproof', false) . '#setup';
     echo self::getNotificationTemplate($type, $message, $buttonText, $buttonLink);
   }
 
   private function connectToWallet()
   {
-    $message = 'It looks like you started the WordProof Setup Wizard, but did not timestamp yet! Join our <a target="_blank" rel="noopener noreferrer" href="https://t.me/joinchat/DVuJAEfhf2QURBBjOWc2XA">Telegram group</a> for help, or send us an <a href="https://wordproof.io/contact">email</a>.';
+    $message = __( 'It looks like you started the WordProof Setup Wizard, but did not timestamp yet! Join our <a target="_blank" rel="noopener noreferrer" href="https://t.me/joinchat/DVuJAEfhf2QURBBjOWc2XA">Telegram group</a> for help, or send us an <a href="https://wordproof.io/contact">email</a>.', 'wordproof-timestamp' );
     $type = 'info';
     echo self::getNotificationTemplate($type, $message);
   }
 
   private function startTimestamping()
   {
-    $message = 'You completed the setup, but did not protect your content by timestamping yet. Start now!';
+    $message = __( 'You completed the setup, but did not protect your content by timestamping yet. Start now!', 'wordproof-timestamp' );
     $type = 'info';
     echo self::getNotificationTemplate($type, $message);
   }
 
   private function keepTimestamping()
   {
-    $message = 'It has been a week since you last protected your content on the blockchain. Timestamp a new post to get started!';
+    $message = __( 'It has been a week since you last protected your content on the blockchain. Timestamp a new post to get started!', 'wordproof-timestamp' );
     $type = 'info';
     echo self::getNotificationTemplate($type, $message);
   }

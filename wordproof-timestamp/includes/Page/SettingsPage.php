@@ -38,7 +38,7 @@ class SettingsPage {
             <h1>WordProof Settings</h1>
             <form action="<?php echo esc_url( admin_url('admin-post.php')); ?>" method="post" id="wordproof_admin_form" >
                 <input type="hidden" name="action" value="wordproof_form_action">
-                <input type="hidden" name="wordproof_admin_form_nonce" value="<?php echo wp_create_nonce('wordproof_admin_form'); ?>" />
+                <input type="hidden" name="wordproof_admin_form_nonce" value="<?php echo wp_create_nonce('wordproof_admin_form_nonce'); ?>" />
                 <div id="wordproof-admin-app"></div>
             </form>
         </div>
@@ -56,8 +56,8 @@ class SettingsPage {
           $value = sanitize_text_field($_POST['wordproof_certificate_text']);
           update_option('wordproof_certificate_text', $value);
         }
-        wp_redirect(admin_url('admin.php?page=wordproof'));
       }
+      wp_redirect(admin_url('admin.php?page=wordproof'));
       die();
     }
 }

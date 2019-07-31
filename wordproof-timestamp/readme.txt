@@ -118,6 +118,7 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 *Release date: July 12th, 2019*
 * Add customization field
 
-= 1.1.1 =
+= 1.2.0 =
 *Release date: August 5th, 2019*
 * Automate your timestamping using WSFY
+* Select output location of the certificate link

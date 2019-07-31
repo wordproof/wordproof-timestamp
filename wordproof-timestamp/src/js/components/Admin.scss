@@ -182,6 +182,9 @@ th.column-wordproof {
 
   .textinput {
     width: 100%;
+    max-width: 350px;
+    padding: 7px 10px;
+    border-radius: 4px;
   }
 
   .simpleNotification {

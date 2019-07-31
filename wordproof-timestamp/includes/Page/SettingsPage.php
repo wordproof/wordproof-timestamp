@@ -30,6 +30,7 @@ class SettingsPage {
         wp_localize_script('wordproof.admin.js', 'wordproofSettings', [
             'network' => get_option('wordproof_network', false),
             'certificateText' => CertificateHelper::getCertificateText(),
+            'certificateDOMSelector' => get_option('wordproof_certificate_dom_selector', false),
             'accessToken' => get_option('wordproof_access_token', false),
             'siteId' => get_option('wordproof_site_id', false),
             'saveChanges' => __('Save Changes')
@@ -59,6 +60,11 @@ class SettingsPage {
         if (isset($_POST['wordproof_certificate_text'])) {
           $value = sanitize_text_field($_POST['wordproof_certificate_text']);
           update_option('wordproof_certificate_text', $value);
+        }
+
+        if (isset($_POST['wordproof_certificate_dom_selector'])) {
+          $value = sanitize_text_field($_POST['wordproof_certificate_dom_selector']);
+          update_option('wordproof_certificate_dom_selector', $value);
         }
 
         if (isset($_POST['wordproof_access_token'])) {

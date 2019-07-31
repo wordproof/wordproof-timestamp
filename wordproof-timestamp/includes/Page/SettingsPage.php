@@ -1,12 +1,12 @@
 <?php
 
-namespace WordProofTimestampFree\includes\Page;
+namespace WordProofTimestamp\includes\Page;
 
-use WordProofTimestampFree\includes\CertificateHelper;
+use WordProofTimestamp\includes\CertificateHelper;
 
 /**
  * Class SettingsPage
- * @package WordProofTimestampFree\includes\Page
+ * @package WordProofTimestamp\includes\Page
  */
 class SettingsPage {
 

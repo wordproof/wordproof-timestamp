@@ -1,23 +1,23 @@
 <?php
 
-namespace WordProofTimestampFree;
+namespace WordProofTimestamp;
 
-use WordProofTimestampFree\includes\AnalyticsHelper;
-use WordProofTimestampFree\includes\ChainHelper;
-use WordProofTimestampFree\includes\MetaBox;
-use WordProofTimestampFree\includes\NotificationHelper;
-use WordProofTimestampFree\includes\Page\SettingsPage;
-use WordProofTimestampFree\includes\AdminAjaxHelper;
-use WordProofTimestampFree\includes\CertificateHelper;
-use WordProofTimestampFree\includes\PostMetaHelper;
-use WordProofTimestampFree\includes\TimestampAjaxHelper;
-use WordProofTimestampFree\includes\Controller\SchemaController;
+use WordProofTimestamp\includes\AnalyticsHelper;
+use WordProofTimestamp\includes\ChainHelper;
+use WordProofTimestamp\includes\MetaBox;
+use WordProofTimestamp\includes\NotificationHelper;
+use WordProofTimestamp\includes\Page\SettingsPage;
+use WordProofTimestamp\includes\AdminAjaxHelper;
+use WordProofTimestamp\includes\CertificateHelper;
+use WordProofTimestamp\includes\PostMetaHelper;
+use WordProofTimestamp\includes\TimestampAjaxHelper;
+use WordProofTimestamp\includes\Controller\SchemaController;
 
 /**
- * Class WordProofTimestampFree
- * @package WordProofTimestampFree
+ * Class WordProofTimestamp
+ * @package WordProofTimestamp
  */
-class WordProofTimestampFree
+class WordProofTimestamp
 {
 
   /** @var null */

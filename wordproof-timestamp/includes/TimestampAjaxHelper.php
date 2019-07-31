@@ -1,8 +1,8 @@
 <?php
 
-namespace WordProofTimestampFree\includes;
+namespace WordProofTimestamp\includes;
 
-use WordProofTimestampFree\includes\Controller\HashController;
+use WordProofTimestamp\includes\Controller\HashController;
 
 class TimestampAjaxHelper
 {

@@ -4,7 +4,7 @@
  Plugin Name: WordProof Timestamp
  Plugin URI:  https://wordproof.io/wordproof-timestamp-plugin/
  Description: Timestamp your WordPress content into the blockchain. Instant and without fees. For EOSIO, EOS &amp; Telos.
- Version:     1.1.1
+ Version:     1.2.0
  Author:      WordProof
  Author URI:  https://wordproof.io
  License:     GPL2
@@ -13,14 +13,14 @@
  Domain Path: /languages
 */
 
-namespace WordProofTimestampFree;
+namespace WordProofTimestamp;
 
 // If this file is called directly, abort.
 if (!defined('WPINC')) {
     die();
 }
 
-define('WORDPROOF_VERSION', '1.1.1');
+define('WORDPROOF_VERSION', '1.2.0');
 define('WORDPROOF_SLUG', 'wordproof');
 define('WORDPROOF_PREFIX', 'wordproof');
 define('WORDPROOF_ROOT_FILE', __FILE__);
@@ -44,16 +44,16 @@ define('CURRENT_WEB_ARTICLE_TIMESTAMP_VERSION', 0.1);
 
 // Init plugin
 spl_autoload_register(__NAMESPACE__ . '\\autoload');
-add_action('plugins_loaded', array(WordProofTimestampFree::getInstance(), 'init'));
+add_action('plugins_loaded', array(WordProofTimestamp::getInstance(), 'init'));
 
 /**
  * @param string $class
  */
 function autoload($class = '') {
-    if (!strstr($class, 'WordProofTimestampFree')) {
+    if (!strstr($class, 'WordProofTimestamp')) {
         return;
     }
-    $result = str_replace('WordProofTimestampFree\\', '', $class);
+    $result = str_replace('WordProofTimestamp\\', '', $class);
     $result = str_replace('\\', '/', $result);
     require $result . '.php';
 }

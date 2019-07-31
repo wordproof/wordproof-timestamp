@@ -1,8 +1,8 @@
 <?php
 
-namespace WordProofTimestampFree\includes\Controller;
+namespace WordProofTimestamp\includes\Controller;
 
-use WordProofTimestampFree\includes\PostMetaHelper;
+use WordProofTimestamp\includes\PostMetaHelper;
 
 class HashController
 {

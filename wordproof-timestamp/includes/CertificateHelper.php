@@ -1,6 +1,6 @@
 <?php
 
-namespace WordProofTimestampFree\includes;
+namespace WordProofTimestamp\includes;
 
 class CertificateHelper {
     private static $default_template = "<div><p class='wordproof-certificate-link' style='display: flex; align-items: center;'><img src='". WORDPROOF_URI . "assets/images/wordproof-icon.png" . "' style='max-width: 30px; max-height: 30px; display: inline-block; margin: 0 10px 0 0;' alt='WordProof timestamp'/><a class='wordproof-certificate-helper' data-post-id='POST_ID' href='CERTIFICATE_URL'>CERTIFICATE_TEXT</a></p></div>";

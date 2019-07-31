@@ -30,6 +30,8 @@ class SettingsPage {
         wp_localize_script('wordproof.admin.js', 'wordproofSettings', [
             'network' => get_option('wordproof_network', false),
             'certificateText' => CertificateHelper::getCertificateText(),
+            'accessToken' => get_option('wordproof_access_token', false),
+            'siteId' => get_option('wordproof_site_id', false),
             'saveChanges' => __('Save Changes')
         ]);
 
@@ -48,14 +50,27 @@ class SettingsPage {
     public function saveSettings()
     {
       if (isset($_POST['wordproof_admin_form_nonce']) && wp_verify_nonce($_POST['wordproof_admin_form_nonce'], 'wordproof_admin_form_nonce')) {
-        if (isset($_POST['wordproof_network'])) {
+
+          if (isset($_POST['wordproof_network'])) {
           $value = sanitize_text_field($_POST['wordproof_network']);
           update_option('wordproof_network', $value);
         }
+
         if (isset($_POST['wordproof_certificate_text'])) {
           $value = sanitize_text_field($_POST['wordproof_certificate_text']);
           update_option('wordproof_certificate_text', $value);
         }
+
+        if (isset($_POST['wordproof_access_token'])) {
+          $value = sanitize_text_field($_POST['wordproof_access_token']);
+          update_option('wordproof_access_token', $value);
+        }
+
+        if (isset($_POST['wordproof_site_id'])) {
+          $value = sanitize_text_field($_POST['wordproof_site_id']);
+          update_option('wordproof_site_id', $value);
+        }
+
       }
       wp_redirect(admin_url('admin.php?page=wordproof'));
       die();

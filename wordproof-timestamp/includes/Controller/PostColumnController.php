@@ -4,11 +4,7 @@ namespace WordProofTimestamp\includes\Controller;
 
 use WordProofTimestamp\includes\PostMetaHelper;
 
-const WSFY_API = 'https://wsfy.wordproof.io/api/';
-const WSFY_ENDPOINT_ARTICLE = 'article/';
-const WSFY_CRON_HOOK = 'wsfy_save_post_on_cron';
-
-class AutomateController
+class PostColumnController
 {
 
   public $options;
@@ -17,76 +13,52 @@ class AutomateController
   {
     $this->options = get_option('wordproof_wsfy');
 
-    if ($this->options['active']) {
-      add_action('publish_page', [$this, 'setCron']);
-      add_action('publish_post', [$this, 'setCron']);
-      add_action(WSFY_CRON_HOOK, [$this, 'savePost']);
-      add_action('wp_enqueue_scripts', [$this, 'enqueueScript']);
-    }
-    //TODO: maybe remove actions
+    add_filter('manage_posts_columns', array($this, 'addColumn'));
+    add_action('manage_posts_custom_column', array($this, 'addColumnContent'), 10, 2);
+
+    add_action('wp_ajax_wordproof_wsfy_save_post', [$this, 'savePost']);
   }
 
-  public function savePost($postId, $return = false) {
-    error_log('Saving post to WSFY servers');
-
-    if (isset($this->options['access_token']) && isset($this->options['site_id'])) {
-      $post = get_post($postId);
-
-
-      if ($post->post_status != "publish") {
-        return 'Post needs to be published';
-      }
-
-      $body = json_encode([
-        'uid' => $post->ID,
-        'title' => $post->post_title,
-        'content' => $post->post_content,
-        'date_created' => get_the_date('c', $post),
-        'date_modified' => get_the_modified_date('c', $post),
-        'url' => get_permalink($post),
-      ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-
-      $result = wp_remote_post(WSFY_API . WSFY_ENDPOINT_ARTICLE, [
-        'headers' => [
-          'Accept' => 'application/json',
-          'Content-Type' => 'application/json',
-          'Authorization' => 'Bearer ' . $this->options['access_token']
-        ],
-        'body' => $body
-      ]);
-
-      if ($return) {
-        return $result;
-      }
-
-      isset($result['body']) ? error_log($result['body']) : error_log(print_r($result, true));
-
-    }
-  }
-
-  public function setCron($postId)
+  public function addColumn($defaults)
   {
-    error_log('Logging ' . $postId);
-    if (!wp_next_scheduled(WSFY_CRON_HOOK, array($postId))) {
-      error_log('Setting cron');
-      wp_schedule_single_event(time() + 10, WSFY_CRON_HOOK, array($postId));
+    $defaults['wordproof'] = 'WordProof';
+    return $defaults;
+  }
+
+  function wsfy_ajax_save_post() {
+    check_ajax_referer('wsfy', 'security');
+    $postId = intval($_REQUEST['post_id']);
+    $result = wsfy_save_post($postId, true);
+    echo json_encode($result, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);; die();
+  }
+
+  public function addColumnContent($column_name)
+  {
+    global $post;
+    if ($column_name == 'wordproof') {
+
+      $meta = PostMetaHelper::getPostMeta($post, ['wordproof_date']); //TODO: Check it
+      if (isset($meta->wordproof_date)) {
+        if ($meta->wordproof_date === get_the_modified_date('Y-m-d H:i:s', $post->ID)) {
+          echo '<a target="_blank" href="' . get_permalink($post->ID) . '#wordproof">Stamped</a>';
+        } else {
+          echo '<a target="_blank" href="' . get_permalink($post->ID) . '#wordproof">Outdated</a>';
+          if ($this->options['active'] === true) {
+            echo '<button class="button wordproof-wsfy-save-post" data-post-id="' . $post->ID . '">Timestamp this post</button>';
+            echo '<span class="wordproof-wsfy-message-' . $post->ID . '"> </span>';
+          }
+        }
+      } else {
+        echo '<span>Post is never stamped</span>';
+      }
+
     }
   }
 
-  public function enqueueScript() {
-    if (is_singular()) {
-      global $post;
-
-      wp_enqueue_script('wordproof-wsfy', WSFY_URI_JS . '/wsfy.js');
-      wp_localize_script('wordproof-wsfy', 'wproof', array(
-        'uid' => $post->ID,
-        'icon' => WORDPROOF_URI_IMAGES . '/wordproof-icon.png',
-        'logo' =>  WORDPROOF_URI_IMAGES . '/wordproof-logo.png',
-        'siteId' => (isset($this->options['site_id'])) ? $this->options['site_id'] : '',
-        'certificateText' =>  (isset($this->options['certificate_text'])) ? $this->options['certificate_text'] : '',
-        'certificateDOMParent' =>  (isset($this->options['certificate_dom_parent'])) ? $this->options['certificate_dom_parent'] : '',
-        'noRevisions' =>  (isset($this->options['no_revisions'])) ? true : false,
-      ));
-    }
+  public function savePost() {
+    check_ajax_referer('wordproof-timestamp', 'security');
+    $postId = intval($_REQUEST['post_id']);
+    $result = wsfy_save_post($postId, true);
+    echo json_encode($result, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);; die();
   }
 }

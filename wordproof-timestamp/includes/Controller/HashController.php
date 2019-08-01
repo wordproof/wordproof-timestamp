@@ -31,7 +31,7 @@ class HashController
     switch ($type) {
       case WEB_ARTICLE_TIMESTAMP:
         $fields = self::getFieldsArticle($post);
-        $fields = array_merge($fields[0], $fields[1]);
+        $fields = array_merge($fields['properties'], $fields['attributes']);
         $object = json_encode($fields, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
         break;
       default:
@@ -68,7 +68,7 @@ class HashController
 
     $properties = self::getPropertiesArticle($post);
     $attributes = self::getAttributesArticle($post);
-    return [$properties, $attributes];
+    return ['properties' => $properties, 'attributes' => $attributes];
   }
 
   /**

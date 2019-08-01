@@ -21,8 +21,8 @@ class TimestampAjaxHelper
 
     $metaFields = HashController::getFieldsArticle($postId);
 
-    $meta = $metaFields[0];
-    $meta['attributes'] = $metaFields[1];
+    $meta = $metaFields['properties'];
+    $meta['attributes'] = $metaFields['attributes'];
 
     $meta['blockchain'] = get_option('wordproof_network');
     $meta['transactionId'] = $transactionId;

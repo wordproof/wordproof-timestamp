@@ -27,12 +27,15 @@ class SettingsPage {
     }
 
     public function generateSettingsPage() {
+        $wsfy = get_option('wordproof_wsfy');
+
         wp_localize_script('wordproof.admin.js', 'wordproofSettings', [
             'network' => get_option('wordproof_network', false),
             'certificateText' => CertificateHelper::getCertificateText(),
             'certificateDOMSelector' => get_option('wordproof_certificate_dom_selector', false),
-            'accessToken' => get_option('wordproof_access_token', false),
-            'siteId' => get_option('wordproof_site_id', false),
+            'accessToken' => $wsfy['accessToken'],
+            'siteId' => $wsfy['siteId'],
+            'active' => $wsfy['active'],
             'saveChanges' => __('Save Changes')
         ]);
 
@@ -67,14 +70,15 @@ class SettingsPage {
           update_option('wordproof_certificate_dom_selector', $value);
         }
 
-        if (isset($_POST['wordproof_access_token'])) {
-          $value = sanitize_text_field($_POST['wordproof_access_token']);
-          update_option('wordproof_access_token', $value);
-        }
-
-        if (isset($_POST['wordproof_site_id'])) {
-          $value = sanitize_text_field($_POST['wordproof_site_id']);
-          update_option('wordproof_site_id', $value);
+        if (isset($_POST['wordproof_access_token']) && isset($_POST['wordproof_site_id'])) {
+          $accessToken = sanitize_text_field($_POST['wordproof_access_token']);
+          $siteId = sanitize_text_field($_POST['wordproof_site_id']);
+          if (empty($accessToken) || empty($siteId)) {
+            $options = ['accessToken' => $accessToken, 'siteId' => $siteId, 'active' => false];
+          } else {
+            $options = ['accessToken' => $accessToken, 'siteId' => $siteId, 'active' => true];
+          }
+          update_option('wordproof_wsfy', $options);
         }
 
       }

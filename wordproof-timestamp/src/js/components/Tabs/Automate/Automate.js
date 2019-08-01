@@ -5,7 +5,8 @@ export default class Automate extends Component {
     super(props)
     this.state = {
       accessToken: wordproofSettings.accessToken,
-      siteId: wordproofSettings.siteId
+      siteId: wordproofSettings.siteId,
+      active: wordproofSettings.active
     }
   }
 
@@ -38,6 +39,8 @@ export default class Automate extends Component {
               <input type="text" className="textinput" name="wordproof_site_id"
                      value={this.state.siteId} onChange={e => this.setState({siteId: e.target.value})}/>
             </div>
+
+            <p>We Stamp For You is {(wordproofSettings.active) ? 'active' : 'not activated' }</p>
 
             <input type="submit" name="submit" id="submit" className="button is-primary"
                    value={wordproofSettings.saveChanges}/>

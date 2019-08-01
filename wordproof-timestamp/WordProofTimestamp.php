@@ -4,6 +4,8 @@ namespace WordProofTimestamp;
 
 use WordProofTimestamp\includes\AnalyticsHelper;
 use WordProofTimestamp\includes\ChainHelper;
+use WordProofTimestamp\includes\Controller\AutomateController;
+use WordProofTimestamp\includes\Controller\PostColumnController;
 use WordProofTimestamp\includes\MetaBox;
 use WordProofTimestamp\includes\NotificationHelper;
 use WordProofTimestamp\includes\Page\SettingsPage;
@@ -33,10 +35,13 @@ class WordProofTimestamp
       new MetaBox();
       new NotificationHelper();
       new ChainHelper();
+      new PostColumnController();
     }
     new AnalyticsHelper();
     new AdminAjaxHelper();
     new TimestampAjaxHelper();
+
+    new AutomateController();
 
     /**
      * Filters and Actions
@@ -46,35 +51,8 @@ class WordProofTimestamp
     add_action('wp_enqueue_scripts', array($this, 'addCertificateScript'), 999);
     add_action('wp_head', array($this, 'addCertificateSchema'), 999);
 
-    add_filter('manage_posts_columns', array($this, 'addColumn'));
     add_action('admin_enqueue_scripts', array($this, 'loadAdminAssets'), 999);
-    add_action('manage_posts_custom_column', array($this, 'addColumnContent'), 10, 2);
 
-  }
-
-  public function addColumn($defaults)
-  {
-    $defaults['wordproof'] = 'WordProof';
-    return $defaults;
-  }
-
-  public function addColumnContent($column_name)
-  {
-    global $post;
-    if ($column_name == 'wordproof') {
-      
-      $meta = PostMetaHelper::getPostMeta($post, ['wordproof_date']); //TODO: HEY WELCOME BACK. ADD 'date
-      if (isset($meta->wordproof_date)) {
-        if ($meta->wordproof_date === get_the_modified_date('Y-m-d H:i:s', $post->ID)) {
-          echo '<a target="_blank" href="' . get_permalink($post->ID) . '#wordproof">Stamped</a>';
-        } else {
-          echo '<a target="_blank" href="' . get_permalink($post->ID) . '#wordproof">Outdated</a>';
-        }
-      } else {
-        echo '—';
-      }
-
-    }
   }
 
   public function addCertificateLink($content)

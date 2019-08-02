@@ -1,28 +1,46 @@
-import {h, render, Component} from 'preact';
+import React, {Component} from 'react';
+
 import striptags from 'striptags'
 import CertificateModal from './CertificateModal/CertificateModal';
 import getJSON from "../../lib/WebArticleTimestamp";
-import wordproofIcon from '../../assets/images/word.svg';
 
 export default class Certificate extends Component {
 
   constructor(props) {
     super(props);
+
+    const articles = this.getArticles();
+    articles.forEach((article, key) => {
+      // articles[key].json = getJSON(article);
+      // articles[key].content = this.prepareContent(article.content);
+      // articles[key].transactionUrl = this.getTransactionUrl(article.blockchain, article.transactionId);
+    });
+
     this.state = {
       isActive: false,
-      currentArticle: 0
+      currentArticle: 0,
+      articles: articles
     };
 
-    props.articles.forEach((article, key) => {
-      props.articles[key].json = getJSON(article);
-      props.articles[key].content = this.prepareContent(article.content);
-      props.articles[key].transactionUrl = this.getTransactionUrl(article.blockchain, article.transactionId);
-    });
     //TODO: ATTRIBUTES
   }
 
   componentDidMount() {
+    console.log(this.state.articles);
 
+  }
+
+  getArticles() {
+    let articles;
+    const schema = document.querySelector('script.wordproof-schema');
+    if (schema.revisions) {
+      const revisions = schema.revisions;
+      delete schema.revisions;
+      articles = [schema, ...revisions];
+    } else {
+      articles = [schema];
+    }
+    return articles;
   }
 
   getTransactionUrl = (network, transactionId) => {
@@ -31,7 +49,11 @@ export default class Certificate extends Component {
         return 'https://telos.bloks.io/transaction/' + transactionId;
       case 'eos':
         return 'https://bloks.io/transaction/' + transactionId;
+      case 'eos_main':
+        return 'https://bloks.io/transaction/' + transactionId;
       case 'eosJungle':
+        return 'https://jungle.bloks.io/transaction/' + transactionId;
+      case 'eos_jungle':
         return 'https://jungle.bloks.io/transaction/' + transactionId;
       default:
         return transactionId;
@@ -68,17 +90,15 @@ export default class Certificate extends Component {
 
   render() {
     return (
-      <div>
-        <a onClick={this.openModal} className="wordproof-certificate-link" href="#wordproof" style={`display: flex;align-items: center;`}>
-          <img src={(wproof.icon) ? wproof.icon : wordproofIcon} alt="wordproof logo" style="max-width: 40px; padding-right: 10px;"/>
-          <span>{(wproof.certificateText) ? wproof.certificateText : 'View this Timestamp Certificate'}</span>
-        </a>
-        <div>
+      <>
+        {/*<a onClick={this.openModal} className="wordproof-certificate-link" href="#wordproof" style={`display: flex;align-items: center;`}>*/}
+          {/*<img src={(this.props.settings.icon) ? this.props.settings.icon : ''} alt="wordproof logo" style="max-width: 40px; padding-right: 10px;"/>*/}
+          {/*<span>{(this.props.settings.certificateText) ? this.props.settings.certificateText : 'View this Timestamp Certificate'}</span>*/}
+        {/*</a>*/}
           <CertificateModal isActive={this.state.isActive} close={this.closeModal} current={this.state.currentArticle}
-                            data={this.props.articles[this.state.currentArticle]} previous={this.previousArticle}
-                            next={this.nextArticle} set={this.setArticle} articles={this.props.articles}/>
-        </div>
-      </div>
+                            data={this.state.articles[this.state.currentArticle]} previous={this.previousArticle}
+                            next={this.nextArticle} set={this.setArticle} articles={this.state.articles}/>
+      </>
     )
   }
 }

@@ -10,24 +10,39 @@ class TimestampController
   {
     add_action('wp_ajax_wordproof_get_hash_by_id', array($this, 'getHashById'));
     add_action('wp_ajax_wordproof_get_raw_by_id', array($this, 'getRawById'));
-    add_action('wp_ajax_wordproof_save_timestamp', array($this, 'saveTimestamp'));
+    add_action('wp_ajax_wordproof_save_timestamp', array($this, 'saveTimestampAjax'));
   }
 
-  public function saveTimestamp() {
-    check_ajax_referer('wordproof', 'security');
-    $postId = intval($_REQUEST['post_id']);
-    $transactionId = sanitize_text_field($_REQUEST['transaction_id']);
+  public static function saveTimestamp($postId, $chain, $transactionId) {
 
     $metaFields = HashController::getFieldsArticle($postId);
 
     $meta = $metaFields['properties'];
     $meta['attributes'] = $metaFields['attributes'];
 
-    $meta['blockchain'] = get_option('wordproof_network');
+    $meta['blockchain'] = $chain;
     $meta['transactionId'] = $transactionId;
     $meta['hash'] = HashController::getHash($postId);
 
     PostMetaHelper::savePostMeta($postId, $meta);
+
+    echo json_encode(array(
+      'success' => true,
+      'data' => array(
+        'url' => get_permalink($postId) . '#wordproof'
+      ),
+    ));
+    exit;
+  }
+
+
+  public function saveTimestampAjax() {
+    check_ajax_referer('wordproof', 'security');
+    $postId = intval($_REQUEST['post_id']);
+    $chain = get_option('wordproof_network');
+    $transactionId = sanitize_text_field($_REQUEST['transaction_id']);
+
+    self::saveTimestamp($postId, $chain, $transactionId);
 
     echo json_encode(array(
       'success' => true,

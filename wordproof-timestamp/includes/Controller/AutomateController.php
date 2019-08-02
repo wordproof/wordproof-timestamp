@@ -16,6 +16,9 @@ class AutomateController
       add_action('publish_post', [$this, 'setCron']);
       add_action(WORDPROOF_WSFY_CRON_HOOK, [$this, 'savePost']);
       add_action('wp_enqueue_scripts', [$this, 'enqueueScript']);
+
+      //TODO: Callback from wsfy.wordproof.io,
+      //PostMetaHelper can add transaction id and chain
     }
     //TODO: maybe remove actions
   }
@@ -57,6 +60,9 @@ class AutomateController
       $code = wp_remote_retrieve_response_code($result);
 
       if ($code === 201) {
+        error_log('Post saved to WSFY Servers. Saving post locally.');
+        TimestampController::saveTimestamp($postId, '', '');
+
         return ['success' => true];
       } else {
         return json_decode($result['body']);

@@ -33,9 +33,7 @@ class SettingsPage {
             'network' => get_option('wordproof_network', false),
             'certificateText' => CertificateController::getCertificateText(),
             'certificateDOMSelector' => get_option('wordproof_certificate_dom_selector', false),
-            'accessToken' => $wsfy['accessToken'],
-            'siteId' => $wsfy['siteId'],
-            'active' => $wsfy['active'],
+            'wsfy' => $wsfy,
             'saveChanges' => __('Save Changes')
         ]);
 
@@ -70,13 +68,16 @@ class SettingsPage {
           update_option('wordproof_certificate_dom_selector', $value);
         }
 
-        if (isset($_POST['wordproof_access_token']) && isset($_POST['wordproof_site_id'])) {
-          $accessToken = sanitize_text_field($_POST['wordproof_access_token']);
-          $siteId = sanitize_text_field($_POST['wordproof_site_id']);
+        if (isset($_POST['wsfy_settings'])) {
+          $post = $_POST['wsfy_settings'];
+          $accessToken = sanitize_text_field($post['access_token']);
+          $siteId = sanitize_text_field($post['site_id']);
+          $revisions = isset($post['revisions']) ? true : false;
+
           if (empty($accessToken) || empty($siteId)) {
-            $options = ['accessToken' => $accessToken, 'siteId' => $siteId, 'active' => false];
+            $options = ['accessToken' => $accessToken, 'siteId' => $siteId, 'active' => false, 'revisions' => $revisions];
           } else {
-            $options = ['accessToken' => $accessToken, 'siteId' => $siteId, 'active' => true];
+            $options = ['accessToken' => $accessToken, 'siteId' => $siteId, 'active' => true, 'revisions' => $revisions];
           }
           update_option('wordproof_wsfy', $options);
         }

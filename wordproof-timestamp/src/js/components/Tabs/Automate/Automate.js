@@ -2,11 +2,12 @@ import React, {Component} from 'react'
 
 export default class Automate extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      accessToken: wordproofSettings.accessToken,
-      siteId: wordproofSettings.siteId,
-      active: wordproofSettings.active
+      accessToken: wordproofSettings.wsfy.accessToken,
+      siteId: wordproofSettings.wsfy.siteId,
+      active: wordproofSettings.wsfy.active,
+      revisions: wordproofSettings.wsfy.revisions
     }
   }
 
@@ -30,17 +31,23 @@ export default class Automate extends Component {
 
             <div className="form-group">
               <label htmlFor="" className="label" title="Access Token">Access Token</label>
-              <input type="text" className="textinput" name="wordproof_access_token"
+              <input type="text" className="textinput" name="wsfy_settings[access_token]"
                      value={this.state.accessToken} onChange={e => this.setState({accessToken: e.target.value})}/>
             </div>
 
             <div className="form-group">
               <label htmlFor="" className="label" title="Access Token">Site Id</label>
-              <input type="text" className="textinput" name="wordproof_site_id"
+              <input type="text" className="textinput" name="wsfy_settings[site_id]"
                      value={this.state.siteId} onChange={e => this.setState({siteId: e.target.value})}/>
             </div>
 
-            <p>We Stamp For You is {(wordproofSettings.active) ? 'active' : 'not activated' }</p>
+            <div className="form-group">
+              <label htmlFor="" className="label" title="Display Revisions">Display Revisions</label>
+              <input type="checkbox" value="1" className="" name="wsfy_settings[revisions]"
+                     onChange={e => this.setState({revisions: e.target.value})} defaultChecked={this.state.revisions}/>
+            </div>
+
+            <p>We Stamp For You is {(wordproofSettings.wsfy.active) ? 'active' : 'not activated' }</p>
 
             <input type="submit" name="submit" id="submit" className="button is-primary"
                    value={wordproofSettings.saveChanges}/>

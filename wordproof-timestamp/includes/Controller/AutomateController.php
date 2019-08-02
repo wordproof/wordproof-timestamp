@@ -17,7 +17,6 @@ class AutomateController
       add_action('publish_page', [$this, 'setCron']);
       add_action('publish_post', [$this, 'setCron']);
       add_action(WORDPROOF_WSFY_CRON_HOOK, [$this, 'savePost']);
-      add_action('wp_enqueue_scripts', [$this, 'enqueueScript']);
 
       add_action('admin_post_nopriv_wordproof_wsfy_edit_post', [$this, 'updatePostWithTransaction']);
     }
@@ -70,7 +69,7 @@ class AutomateController
 
   public function updatePostWithTransaction()
   {
-    if ($_SERVER['REMOTE_ADDR'] === WORDPROOF_WSFY_API_IP) {
+    if ($_SERVER['REMOTE_ADDR'] === WORDPROOF_WSFY_API_IP || $_SERVER['REMOTE_ADDR'] === '127.0.0.1') { //TODO: REMOVE LOCALHOST
       $postId = intval($_REQUEST['uid']);
       $chain = ($_REQUEST['chain']) ? sanitize_text_field($_REQUEST['chain']) : '';
       $transactionId = ($_REQUEST['transactionId']) ? sanitize_text_field($_REQUEST['transactionId']) : '';
@@ -81,6 +80,7 @@ class AutomateController
 
       PostMetaHelper::savePostMeta($postId, (array) $meta, true);
       error_log('Post meta updated with transactional data for ' . $postId);
+      echo json_encode(['success' => true]); die();
     }
     die();
   }
@@ -91,25 +91,6 @@ class AutomateController
     if (!wp_next_scheduled(WORDPROOF_WSFY_CRON_HOOK, array($postId))) {
       error_log('Setting cron');
       wp_schedule_single_event(time() + 10, WORDPROOF_WSFY_CRON_HOOK, array($postId));
-    }
-  }
-
-  public function enqueueScript()
-  {
-    if (is_singular()) {
-      global $post;
-
-      //TODO: ADD CERTIFICATE TEXT
-      wp_enqueue_script('wordproof-wsfy', WORDPROOF_URI_JS . '/wsfy.js');
-      wp_localize_script('wordproof-wsfy', 'wproof', array(
-        'uid' => $post->ID,
-        'icon' => WORDPROOF_URI_IMAGES . '/wordproof-icon.png',
-        'logo' => WORDPROOF_URI_IMAGES . '/wordproof-logo.png',
-        'siteId' => (isset($this->options['site_id'])) ? $this->options['site_id'] : '',
-        'certificateText' => (isset($this->options['certificate_text'])) ? $this->options['certificate_text'] : '',
-        'certificateDOMParent' => (isset($this->options['certificate_dom_parent'])) ? $this->options['certificate_dom_parent'] : '',
-        'noRevisions' => (isset($this->options['no_revisions'])) ? true : false,
-      ));
     }
   }
 }

@@ -7,8 +7,7 @@ module.exports = {
   mode: process.env.NODE_ENV,
   entry: {
     admin: './src/js/admin.js',
-    frontend: './src/js/frontend.js',
-    wsfy: './src/js/wsfy.js',
+    frontend: './src/js/frontend.js'
   },
   output: {
     filename: '[name].js',

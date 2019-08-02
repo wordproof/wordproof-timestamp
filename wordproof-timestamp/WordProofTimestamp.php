@@ -11,9 +11,7 @@ use WordProofTimestamp\includes\NotificationHelper;
 use WordProofTimestamp\includes\Page\SettingsPage;
 use WordProofTimestamp\includes\AdminAjaxHelper;
 use WordProofTimestamp\includes\Controller\CertificateController;
-use WordProofTimestamp\includes\PostMetaHelper;
 use WordProofTimestamp\includes\TimestampAjaxHelper;
-use WordProofTimestamp\includes\Controller\SchemaController;
 
 /**
  * Class WordProofTimestamp

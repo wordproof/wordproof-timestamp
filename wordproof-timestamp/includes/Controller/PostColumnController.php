@@ -15,21 +15,24 @@ class PostColumnController
 
     add_filter('manage_posts_columns', array($this, 'addColumn'));
     add_action('manage_posts_custom_column', array($this, 'addColumnContent'), 10, 2);
+    add_filter('manage_pages_columns', array($this, 'addColumn'));
+    add_action('manage_pages_custom_column', array($this, 'addColumnContent'), 10, 2);
 
     add_action('wp_ajax_wordproof_wsfy_save_post', [$this, 'savePost']);
+  }
+
+  function savePost() {
+    check_ajax_referer('wordproof', 'security');
+    $postId = intval($_REQUEST['post_id']);
+    $result = AutomateController::savePost($postId);
+    echo json_encode($result);
+    die();
   }
 
   public function addColumn($defaults)
   {
     $defaults['wordproof'] = 'WordProof';
     return $defaults;
-  }
-
-  function wsfy_ajax_save_post() {
-    check_ajax_referer('wsfy', 'security');
-    $postId = intval($_REQUEST['post_id']);
-    $result = wsfy_save_post($postId, true);
-    echo json_encode($result, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);; die();
   }
 
   public function addColumnContent($column_name)
@@ -43,8 +46,8 @@ class PostColumnController
           echo '<a target="_blank" href="' . get_permalink($post->ID) . '#wordproof">Stamped</a>';
         } else {
           echo '<a target="_blank" href="' . get_permalink($post->ID) . '#wordproof">Outdated</a>';
-          if ($this->options['active'] === true) {
-            echo '<button class="button wordproof-wsfy-save-post" data-post-id="' . $post->ID . '">Timestamp this post</button>';
+          if (isset($this->options['active']) && $this->options['active'] === true) {
+            echo '<br><button class="button wordproof-wsfy-save-post" data-post-id="' . $post->ID . '">Timestamp this post</button>';
             echo '<span class="wordproof-wsfy-message-' . $post->ID . '"> </span>';
           }
         }
@@ -53,12 +56,5 @@ class PostColumnController
       }
 
     }
-  }
-
-  public function savePost() {
-    check_ajax_referer('wordproof-timestamp', 'security');
-    $postId = intval($_REQUEST['post_id']);
-    $result = wsfy_save_post($postId, true);
-    echo json_encode($result, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);; die();
   }
 }

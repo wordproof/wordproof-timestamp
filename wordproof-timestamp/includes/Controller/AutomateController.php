@@ -11,7 +11,7 @@ class AutomateController
   {
     $this->options = get_option('wordproof_wsfy');
 
-    if ($this->options['active']) {
+    if (isset($this->options['active']) && $this->options['active']) {
       add_action('publish_page', [$this, 'setCron']);
       add_action('publish_post', [$this, 'setCron']);
       add_action(WORDPROOF_WSFY_CRON_HOOK, [$this, 'savePost']);
@@ -20,15 +20,18 @@ class AutomateController
     //TODO: maybe remove actions
   }
 
-  public function savePost($postId, $return = false) {
+  public static function savePost($postId)
+  {
     error_log('Saving post to WSFY servers');
 
-    if (isset($this->options['access_token']) && isset($this->options['site_id'])) {
+    $options = get_option('wordproof_wsfy');
+    error_log(print_r($options, true));
+
+    if (isset($options['accessToken']) && isset($options['siteId'])) {
       $post = get_post($postId);
 
-
-      if ($post->post_status != "publish") {
-        return 'Post needs to be published';
+      if ($post->post_status != 'publish') {
+        return ['errors' => ['post_status' => ['Post needs to be published']]];
       }
 
       $body = json_encode([
@@ -40,21 +43,24 @@ class AutomateController
         'url' => get_permalink($post),
       ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
+      error_log($body);
+
       $result = wp_remote_post(WORDPROOF_WSFY_API . WORDPROOF_WSFY_ENDPOINT_ARTICLE, [
         'headers' => [
           'Accept' => 'application/json',
           'Content-Type' => 'application/json',
-          'Authorization' => 'Bearer ' . $this->options['access_token']
+          'Authorization' => 'Bearer ' . $options['accessToken']
         ],
         'body' => $body
       ]);
 
-      if ($return) {
-        return $result;
+      $code = wp_remote_retrieve_response_code($result);
+
+      if ($code === 201) {
+        return ['success' => true];
+      } else {
+        return json_decode($result['body']);
       }
-
-      isset($result['body']) ? error_log($result['body']) : error_log(print_r($result, true));
-
     }
   }
 
@@ -67,19 +73,21 @@ class AutomateController
     }
   }
 
-  public function enqueueScript() {
+  public function enqueueScript()
+  {
     if (is_singular()) {
       global $post;
 
+      //TODO: ADD CERTIFICATE TEXT
       wp_enqueue_script('wordproof-wsfy', WORDPROOF_URI_JS . '/wsfy.js');
       wp_localize_script('wordproof-wsfy', 'wproof', array(
         'uid' => $post->ID,
         'icon' => WORDPROOF_URI_IMAGES . '/wordproof-icon.png',
-        'logo' =>  WORDPROOF_URI_IMAGES . '/wordproof-logo.png',
+        'logo' => WORDPROOF_URI_IMAGES . '/wordproof-logo.png',
         'siteId' => (isset($this->options['site_id'])) ? $this->options['site_id'] : '',
-        'certificateText' =>  (isset($this->options['certificate_text'])) ? $this->options['certificate_text'] : '',
-        'certificateDOMParent' =>  (isset($this->options['certificate_dom_parent'])) ? $this->options['certificate_dom_parent'] : '',
-        'noRevisions' =>  (isset($this->options['no_revisions'])) ? true : false,
+        'certificateText' => (isset($this->options['certificate_text'])) ? $this->options['certificate_text'] : '',
+        'certificateDOMParent' => (isset($this->options['certificate_dom_parent'])) ? $this->options['certificate_dom_parent'] : '',
+        'noRevisions' => (isset($this->options['no_revisions'])) ? true : false,
       ));
     }
   }

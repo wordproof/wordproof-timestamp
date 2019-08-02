@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {h, render, Component} from 'preact';
 import {DateTime} from "luxon";
 
 export default class MockupBrowser extends Component {
@@ -11,17 +11,22 @@ export default class MockupBrowser extends Component {
     }
   }
 
-  componentDidMount() {
-    this.setState({currentContent: this.shrinkContent(this.props.data.content)});
+  componentWillReceiveProps(nextProps, nextState) {
+    this.getContent(nextProps.data.content);
   }
 
-  shrinkContent(content) {
-    if (content.length > 500) {
-      return content = content.substring(0, 500) + '...';
+  getContent(content) {
+    if (this.state.showReadMore === true && content.length > 500) {
+      this.setState({
+        currentContent: content.substring(0, 500) + '...',
+        showReadMore: true
+      });
+    } else {
+      this.setState({
+        currentContent: content,
+        showReadMore: false
+      });
     }
-
-    this.setState({showReadMore: false});
-    return content;
   }
 
   readMore = () => {
@@ -32,7 +37,7 @@ export default class MockupBrowser extends Component {
   }
 
   /**
-   * TODO: Should get WP date format
+   * TODO: Should get custom date format
    * @param iso
    * @returns {string}
    */
@@ -58,25 +63,27 @@ export default class MockupBrowser extends Component {
               switch (this.props.view) {
                 case 'article':
                   return (
-                    <>
+                    <div>
                       <h3>{data.title}</h3>
                       <p>{this.state.currentContent}</p>
-                      {(this.state.showReadMore) ?
-                        <p><span className="read-more" onClick={this.readMore}>Read More</span></p> : ''}
-                    </>
+
+                      {(this.state.showReadMore)
+                        ? <p><span className="read-more" onClick={this.readMore}>Read More</span></p>
+                        : ''}
+                    </div>
                   );
                 case 'raw':
                   //Get Raw
                   return (
-                    <>
+                    <div>
                       <textarea className="textarea" rows="13" readOnly value={JSON.stringify(data.json)}>
                       </textarea>
-                    </>
+                    </div>
                   )
                 default:
                   //get Info
                   return (
-                    <>
+                    <div>
                       <h3>What is this Timestamp Certificate?</h3>
                       <p>This content is protected with WordProof, a new web standard for a more trustworthy internet.
                         This timestamp exists of a unique hash (summary) based on the title, date and content of this
@@ -86,7 +93,7 @@ export default class MockupBrowser extends Component {
                           Timestamp Checker</a>.
                         The hash of this post is {data.hash}.
                       </p>
-                    </>
+                    </div>
 
                   )
               }

@@ -1,13 +1,13 @@
-@import "../../../../node_modules/bulma/sass/utilities/all";
-@import "../../../../node_modules/bulma/sass/base/all";
-@import "../../../../node_modules/bulma/sass/components/modal";
-@import "../../../../node_modules/bulma/sass/components/pagination";
-@import "../../../../node_modules/bulma/sass/elements/button";
-@import "../../../../node_modules/bulma/sass/elements/content";
-@import "../../../../node_modules/bulma/sass/elements/title";
-@import "../../../../node_modules/bulma/sass/form/shared";
-@import "../../../../node_modules/bulma/sass/form/input-textarea";
-@import "../../../../node_modules/bulma/sass/grid/columns";
+@import "../../../node_modules/bulma/sass/utilities/all";
+@import "../../../node_modules/bulma/sass/base/all";
+@import "../../../node_modules/bulma/sass/components/modal";
+@import "../../../node_modules/bulma/sass/components/pagination";
+@import "../../../node_modules/bulma/sass/elements/button";
+@import "../../../node_modules/bulma/sass/elements/content";
+@import "../../../node_modules/bulma/sass/elements/title";
+@import "../../../node_modules/bulma/sass/form/shared";
+@import "../../../node_modules/bulma/sass/form/input-textarea";
+@import "../../../node_modules/bulma/sass/grid/columns";
 
 $black: #1a1a1a;
 
@@ -15,15 +15,6 @@ $browser-head: #EDF0F5;
 $browser-url: #F8F9FB;
 
 $grey-light: darken($grey-light, 10);
-
-.shadowHost {
-  opacity: 0;
-  transition: all .35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.shadowHost.resolved {
-  opacity: 1;
-}
 
 .modal {
   z-index: 9999;
@@ -78,17 +69,72 @@ $grey-light: darken($grey-light, 10);
     }
 
     &-foot {
-      align-items: center;
-      justify-content: center;
+      .pagination-list {
+        display: flex;
+        flex-direction: row-reverse;
+      }
+
+      .pagination-link {
+        height: 10px;
+        width: 10px;
+        border-radius: 100%;
+        padding: 0;
+        font-size: 0;
+        line-height: 0;
+      }
+
+      .pagination-container {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+
+        .button-container {
+          min-width: 180px;
+
+          .button {
+            display: flex;
+            color: $link;
+            font-size: 0.64em;
+            line-height: 1.3em;
+            align-items: center;
+            height: auto;
+            font-weight: 600;
+
+            .date {
+              color: $grey;
+              font-size: 0.7em;
+            }
+
+            &--left {
+              text-align: left;
+              .arrow {
+                font-size: 1.7em;
+                padding-right: 20px;
+
+              }
+            }
+            &--right {
+              text-align: right;
+              margin-left: auto;
+              margin-right: 0;
+              .arrow {
+                font-size: 1.7em;
+                padding-left: 20px;
+              }
+            }
+          }
+        }
+      }
 
       a {
-        font-size: 0.6em;
+        font-size: 0.5em;
         text-decoration: underline;
+        width:100%;
+        text-align:center;
       }
     }
   }
 }
-
 
 /**
 Mockup browser
@@ -115,7 +161,7 @@ Color can be changed inline (search for %23, which equals #)
     &.content {
       padding-bottom: 0.3rem;
       margin-bottom: 0;
-      min-height: 350px;
+      min-height: 300px;
 
       h3 {
         font-size: 1em;
@@ -139,7 +185,7 @@ Color can be changed inline (search for %23, which equals #)
       }
 
       textarea {
-        font-size: 0.55rem;
+        font-size: 0.65rem;
       }
 
       .button-raw {
@@ -148,7 +194,7 @@ Color can be changed inline (search for %23, which equals #)
         right: 0;
 
         &.is-small {
-          font-size: 0.55em;
+          font-size: 0.65em;
         }
       }
     }
@@ -179,6 +225,8 @@ Color can be changed inline (search for %23, which equals #)
 
     a {
       font-size: 0.65em;
+      padding: 0;
+      line-height: 1.8em;
       font-weight: 600;
       text-decoration: none;
       display: block;

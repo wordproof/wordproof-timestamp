@@ -1,55 +1,105 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import {h, render} from 'preact';
+import fetch from 'unfetch'
+
 import Certificate from './components/Certficate/Certificate';
 
-(function() {
-  let schema = document.querySelector('.wordproof-schema');
+const parameters = [
+  'debug',
+  'siteId',
+  'uid',
+  'certificateDOMParent',
+  'certificateText',
+  'noRevisions',
+  'logo',
+  'icon',
+  'wordproofApi',
+];
 
-  if (schema) {
-    schema = JSON.parse(schema.innerHTML);
-    if (document.querySelector('#wordproof-certificate-container')) {
-      ReactDOM.render(<Certificate schema={schema} />, document.querySelector('#wordproof-certificate-container'));
-      checkUrlForWordproof();
-      addCertificateLinkEventListener();
-      addCloseModalEventListener();
+let settings = {
+  editExistingSchema: false,
+  renderCertificate: true,
+  certificateLocation: '#wordproof-certificate',
+  wordproofApi: 'https://wsfy.wordproof.io/api/',
+  fetchArticlesEndpoint: 'articles'
+};
+
+debug();
+
+const schema = document.querySelector('script.wordproof-schema');
+const certificateLink = document.querySelector('.wordproof-certificate-link');
+
+setSettings(schema, certificateLink);
+
+if (schema && certificateLink) {
+  if (!wproof.noRevisions) {
+    certificateLink.addEventListener('click', fetchArticles);
+  }
+} else {
+  fetchArticles();
+}
+
+function fetchArticles() {
+  fetch(settings.wordproofApi + 'site/' + wproof.siteId + '/' + settings.fetchArticlesEndpoint + '/' + wproof.uid).then((response) => {
+    if (response.ok) {
+      return response.json();
     }
+  }).then((schema) => {
+
+    if (typeof schema === 'object' && !(schema instanceof Array)) {
+      if (settings.editExistingSchema) {
+        const script = document.querySelector('script.wordproof-schema');
+        script.innerHTML = JSON.stringify(schema);
+      } else {
+        let head = document.getElementsByTagName('head')[0];
+        let script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.innerHTML = JSON.stringify(schema);
+        head.appendChild(script);
+      }
+
+      if (settings.renderCertificate) {
+        let articles;
+        if (schema.revisions) {
+          const revisions = schema.revisions;
+          delete schema.revisions;
+          articles = [schema, ...revisions];
+        } else {
+          articles = [schema];
+        }
+
+        render(<Certificate articles={articles}/>, document.querySelector(settings.certificateLocation));
+      }
+    }
+  });
+}
+
+function setSettings(schema, certificateLink) {
+  if (wproof.noRevisions) {
+    settings.fetchArticlesEndpoint = 'article';
   }
-})();
 
-function addCertificateLinkEventListener() {
-  document.querySelector('.wordproof-certificate-helper').addEventListener('click', function () {
-    showModal();
-  }, false);
-}
+  if (wproof.certificateDOMParent) {
+    settings.certificateLocation = wproof.certificateDOMParent;
+  }
 
-function addCloseModalEventListener() {
-  let modal = getModal();
-  modal.querySelector('.wordproof-modal-background').addEventListener('click', (e) => handleCloseModalEvent(e), false);
-  modal.querySelector('.wordproof-modal-close').addEventListener('click', (e) => handleCloseModalEvent(e), false);
-}
+  if (schema && certificateLink) {
+    settings.renderCertificate = false;
+    settings.editExistingSchema = true;
+  }
 
-function handleCloseModalEvent(event) {
-  event.preventDefault();
-  hideModal();
-}
+  if (wproof.debug) {
+    if (wproof.wordproofApi) {
+      settings.wordproofApi = wproof.wordproofApi;
+    }
 
-/*
-Show modal if the url contains #wordproof
- */
-function checkUrlForWordproof() {
-  if(window.location.href.indexOf("#wordproof") > -1) {
-    showModal();
+    console.log(settings);
   }
 }
 
-function getModal() {
-  return document.querySelector('#wordproof-certificate-container .shadowHost').shadowRoot.querySelector('.modal');
-}
-
-function hideModal() {
-  getModal().classList.remove('is-active');
-}
-
-function showModal() {
-  getModal().classList.add('is-active');
+function debug() {
+  if (wproof.debug === true) {
+    parameters.forEach((parameter) => {
+      console.log(parameter + ' => ' + wproof[parameter]);
+    });
+  }
 }

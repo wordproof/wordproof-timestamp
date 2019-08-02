@@ -1,4 +1,4 @@
-import {h, render, Component} from 'preact';
+import React, {Component} from 'react';
 import {DateTime} from 'luxon';
 
 export default class Pagination extends Component {

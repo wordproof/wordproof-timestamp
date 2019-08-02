@@ -1,4 +1,4 @@
-import {h, render, Component} from 'preact';
+import React, {Component} from 'react';
 import {DateTime} from "luxon";
 
 export default class MockupBrowser extends Component {
@@ -11,8 +11,8 @@ export default class MockupBrowser extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps, nextState) {
-    this.getContent(nextProps.data.content);
+  componentDidMount() {
+    this.getContent(this.props.data.content);
   }
 
   getContent(content) {

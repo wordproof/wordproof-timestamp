@@ -10,7 +10,7 @@ use WordProofTimestamp\includes\MetaBox;
 use WordProofTimestamp\includes\NotificationHelper;
 use WordProofTimestamp\includes\Page\SettingsPage;
 use WordProofTimestamp\includes\AdminAjaxHelper;
-use WordProofTimestamp\includes\CertificateHelper;
+use WordProofTimestamp\includes\Controller\CertificateController;
 use WordProofTimestamp\includes\PostMetaHelper;
 use WordProofTimestamp\includes\TimestampAjaxHelper;
 use WordProofTimestamp\includes\Controller\SchemaController;
@@ -40,60 +40,14 @@ class WordProofTimestamp
     new AnalyticsHelper();
     new AdminAjaxHelper();
     new TimestampAjaxHelper();
+    new CertificateController();
 
     new AutomateController();
 
     /**
      * Filters and Actions
      */
-    add_filter('the_content', array($this, 'addCertificateLink'), 999, 1);
-    add_action('wp_footer', array($this, 'addCertificateHtml'), 10);
-    add_action('wp_enqueue_scripts', array($this, 'addCertificateScript'), 999);
-    add_action('wp_head', array($this, 'addCertificateSchema'), 999);
-
     add_action('admin_enqueue_scripts', array($this, 'loadAdminAssets'), 999);
-
-  }
-
-  public function addCertificateLink($content)
-  {
-    global $post;
-
-    if (!empty($post)) {
-      $meta = PostMetaHelper::getPostMeta($post, ['wordproof_date']);
-      if (isset($meta->wordproof_date)) {
-        $content .= CertificateHelper::getCertificateHtml($post->ID);
-      }
-    }
-
-    return $content;
-  }
-
-  public function addCertificateHtml()
-  {
-    global $post;
-
-    if (!empty($post)) {
-      $meta = PostMetaHelper::getPostMeta($post, ['wordproof_date']);
-      if (isset($meta->wordproof_date)) {
-        echo '<div id="wordproof-certificate-container"></div>';
-      }
-    }
-  }
-
-  public function addCertificateScript()
-  {
-    wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', array(), filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
-    wp_localize_script('wordproof.frontend.js', 'wordproofData', array(
-      'wordProofCssDir' => WORDPROOF_URI_CSS,
-      'pluginDirUrl' => WORDPROOF_URI
-    ));
-  }
-
-  public function addCertificateSchema()
-  {
-    global $post;
-    echo SchemaController::getSchema($post);
   }
 
   public function loadAdminAssets()

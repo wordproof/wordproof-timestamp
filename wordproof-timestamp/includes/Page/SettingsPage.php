@@ -2,7 +2,7 @@
 
 namespace WordProofTimestamp\includes\Page;
 
-use WordProofTimestamp\includes\CertificateHelper;
+use WordProofTimestamp\includes\Controller\CertificateController;
 
 /**
  * Class SettingsPage
@@ -31,7 +31,7 @@ class SettingsPage {
 
         wp_localize_script('wordproof.admin.js', 'wordproofSettings', [
             'network' => get_option('wordproof_network', false),
-            'certificateText' => CertificateHelper::getCertificateText(),
+            'certificateText' => CertificateController::getCertificateText(),
             'certificateDOMSelector' => get_option('wordproof_certificate_dom_selector', false),
             'accessToken' => $wsfy['accessToken'],
             'siteId' => $wsfy['siteId'],

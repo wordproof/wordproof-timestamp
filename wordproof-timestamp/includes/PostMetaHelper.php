@@ -40,22 +40,31 @@ class PostMetaHelper {
   private static function getTimestampPostMeta($post) {
     $meta = get_post_meta($post->ID, 'wordproof_timestamp_data', true);
 
+    //Remap old meta
+    if (isset($meta['wordproof_date'])) {
+      $meta['blockchain'] = ($meta['wordproof_network']) ? $meta['wordproof_network'] : '';
+      $meta['transactionId'] = ($meta['wordproof_transaction_id']) ? $meta['wordproof_transaction_id'] : '';
+      $meta['hash'] = ($meta['wordproof_hash']) ? $meta['wordproof_hash'] : '';
+      $meta['title'] = ($meta['wordproof_title']) ? $meta['wordproof_title'] : '';
+      $meta['content'] = ($meta['wordproof_content']) ? $meta['wordproof_content'] : '';
+      $meta['date'] = ($meta['wordproof_date']) ? $meta['wordproof_date'] : '';
+      $meta['attributes'] = [];
+      $meta['attributes']['url'] = ($meta['wordproof_link']) ? $meta['wordproof_date'] : '';
+    }
+
     // Get old metadata structure (<0.6)
     if (empty($meta)) {
       $wordproof_date = get_post_meta($post->ID, 'wordproof_date', true);
 
       if (isset($wordproof_date) && !empty($wordproof_date)) {
         $meta = [];
-        $meta['wordproof_date'] = $wordproof_date;
-        $meta['wordproof_post_date'] = $post->post_date;
-        $meta['wordproof_title'] = get_post_meta($post->ID, 'wordproof_title', true);
-        $meta['wordproof_content'] = get_post_meta($post->ID, 'wordproof_content', true);
-        $meta['wordproof_link'] = get_permalink($post->ID);
-        $meta['wordproof_transaction_id'] = get_post_meta($post->ID, 'wordproof_transaction_id', true);
-        $meta['wordproof_block_num'] = get_post_meta($post->ID, 'wordproof_block_num', true);
-        $meta['wordproof_block_time'] = get_post_meta($post->ID, 'wordproof_block_time', true);
-        $meta['wordproof_network'] = get_post_meta($post->ID, 'wordproof_network', true);
-        $meta['wordproof_hash'] = "";
+        $meta['date'] = $wordproof_date;
+        $meta['title'] = get_post_meta($post->ID, 'wordproof_title', true);
+        $meta['content'] = get_post_meta($post->ID, 'wordproof_content', true);
+        $meta['attributes']['url'] = get_permalink($post->ID);
+        $meta['transactionId'] = get_post_meta($post->ID, 'wordproof_transaction_id', true);
+        $meta['blockchain'] = get_post_meta($post->ID, 'wordproof_network', true);
+        $meta['hash'] = "";
       }
     }
 

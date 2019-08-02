@@ -10,7 +10,7 @@ use WordProofTimestamp\includes\MetaBox;
 use WordProofTimestamp\includes\NotificationHelper;
 use WordProofTimestamp\includes\Page\SettingsPage;
 use WordProofTimestamp\includes\Controller\CertificateController;
-use WordProofTimestamp\includes\TimestampAjaxHelper;
+use WordProofTimestamp\includes\Controller\TimestampController;
 
 /**
  * Class WordProofTimestamp
@@ -35,7 +35,7 @@ class WordProofTimestamp
       new PostColumnController();
     }
     new AnalyticsHelper();
-    new TimestampAjaxHelper();
+    new TimestampController();
     new CertificateController();
 
     new AutomateController();

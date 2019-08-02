@@ -1,14 +1,13 @@
 <?php
 
-namespace WordProofTimestamp\includes;
+namespace WordProofTimestamp\includes\Controller;
 
-use WordProofTimestamp\includes\Controller\HashController;
+use WordProofTimestamp\includes\PostMetaHelper;
 
-class TimestampAjaxHelper
+class TimestampController
 {
   public function __construct()
   {
-    add_action('wp_ajax_wordproof_save_meta', array($this, 'saveMeta'));
     add_action('wp_ajax_wordproof_get_hash_by_id', array($this, 'getHashById'));
     add_action('wp_ajax_wordproof_get_raw_by_id', array($this, 'getRawById'));
     add_action('wp_ajax_wordproof_save_timestamp', array($this, 'saveTimestamp'));

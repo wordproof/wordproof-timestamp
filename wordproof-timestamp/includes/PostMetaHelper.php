@@ -4,8 +4,8 @@ namespace WordProofTimestamp\includes;
 
 class PostMetaHelper {
 
-  public static function savePostMeta($postId, $meta) {
-    if (current_user_can('manage_options')) {
+  public static function savePostMeta($postId, $meta, $remote = false) {
+    if (current_user_can('manage_options') || $remote) {
       do_action('wordproof_before_saving_timestamp_meta_data', $postId);
       $result = update_post_meta($postId, 'wordproof_timestamp_data', $meta);
       do_action('wordproof_after_saving_timestamp_meta_data', $postId);
@@ -20,6 +20,11 @@ class PostMetaHelper {
    * @return object
    */
   public static function getPostMeta($post, $keys = []) {
+
+    if (is_int($post)) {
+      $post = get_post($post);
+    }
+
     $meta = self::getTimestampPostMeta($post);
 
     if (!empty($keys)) {

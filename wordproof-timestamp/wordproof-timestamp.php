@@ -38,7 +38,8 @@ define('WORDPROOF_URI_JS', WORDPROOF_URI_ASSETS . '/js');
 define('WORDPROOF_URI_CSS', WORDPROOF_URI_ASSETS . '/css');
 define('WORDPROOF_URI_IMAGES', WORDPROOF_URI_ASSETS . '/images');
 define('WORDPROOF_URI_SVG', WORDPROOF_URI_ASSETS . '/svg');
-define('WORDPROOF_WSFY_API', 'https://wsfy.wordproof.io/api/');
+define('WORDPROOF_WSFY_API_IP', '167.71.137.240');
+define('WORDPROOF_WSFY_API_URI', 'https://wsfy.wordproof.io/api/');
 define('WORDPROOF_WSFY_ENDPOINT_ARTICLE', 'article/');
 define('WORDPROOF_WSFY_CRON_HOOK', 'wsfy_save_post_on_cron');
 

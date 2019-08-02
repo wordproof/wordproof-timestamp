@@ -2,6 +2,8 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
+use WordProofTimestamp\includes\PostMetaHelper;
+
 class AutomateController
 {
 
@@ -17,8 +19,7 @@ class AutomateController
       add_action(WORDPROOF_WSFY_CRON_HOOK, [$this, 'savePost']);
       add_action('wp_enqueue_scripts', [$this, 'enqueueScript']);
 
-      //TODO: Callback from wsfy.wordproof.io,
-      //PostMetaHelper can add transaction id and chain
+      add_action('admin_post_nopriv_wordproof_wsfy_edit_post', [$this, 'updatePostWithTransaction']);
     }
   }
 
@@ -44,7 +45,7 @@ class AutomateController
         'url' => get_permalink($post),
       ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-      $result = wp_remote_post(WORDPROOF_WSFY_API . WORDPROOF_WSFY_ENDPOINT_ARTICLE, [
+      $result = wp_remote_post(WORDPROOF_WSFY_API_URI . WORDPROOF_WSFY_ENDPOINT_ARTICLE, [
         'headers' => [
           'Accept' => 'application/json',
           'Content-Type' => 'application/json',
@@ -65,6 +66,23 @@ class AutomateController
         return json_decode($result['body']);
       }
     }
+  }
+
+  public function updatePostWithTransaction()
+  {
+    if ($_SERVER['REMOTE_ADDR'] === WORDPROOF_WSFY_API_IP) {
+      $postId = intval($_REQUEST['uid']);
+      $chain = ($_REQUEST['chain']) ? sanitize_text_field($_REQUEST['chain']) : '';
+      $transactionId = ($_REQUEST['transactionId']) ? sanitize_text_field($_REQUEST['transactionId']) : '';
+      $meta = PostMetaHelper::getPostMeta($postId);
+
+      $meta->blockchain = $chain;
+      $meta->transactionId = $transactionId;
+
+      PostMetaHelper::savePostMeta($postId, (array) $meta, true);
+      error_log('Post meta updated with transactional data for ' . $postId);
+    }
+    die();
   }
 
   public function setCron($postId)

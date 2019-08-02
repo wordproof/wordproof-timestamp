@@ -17,6 +17,10 @@ class SchemaController
     }
 
     $meta = PostMetaHelper::getPostMeta($post);
+
+    if (!isset($meta->blockchain) || empty($meta->blockchain))
+      return false;
+
     $type = (isset($meta->type)) ? $meta->type : '';
     $attributes = (isset($meta->attributes)) ? $meta->attributes : [];
 
@@ -76,13 +80,13 @@ class SchemaController
   private static function generateSchemaLegacy($post, $meta)
   {
     $array = [];
-    $array['blockchain'] = $meta->wordproof_network;
-    $array['transactionId'] = $meta->wordproof_transaction_id;
-    $array['hash'] = $meta->wordproof_hash;
-    $array['title'] = $post->post_title;
-    $array['content'] = $post->post_content;
+    $array['blockchain'] = $meta->blockchain;
+    $array['transactionId'] = $meta->transactionId;
+    $array['hash'] = $meta->hash;
+    $array['title'] = $post->title;
+    $array['content'] = $post->content;
     $array['date'] = get_the_modified_date('c', $post);
-    $array['url'] = $meta->wordproof_link;
+    $array['url'] = $meta->url;
     return json_encode($array);
   }
 }

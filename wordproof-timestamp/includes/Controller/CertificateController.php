@@ -23,8 +23,8 @@ class CertificateController {
     global $post;
 
     if (!empty($post)) {
-      $meta = PostMetaHelper::getPostMeta($post, ['wordproof_date']);
-      if (isset($meta->wordproof_date)) {
+      $meta = PostMetaHelper::getPostMeta($post, ['date']);
+      if (isset($meta->date)) {
         $content .= $this->getCertificateLinkHtml($post->ID);
       }
     }
@@ -37,8 +37,8 @@ class CertificateController {
     global $post;
 
     if (!empty($post)) {
-      $meta = PostMetaHelper::getPostMeta($post, ['wordproof_date']);
-      if (isset($meta->wordproof_date)) {
+      $meta = PostMetaHelper::getPostMeta($post, ['date']);
+      if (isset($meta->date)) {
         echo '<div id="wordproof-certificate-container"></div>';
       }
     }

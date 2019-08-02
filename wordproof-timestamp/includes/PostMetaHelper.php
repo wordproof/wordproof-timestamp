@@ -47,7 +47,7 @@ class PostMetaHelper {
       $meta['hash'] = ($meta['wordproof_hash']) ? $meta['wordproof_hash'] : '';
       $meta['title'] = ($meta['wordproof_title']) ? $meta['wordproof_title'] : '';
       $meta['content'] = ($meta['wordproof_content']) ? $meta['wordproof_content'] : '';
-      $meta['date'] = ($meta['wordproof_date']) ? $meta['wordproof_date'] : '';
+      $meta['date'] = ($meta['wordproof_date']) ? date('c', strtotime($meta['wordproof_date'])) : '';
       $meta['attributes'] = [];
       $meta['attributes']['url'] = ($meta['wordproof_link']) ? $meta['wordproof_date'] : '';
     }
@@ -58,7 +58,7 @@ class PostMetaHelper {
 
       if (isset($wordproof_date) && !empty($wordproof_date)) {
         $meta = [];
-        $meta['date'] = $wordproof_date;
+        $meta['date'] = date('c', strtotime($wordproof_date));
         $meta['title'] = get_post_meta($post->ID, 'wordproof_title', true);
         $meta['content'] = get_post_meta($post->ID, 'wordproof_content', true);
         $meta['attributes']['url'] = get_permalink($post->ID);

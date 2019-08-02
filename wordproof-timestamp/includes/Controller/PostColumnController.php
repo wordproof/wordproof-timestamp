@@ -40,11 +40,12 @@ class PostColumnController
     global $post;
     if ($column_name == 'wordproof') {
 
-      $meta = PostMetaHelper::getPostMeta($post, ['wordproof_date']); //TODO: Check it
-      if (isset($meta->wordproof_date)) {
-        if ($meta->wordproof_date === get_the_modified_date('Y-m-d H:i:s', $post->ID)) {
+      $meta = PostMetaHelper::getPostMeta($post, ['date']);
+      if (isset($meta->date)) {
+        if ($meta->date === get_the_modified_date('c', $post->ID)) {
           echo '<a target="_blank" href="' . get_permalink($post->ID) . '#wordproof">Stamped</a>';
         } else {
+
           echo '<a target="_blank" href="' . get_permalink($post->ID) . '#wordproof">Outdated</a>';
           if (isset($this->options['active']) && $this->options['active'] === true) {
             echo '<br><button class="button wordproof-wsfy-save-post" data-post-id="' . $post->ID . '">Timestamp this post</button>';

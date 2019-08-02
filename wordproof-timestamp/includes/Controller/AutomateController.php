@@ -20,7 +20,6 @@ class AutomateController
       //TODO: Callback from wsfy.wordproof.io,
       //PostMetaHelper can add transaction id and chain
     }
-    //TODO: maybe remove actions
   }
 
   public static function savePost($postId)
@@ -28,7 +27,6 @@ class AutomateController
     error_log('Saving post to WSFY servers');
 
     $options = get_option('wordproof_wsfy');
-    error_log(print_r($options, true));
 
     if (isset($options['accessToken']) && isset($options['siteId'])) {
       $post = get_post($postId);
@@ -46,8 +44,6 @@ class AutomateController
         'url' => get_permalink($post),
       ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-      error_log($body);
-
       $result = wp_remote_post(WORDPROOF_WSFY_API . WORDPROOF_WSFY_ENDPOINT_ARTICLE, [
         'headers' => [
           'Accept' => 'application/json',
@@ -61,6 +57,7 @@ class AutomateController
 
       if ($code === 201) {
         error_log('Post saved to WSFY Servers. Saving post locally.');
+
         TimestampController::saveTimestamp($postId, '', '');
 
         return ['success' => true];

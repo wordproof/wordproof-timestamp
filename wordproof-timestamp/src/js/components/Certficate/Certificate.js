@@ -23,7 +23,11 @@ export default class Certificate extends Component {
     switch (network) {
       case 'eos_main':
         return 'https://bloks.io/transaction/' + transactionId;
+      case 'eos':
+        return 'https://bloks.io/transaction/' + transactionId;
       case 'eos_jungle':
+        return 'https://jungle.bloks.io/transaction/' + transactionId;
+      case 'eosJungle':
         return 'https://jungle.bloks.io/transaction/' + transactionId;
       default:
         return 'https://telos.bloks.io/transaction/' + transactionId;

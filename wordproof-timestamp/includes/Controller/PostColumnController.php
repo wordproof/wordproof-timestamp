@@ -44,13 +44,17 @@ class PostColumnController
       $meta = PostMetaHelper::getPostMeta($post, ['date', 'blockchain']);
       if (empty($meta->date)) {
 
-        echo '<span>🚨 Post is never stamped</span>';
+        echo '<span>🚨 Post is never timestamped</span>';
         $this->addTimestampButton($post);
 
       } else if ($meta->date !== get_the_modified_date('c', $post->ID)) {
 
         echo '🚨 <span>Timestamp is outdated</span>';
         $this->addTimestampButton($post);
+
+      } else if (empty($meta->blockchain)) {
+
+        echo '🕓 <span>Waiting for callback</span>';
 
       } else {
 

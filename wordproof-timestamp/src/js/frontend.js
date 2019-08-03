@@ -64,24 +64,26 @@ function closeModal() {
 }
 
 function fetchArticles() {
-  fetch(settings.wordproofApi + 'site/' + wproof.siteId + '/' + settings.fetchArticlesEndpoint + '/' + wproof.uid).then((response) => {
-    if (response.ok) {
-      return response.json();
-    }
-  }).then((schema) => {
-    if (typeof schema === 'object' && !(schema instanceof Array)) {
-      document.dispatchEvent(new CustomEvent('newArticles', {detail: schema}));
+  if (wproof.wsfy.active && wproof.wsfy.revisions) {
+    fetch(settings.wordproofApi + 'site/' + wproof.wsfy.siteId + '/' + settings.fetchArticlesEndpoint + '/' + wproof.uid).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+    }).then((schema) => {
+      if (typeof schema === 'object' && !(schema instanceof Array)) {
+        document.dispatchEvent(new CustomEvent('newArticles', {detail: schema}));
 
-      const script = document.querySelector('script.wordproof-schema');
-      script.innerHTML = JSON.stringify(schema);
-    }
-  });
+        const script = document.querySelector('script.wordproof-schema');
+        script.innerHTML = JSON.stringify(schema);
+      }
+    });
+  }
 }
 
 function setSettings() {
   debug();
 
-  if (wproof.noRevisions) {
+  if (!wproof.wsfy.revisions) {
     settings.fetchArticlesEndpoint = 'article';
   }
 

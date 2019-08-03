@@ -64,10 +64,9 @@ class CertificateController
           'css' => WORDPROOF_URI_CSS . '/frontend.css',
           'icon' => WORDPROOF_URI_IMAGES . '/wordproof-icon.png',
           'logo' => WORDPROOF_URI_IMAGES . '/wordproof-logo.png',
-          'siteId' => (isset($wsfyOptions['siteId'])) ? $wsfyOptions['siteId'] : '',
+          'wsfy' => (isset($wsfyOptions['active']) && $wsfyOptions['active'] === true) ? $wsfyOptions : false,
           'certificateText' => (isset($certificateText)) ? $certificateText : '',
           'certificateDOMParent' => (isset($certificateDOMParent)) ? $certificateDOMParent : '',
-          'noRevisions' => (isset($wsfyOptions['revisions'])) ? !$wsfyOptions['revisions'] : '',
           'debug' => false
         ));
       }

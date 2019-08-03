@@ -55,6 +55,7 @@ class CertificateController
 
       if (isset($meta->date) && !empty($meta->blockchain)) {
         $wsfyOptions = get_option('wordproof_wsfy');
+        $wsfyOptions = (isset($wsfyOptions['active']) && $wsfyOptions['active'] === true) ? ['active' => $wsfyOptions['active'], 'revisions' => $wsfyOptions['revisions'], 'siteId' => $wsfyOptions['siteId']] : '';
         $certificateText = get_option('wordproof_certificate_text');
         $certificateDOMParent = get_option('wordproof_certificate_dom_selector');
 
@@ -64,7 +65,7 @@ class CertificateController
           'css' => WORDPROOF_URI_CSS . '/frontend.css',
           'icon' => WORDPROOF_URI_IMAGES . '/wordproof-icon.png',
           'logo' => WORDPROOF_URI_IMAGES . '/wordproof-logo.png',
-          'wsfy' => (isset($wsfyOptions['active']) && $wsfyOptions['active'] === true) ? $wsfyOptions : false,
+          'wsfy' => $wsfyOptions,
           'certificateText' => (isset($certificateText)) ? $certificateText : '',
           'certificateDOMParent' => (isset($certificateDOMParent)) ? $certificateDOMParent : '',
           'debug' => false

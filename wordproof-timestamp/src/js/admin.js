@@ -39,7 +39,7 @@ function savePost(ev) {
 
       } else if (response.success) {
         ev.target.style.display = 'none';
-        document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = 'Post is timestamped.';
+        document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = '👍 Post sent to WSFY';
       }
     }
   }

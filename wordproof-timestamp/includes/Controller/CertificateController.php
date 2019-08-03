@@ -59,6 +59,7 @@ class CertificateController
         wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', array(), filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
         wp_localize_script('wordproof.frontend.js', 'wproof', array(
           'uid' => $post->ID,
+          'css' => WORDPROOF_URI_CSS . '/frontend.css',
           'icon' => WORDPROOF_URI_IMAGES . '/wordproof-icon.png',
           'logo' => WORDPROOF_URI_IMAGES . '/wordproof-logo.png',
           'siteId' => (isset($wsfyOptions['siteId'])) ? $wsfyOptions['siteId'] : '',

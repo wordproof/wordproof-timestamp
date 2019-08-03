@@ -3,7 +3,7 @@ import ShadowDOM from 'react-shadow';
 
 import MockupBrowser from "./MockupBrowser/MockupBrowser";
 import Pagination from "./Pagination/Pagination";
-import style from '../Certificate.scss';
+// import styles from '../Certificate.scss';
 
 export default class CertificateModal extends Component {
   constructor(props) {
@@ -20,10 +20,11 @@ export default class CertificateModal extends Component {
   render() {
     const data = this.props.data;
     return (
-      <ShadowDOM>
+      <ShadowDOM include={`${wproof.css}`}>
+
         <div className="shadowHost">
 
-          <div className={`modal is-family-primary ${(this.props.isActive ? 'is-active' : '')}`}>
+          <div className={`modal is-family-primary`}>
             <div onClick={this.props.close} className="modal-background wordproof-modal-background"></div>
             <div className="modal-card">
               <section className="modal-card-body">
@@ -44,8 +45,6 @@ export default class CertificateModal extends Component {
               </footer>
             </div>
           </div>
-
-          <style type="text/css">{style}</style>
         </div>
       </ShadowDOM>
     )

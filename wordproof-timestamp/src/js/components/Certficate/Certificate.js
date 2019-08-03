@@ -9,15 +9,10 @@ export default class Certificate extends Component {
   constructor(props) {
     super(props);
 
-    const articles = this.getArticles();
-    articles.forEach((article, key) => {
-      // articles[key].json = getJSON(article);
-      // articles[key].content = this.prepareContent(article.content);
-      // articles[key].transactionUrl = this.getTransactionUrl(article.blockchain, article.transactionId);
-    });
+    const schema = JSON.parse(document.querySelector('script.wordproof-schema').innerHTML);
+    const articles = this.getArticles(schema);
 
     this.state = {
-      isActive: false,
       currentArticle: 0,
       articles: articles
     };
@@ -26,13 +21,15 @@ export default class Certificate extends Component {
   }
 
   componentDidMount() {
-    console.log(this.state.articles);
-
+    document.addEventListener('newArticles', (e) => {
+      console.log('helloagain', e.detail);
+      let articles = this.getArticles(e.detail);
+      this.setState({articles: articles});
+    });
   }
 
-  getArticles() {
+  getArticles(schema) {
     let articles;
-    const schema = document.querySelector('script.wordproof-schema');
     if (schema.revisions) {
       const revisions = schema.revisions;
       delete schema.revisions;
@@ -40,6 +37,13 @@ export default class Certificate extends Component {
     } else {
       articles = [schema];
     }
+
+    articles.forEach((article, key) => {
+      articles[key].json = getJSON(article);
+      articles[key].content = this.prepareContent(article.content);
+      articles[key].transactionUrl = this.getTransactionUrl(article.blockchain, article.transactionId);
+    });
+
     return articles;
   }
 
@@ -68,10 +72,6 @@ export default class Certificate extends Component {
     return content;
   }
 
-  openModal = () => {
-    this.setState({isActive: true});
-  }
-
   previousArticle = () => {
     this.setState({currentArticle: this.state.currentArticle + 1});
   }
@@ -84,10 +84,6 @@ export default class Certificate extends Component {
     this.setState({currentArticle: article});
   }
 
-  closeModal = () => {
-    this.setState({isActive: false});
-  }
-
   render() {
     return (
       <>
@@ -95,7 +91,7 @@ export default class Certificate extends Component {
           {/*<img src={(this.props.settings.icon) ? this.props.settings.icon : ''} alt="wordproof logo" style="max-width: 40px; padding-right: 10px;"/>*/}
           {/*<span>{(this.props.settings.certificateText) ? this.props.settings.certificateText : 'View this Timestamp Certificate'}</span>*/}
         {/*</a>*/}
-          <CertificateModal isActive={this.state.isActive} close={this.closeModal} current={this.state.currentArticle}
+          <CertificateModal current={this.state.currentArticle}
                             data={this.state.articles[this.state.currentArticle]} previous={this.previousArticle}
                             next={this.nextArticle} set={this.setArticle} articles={this.state.articles}/>
       </>

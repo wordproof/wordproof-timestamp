@@ -16,7 +16,9 @@ class CertificateController
     add_filter('the_content', array($this, 'addCertificateLink'), 999, 1);
     add_action('wp_footer', array($this, 'addCertificateModalContainer'), 10);
     add_action('wp_enqueue_scripts', array($this, 'addCertificateScript'), 999);
+    add_filter('script_loader_tag', [$this, 'addCertificateScriptAttribute'], 10, 2);
     add_action('wp_head', array($this, 'addCertificateSchema'), 999);
+
   }
 
   public function addCertificateLink($content)
@@ -66,10 +68,17 @@ class CertificateController
           'certificateText' => (isset($certificateText)) ? $certificateText : '',
           'certificateDOMParent' => (isset($certificateDOMParent)) ? $certificateDOMParent : '',
           'noRevisions' => (isset($wsfyOptions['revisions'])) ? !$wsfyOptions['revisions'] : '',
-          'debug' => true
+          'debug' => false
         ));
       }
     }
+  }
+
+  public function addCertificateScriptAttribute($tag, $handle)
+  {
+    if ($handle !== 'wordproof.frontend.js')
+      return $tag;
+    return str_replace( ' src', ' defer="defer" src', $tag );
   }
 
   public function addCertificateSchema()

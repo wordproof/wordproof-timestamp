@@ -16,8 +16,10 @@ export default class Pagination extends Component {
     }
   }
 
-  componentDidMount = () => {
-    this.handleButtons(this.props.current);
+  componentDidUpdate = (prevProps) => {
+    if (prevProps !== this.props) {
+      this.handleButtons(this.props.current);
+    }
   }
 
   previous = () => {

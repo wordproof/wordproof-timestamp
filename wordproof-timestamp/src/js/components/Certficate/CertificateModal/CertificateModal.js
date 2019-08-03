@@ -9,7 +9,14 @@ export default class CertificateModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'article'
+      view: 'article',
+      articles: this.props.articles
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.setState({articles: this.props.articles, i: 'test2'});
     }
   }
 
@@ -18,12 +25,10 @@ export default class CertificateModal extends Component {
   }
 
   render() {
-    const data = this.props.data;
     return (
       <ShadowDOM include={`${wproof.css}`}>
 
         <div className="shadowHost">
-
           <div className={`modal is-family-primary`}>
             <div onClick={this.props.close} className="modal-background wordproof-modal-background"></div>
             <div className="modal-card">
@@ -34,12 +39,14 @@ export default class CertificateModal extends Component {
                   <h3 className="subtitle has-text-centered">Protected with </h3>
                   <img src={(wproof.logo) ? wproof.logo : ''} alt="WordProof logo"/>
                 </div>
-                <MockupBrowser data={data} changeView={this.changeView.bind(this)} view={this.state.view}/>
+                <MockupBrowser data={this.props.data} changeView={this.changeView.bind(this)} view={this.state.view}/>
               </section>
               <footer className="modal-card-foot">
                 {(wproof.noRevisions)
-                  ? <a style="text-align: center;" href="https://wordproof.io" target="_blank" rel="noopener noreferrer nofollow">Protect your content on the blockchain with WordProof Timestamp</a>
-                  : <Pagination current={this.props.current} articles={this.props.articles} previous={this.props.previous}
+                  ? <a style="text-align: center;" href="https://wordproof.io" target="_blank"
+                       rel="noopener noreferrer nofollow">Protect your content on the blockchain with WordProof
+                    Timestamp</a>
+                  : <Pagination current={this.props.current} articles={this.state.articles} previous={this.props.previous}
                               next={this.props.next} set={this.props.set}/>
                 }
               </footer>

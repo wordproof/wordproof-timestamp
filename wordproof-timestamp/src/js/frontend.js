@@ -79,7 +79,7 @@ function fetchArticles() {
 }
 
 function setSettings() {
-  // debug();
+  debug();
 
   if (wproof.noRevisions) {
     settings.fetchArticlesEndpoint = 'article';

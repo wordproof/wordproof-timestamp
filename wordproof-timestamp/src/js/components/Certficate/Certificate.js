@@ -22,7 +22,6 @@ export default class Certificate extends Component {
 
   componentDidMount() {
     document.addEventListener('newArticles', (e) => {
-      console.log('helloagain', e.detail);
       let articles = this.getArticles(e.detail);
       this.setState({articles: articles});
     });
@@ -87,13 +86,9 @@ export default class Certificate extends Component {
   render() {
     return (
       <>
-        {/*<a onClick={this.openModal} className="wordproof-certificate-link" href="#wordproof" style={`display: flex;align-items: center;`}>*/}
-          {/*<img src={(this.props.settings.icon) ? this.props.settings.icon : ''} alt="wordproof logo" style="max-width: 40px; padding-right: 10px;"/>*/}
-          {/*<span>{(this.props.settings.certificateText) ? this.props.settings.certificateText : 'View this Timestamp Certificate'}</span>*/}
-        {/*</a>*/}
-          <CertificateModal current={this.state.currentArticle}
-                            data={this.state.articles[this.state.currentArticle]} previous={this.previousArticle}
-                            next={this.nextArticle} set={this.setArticle} articles={this.state.articles}/>
+        <CertificateModal current={this.state.currentArticle}
+                          data={this.state.articles[this.state.currentArticle]} previous={this.previousArticle}
+                          next={this.nextArticle} set={this.setArticle} articles={this.state.articles}/>
       </>
     )
   }

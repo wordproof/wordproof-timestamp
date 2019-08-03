@@ -20,6 +20,13 @@ if (!defined('WPINC')) {
     die();
 }
 
+/**
+ * Temporary solution to fix problems with floats in json_encode
+ */
+if (version_compare(phpversion(), '7.1', '>=')) {
+  ini_set( 'serialize_precision', -1 );
+}
+
 define('WORDPROOF_VERSION', '1.1.1');
 define('WORDPROOF_SLUG', 'wordproof');
 define('WORDPROOF_PREFIX', 'wordproof');

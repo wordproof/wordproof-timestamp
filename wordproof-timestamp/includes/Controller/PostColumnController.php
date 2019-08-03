@@ -49,16 +49,16 @@ class PostColumnController
 
       } else if ($meta->date !== get_the_modified_date('c', $post->ID)) {
 
-        echo '🚨 <span>Timestamp is outdated</span>';
+        echo '<span>🚨 Timestamp is outdated</span>';
         $this->addTimestampButton($post);
 
       } else if (empty($meta->blockchain)) {
 
-        echo '🕓 <span>Waiting for callback</span>';
+        echo '<span>🕓 Waiting for callback</span>';
 
       } else {
 
-        echo '✅ <a target="_blank" href="' . get_permalink($post->ID) . '#wordproof">Certificate</a>';
+        echo '<a target="_blank" href="' . get_permalink($post->ID) . '#wordproof">✅ Certificate</a>';
 
       }
     }

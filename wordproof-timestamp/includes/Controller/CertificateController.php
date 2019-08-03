@@ -67,8 +67,7 @@ class CertificateController
           'logo' => WORDPROOF_URI_IMAGES . '/wordproof-logo.png',
           'wsfy' => $wsfyOptions,
           'certificateText' => (isset($certificateText)) ? $certificateText : '',
-          'certificateDOMParent' => (isset($certificateDOMParent)) ? $certificateDOMParent : '',
-          'debug' => false
+          'certificateDOMParent' => (isset($certificateDOMParent)) ? $certificateDOMParent : ''
         ));
       }
     }

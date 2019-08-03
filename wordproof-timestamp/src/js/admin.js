@@ -34,12 +34,20 @@ function savePost(ev) {
       let response = JSON.parse(Http.responseText);
 
       if (response.errors) {
+
         ev.target.style.display = 'none';
         document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = 'Something went wrong. ' + JSON.stringify(response.errors);
 
       } else if (response.success) {
+
         ev.target.style.display = 'none';
         document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = '👍 Post sent to WSFY';
+
+      } else if (response.message) {
+
+        ev.target.style.display = 'none';
+        document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = 'Something went wrong. ' + JSON.stringify(response.message);
+
       }
     }
   }

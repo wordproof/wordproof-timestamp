@@ -88,11 +88,7 @@ function setSettings() {
   }
 
   if (wproof.debug) {
-    if (wproof.wordproofApi) {
-      settings.wordproofApi = wproof.wordproofApi;
-    }
-
-    console.log(settings);
+    settings.wordproofApi = 'http://wsfy.test/api/';
   }
 }
 

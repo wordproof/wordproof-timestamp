@@ -63,13 +63,15 @@ class PostMetaHelper {
 
       if (isset($wordproof_date) && !empty($wordproof_date)) {
         $meta = [];
-        $meta['date'] = date('c', strtotime($wordproof_date));
-        $meta['title'] = get_post_meta($post->ID, 'wordproof_title', true);
-        $meta['content'] = get_post_meta($post->ID, 'wordproof_content', true);
-        $meta['attributes']['url'] = get_permalink($post->ID);
-        $meta['transactionId'] = get_post_meta($post->ID, 'wordproof_transaction_id', true);
         $meta['blockchain'] = get_post_meta($post->ID, 'wordproof_network', true);
         $meta['hash'] = "";
+        $meta['title'] = get_post_meta($post->ID, 'wordproof_title', true);
+        $meta['content'] = get_post_meta($post->ID, 'wordproof_content', true);
+        $meta['date'] = date('c', strtotime($wordproof_date));
+        $meta['attributes'] = [];
+        $meta['attributes']['url'] = get_permalink($post->ID);
+        $meta['transactionId'] = get_post_meta($post->ID, 'wordproof_transaction_id', true);
+
       }
     }
 

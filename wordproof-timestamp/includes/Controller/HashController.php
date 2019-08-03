@@ -48,7 +48,7 @@ class HashController
   {
     $array = [];
     $array['type'] = WEB_ARTICLE_TIMESTAMP;
-    $array['version'] = floatval(CURRENT_WEB_ARTICLE_TIMESTAMP_VERSION);
+    $array['version'] = CURRENT_WEB_ARTICLE_TIMESTAMP_VERSION;
     $array['title'] = $post->post_title;
     $array['content'] = $post->post_content;
     $array['date'] = get_the_modified_date('c', $post);

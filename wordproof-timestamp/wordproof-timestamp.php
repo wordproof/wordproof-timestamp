@@ -45,7 +45,7 @@ define('WORDPROOF_WSFY_CRON_HOOK', 'wsfy_save_post_on_cron');
 
 //Web Standards
 define('WEB_ARTICLE_TIMESTAMP', 'WebArticleTimestamp');
-define('CURRENT_WEB_ARTICLE_TIMESTAMP_VERSION', '0.1');
+define('CURRENT_WEB_ARTICLE_TIMESTAMP_VERSION', '0.1.1');
 
 // Init plugin
 spl_autoload_register(__NAMESPACE__ . '\\autoload');

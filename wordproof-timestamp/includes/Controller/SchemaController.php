@@ -67,6 +67,22 @@ class SchemaController
           $array[$key] = $value;
         }
         return json_encode($array, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+
+      case '0.1.1':
+        $array = [];
+        $array['@context']['@type'] = WEB_ARTICLE_TIMESTAMP;
+        $array['@context']['@version'] = $meta->version;
+        $array['blockchain'] = $meta->blockchain;
+        $array['transactionId'] = $meta->transactionId;
+        $array['hash'] = $meta->hash;
+        $array['title'] = $meta->title;
+        $array['content'] = $meta->content;
+        $array['date'] = $meta->date;
+
+        foreach ($attributes as $key => $value) {
+          $array[$key] = $value;
+        }
+        return json_encode($array, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
       default:
         return false;
     }

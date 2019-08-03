@@ -90,7 +90,7 @@ class AutomateController
     error_log('Logging ' . $postId);
     if (!wp_next_scheduled(WORDPROOF_WSFY_CRON_HOOK, array($postId))) {
       error_log('Setting cron');
-      wp_schedule_single_event(time() + 10, WORDPROOF_WSFY_CRON_HOOK, array($postId));
+      wp_schedule_single_event(time() + 7, WORDPROOF_WSFY_CRON_HOOK, array($postId));
     }
   }
 }

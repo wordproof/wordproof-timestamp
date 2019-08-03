@@ -15,7 +15,7 @@ class TimestampController
 
   public static function saveTimestamp($postId, $chain, $transactionId) {
 
-    $metaFields = HashController::getFieldsArticle($postId);
+    $metaFields = HashController::getFields($postId);
 
     $meta = $metaFields['properties'];
     $meta['attributes'] = $metaFields['attributes'];

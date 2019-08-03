@@ -56,7 +56,7 @@ class CertificateController
       if (isset($meta->date) && !empty($meta->blockchain)) {
         $wsfyOptions = get_option('wordproof_wsfy');
         $wsfyOptions = (isset($wsfyOptions['active']) && $wsfyOptions['active'] === true) ? ['active' => $wsfyOptions['active'], 'revisions' => $wsfyOptions['revisions'], 'siteId' => $wsfyOptions['siteId']] : '';
-        $certificateText = get_option('wordproof_certificate_text');
+        $certificateText = $this->getCertificateText();
         $certificateDOMParent = get_option('wordproof_certificate_dom_selector');
 
         wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', array(), filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
@@ -66,7 +66,7 @@ class CertificateController
           'icon' => WORDPROOF_URI_IMAGES . '/wordproof-icon.png',
           'logo' => WORDPROOF_URI_IMAGES . '/wordproof-logo.png',
           'wsfy' => $wsfyOptions,
-          'certificateText' => (isset($certificateText)) ? $certificateText : '',
+          'certificateText' => $certificateText,
           'certificateDOMParent' => (isset($certificateDOMParent)) ? $certificateDOMParent : ''
         ));
       }
@@ -105,7 +105,7 @@ class CertificateController
   public static function getCertificateText()
   {
     $text = get_option('wordproof_certificate_text', null) ?: self::$default_text;
-    return $text;
+    return stripslashes($text);
   }
 
   private function getCertificateTemplate()

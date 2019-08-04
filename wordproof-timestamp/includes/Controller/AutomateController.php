@@ -2,6 +2,7 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
+use WordProofTimestamp\includes\Page\AutoStampPage;
 use WordProofTimestamp\includes\PostMetaHelper;
 
 class AutomateController
@@ -19,6 +20,10 @@ class AutomateController
       add_action(WORDPROOF_WSFY_CRON_HOOK, [$this, 'savePost']);
 
       add_action('admin_post_nopriv_wordproof_wsfy_edit_post', [$this, 'updatePostWithTransaction']);
+
+      if (is_admin()) {
+        new AutoStampPage();
+      }
     }
   }
 
@@ -62,7 +67,9 @@ class AutomateController
 
         return ['success' => true];
       } else {
-        return json_decode($result['body']);
+        if (isset($result['body'])) {
+          return json_decode($result['body']);
+        }
       }
     }
   }
@@ -75,12 +82,19 @@ class AutomateController
       $transactionId = ($_REQUEST['transactionId']) ? sanitize_text_field($_REQUEST['transactionId']) : '';
       $meta = PostMetaHelper::getPostMeta($postId);
 
-      $meta->blockchain = $chain;
-      $meta->transactionId = $transactionId;
+      if (!empty($meta)) {
+        $meta->blockchain = $chain;
+        $meta->transactionId = $transactionId;
 
-      PostMetaHelper::savePostMeta($postId, (array) $meta, true);
-      error_log('Post meta updated with transactional data for ' . $postId);
-      echo json_encode(['success' => true]); die();
+        PostMetaHelper::savePostMeta($postId, (array)$meta, true);
+        error_log('Post meta updated with transactional data for ' . $postId);
+        echo json_encode(['success' => true]);
+        die();
+      } else {
+        error_log('Post ' . $postId . ' not updated. ');
+        echo json_encode(['success' => false]);
+        die();
+      }
     }
     die();
   }

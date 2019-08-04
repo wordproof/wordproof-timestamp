@@ -7,7 +7,7 @@ use WordProofTimestamp\includes\PostMetaHelper;
 class CertificateController
 {
 
-  private static $default_template = "<div><p class='wordproof-certificate-link' style='display: flex; align-items: center;'><img src='" . WORDPROOF_URI_IMAGES . "/wordproof-icon.png" . "' style='max-width: 30px; max-height: 30px; display: inline-block; margin: 0 10px 0 0;' alt='WordProof timestamp'/><a class='wordproof-certificate-helper' data-post-id='POST_ID' href='CERTIFICATE_URL'>CERTIFICATE_TEXT</a></p></div>";
+  private static $default_template = "<div><p class='wordproof-certificate-link' style='display: none; align-items: center;'><img src='" . WORDPROOF_URI_IMAGES . "/wordproof-icon.png" . "' style='max-width: 30px; max-height: 30px; display: inline-block; margin: 0 10px 0 0;' alt='WordProof timestamp'/><a class='wordproof-certificate-helper' data-post-id='POST_ID' href='CERTIFICATE_URL'>CERTIFICATE_TEXT</a></p></div>";
   private static $default_text = "View this content's WordProof Timestamp certificate";
   private static $default_url = '#wordproof';
 

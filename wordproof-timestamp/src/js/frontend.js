@@ -27,21 +27,43 @@ document.addEventListener('DOMContentLoaded', function () {
   setSettings();
 
   if (schema) {
-    //Render Modal
-    renderModal();
-
-    //Close Modal
-    let modal = getModal();
-    modal.querySelector('.wordproof-modal-background').addEventListener('click', closeModal);
-    modal.querySelector('.wordproof-modal-close').addEventListener('click', closeModal);
-
-    //Open Modal
-    document.querySelector('.wordproof-certificate-link').addEventListener('click', openModal);
-    if (window.location.href.indexOf("#wordproof") > -1) {
-      openModal();
-    }
+    initModal();
+    initLink();
   }
 });
+
+/**
+ * Render modal and set event listeners
+ */
+function initModal() {
+  //Render Modal
+  renderModal();
+
+  //Close Modal
+  let modal = getModal();
+  modal.querySelector('.wordproof-modal-background').addEventListener('click', closeModal);
+  modal.querySelector('.wordproof-modal-close').addEventListener('click', closeModal);
+
+  //Open Modal
+  if (window.location.href.indexOf("#wordproof") > -1) {
+    openModal();
+  }
+}
+
+function initLink() {
+  let link = document.querySelector('.wordproof-certificate-link');
+
+  if (wproof.certificateDOMParent) {
+    const newLocation = document.querySelector(wproof.certificateDOMParent);
+
+    if (newLocation) {
+      link = newLocation.appendChild(link);
+    }
+  }
+
+  link.style.display = 'flex';
+  link.addEventListener('click', openModal);
+}
 
 function renderModal() {
   ReactDOM.render(<Certificate settings={wproof} />, document.querySelector('#wordproof-certificate-container'));

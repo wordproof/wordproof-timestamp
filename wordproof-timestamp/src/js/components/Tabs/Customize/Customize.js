@@ -31,7 +31,7 @@ export default class Customize extends Component {
 
           <div className={`form-group ${ this.state.hideAdvanced ? 'hidden' : '' }`}>
             <label htmlFor="" className="label" title="Certificate DOM Selector">Certificate DOM Selector</label>
-            <input type="text" className="textinput" name="wordproof_certificate_dom_selector"
+            <input type="text" className="textinput" name="wordproof_certificate_dom_selector" placeholder="eg. .entry-meta or #mydiv"
                    value={this.state.certificateDOMSelector} onChange={e => this.setState({certificateDOMSelector: e.target.value})}/>
           </div>
 

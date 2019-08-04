@@ -69,31 +69,22 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 
 == Changelog ==
 
-= 0.1 =
-*Release date: April 5th, 2019*
-* Initial release.
+= 1.1.1 =
+*Release date: July 12th, 2019*
+* Add customization field
 
-= 0.6 =
-*Release date: May 30th, 2019*
-* Redesigned plugin Options
-* WordProof Setup Wizard added
-* Front-end blockchain certificate 
+= 1.1.0 =
+*Release date: July 12th, 2019*
+* Implement Timestamp Standard
+* Various performance and page load improvements
 
-= 0.6.1 =
-*Release date: May 31th, 2019*
-* Bugfix
+= 1.0.3 =
+*Release date: July 11th, 2019*
+* Improved network selection
 
-= 0.6.2 =
-*Release date: June 3rd, 2019*
-* Small styling fix
-
-= 0.6.3 =
-*Release date: June 4rd, 2019*
-* Backwards compatibility fix
-
-= 1.0.0 =
-*Release date: June 22th, 2019*
-* Our biggest release yet! Please share your experience with us!
+= 1.0.2 =
+*Release date: July 11th, 2019*
+* Improvements to the admin area
 
 = 1.0.1 =
 *Release date: June 28th, 2019*
@@ -101,19 +92,28 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 * Page load Optimization
 * Resolving various bugs
 
-= 1.0.2 =
-*Release date: July 11th, 2019*
-* Improvements to the admin area
+= 1.0.0 =
+*Release date: June 22th, 2019*
+* Our biggest release yet! Please share your experience with us!
 
-= 1.0.3 =
-*Release date: July 11th, 2019*
-* Improved network selection
+= 0.6.3 =
+*Release date: June 4rd, 2019*
+* Backwards compatibility fix
 
-= 1.1.0 =
-*Release date: July 12th, 2019*
-* Implement Timestamp Standard
-* Various performance and page load improvements
+= 0.6.2 =
+*Release date: June 3rd, 2019*
+* Small styling fix
 
-= 1.1.1 =
-*Release date: July 12th, 2019*
-* Add customization field
+= 0.6.1 =
+*Release date: May 31th, 2019*
+* Bugfix
+
+= 0.6 =
+*Release date: May 30th, 2019*
+* Redesigned plugin Options
+* WordProof Setup Wizard added
+* Front-end blockchain certificate 
+
+= 0.1 =
+*Release date: April 5th, 2019*
+* Initial release.

@@ -123,4 +123,5 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 * Automate your timestamping using WSFY
 * Select output location of the certificate link
 * Make use of WebArticleTimestamp 0.1.1
+* Optimize and restructure code
 * Fix for the posts timestamp column indicator

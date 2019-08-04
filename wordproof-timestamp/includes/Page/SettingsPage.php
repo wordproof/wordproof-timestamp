@@ -72,12 +72,12 @@ class SettingsPage {
           $post = $_POST['wsfy_settings'];
           $accessToken = sanitize_text_field($post['access_token']);
           $siteId = sanitize_text_field($post['site_id']);
-          $revisions = isset($post['revisions']) ? true : false;
+          $revisions = isset($post['no_revisions']) ? true : false;
 
           if (empty($accessToken) || empty($siteId)) {
-            $options = ['accessToken' => $accessToken, 'siteId' => $siteId, 'active' => false, 'revisions' => $revisions];
+            $options = ['accessToken' => $accessToken, 'siteId' => $siteId, 'active' => false, 'noRevisions' => $revisions];
           } else {
-            $options = ['accessToken' => $accessToken, 'siteId' => $siteId, 'active' => true, 'revisions' => $revisions];
+            $options = ['accessToken' => $accessToken, 'siteId' => $siteId, 'active' => true, 'noRevisions' => $revisions];
           }
           update_option('wordproof_wsfy', $options);
         }

@@ -7,7 +7,7 @@ export default class Automate extends Component {
       accessToken: wordproofSettings.wsfy.accessToken,
       siteId: wordproofSettings.wsfy.siteId,
       active: wordproofSettings.wsfy.active,
-      revisions: wordproofSettings.wsfy.revisions
+      noRevisions: wordproofSettings.wsfy.noRevisions
     }
   }
 
@@ -42,9 +42,9 @@ export default class Automate extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="" className="label" title="Display Revisions">Display Revisions</label>
-              <input type="checkbox" value="1" className="" name="wsfy_settings[revisions]"
-                     onChange={e => this.setState({revisions: e.target.value})} defaultChecked={this.state.revisions}/>
+              <label htmlFor="" className="label" title="Display Revisions">Hide Revisions</label>
+              <input type="checkbox" value="1" className="" name="wsfy_settings[no_revisions]"
+                     onChange={e => this.setState({noRevisions: e.target.value})} defaultChecked={this.state.noRevisions}/>
             </div>
 
             <p>We Stamp For You is {(wordproofSettings.wsfy.active) ? 'active' : 'not activated' }</p>

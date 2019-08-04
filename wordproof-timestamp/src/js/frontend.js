@@ -64,7 +64,7 @@ function closeModal() {
 }
 
 function fetchArticles() {
-  if (wproof.wsfy.active && wproof.wsfy.revisions) {
+  if (wproof.wsfy.active && !wproof.wsfy.noRevisions) {
     fetch(settings.wordproofApi + 'site/' + wproof.wsfy.siteId + '/' + settings.fetchArticlesEndpoint + '/' + wproof.uid).then((response) => {
       if (response.ok) {
         return response.json();
@@ -83,7 +83,7 @@ function fetchArticles() {
 function setSettings() {
   debug();
 
-  if (!wproof.wsfy.revisions) {
+  if (wproof.wsfy.noRevisions) {
     settings.fetchArticlesEndpoint = 'article';
   }
 

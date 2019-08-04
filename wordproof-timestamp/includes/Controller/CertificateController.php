@@ -55,7 +55,7 @@ class CertificateController
 
       if (isset($meta->date) && !empty($meta->blockchain)) {
         $wsfyOptions = get_option('wordproof_wsfy');
-        $wsfyOptions = (isset($wsfyOptions['active']) && $wsfyOptions['active'] === true) ? ['active' => $wsfyOptions['active'], 'revisions' => $wsfyOptions['revisions'], 'siteId' => $wsfyOptions['siteId']] : '';
+        $wsfyOptions = (isset($wsfyOptions['active']) && $wsfyOptions['active'] === true) ? ['active' => $wsfyOptions['active'], 'noRevisions' => $wsfyOptions['noRevisions'], 'siteId' => $wsfyOptions['siteId']] : '';
         $certificateText = $this->getCertificateText();
         $certificateDOMParent = get_option('wordproof_certificate_dom_selector');
 

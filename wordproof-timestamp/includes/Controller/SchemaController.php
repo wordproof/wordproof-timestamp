@@ -7,16 +7,12 @@ use WordProofTimestamp\includes\PostMetaHelper;
 class SchemaController
 {
   /**
-   * @param $post
+   * @param $postId
    * @return bool|object|string
    */
-  public static function getSchema($post)
+  public static function getSchema($postId)
   {
-    if (is_int($post)) {
-      $post = get_post($post);
-    }
-
-    $meta = PostMetaHelper::getPostMeta($post->ID);
+    $meta = PostMetaHelper::getPostMeta($postId);
 
     if (!isset($meta->blockchain) || empty($meta->blockchain))
       return false;
@@ -29,7 +25,7 @@ class SchemaController
         $object = self::generateSchemaForArticle($meta, $attributes);
         break;
       default:
-        $object = self::generateSchemaLegacy($post, $meta);
+        $object = self::generateSchemaLegacy($meta);
         break;
     }
 
@@ -89,19 +85,18 @@ class SchemaController
   }
 
   /**
-   * @param $post
    * @param $meta
    * @return object
    */
-  private static function generateSchemaLegacy($post, $meta)
+  private static function generateSchemaLegacy($meta)
   {
     $array = [];
     $array['blockchain'] = $meta->blockchain;
     $array['transactionId'] = $meta->transactionId;
     $array['hash'] = $meta->hash;
-    $array['title'] = $post->title;
-    $array['content'] = $post->content;
-    $array['date'] = get_the_modified_date('c', $post);
+    $array['title'] = $meta->title;
+    $array['content'] = $meta->content;
+    $array['date'] = get_the_modified_date('c', $meta->date);
     $array['url'] = $meta->url;
     return json_encode($array);
   }

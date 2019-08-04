@@ -18,7 +18,6 @@ class CertificateController
     add_action('wp_enqueue_scripts', array($this, 'addCertificateScript'), 999);
     add_filter('script_loader_tag', [$this, 'addCertificateScriptAttribute'], 10, 2);
     add_action('wp_head', array($this, 'addCertificateSchema'), 999);
-
   }
 
   public function addCertificateLink($content)
@@ -77,13 +76,13 @@ class CertificateController
   {
     if ($handle !== 'wordproof.frontend.js')
       return $tag;
-    return str_replace( ' src', ' defer="defer" src', $tag );
+    return str_replace(' src', ' defer="defer" src', $tag);
   }
 
   public function addCertificateSchema()
   {
     global $post;
-    echo SchemaController::getSchema($post);
+    echo SchemaController::getSchema($post->ID);
   }
 
   /**

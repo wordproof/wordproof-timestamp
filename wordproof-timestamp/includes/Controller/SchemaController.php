@@ -16,7 +16,7 @@ class SchemaController
       $post = get_post($post);
     }
 
-    $meta = PostMetaHelper::getPostMeta($post);
+    $meta = PostMetaHelper::getPostMeta($post->ID);
 
     if (!isset($meta->blockchain) || empty($meta->blockchain))
       return false;

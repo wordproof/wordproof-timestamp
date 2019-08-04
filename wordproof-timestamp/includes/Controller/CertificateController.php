@@ -26,7 +26,7 @@ class CertificateController
     global $post;
 
     if (!empty($post)) {
-      $meta = PostMetaHelper::getPostMeta($post, ['date', 'blockchain']);
+      $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain']);
       if (isset($meta->date) && !empty($meta->blockchain)) {
         $content .= $this->getCertificateLinkHtml($post->ID);
       }
@@ -40,7 +40,7 @@ class CertificateController
     global $post;
 
     if (!empty($post)) {
-      $meta = PostMetaHelper::getPostMeta($post, ['date', 'blockchain']);
+      $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain']);
       if (isset($meta->date) && !empty($meta->blockchain)) {
         echo '<div id="wordproof-certificate-container"></div>';
       }
@@ -51,7 +51,7 @@ class CertificateController
   {
     if (is_singular()) {
       global $post;
-      $meta = PostMetaHelper::getPostMeta($post, ['date', 'blockchain']);
+      $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain']);
 
       if (isset($meta->date) && !empty($meta->blockchain)) {
         $wsfyOptions = get_option('wordproof_wsfy');

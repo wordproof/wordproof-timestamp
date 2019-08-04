@@ -41,7 +41,7 @@ class PostColumnController
     global $post;
     if ($column_name == 'wordproof') {
 
-      $meta = PostMetaHelper::getPostMeta($post, ['date', 'blockchain']);
+      $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain']);
       if (empty($meta->date)) {
 
         echo '<span>🚨 Post is never timestamped</span>';

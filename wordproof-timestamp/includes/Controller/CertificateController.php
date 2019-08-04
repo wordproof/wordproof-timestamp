@@ -13,11 +13,11 @@ class CertificateController
 
   public function __construct()
   {
-    add_filter('the_content', array($this, 'addCertificateLink'), 999, 1);
-    add_action('wp_footer', array($this, 'addCertificateModalContainer'), 10);
-    add_action('wp_enqueue_scripts', array($this, 'addCertificateScript'), 999);
+    add_filter('the_content', array($this, 'addCertificateLink'));
+    add_action('wp_footer', array($this, 'addCertificateModalContainer'));
+    add_action('wp_enqueue_scripts', array($this, 'addCertificateScript'));
     add_filter('script_loader_tag', [$this, 'addCertificateScriptAttribute'], 10, 2);
-    add_action('wp_head', array($this, 'addCertificateSchema'), 999);
+    add_action('wp_head', array($this, 'addCertificateSchema'));
   }
 
   public function addCertificateLink($content)
@@ -81,8 +81,10 @@ class CertificateController
 
   public function addCertificateSchema()
   {
-    global $post;
-    echo SchemaController::getSchema($post->ID);
+    if (is_singular()) {
+      global $post;
+      echo SchemaController::getSchema($post->ID);
+    }
   }
 
   /**

@@ -11,8 +11,10 @@ export default class MockupBrowser extends Component {
     }
   }
 
-  componentDidMount() {
-    this.getContent(this.props.data.content);
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.getContent(this.props.data.content);
+    }
   }
 
   getContent(content) {

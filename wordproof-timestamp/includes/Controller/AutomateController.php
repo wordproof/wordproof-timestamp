@@ -20,6 +20,7 @@ class AutomateController
       add_action(WORDPROOF_WSFY_CRON_HOOK, [$this, 'savePost']);
 
       add_action('admin_post_nopriv_wordproof_wsfy_edit_post', [$this, 'updatePostWithTransaction']);
+      add_action('admin_post_nopriv_wordproof_wsfy_migrate', [$this, 'migrateToNewWSFY']);
 
       if (is_admin()) {
         new AutoStampPage();
@@ -76,7 +77,7 @@ class AutomateController
 
   public function updatePostWithTransaction()
   {
-    if ($_SERVER['REMOTE_ADDR'] === WORDPROOF_WSFY_API_IP || $_SERVER['REMOTE_ADDR'] === '127.0.0.1') { //TODO: REMOVE LOCALHOST
+    if ($_SERVER['REMOTE_ADDR'] === WORDPROOF_WSFY_API_IP) {
       $postId = intval($_REQUEST['uid']);
       $chain = ($_REQUEST['chain']) ? sanitize_text_field($_REQUEST['chain']) : '';
       $transactionId = ($_REQUEST['transactionId']) ? sanitize_text_field($_REQUEST['transactionId']) : '';
@@ -88,6 +89,28 @@ class AutomateController
 
         PostMetaHelper::savePostMeta($postId, (array)$meta, true);
         error_log('Post meta updated with transactional data for ' . $postId);
+        echo json_encode(['success' => true]);
+        die();
+      } else {
+        error_log('Post ' . $postId . ' not updated. ');
+        echo json_encode(['success' => false]);
+        die();
+      }
+    }
+    die();
+  }
+
+  public function migrateToNewWSFY()
+  {
+    if ($_SERVER['REMOTE_ADDR'] === WORDPROOF_WSFY_API_IP || $_SERVER['REMOTE_ADDR'] === '127.0.0.1') {
+      $postId = intval($_REQUEST['uid']);
+      $chain = ($_REQUEST['chain']) ? sanitize_text_field($_REQUEST['chain']) : '';
+      $transactionId = ($_REQUEST['transactionId']) ? sanitize_text_field($_REQUEST['transactionId']) : '';
+
+      TimestampController::saveTimestamp($postId, $chain, $transactionId);
+
+      if (!empty($meta)) {
+        error_log('Post meta updated with migrated data for ' . $postId);
         echo json_encode(['success' => true]);
         die();
       } else {

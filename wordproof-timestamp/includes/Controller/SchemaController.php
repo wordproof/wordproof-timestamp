@@ -14,8 +14,8 @@ class SchemaController
   {
     $meta = PostMetaHelper::getPostMeta($postId);
 
-    if (!isset($meta->blockchain) || empty($meta->blockchain))
-      return false;
+    if (!isset($meta->blockchain) || empty($meta->blockchain) || !isset($meta->date) || empty($meta->date))
+      return '';
 
     $type = (isset($meta->type)) ? $meta->type : '';
     $attributes = (isset($meta->attributes)) ? $meta->attributes : [];
@@ -30,7 +30,7 @@ class SchemaController
     }
 
     if (!$object) {
-      return false;
+      return '';
     }
 
     $schema = '<script type="application/ld+json" class="wordproof-schema">';

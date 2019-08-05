@@ -107,7 +107,7 @@ class AutomateController
       $chain = ($_REQUEST['chain']) ? sanitize_text_field($_REQUEST['chain']) : '';
       $transactionId = ($_REQUEST['transactionId']) ? sanitize_text_field($_REQUEST['transactionId']) : '';
 
-      TimestampController::saveTimestamp($postId, $chain, $transactionId);
+      TimestampController::saveTimestamp($postId, $chain, $transactionId, true);
 
       if (!empty($meta)) {
         error_log('Post meta updated with migrated data for ' . $postId);

@@ -13,7 +13,7 @@ class TimestampController
     add_action('wp_ajax_wordproof_save_timestamp', array($this, 'saveTimestampAjax'));
   }
 
-  public static function saveTimestamp($postId, $chain, $transactionId) {
+  public static function saveTimestamp($postId, $chain, $transactionId, $remote = false) {
 
     $metaFields = HashController::getFields($postId);
 
@@ -24,7 +24,7 @@ class TimestampController
     $meta['transactionId'] = $transactionId;
     $meta['hash'] = HashController::getHash($postId);
 
-    PostMetaHelper::savePostMeta($postId, $meta);
+    PostMetaHelper::savePostMeta($postId, $meta, $remote);
 
     echo json_encode(array(
       'success' => true,

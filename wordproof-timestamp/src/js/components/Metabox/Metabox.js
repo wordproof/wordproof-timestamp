@@ -199,7 +199,7 @@ class Metabox extends Component {
           </div>
           :
           <div className="timestamped">
-            <p>Your post is timestamped! <a target="_blank" href={this.state.timestampCertificateLink}>View your certificate</a>.</p>
+            <p>Your post is timestamped! <a rel="noopener noreferrer" target="_blank" href={this.state.timestampCertificateLink}>View your certificate</a>.</p>
           </div>
         }
       </div>

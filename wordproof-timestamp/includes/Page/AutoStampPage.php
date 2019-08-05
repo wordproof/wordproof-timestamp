@@ -19,7 +19,7 @@ class AutoStampPage {
         'Auto Posts Stamper',
         'Auto Stamp',
         'manage_options',
-        'wordproof-licensing',
+        'wordproof-autostamp',
         array($this, 'generateSettingsPage')
       );
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace WordProofTimestampFree\includes;
+namespace WordProofTimestamp\includes;
 
 class AnalyticsHelper
 {

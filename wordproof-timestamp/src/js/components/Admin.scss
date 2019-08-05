@@ -10,10 +10,6 @@ $green-light: #c7e9b9;
 $wordpress-blue: #3884B5;
 $wordpress-blue-light: #e7f5ff;
 
-th.column-wordproof {
-  width: 10%;
-}
-
 .wordproof-admin-app {
   .vo-card {
     position: relative;
@@ -182,6 +178,9 @@ th.column-wordproof {
 
   .textinput {
     width: 100%;
+    max-width: 350px;
+    padding: 7px 10px;
+    border-radius: 4px;
   }
 
   .simpleNotification {

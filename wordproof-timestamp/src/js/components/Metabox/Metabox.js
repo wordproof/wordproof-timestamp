@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import {instanceOf} from 'prop-types';
 import {withCookies, Cookies} from 'react-cookie';
 import ConnectionWidget from '../ConnectionWidget/ConnectionWidget';
-import initWallet from '../../wallet';
-import timestamp from '../../timestamp';
-import getBonus from '../../bonus';
+import initWallet from '../../lib/wallet';
+import timestamp from '../../lib/timestamp';
+import getBonus from '../../lib/bonus';
 
 class Metabox extends Component {
 
@@ -199,7 +199,7 @@ class Metabox extends Component {
           </div>
           :
           <div className="timestamped">
-            <p>Your post is timestamped! <a href={this.state.timestampCertificateLink}>View your certificate</a>.</p>
+            <p>Your post is timestamped! <a rel="noopener noreferrer" target="_blank" href={this.state.timestampCertificateLink}>View your certificate</a>.</p>
           </div>
         }
       </div>

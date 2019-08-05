@@ -1,11 +1,11 @@
 <?php
 
-namespace WordProofTimestampFree\includes;
+namespace WordProofTimestamp\includes;
 
 class PostMetaHelper {
 
-  public static function savePostMeta($postId, $meta) {
-    if (current_user_can('manage_options')) {
+  public static function savePostMeta($postId, $meta, $remote = false) {
+    if (current_user_can('manage_options') || $remote) {
       do_action('wordproof_before_saving_timestamp_meta_data', $postId);
       $result = update_post_meta($postId, 'wordproof_timestamp_data', $meta);
       do_action('wordproof_after_saving_timestamp_meta_data', $postId);
@@ -15,12 +15,16 @@ class PostMetaHelper {
   }
 
   /**
-   * @param $post
+   * @param $postId
    * @param array $keys
-   * @return object
+   * @return object|boolean
    */
-  public static function getPostMeta($post, $keys = []) {
-    $meta = self::getTimestampPostMeta($post);
+  public static function getPostMeta($postId, $keys = []) {
+
+    if (!is_int($postId))
+      return false;
+
+    $meta = self::getTimestampPostMeta($postId);
 
     if (!empty($keys)) {
       $values = [];
@@ -37,25 +41,36 @@ class PostMetaHelper {
    * @param $post
    * @return array
    */
-  private static function getTimestampPostMeta($post) {
-    $meta = get_post_meta($post->ID, 'wordproof_timestamp_data', true);
+  private static function getTimestampPostMeta($postId) {
+    $meta = get_post_meta($postId, 'wordproof_timestamp_data', true);
+
+    //Remap old meta
+    if (isset($meta['wordproof_date'])) {
+      $meta['blockchain'] = ($meta['wordproof_network']) ? $meta['wordproof_network'] : '';
+      $meta['transactionId'] = ($meta['wordproof_transaction_id']) ? $meta['wordproof_transaction_id'] : '';
+      $meta['hash'] = ($meta['wordproof_hash']) ? $meta['wordproof_hash'] : '';
+      $meta['title'] = ($meta['wordproof_title']) ? $meta['wordproof_title'] : '';
+      $meta['content'] = ($meta['wordproof_content']) ? $meta['wordproof_content'] : '';
+      $meta['date'] = ($meta['wordproof_date']) ? date('c', strtotime($meta['wordproof_date'])) : '';
+      $meta['attributes'] = [];
+      $meta['attributes']['url'] = ($meta['wordproof_link']) ? $meta['wordproof_date'] : '';
+    }
 
     // Get old metadata structure (<0.6)
     if (empty($meta)) {
-      $wordproof_date = get_post_meta($post->ID, 'wordproof_date', true);
+      $wordproof_date = get_post_meta($postId, 'wordproof_date', true);
 
       if (isset($wordproof_date) && !empty($wordproof_date)) {
         $meta = [];
-        $meta['wordproof_date'] = $wordproof_date;
-        $meta['wordproof_post_date'] = $post->post_date;
-        $meta['wordproof_title'] = get_post_meta($post->ID, 'wordproof_title', true);
-        $meta['wordproof_content'] = get_post_meta($post->ID, 'wordproof_content', true);
-        $meta['wordproof_link'] = get_permalink($post->ID);
-        $meta['wordproof_transaction_id'] = get_post_meta($post->ID, 'wordproof_transaction_id', true);
-        $meta['wordproof_block_num'] = get_post_meta($post->ID, 'wordproof_block_num', true);
-        $meta['wordproof_block_time'] = get_post_meta($post->ID, 'wordproof_block_time', true);
-        $meta['wordproof_network'] = get_post_meta($post->ID, 'wordproof_network', true);
-        $meta['wordproof_hash'] = "";
+        $meta['blockchain'] = get_post_meta($postId, 'wordproof_network', true);
+        $meta['hash'] = "";
+        $meta['title'] = get_post_meta($$postId, 'wordproof_title', true);
+        $meta['content'] = get_post_meta($postId, 'wordproof_content', true);
+        $meta['date'] = date('c', strtotime($wordproof_date));
+        $meta['attributes'] = [];
+        $meta['attributes']['url'] = get_permalink($postId);
+        $meta['transactionId'] = get_post_meta($postId, 'wordproof_transaction_id', true);
+
       }
     }
 

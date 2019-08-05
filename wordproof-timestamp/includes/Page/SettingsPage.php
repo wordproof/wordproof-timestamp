@@ -1,12 +1,12 @@
 <?php
 
-namespace WordProofTimestampFree\includes\Page;
+namespace WordProofTimestamp\includes\Page;
 
-use WordProofTimestampFree\includes\CertificateHelper;
+use WordProofTimestamp\includes\Controller\CertificateController;
 
 /**
  * Class SettingsPage
- * @package WordProofTimestampFree\includes\Page
+ * @package WordProofTimestamp\includes\Page
  */
 class SettingsPage {
 
@@ -27,15 +27,25 @@ class SettingsPage {
     }
 
     public function generateSettingsPage() {
+        $wsfy = get_option('wordproof_wsfy');
+        $wsfyActive = isset($wsfy['active']) ? $wsfy['active'] : false;
+
         wp_localize_script('wordproof.admin.js', 'wordproofSettings', [
             'network' => get_option('wordproof_network', false),
-            'certificateText' => CertificateHelper::getCertificateText(),
+            'certificateText' => CertificateController::getCertificateText(),
+            'certificateDOMSelector' => get_option('wordproof_certificate_dom_selector', false),
+            'wsfy' => $wsfy,
             'saveChanges' => __('Save Changes')
         ]);
 
         ?>
         <div class="wrap">
             <h1>WordProof Settings</h1>
+
+            <?php if ($wsfyActive): ?>
+                <div class="notice notice-info"><p>WordProof Timestamp 'We Stamp For You' is active. This overwrites some of your local WordProof Timestamp settings.</p></div>
+            <?php endif; ?>
+
             <form action="<?php echo esc_url( admin_url('admin-post.php')); ?>" method="post" id="wordproof_admin_form" >
                 <input type="hidden" name="action" value="wordproof_form_action">
                 <input type="hidden" name="wordproof_admin_form_nonce" value="<?php echo wp_create_nonce('wordproof_admin_form_nonce'); ?>" />
@@ -48,14 +58,36 @@ class SettingsPage {
     public function saveSettings()
     {
       if (isset($_POST['wordproof_admin_form_nonce']) && wp_verify_nonce($_POST['wordproof_admin_form_nonce'], 'wordproof_admin_form_nonce')) {
-        if (isset($_POST['wordproof_network'])) {
+
+          if (isset($_POST['wordproof_network'])) {
           $value = sanitize_text_field($_POST['wordproof_network']);
           update_option('wordproof_network', $value);
         }
+
         if (isset($_POST['wordproof_certificate_text'])) {
           $value = sanitize_text_field($_POST['wordproof_certificate_text']);
           update_option('wordproof_certificate_text', $value);
         }
+
+        if (isset($_POST['wordproof_certificate_dom_selector'])) {
+          $value = sanitize_text_field($_POST['wordproof_certificate_dom_selector']);
+          update_option('wordproof_certificate_dom_selector', $value);
+        }
+
+        if (isset($_POST['wsfy_settings'])) {
+          $post = $_POST['wsfy_settings'];
+          $accessToken = sanitize_text_field($post['access_token']);
+          $siteId = sanitize_text_field($post['site_id']);
+          $revisions = isset($post['no_revisions']) ? true : false;
+
+          if (empty($accessToken) || empty($siteId)) {
+            $options = ['accessToken' => $accessToken, 'siteId' => $siteId, 'active' => false, 'noRevisions' => $revisions];
+          } else {
+            $options = ['accessToken' => $accessToken, 'siteId' => $siteId, 'active' => true, 'noRevisions' => $revisions];
+          }
+          update_option('wordproof_wsfy', $options);
+        }
+
       }
       wp_redirect(admin_url('admin.php?page=wordproof'));
       die();

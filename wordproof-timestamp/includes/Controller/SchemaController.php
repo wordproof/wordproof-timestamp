@@ -1,22 +1,22 @@
 <?php
 
-namespace WordProofTimestampFree\includes\Controller;
+namespace WordProofTimestamp\includes\Controller;
 
-use WordProofTimestampFree\includes\PostMetaHelper;
+use WordProofTimestamp\includes\PostMetaHelper;
 
 class SchemaController
 {
   /**
-   * @param $post
+   * @param $postId
    * @return bool|object|string
    */
-  public static function getSchema($post)
+  public static function getSchema($postId)
   {
-    if (is_int($post)) {
-      $post = get_post($post);
-    }
+    $meta = PostMetaHelper::getPostMeta($postId);
 
-    $meta = PostMetaHelper::getPostMeta($post);
+    if (!isset($meta->blockchain) || empty($meta->blockchain) || !isset($meta->date) || empty($meta->date))
+      return '';
+
     $type = (isset($meta->type)) ? $meta->type : '';
     $attributes = (isset($meta->attributes)) ? $meta->attributes : [];
 
@@ -25,12 +25,12 @@ class SchemaController
         $object = self::generateSchemaForArticle($meta, $attributes);
         break;
       default:
-        $object = self::generateSchemaLegacy($post, $meta);
+        $object = self::generateSchemaLegacy($meta);
         break;
     }
 
     if (!$object) {
-      return false;
+      return '';
     }
 
     $schema = '<script type="application/ld+json" class="wordproof-schema">';
@@ -48,7 +48,7 @@ class SchemaController
   private static function generateSchemaForArticle($meta, $attributes)
   {
     switch ($meta->version) {
-      case 0.1:
+      default:
         $array = [];
         $array['@context']['@type'] = WEB_ARTICLE_TIMESTAMP;
         $array['@context']['@version'] = $meta->version;
@@ -63,26 +63,23 @@ class SchemaController
           $array[$key] = $value;
         }
         return json_encode($array, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
-      default:
-        return false;
     }
   }
 
   /**
-   * @param $post
    * @param $meta
    * @return object
    */
-  private static function generateSchemaLegacy($post, $meta)
+  private static function generateSchemaLegacy($meta)
   {
     $array = [];
-    $array['blockchain'] = $meta->wordproof_network;
-    $array['transactionId'] = $meta->wordproof_transaction_id;
-    $array['hash'] = $meta->wordproof_hash;
-    $array['title'] = $post->post_title;
-    $array['content'] = $post->post_content;
-    $array['date'] = get_the_modified_date('c', $post);
-    $array['url'] = $meta->wordproof_link;
+    $array['blockchain'] = $meta->blockchain;
+    $array['transactionId'] = $meta->transactionId;
+    $array['hash'] = $meta->hash;
+    $array['title'] = $meta->title;
+    $array['content'] = $meta->content;
+    $array['date'] = get_the_modified_date('c', $meta->date);
+    $array['url'] = $meta->url;
     return json_encode($array);
   }
 }

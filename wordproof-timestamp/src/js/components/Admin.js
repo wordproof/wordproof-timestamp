@@ -7,6 +7,7 @@ import Dashboard from './Tabs/Dashboard/Dashboard';
 import Setup from './Tabs/Setup/Setup';
 import Customize from './Tabs/Customize/Customize';
 import Timestamp from './Tabs/Timestamp/Timestamp';
+import Automate from './Tabs/Automate/Automate';
 import Support from './Tabs/Support/Support';
 import Learn from './Tabs/Learn/Learn';
 
@@ -70,10 +71,12 @@ class Admin extends Component {
     switch (hash) {
       case '#setup':
         return <Setup setCookie={this.setCookie} nextStep={this.nextStep} />;
-      case '#customize':
-        return <Customize/>;
       case '#timestamp':
         return <Timestamp nextStep={this.nextStep} />;
+      case '#customize':
+        return <Customize/>;
+      case '#automate':
+        return <Automate/>;
       case '#support':
         return <Support/>;
       case '#learn':
@@ -91,6 +94,7 @@ class Admin extends Component {
           <a href="#setup" className={`nav-tab ${this.activeTab('#setup')}`}>1. Setup</a>
           <a href="#timestamp" className={`nav-tab ${this.activeTab('#timestamp')}`}>2. Timestamp & WORD</a>
           <a href="#customize" className={`nav-tab ${this.activeTab('#customize')}`}>3. Customize</a>
+          <a href="#automate" className={`nav-tab ${this.activeTab('#automate')}`}>Automate</a>
           <a href="#support" className={`nav-tab ${this.activeTab('#support')}`}>Support</a>
           <a href="#learn" className={`nav-tab ${this.activeTab('#learn')}`}>Learn</a>
         </h2>

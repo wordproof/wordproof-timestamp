@@ -1,13 +1,12 @@
 <?php
 
-namespace WordProofTimestampFree\includes\Controller;
-
-use WordProofTimestampFree\includes\PostMetaHelper;
+namespace WordProofTimestamp\includes\Controller;
 
 class HashController
 {
 
   /**
+   * Create the hash for new posts
    * @param $post
    * @param bool $raw
    * @return bool|object|string
@@ -18,57 +17,26 @@ class HashController
       $post = get_post($post);
     }
 
-    $type = false;
-    $meta = (array) PostMetaHelper::getPostMeta($post);
-    if (!empty($meta)) {
-      if (isset($meta['type'])) {
-        $type = $meta['type'];
-      }
-    } else {
-      $type = WEB_ARTICLE_TIMESTAMP;
-    }
+    $fields = self::getFields($post);
+    $fields = array_merge($fields['properties'], $fields['attributes']);
+    $object = json_encode($fields, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
 
-    switch ($type) {
-      case WEB_ARTICLE_TIMESTAMP:
-        $fields = self::getFieldsArticle($post);
-        $fields = array_merge($fields[0], $fields[1]);
-        $object = json_encode($fields, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
-        break;
-      default:
-        $array = self::getFieldsLegacy($post);
-        $object = json_encode($array);
-        break;
-    }
-
-    if (!$object || $raw) {
+    if ($raw) {
       return $object;
     }
 
     return hash('sha256', $object);
   }
 
-  /**
-   * @param $post
-   * @return array
-   */
-  private static function getFieldsLegacy($post)
-  {
-    $array = [];
-    $array['title'] = $post->post_title;
-    $array['content'] = $post->post_content;
-    $array['date'] = get_the_modified_date('c', $post);
-    return $array;
-  }
-
-  public static function getFieldsArticle($post)
+  public static function getFields($post)
   {
     if (is_int($post)) {
       $post = get_post($post);
     }
 
-    $properties = self::getPropertiesArticle($post);
-    $attributes = self::getAttributesArticle($post);
-    return [$properties, $attributes];
+    $properties = self::getProperties($post);
+    $attributes = self::getAttributes($post);
+    return ['properties' => $properties, 'attributes' => $attributes];
   }
 
   /**
@@ -76,7 +44,7 @@ class HashController
    * @param $post
    * @return array
    */
-  private static function getPropertiesArticle($post)
+  private static function getProperties($post)
   {
     $array = [];
     $array['type'] = WEB_ARTICLE_TIMESTAMP;
@@ -92,7 +60,7 @@ class HashController
    * @param $post
    * @return array
    */
-  private static function getAttributesArticle($post)
+  private static function getAttributes($post)
   {
     $array = [];
     //TODO: Get selected attributes

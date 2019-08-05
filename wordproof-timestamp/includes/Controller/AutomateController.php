@@ -64,7 +64,7 @@ class AutomateController
       if ($code === 201) {
         error_log('Post saved to WSFY Servers. Saving post locally.');
 
-        TimestampController::saveTimestamp($postId, '', '');
+        TimestampController::saveTimestamp($postId, '', '', true);
 
         return ['success' => true];
       } else {

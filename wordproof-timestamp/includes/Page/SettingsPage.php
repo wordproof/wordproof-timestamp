@@ -28,6 +28,7 @@ class SettingsPage {
 
     public function generateSettingsPage() {
         $wsfy = get_option('wordproof_wsfy');
+        $wsfyActive = isset($wsfy['active']) ? $wsfy['active'] : false;
 
         wp_localize_script('wordproof.admin.js', 'wordproofSettings', [
             'network' => get_option('wordproof_network', false),
@@ -40,6 +41,11 @@ class SettingsPage {
         ?>
         <div class="wrap">
             <h1>WordProof Settings</h1>
+
+            <?php if ($wsfyActive): ?>
+                <div class="notice notice-info"><p>WordProof Timestamp 'We Stamp For You' is active. This overwrites some of your local WordProof Timestamp settings.</p></div>
+            <?php endif; ?>
+
             <form action="<?php echo esc_url( admin_url('admin-post.php')); ?>" method="post" id="wordproof_admin_form" >
                 <input type="hidden" name="action" value="wordproof_form_action">
                 <input type="hidden" name="wordproof_admin_form_nonce" value="<?php echo wp_create_nonce('wordproof_admin_form_nonce'); ?>" />

@@ -93,10 +93,9 @@ function fetchArticles() {
       }
     }).then((schema) => {
       if (typeof schema === 'object' && !(schema instanceof Array)) {
-        document.dispatchEvent(new CustomEvent('newArticles', {detail: schema}));
-
         const script = document.querySelector('script.wordproof-schema');
         script.innerHTML = JSON.stringify(schema);
+        document.dispatchEvent(new CustomEvent('newArticles', {detail: schema}));
       }
     });
   }

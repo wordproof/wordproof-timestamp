@@ -28,7 +28,7 @@ class AutoStampPage {
         $args = [
             'post_status' => 'publish',
             'post_type' => 'post',
-            'numberposts' => -1,
+            'numberposts' => 1000,
             'meta_query' => array(
             array(
                 'key' => 'wordproof_timestamp_data',

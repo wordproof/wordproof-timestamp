@@ -16,7 +16,7 @@ export default class CertificateModal extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      this.setState({articles: this.props.articles, i: 'test2'});
+      this.setState({articles: this.props.articles});
     }
   }
 

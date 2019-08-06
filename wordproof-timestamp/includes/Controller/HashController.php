@@ -11,7 +11,7 @@ class HashController
    * @param bool $raw
    * @return bool|object|string
    */
-  public static function getHash($post, $raw = false)
+  public static function getHash($post, $raw = false, $migration = false)
   {
     if (is_int($post)) {
       $post = get_post($post);
@@ -19,6 +19,9 @@ class HashController
 
     $fields = self::getFields($post);
     $fields = array_merge($fields['properties'], $fields['attributes']);
+    if ($migration) {
+      $fields['version'] = 0.1;
+    }
     $object = json_encode($fields, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
 
     if ($raw) {

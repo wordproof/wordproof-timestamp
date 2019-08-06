@@ -13,12 +13,17 @@ class TimestampController
     add_action('wp_ajax_wordproof_save_timestamp', array($this, 'saveTimestampAjax'));
   }
 
-  public static function saveTimestamp($postId, $chain, $transactionId, $remote = false) {
+  public static function saveTimestamp($postId, $chain, $transactionId, $remote = false, $migration = false) {
 
     $metaFields = HashController::getFields($postId);
 
     $meta = $metaFields['properties'];
     $meta['attributes'] = $metaFields['attributes'];
+
+    //Remove after migrations are done
+    if ($migration) {
+      $meta['version'] = 0.1;
+    }
 
     $meta['blockchain'] = $chain;
     $meta['transactionId'] = $transactionId;

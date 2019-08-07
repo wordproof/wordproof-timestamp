@@ -20,8 +20,15 @@ class TimestampController
     $meta = $metaFields['properties'];
     $meta['attributes'] = $metaFields['attributes'];
 
-    //Remove after migrations are done
+    //TODO: Remove after migrations are done
     if ($migration) {
+      /**
+       * Temporary solution to fix problems with floats in json_encode
+       */
+      if (version_compare(phpversion(), '7.1', '>=')) {
+        ini_set( 'serialize_precision', -1 );
+      }
+
       $meta['version'] = 0.1;
     }
 

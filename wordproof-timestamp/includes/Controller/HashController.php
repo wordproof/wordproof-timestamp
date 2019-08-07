@@ -19,6 +19,8 @@ class HashController
 
     $fields = self::getFields($post);
     $fields = array_merge($fields['properties'], $fields['attributes']);
+
+    //TODO: Remove after migrations are done
     if ($migration) {
       $fields['version'] = 0.1;
     }

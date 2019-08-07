@@ -102,7 +102,7 @@ class AutomateController
 
   public function migrateToNewWSFY()
   {
-    if ($_SERVER['REMOTE_ADDR'] === WORDPROOF_WSFY_API_IP || $_SERVER['REMOTE_ADDR'] === '127.0.0.1') {
+    if ($_SERVER['REMOTE_ADDR'] === WORDPROOF_WSFY_API_IP) {
       $postId = intval($_REQUEST['uid']);
       $chain = ($_REQUEST['chain']) ? sanitize_text_field($_REQUEST['chain']) : '';
       $transactionId = ($_REQUEST['transactionId']) ? sanitize_text_field($_REQUEST['transactionId']) : '';

@@ -27,7 +27,7 @@ class TimestampController
 
     $meta['blockchain'] = $chain;
     $meta['transactionId'] = $transactionId;
-    $meta['hash'] = HashController::getHash($postId);
+    $meta['hash'] = HashController::getHash($postId, $migration);
 
     PostMetaHelper::savePostMeta($postId, $meta, $remote);
 

@@ -7,8 +7,14 @@ export default class Automate extends Component {
       accessToken: wordproofSettings.wsfy.accessToken,
       siteId: wordproofSettings.wsfy.siteId,
       active: wordproofSettings.wsfy.active,
-      noRevisions: wordproofSettings.wsfy.noRevisions
+      noRevisions: wordproofSettings.wsfy.noRevisions,
+      hideAdvanced: true
     }
+  }
+
+  handleAdvancedOptions = (e) => {
+    e.preventDefault();
+    this.setState({hideAdvanced: false});
   }
 
   render() {
@@ -47,10 +53,21 @@ export default class Automate extends Component {
                      onChange={e => this.setState({noRevisions: e.target.value})} defaultChecked={this.state.noRevisions}/>
             </div>
 
+            <div className={`form-group  ${ this.state.hideAdvanced ? 'hidden' : '' }`}>
+              <label htmlFor="" className="label">Tools</label>
+              <a href={`${wordproofSettings.adminUrl}admin.php?page=wordproof-autostamp`} target="_blank" rel="noopener noreferrer">Auto Stamp your Posts</a>
+            </div>
+
+
+
             <p>We Stamp For You is {(wordproofSettings.wsfy.active) ? 'active' : 'not activated' }</p>
 
             <input type="submit" name="submit" id="submit" className="button is-primary"
                    value={wordproofSettings.saveChanges}/>
+
+            <button className={`button button-modest ${ this.state.hideAdvanced ? '' : 'hidden' }`}
+                    onClick={this.handleAdvancedOptions}>Show advanced settings
+            </button>
 
           </div>
           <div className="vo-col">

@@ -15,7 +15,7 @@ class AutoStampPage {
 
     public function addSettingsPage() {
       add_submenu_page(
-        'wordproof',
+        null,
         'Auto Posts Stamper',
         'Auto Stamp',
         'manage_options',
@@ -25,9 +25,14 @@ class AutoStampPage {
     }
 
     public function generateSettingsPage() {
+        $cpt = 'post';
+        if (isset($_GET['cpt']) && !empty($_GET['cpt'])) {
+            $cpt = sanitize_text_field($_GET['cpt']);
+        }
+
         $args = [
             'post_status' => 'publish',
-            'post_type' => 'post',
+            'post_type' => $cpt,
             'numberposts' => 1000,
             'meta_query' => array(
             array(

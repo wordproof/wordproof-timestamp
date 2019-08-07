@@ -30,16 +30,19 @@ class AutoStampPage {
             $cpt = sanitize_text_field($_GET['cpt']);
         }
 
+        $metaQueries = ['key' => 'wordproof_timestamp_data', 'compare' => 'NOT EXISTS'];
+        $offset = 0;
+        if (isset($_GET['force']) && isset($_GET['offset'])) {
+            $offset = intval($_GET['offset']);
+            $metaQueries = [];
+        }
+
         $args = [
             'post_status' => 'publish',
             'post_type' => $cpt,
             'numberposts' => 1000,
-            'meta_query' => array(
-            array(
-                'key' => 'wordproof_timestamp_data',
-                'compare' => 'NOT EXISTS'
-            ),
-            )
+            'offset' => $offset,
+            'meta_query' => [$metaQueries]
         ];
         $posts = get_posts($args);
 

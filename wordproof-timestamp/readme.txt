@@ -71,7 +71,7 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 
 = 1.2.6 =
 *Release date: August 8th, 2019*
-* Code cleanup
+* Display correct blockchain link for with Telos stamped posts
 
 = 1.2.5 =
 *Release date: August 7th, 2019*

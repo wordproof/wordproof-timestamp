@@ -70,7 +70,7 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 == Changelog ==
 
 = 1.2.6 =
-*Release date: August 7th, 2019*
+*Release date: August 8th, 2019*
 * Code cleanup
 
 = 1.2.5 =

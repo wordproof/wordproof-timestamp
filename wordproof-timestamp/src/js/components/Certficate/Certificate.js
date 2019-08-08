@@ -48,6 +48,8 @@ export default class Certificate extends Component {
 
   getTransactionUrl = (network, transactionId) => {
     switch (network) {
+      case 'telos_main':
+        return 'https://telos.bloks.io/transaction/' + transactionId;
       case 'telos':
         return 'https://telos.bloks.io/transaction/' + transactionId;
       case 'eos':

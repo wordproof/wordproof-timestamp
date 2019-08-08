@@ -49,7 +49,7 @@ class PostColumnController
 
       } else if ($meta->date !== get_the_modified_date('c', $post->ID)) {
 
-        echo '<span>🚨 Timestamp is outdated</span>';
+        echo '<a target="_blank" rel="noopener noreferrer" href="' . get_permalink($post->ID) . '#wordproof">🚨 Timestamp is outdated</a>';
         $this->addTimestampButton($post);
 
       } else if (empty($meta->blockchain)) {
@@ -58,7 +58,7 @@ class PostColumnController
 
       } else {
 
-        echo '<a target="_blank" href="' . get_permalink($post->ID) . '#wordproof">✅ Certificate</a>';
+        echo '<a target="_blank" rel="noopener noreferrer" href="' . get_permalink($post->ID) . '#wordproof">✅ Certificate</a>';
 
       }
     }

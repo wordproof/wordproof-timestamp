@@ -18,6 +18,7 @@ class CertificateController
     add_action('wp_enqueue_scripts', array($this, 'addCertificateScript'));
     add_filter('script_loader_tag', [$this, 'addCertificateScriptAttribute'], 10, 2);
     add_action('wp_head', array($this, 'addCertificateSchema'));
+    add_action('wordproof_translate_certificate', array($this, 'translateCertificate'));
   }
 
   public function addCertificateLink($content)
@@ -68,8 +69,32 @@ class CertificateController
           'certificateText' => $certificateText,
           'certificateDOMParent' => (isset($certificateDOMParent)) ? $certificateDOMParent : ''
         ));
+        do_action('wordproof_translate_certificate');
       }
     }
+  }
+
+  public function translateCertificate()
+  {
+    wp_localize_script('wordproof.frontend.js', 'wproofStrings', array(
+      'title' => __('Timestamp Certificate', 'wordproof-timestamp'),
+      'subtitle' => __('Protected with', 'wordproof-timestamp'),
+      'readMore' => __('Read More', 'wordproof-timestamp'),
+      'switchRaw' => __('Raw', 'wordproof-timestamp'),
+      'switchArticle' => __('Article', 'wordproof-timestamp'),
+      'switchAbout' => __('About this Timestamp Certificate', 'wordproof-timestamp'),
+      'switchAboutReturn' => __('Back to Timestamp Certificate', 'wordproof-timestamp'),
+      'blockchainLink' => __('View on the blockchain', 'wordproof-timestamp'),
+      'timestampChecker' => __('Timestamp Checker', 'wordproof-timestamp'),
+      'dateModification' => __('Modification Date', 'wordproof-timestamp'),
+      'promotionLinkText' => __('Protect your content on the blockchain with WordProof Timestamp', 'wordproof-timestamp'),
+      'buttonPrevious' => __('Previous', 'wordproof-timestamp'),
+      'buttonNext' => __('Next', 'wordproof-timestamp'),
+      'aboutTitle' => __('What is this Timestamp Certificate', 'wordproof-timestamp'),
+      'aboutText' => sprintf(
+        __('This content is protected with WordProof, a new web standard for a more trustworthy internet. This timestamp exists of a unique hash (summary) based on the title, date and content of this page. It is stored in the blockchain and can never be altered.<br/><br/>You can verify this Timestamp Certificate yourself with the <a target="_blank" rel="noopener noreferrer" href="%s">WordProof Timestamp Checker</a>. The hash of this post is', 'wordproof-timestamp')
+        , 'https://wordproof.io/check/'),
+    ));
   }
 
   public function addCertificateScriptAttribute($tag, $handle)

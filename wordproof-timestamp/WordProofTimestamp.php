@@ -28,8 +28,6 @@ class WordProofTimestamp
     new AutomateController();
   }
 
-
-
   /**
    * @return null|WordProof
    */

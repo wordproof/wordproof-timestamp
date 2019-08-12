@@ -91,7 +91,7 @@ export default class Pagination extends Component {
           <button className="button button--left" disabled={this.state.previous.disabled}
                   onClick={this.previous}>
             <span className="arrow">&#x2190;</span>
-            <span>Previous<br/><span className="date">{(this.state.previous.date)
+            <span>{ wproofStrings.buttonPrevious }<br/><span className="date">{(this.state.previous.date)
               ? DateTime.fromISO(this.state.previous.date).toLocaleString(DateTime.DATE_SHORT)
               : ''}</span></span>
           </button>
@@ -113,7 +113,7 @@ export default class Pagination extends Component {
         <div className="button-container">
           <button className="button button--right" disabled={this.state.next.disabled}
                   onClick={this.next}>
-            <span>Next<br/><span className="date">{(this.state.next.date)
+            <span>{ wproofStrings.buttonNext }<br/><span className="date">{(this.state.next.date)
               ? DateTime.fromISO(this.state.next.date).toLocaleString(DateTime.DATE_SHORT)
               : ''}
               </span></span>

@@ -34,9 +34,9 @@ export default class CertificateModal extends Component {
             <div className="modal-card">
               <section className="modal-card-body">
                 <button onClick={this.props.close} className="wordproof-modal-close">&times;</button>
-                <h2 className="title has-text-centered">Timestamp Certificate</h2>
+                <h2 className="title has-text-centered">{wproofStrings.title}</h2>
                 <div className="subtitle-container">
-                  <h3 className="subtitle has-text-centered">Protected with </h3>
+                  <h3 className="subtitle has-text-centered">{wproofStrings.subtitle} </h3>
                   <img src={(wproof.logo) ? wproof.logo : ''} alt="WordProof logo"/>
                 </div>
                 <MockupBrowser data={this.props.data} changeView={this.changeView.bind(this)} view={this.state.view}/>
@@ -44,8 +44,7 @@ export default class CertificateModal extends Component {
               <footer className="modal-card-foot">
                 {(wproof.wsfy.noRevisions)
                   ? <a style={{textAlign: 'center'}} href="https://wordproof.io" target="_blank"
-                       rel="noopener noreferrer nofollow">Protect your content on the blockchain with WordProof
-                  Timestamp</a>
+                       rel="noopener noreferrer nofollow">{ wproofStrings.promotionLinkText }</a>
                   : <Pagination current={this.props.current} articles={this.state.articles} previous={this.props.previous}
                               next={this.props.next} set={this.props.set}/>
                 }

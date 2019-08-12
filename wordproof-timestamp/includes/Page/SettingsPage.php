@@ -36,7 +36,7 @@ class SettingsPage {
             'certificateText' => CertificateController::getCertificateText(),
             'certificateDOMSelector' => get_option('wordproof_certificate_dom_selector', false),
             'wsfy' => $wsfy,
-            'saveChanges' => __('Save Changes')
+            'saveChanges' => 'Save Changes'
         ]);
 
         ?>

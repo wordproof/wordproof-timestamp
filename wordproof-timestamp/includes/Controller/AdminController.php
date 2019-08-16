@@ -12,14 +12,14 @@ class AdminController
 
   public function __construct()
   {
-
-    add_action('admin_enqueue_scripts', array($this, 'loadAdminAssets'));
-
-    new SettingsPage();
-    new MetaBox();
-    new NotificationHelper();
-    new ChainHelper();
-    new PostColumnController();
+    if (is_admin()) {
+      add_action('admin_enqueue_scripts', array($this, 'loadAdminAssets'));
+      new SettingsPage();
+      new MetaBox();
+      new NotificationHelper();
+      new ChainHelper();
+      new PostColumnController();
+    }
   }
 
   public function loadAdminAssets($hookSuffix)

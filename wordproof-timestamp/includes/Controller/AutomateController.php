@@ -61,15 +61,22 @@ class AutomateController
       $code = wp_remote_retrieve_response_code($result);
 
       if ($code === 201) {
-        error_log('Post saved to WSFY Servers. Saving post locally.');
 
+        error_log('Post saved to WSFY Servers. Saving post locally.');
         TimestampController::saveTimestamp($postId, '', '', true);
 
-        return ['success' => true];
       } else {
-        if (isset($result['body'])) {
-          return json_decode($result['body']);
+
+        if (isset($result)) {
+          if (is_wp_error($result)) {
+            return ['errors' => $result->get_error_message()];
+          } else if (is_array($result) && isset($result['body'])) {
+            return $result['body'];
+          } else {
+            return $result;
+          }
         }
+
       }
     }
   }
@@ -99,7 +106,8 @@ class AutomateController
     die();
   }
 
-  public function setCron($postId)
+  public
+  function setCron($postId)
   {
     error_log('Logging ' . $postId);
     if (!wp_next_scheduled(WORDPROOF_WSFY_CRON_HOOK, array($postId))) {

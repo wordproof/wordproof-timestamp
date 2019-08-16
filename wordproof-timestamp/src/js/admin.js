@@ -37,6 +37,10 @@ async function postColumnSave(ev) {
   var response = await savePost(postId);
   console.log(response);
 
+  if (typeof response === 'string') {
+    response = JSON.parse(response);
+  }
+
   if (response.errors) {
 
     ev.target.style.display = 'none';

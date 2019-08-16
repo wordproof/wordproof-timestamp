@@ -35,6 +35,7 @@ class SettingsPage {
             'adminUrl' => admin_url(),
             'certificateText' => CertificateController::getCertificateText(),
             'certificateDOMSelector' => get_option('wordproof_certificate_dom_selector', false),
+            'hidePostColumn' => get_option('wordproof_hide_post_column', false),
             'wsfy' => $wsfy,
             'saveChanges' => 'Save Changes'
         ]);
@@ -73,6 +74,12 @@ class SettingsPage {
         if (isset($_POST['wordproof_certificate_dom_selector'])) {
           $value = sanitize_text_field($_POST['wordproof_certificate_dom_selector']);
           update_option('wordproof_certificate_dom_selector', $value);
+        }
+
+        if (isset($_POST['wordproof_hide_post_column'])) {
+          update_option('wordproof_hide_post_column', true);
+        } else {
+          update_option('wordproof_hide_post_column', false);
         }
 
         if (isset($_POST['wsfy_settings'])) {

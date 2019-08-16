@@ -6,6 +6,7 @@ export default class Customize extends Component {
     this.state = {
       certificateText: wordproofSettings.certificateText,
       certificateDOMSelector: wordproofSettings.certificateDOMSelector,
+      hidePostColumn: wordproofSettings.hidePostColumn,
       hideAdvanced: true
     }
   }
@@ -33,6 +34,12 @@ export default class Customize extends Component {
             <label htmlFor="" className="label" title="Certificate DOM Selector">Certificate DOM Selector</label>
             <input type="text" className="textinput" name="wordproof_certificate_dom_selector" placeholder="eg. .entry-meta or #mydiv"
                    value={this.state.certificateDOMSelector} onChange={e => this.setState({certificateDOMSelector: e.target.value})}/>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="" className="label" title="Display Revisions">Hide Post Column</label>
+            <input type="checkbox" value="1" className="" name="wordproof_hide_post_column"
+                   onChange={e => this.setState({hidePostColumn: e.target.value})} defaultChecked={this.state.hidePostColumn}/>
           </div>
 
           <input type="submit" name="submit" id="submit" className="button is-primary"

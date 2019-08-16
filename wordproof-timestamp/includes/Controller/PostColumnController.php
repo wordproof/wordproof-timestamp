@@ -13,10 +13,15 @@ class PostColumnController
   {
     $this->options = get_option('wordproof_wsfy');
 
-    add_filter('manage_posts_columns', array($this, 'addColumn'));
-    add_action('manage_posts_custom_column', array($this, 'addColumnContent'), 10, 2);
-    add_filter('manage_pages_columns', array($this, 'addColumn'));
-    add_action('manage_pages_custom_column', array($this, 'addColumnContent'), 10, 2);
+    $userMeta = get_userdata(get_current_user_id());
+    $userRoles = $userMeta->roles;
+
+    if (in_array('administrator', $userRoles, true) || !get_option('wordproof_hide_post_column')) {
+      add_filter('manage_posts_columns', array($this, 'addColumn'));
+      add_action('manage_posts_custom_column', array($this, 'addColumnContent'), 10, 2);
+      add_filter('manage_pages_columns', array($this, 'addColumn'));
+      add_action('manage_pages_custom_column', array($this, 'addColumnContent'), 10, 2);
+    }
 
     add_action('wp_ajax_wordproof_wsfy_save_post', [$this, 'savePost']);
   }

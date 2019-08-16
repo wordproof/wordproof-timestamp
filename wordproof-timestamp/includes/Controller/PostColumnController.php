@@ -13,10 +13,18 @@ class PostColumnController
   {
     $this->options = get_option('wordproof_wsfy');
 
-    $userMeta = get_userdata(get_current_user_id());
-    $userRoles = $userMeta->roles;
+    $showColumn = true;
+    if (get_option('wordproof_hide_post_column', false)) {
 
-    if (in_array('administrator', $userRoles, true) || !get_option('wordproof_hide_post_column')) {
+      $userMeta = get_userdata(get_current_user_id());
+      $roles = $userMeta->roles;
+
+      if (!in_array('administrator', $roles, true)) {
+        $showColumn = false;
+      }
+    }
+
+    if ($showColumn) {
       add_filter('manage_posts_columns', array($this, 'addColumn'));
       add_action('manage_posts_custom_column', array($this, 'addColumnContent'), 10, 2);
       add_filter('manage_pages_columns', array($this, 'addColumn'));

@@ -19,7 +19,7 @@ class PostColumnController
       $userMeta = get_userdata(get_current_user_id());
       $roles = $userMeta->roles;
 
-      if (!in_array('administrator', $roles, true)) {
+      if (!is_array($roles) || !in_array('administrator', $roles, true)) {
         $showColumn = false;
       }
     }

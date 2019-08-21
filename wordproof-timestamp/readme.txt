@@ -71,7 +71,8 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 
 = 1.2.12 =
 *Release date: August 21th, 2019*
-* Remove certificate link from the REST API
+* Remove certificate link from the REST API and RSS feed
+* Ensure content is always encoded
 
 = 1.2.11 =
 *Release date: August 21th, 2019*

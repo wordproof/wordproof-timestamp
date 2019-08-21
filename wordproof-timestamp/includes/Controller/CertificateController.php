@@ -14,6 +14,7 @@ class CertificateController
   public function __construct()
   {
     add_filter('the_content', array($this, 'addCertificateLink'));
+    add_filter('get_the_excerpt', array($this, 'removeCertificateText'));
     add_action('wp_footer', array($this, 'addCertificateModalContainer'));
     add_action('wp_enqueue_scripts', array($this, 'addCertificateScript'));
     add_filter('script_loader_tag', [$this, 'addCertificateScriptAttribute'], 10, 2);
@@ -33,6 +34,12 @@ class CertificateController
     }
 
     return $content;
+  }
+
+  public function removeCertificateText($excerpt)
+  {
+    $text = self::getCertificateText();
+    return str_replace($text,'', $excerpt);
   }
 
   public function addCertificateModalContainer()

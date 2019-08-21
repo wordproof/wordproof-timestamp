@@ -70,7 +70,7 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 == Changelog ==
 
 = 1.2.12 =
-*Release date: August 22th, 2019*
+*Release date: August 21th, 2019*
 * Remove certificate link from the REST API
 
 = 1.2.11 =

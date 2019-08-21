@@ -33,7 +33,7 @@ class SettingsPage {
         wp_localize_script('wordproof.admin.js', 'wordproofSettings', [
             'network' => get_option('wordproof_network', false),
             'adminUrl' => admin_url(),
-            'certificateText' => CertificateController::getCertificateText(),
+            'certificateText' => CertificateController::getText(),
             'certificateDOMSelector' => get_option('wordproof_certificate_dom_selector', false),
             'hidePostColumn' => get_option('wordproof_hide_post_column', false),
             'wsfy' => $wsfy,

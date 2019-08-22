@@ -56,14 +56,8 @@ export default class Automate extends Component {
                      defaultChecked={this.state.noRevisions}/>
             </div>
 
-            <div className={`form-group  ${this.state.hideAdvanced ? 'hidden' : ''}`}>
-              <label htmlFor="" className="label">Tools</label>
-              <a href={`${wordproofSettings.adminUrl}admin.php?page=wordproof-autostamp`} target="_blank"
-                 rel="noopener noreferrer">Auto Stamp your Posts</a>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="" className="label">Post types to be timestamped</label>
+            <div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>
+              <label htmlFor="" className="label">Post Types to timestamp automatically</label>
 
               { this.state.registeredPostTypes.map((value) => {
                 return <div key={value}>
@@ -74,6 +68,11 @@ export default class Automate extends Component {
               })}
             </div>
 
+            <div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>
+              <label htmlFor="" className="label">Tools</label>
+              <a href={`${wordproofSettings.adminUrl}admin.php?page=wordproof-autostamp`} target="_blank"
+                 rel="noopener noreferrer">Auto Stamp your Posts</a>
+            </div>
 
             <p>We Stamp For You is {(wordproofSettings.wsfy.active) ? 'active' : 'not activated'}</p>
 

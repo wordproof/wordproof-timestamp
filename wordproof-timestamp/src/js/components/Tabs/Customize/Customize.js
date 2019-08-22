@@ -24,10 +24,11 @@ export default class Customize extends Component {
             near future.</p>
 
           <div className="form-group">
-            <label htmlFor="wordproof_certificate_text" className="label" title="Certificate Text">How do you want to
+            <label htmlFor="wordproof_customize[certificate_text]" className="label" title="Certificate Text">How do you want to
               refer to the WordProof timestamp certificate? </label>
             <input type="text" className="textinput" name="wordproof_customize[certificate_text]"
-                   value={this.state.certificateText} onChange={e => this.setState({certificateText: e.target.value})}/>
+                   value={this.state.certificateText} onChange={e => this.setState({certificateText: e.target.value})}
+                   id="wordproof_customize[certificate_text]"/>
           </div>
 
           <div className={`form-group ${ this.state.hideAdvanced ? 'hidden' : '' }`}>

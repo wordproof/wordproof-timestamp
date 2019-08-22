@@ -24,21 +24,21 @@ export default class Customize extends Component {
             near future.</p>
 
           <div className="form-group">
-            <label htmlFor="" className="label" title="Certificate Text">How do you want to
+            <label htmlFor="wordproof_certificate_text" className="label" title="Certificate Text">How do you want to
               refer to the WordProof timestamp certificate? </label>
-            <input type="text" className="textinput" name="wordproof_certificate_text"
+            <input type="text" className="textinput" name="wordproof_customize[certificate_text]"
                    value={this.state.certificateText} onChange={e => this.setState({certificateText: e.target.value})}/>
           </div>
 
           <div className={`form-group ${ this.state.hideAdvanced ? 'hidden' : '' }`}>
             <label htmlFor="" className="label" title="Certificate DOM Selector">Certificate DOM Selector</label>
-            <input type="text" className="textinput" name="wordproof_certificate_dom_selector" placeholder="eg. .entry-meta or #mydiv"
+            <input type="text" className="textinput" name="wordproof_customize[certificate_dom_selector]" placeholder="eg. .entry-meta or #mydiv"
                    value={this.state.certificateDOMSelector} onChange={e => this.setState({certificateDOMSelector: e.target.value})}/>
           </div>
 
           <div className="form-group">
             <label htmlFor="" className="label" title="Display Revisions">Hide Post Column</label>
-            <input type="checkbox" value="1" className="" name="wordproof_hide_post_column"
+            <input type="checkbox" value="1" className="" name="wordproof_customize[hide_post_column]"
                    onChange={e => this.setState({hidePostColumn: e.target.value})} defaultChecked={this.state.hidePostColumn}/>
           </div>
 

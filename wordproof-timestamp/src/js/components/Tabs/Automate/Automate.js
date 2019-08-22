@@ -8,7 +8,9 @@ export default class Automate extends Component {
       siteId: wordproofSettings.wsfy.siteId,
       active: wordproofSettings.wsfy.active,
       noRevisions: wordproofSettings.wsfy.noRevisions,
-      hideAdvanced: true
+      allowedPostTypes: (wordproofSettings.wsfy.allowedPostTypes) ? wordproofSettings.wsfy.allowedPostTypes : ['post', 'page'],
+      hideAdvanced: true,
+      registeredPostTypes: Object.values(wordproofSettings.registeredPostTypes),
     }
   }
 
@@ -50,22 +52,35 @@ export default class Automate extends Component {
             <div className="form-group">
               <label htmlFor="" className="label" title="Display Revisions">Hide Revisions</label>
               <input type="checkbox" value="1" className="" name="wsfy_settings[no_revisions]"
-                     onChange={e => this.setState({noRevisions: e.target.value})} defaultChecked={this.state.noRevisions}/>
+                     onChange={e => this.setState({noRevisions: e.target.value})}
+                     defaultChecked={this.state.noRevisions}/>
             </div>
 
-            <div className={`form-group  ${ this.state.hideAdvanced ? 'hidden' : '' }`}>
+            <div className={`form-group  ${this.state.hideAdvanced ? 'hidden' : ''}`}>
               <label htmlFor="" className="label">Tools</label>
-              <a href={`${wordproofSettings.adminUrl}admin.php?page=wordproof-autostamp`} target="_blank" rel="noopener noreferrer">Auto Stamp your Posts</a>
+              <a href={`${wordproofSettings.adminUrl}admin.php?page=wordproof-autostamp`} target="_blank"
+                 rel="noopener noreferrer">Auto Stamp your Posts</a>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="" className="label">Post types to be timestamped</label>
+
+              { this.state.registeredPostTypes.map((value) => {
+                return <div key={value}>
+                  <input key={value} type="checkbox" value={ value } name={`wsfy_settings[allowed_post_types][${value}]`}
+                         id={`wsfy_settings[allowed_post_types][${value}]`} defaultChecked={this.state.allowedPostTypes.includes(value)}/>
+                   <label htmlFor={`wsfy_settings[allowed_post_types][${value}]`}>{ value }</label>
+              </div>
+              })}
             </div>
 
 
-
-            <p>We Stamp For You is {(wordproofSettings.wsfy.active) ? 'active' : 'not activated' }</p>
+            <p>We Stamp For You is {(wordproofSettings.wsfy.active) ? 'active' : 'not activated'}</p>
 
             <input type="submit" name="submit" id="submit" className="button is-primary"
                    value={wordproofSettings.saveChanges}/>
 
-            <button className={`button button-modest ${ this.state.hideAdvanced ? '' : 'hidden' }`}
+            <button className={`button button-modest ${this.state.hideAdvanced ? '' : 'hidden'}`}
                     onClick={this.handleAdvancedOptions}>Show advanced settings
             </button>
 

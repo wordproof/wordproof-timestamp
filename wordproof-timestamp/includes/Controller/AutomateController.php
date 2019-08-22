@@ -15,8 +15,18 @@ class AutomateController
     $this->options = get_option('wordproof_wsfy');
 
     if (isset($this->options['active']) && $this->options['active']) {
-      add_action('publish_page', [$this, 'setCron']);
-      add_action('publish_post', [$this, 'setCron']);
+
+      if (isset($this->options['allowedPostTypes'])) {
+
+        foreach ($this->options['allowedPostTypes'] as $postType) {
+          add_action('publish_' . $postType, [$this, 'setCron']);
+        }
+
+      } else {
+        add_action('publish_page', [$this, 'setCron']);
+        add_action('publish_post', [$this, 'setCron']);
+      }
+
       add_action(WORDPROOF_WSFY_CRON_HOOK, [$this, 'savePost']);
 
       add_action('admin_post_nopriv_wordproof_wsfy_edit_post', [$this, 'updatePostWithTransaction']);

@@ -37,6 +37,7 @@ class SettingsPage {
             'certificateDOMSelector' => get_option('wordproof_certificate_dom_selector', false),
             'hidePostColumn' => get_option('wordproof_hide_post_column', false),
             'wsfy' => $wsfy,
+            'registeredPostTypes' => get_post_types(['public' => true]),
             'saveChanges' => 'Save Changes'
         ]);
 
@@ -89,17 +90,24 @@ class SettingsPage {
 
         }
 
+        /**
+         * WSFY settings
+         */
         if (isset($_POST['wsfy_settings'])) {
+
           $post = $_POST['wsfy_settings'];
           $accessToken = sanitize_text_field($post['access_token']);
           $siteId = sanitize_text_field($post['site_id']);
           $revisions = isset($post['no_revisions']) ? true : false;
+          $allowedPostTypes = isset($post['allowed_post_types']) ? array_map('sanitize_text_field', array_values($post['allowed_post_types'])) : [];
 
+          $options = ['accessToken' => $accessToken, 'siteId' => $siteId, 'active' => null, 'noRevisions' => $revisions, 'allowedPostTypes' => $allowedPostTypes];
           if (empty($accessToken) || empty($siteId)) {
-            $options = ['accessToken' => $accessToken, 'siteId' => $siteId, 'active' => false, 'noRevisions' => $revisions];
+              $options['active'] = false;
           } else {
-            $options = ['accessToken' => $accessToken, 'siteId' => $siteId, 'active' => true, 'noRevisions' => $revisions];
+            $options['active'] = true;
           }
+
           update_option('wordproof_wsfy', $options);
         }
 

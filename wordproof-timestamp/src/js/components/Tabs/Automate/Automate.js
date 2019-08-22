@@ -38,20 +38,20 @@ export default class Automate extends Component {
               key</a> for your website, and paste it here:</p>
 
             <div className="form-group">
-              <label htmlFor="" className="label" title="Access Token">Access Token</label>
-              <input type="text" className="textinput" name="wsfy_settings[access_token]"
+              <label htmlFor="wsfy_settings[access_token]" className="label" title="Access Token">Access Token</label>
+              <input type="text" className="textinput" name="wsfy_settings[access_token]" id="wsfy_settings[access_token]"
                      value={this.state.accessToken} onChange={e => this.setState({accessToken: e.target.value})}/>
             </div>
 
             <div className="form-group">
-              <label htmlFor="" className="label" title="Access Token">Site Id</label>
-              <input type="text" className="textinput" name="wsfy_settings[site_id]"
+              <label htmlFor="wsfy_settings[site_id]" className="label" title="Access Token">Site Id</label>
+              <input type="text" className="textinput" name="wsfy_settings[site_id]" id="wsfy_settings[site_id]"
                      value={this.state.siteId} onChange={e => this.setState({siteId: e.target.value})}/>
             </div>
 
             <div className="form-group">
-              <label htmlFor="" className="label" title="Display Revisions">Hide Revisions</label>
-              <input type="checkbox" value="1" className="" name="wsfy_settings[no_revisions]"
+              <label htmlFor="wsfy_settings[no_revisions]" className="label" title="Display Revisions">Hide Revisions</label>
+              <input type="checkbox" value="1" className="" name="wsfy_settings[no_revisions]" id="wsfy_settings[no_revisions]"
                      onChange={e => this.setState({noRevisions: e.target.value})}
                      defaultChecked={this.state.noRevisions}/>
             </div>

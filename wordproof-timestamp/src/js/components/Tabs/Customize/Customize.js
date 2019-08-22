@@ -31,15 +31,17 @@ export default class Customize extends Component {
           </div>
 
           <div className={`form-group ${ this.state.hideAdvanced ? 'hidden' : '' }`}>
-            <label htmlFor="" className="label" title="Certificate DOM Selector">Certificate DOM Selector</label>
+            <label htmlFor="wordproof_customize[certificate_dom_selector]" className="label" title="Certificate DOM Selector">Certificate DOM Selector</label>
             <input type="text" className="textinput" name="wordproof_customize[certificate_dom_selector]" placeholder="eg. .entry-meta or #mydiv"
-                   value={this.state.certificateDOMSelector} onChange={e => this.setState({certificateDOMSelector: e.target.value})}/>
+                   value={this.state.certificateDOMSelector} onChange={e => this.setState({certificateDOMSelector: e.target.value})}
+                   id="wordproof_customize[certificate_dom_selector]"/>
           </div>
 
           <div className="form-group">
-            <label htmlFor="" className="label" title="Display Revisions">Hide Post Column</label>
+            <label htmlFor="wordproof_customize[hide_post_column]" className="label" title="Display Revisions">Hide Post Column</label>
             <input type="checkbox" value="1" className="" name="wordproof_customize[hide_post_column]"
-                   onChange={e => this.setState({hidePostColumn: e.target.value})} defaultChecked={this.state.hidePostColumn}/>
+                   onChange={e => this.setState({hidePostColumn: e.target.value})} defaultChecked={this.state.hidePostColumn}
+                   id="wordproof_customize[hide_post_column]"/>
           </div>
 
           <input type="submit" name="submit" id="submit" className="button is-primary"

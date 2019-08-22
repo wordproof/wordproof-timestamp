@@ -55,9 +55,13 @@ class PostColumnController
     if ($column_name == 'wordproof') {
 
       $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain']);
-      if (empty($meta->date)) {
+      if ($post->post_status !== 'publish') {
 
-        echo '<span>🚨 Post is never timestamped</span>';
+        echo '<span>🕓 Not published yet</span>';
+
+      } else if (empty($meta->date)) {
+
+        echo '<span>🚨 Not timestamped</span>';
         $this->addTimestampButton($post);
 
       } else if ($meta->date !== get_the_modified_date('c', $post->ID)) {

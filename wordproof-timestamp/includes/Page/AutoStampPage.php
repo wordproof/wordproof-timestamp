@@ -28,28 +28,10 @@ class AutoStampPage
 
   public function generateSettingsPage()
   {
-    $cpt = 'post';
-    $offset = 0;
-    $force = false;
+    self::initDeletion();
 
-    if (isset($_GET['remove_timestamp']) && !empty($_GET['remove_timestamp'])) {
-      self::removeTimestamp(intval($_GET['remove_timestamp']));
-    }
-
-    if (isset($_GET['cpt']) && !empty($_GET['cpt'])) {
-      $cpt = sanitize_text_field($_GET['cpt']);
-    }
-
-    if (isset($_GET['force']) && isset($_GET['offset'])) {
-      $offset = intval($_GET['offset']);
-      $force = true;
-    }
-
-    $posts = self::getPosts($cpt, $offset, $force);
-    wp_localize_script('wordproof.admin.js', 'wordproofAutoStamp', [
-      'posts' => $posts,
-      'loading' => admin_url() . 'images/spinner-2x.gif'
-    ]);
+    $posts = self::retrievePosts();
+    self::localizeScript($posts);
 
     ?>
       <div class="wrap">
@@ -64,6 +46,36 @@ class AutoStampPage
           </ul>
       </div>
     <?php
+  }
+
+  public function initDeletion() {
+    if (isset($_GET['remove_timestamp']) && !empty($_GET['remove_timestamp'])) {
+      self::removeTimestamp(intval($_GET['remove_timestamp']));
+    }
+  }
+
+  public function retrievePosts() {
+    $cpt = 'post';
+    $offset = 0;
+    $force = false;
+
+    if (isset($_GET['cpt']) && !empty($_GET['cpt'])) {
+      $cpt = sanitize_text_field($_GET['cpt']);
+    }
+
+    if (isset($_GET['force']) && isset($_GET['offset'])) {
+      $offset = intval($_GET['offset']);
+      $force = true;
+    }
+
+    return self::getPosts($cpt, $offset, $force);
+  }
+
+  public function localizeScript($posts) {
+    wp_localize_script('wordproof.admin.js', 'wordproofAutoStamp', [
+      'posts' => $posts,
+      'loading' => admin_url() . 'images/spinner-2x.gif'
+    ]);
   }
 
   public function removeTimestamp($id)

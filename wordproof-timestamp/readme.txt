@@ -72,6 +72,7 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 = 1.2.14 =
 *Release date: August 22th, 2019*
 * Allow timestamps to be removed.
+* Remove Post Column notice for posts which are not published yet.
 
 = 1.2.13 =
 *Release date: August 22th, 2019*

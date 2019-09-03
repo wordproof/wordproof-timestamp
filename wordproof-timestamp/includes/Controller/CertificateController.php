@@ -21,6 +21,7 @@ class CertificateController
     if (is_singular()) {
       add_action('wp_head', array($this, 'addSchema'));
       add_filter('the_content', array($this, 'addLink'));
+      add_filter('get_the_excerpt', array($this, 'removeText'));
       add_action('wp_footer', array($this, 'addModalContainer'));
       add_action('wp_enqueue_scripts', array($this, 'addScript'));
       add_filter('script_loader_tag', [$this, 'addScriptAttribute'], 10, 2);
@@ -36,6 +37,17 @@ class CertificateController
     }
 
     return $content;
+  }
+
+  /**
+   * Remove Certificate Text from excerpts in rare cases
+   * @param $excerpt
+   * @return mixed
+   */
+  public function removeText($excerpt)
+  {
+    $text = self::getText();
+    return str_replace($text, '', $excerpt);
   }
 
   public function addModalContainer()

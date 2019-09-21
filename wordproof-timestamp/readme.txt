@@ -2,9 +2,9 @@
 Contributors: wordproof
 Tags: blockchain, timestamp, eosio, eos, telos, web30, copyright, scatter, decentralisation, proof
 Requires at least: 4.6
-Tested up to: 5.2.2
+Tested up to: 5.2.3
 Requires PHP: 5.3
-Stable tag: 1.2.15
+Stable tag: 1.2.16
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,26 +69,30 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 
 == Changelog ==
 
+= 1.2.16 =
+*Release date: September 21st, 2019*
+* Prepare migration to upgraded WSFY service
+
 = 1.2.15 =
 *Release date: September 3rd, 2019*
 * Remove Certificate Text from excerpts in rare cases
 
 = 1.2.14 =
-*Release date: August 22th, 2019*
+*Release date: August 22nd, 2019*
 * Allow timestamps to be removed.
 * Remove Post Column notice for posts which are not published yet.
 
 = 1.2.13 =
-*Release date: August 22th, 2019*
+*Release date: August 22nd, 2019*
 * Select the post types which are be auto-stamped.
 
 = 1.2.12 =
-*Release date: August 21th, 2019*
+*Release date: August 21st, 2019*
 * Remove certificate link from the REST API and RSS feed
 * Ensure content is always encoded
 
 = 1.2.11 =
-*Release date: August 21th, 2019*
+*Release date: August 21st, 2019*
 * Remove certificate link from excerpts
 
 = 1.2.10 =
@@ -167,11 +171,11 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 * Resolving various bugs
 
 = 1.0.0 =
-*Release date: June 22th, 2019*
+*Release date: June 22nd, 2019*
 * Our biggest release yet! Please share your experience with us!
 
 = 0.6.3 =
-*Release date: June 4rd, 2019*
+*Release date: June 4th, 2019*
 * Backwards compatibility fix
 
 = 0.6.2 =
@@ -179,7 +183,7 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 * Small styling fix
 
 = 0.6.1 =
-*Release date: May 31th, 2019*
+*Release date: May 31st, 2019*
 * Bugfix
 
 = 0.6 =

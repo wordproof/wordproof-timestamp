@@ -93,7 +93,7 @@ class AutomateController
 
   public function updatePostWithTransaction()
   {
-    if ($_SERVER['REMOTE_ADDR'] === WORDPROOF_WSFY_API_IP) {
+    if (in_array($_SERVER['REMOTE_ADDR'], WORDPROOF_WSFY_API_IP)) {
       $postId = intval($_REQUEST['uid']);
       $chain = ($_REQUEST['chain']) ? sanitize_text_field($_REQUEST['chain']) : '';
       $transactionId = ($_REQUEST['transactionId']) ? sanitize_text_field($_REQUEST['transactionId']) : '';

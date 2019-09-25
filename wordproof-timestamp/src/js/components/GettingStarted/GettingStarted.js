@@ -22,13 +22,16 @@ class GettingStarted extends Component {
 
         <img className="border-none my-8" src="https://via.placeholder.com/150" />
 
-        <button className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
-          Button
-        </button>
-        <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border-b-4 border-gray-400 rounded">
-          Button
-        </button>
+        <p className="text-lg text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet.</p>
 
+        <div className="flex justify-center mt-6">
+        <button className="bg-blue-500 hover:bg-blue-400 text-white font-semibold text-lg py-4 px-6 mr-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
+          Launch the Wizard!
+        </button>
+        <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold text-lg py-4 px-6 border-b-4 border-gray-400 rounded">
+          Do Something Else
+        </button>
+        </div>
       </div>
     )
   }

@@ -1,0 +1,16 @@
+@import "../../../../node_modules/tailwindcss/base";
+@import "../../../../node_modules/tailwindcss/components";
+@import "../../../../node_modules/tailwindcss/utilities";
+
+#wordproof-getting-started {
+  justify-content: center;
+  display: flex;
+}
+
+.wordproof-getting-started {
+  max-width: 850px;
+}
+
+.wordproof-logo {
+  top: -15%;
+}

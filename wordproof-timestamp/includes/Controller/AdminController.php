@@ -5,6 +5,8 @@ namespace WordProofTimestamp\includes\Controller;
 use WordProofTimestamp\includes\ChainHelper;
 use WordProofTimestamp\includes\MetaBox;
 use WordProofTimestamp\includes\NotificationHelper;
+use WordProofTimestamp\includes\Page\GettingStarted;
+use WordProofTimestamp\includes\Page\OnboardingWizard;
 use WordProofTimestamp\includes\Page\SettingsPage;
 
 class AdminController
@@ -14,13 +16,18 @@ class AdminController
   {
     if (is_admin()) {
 
-      add_action('admin_enqueue_scripts', array($this, 'loadAdminAssets'));
+      add_action('admin_enqueue_scripts', [$this, 'loadAdminAssets']);
 
+      //Admin Pages
       new SettingsPage();
+      new OnboardingWizard();
+      new GettingStarted();
+
       new MetaBox();
       new NotificationHelper();
       new ChainHelper();
       new PostColumnController();
+
 
     }
   }
@@ -28,8 +35,8 @@ class AdminController
   public function loadAdminAssets($hookSuffix)
   {
     $allowedPages = ['edit.php', 'post-new.php', 'post.php', 'toplevel_page_wordproof', 'admin_page_wordproof-autostamp'];
-    if (in_array($hookSuffix, $allowedPages)) {
 
+    if (in_array($hookSuffix, $allowedPages)) {
       global $post;
       wp_enqueue_style('wordproof.admin.css', WORDPROOF_URI_CSS . '/admin.css', array(), filemtime(WORDPROOF_DIR_CSS . '/admin.css'));
 
@@ -45,7 +52,6 @@ class AdminController
         'wordBalance' => get_option('wordproof_balance', 0),
         'pluginDirUrl' => WORDPROOF_URI
       ));
-
     }
   }
 }

@@ -1,0 +1,42 @@
+<?php
+
+namespace WordProofTimestamp\includes\Page;
+
+use WordProofTimestamp\includes\Controller\CertificateController;
+
+/**
+ * Class SettingsPage
+ * @package WordProofTimestamp\includes\Page
+ */
+class GettingStarted {
+
+  public function __construct()
+  {
+    add_action('admin_menu', array($this, 'addSettingsPage'));
+  }
+
+  public function addSettingsPage()
+  {
+    add_submenu_page(
+      null,
+      'Auto Posts Stamper',
+      'Auto Stamp',
+      'manage_options',
+      'wordproof-getting-started',
+      array($this, 'generateSettingsPage')
+    );
+  }
+
+    public function generateSettingsPage() {
+      wp_enqueue_script('wordproof.getting-started.js', WORDPROOF_URI_JS . '/getting-started.js', array(), filemtime(WORDPROOF_DIR_JS . '/getting-started.js'), true);
+      wp_localize_script('wordproof.getting-started.js', 'wordproof', []);
+
+        ?>
+        <div class="wrap">
+
+            <div id="wordproof-getting-started"></div>
+
+        </div>
+        <?php
+    }
+}

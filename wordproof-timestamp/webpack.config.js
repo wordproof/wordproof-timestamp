@@ -6,8 +6,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 module.exports = {
   mode: process.env.NODE_ENV,
   entry: {
-    admin: './src/js/admin.js',
-    frontend: './src/js/frontend.js'
+    'admin': './src/js/admin.js',
+    'frontend': './src/js/frontend.js',
+    'wizard': './src/js/wizard.js',
+    'getting-started': './src/js/gettingStarted.js',
   },
   output: {
     filename: '[name].js',

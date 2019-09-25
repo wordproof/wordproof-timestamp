@@ -48,6 +48,7 @@ define('CURRENT_WEB_ARTICLE_TIMESTAMP_VERSION', '0.1.1');
 
 // Init plugin
 spl_autoload_register(__NAMESPACE__ . '\\autoload');
+add_action('activated_plugin', __NAMESPACE__ . '\\wordproofGettingStarted');
 add_action('plugins_loaded', array(WordProofTimestamp::getInstance(), 'init'));
 
 /**
@@ -61,4 +62,11 @@ function autoload($class = '')
   $result = str_replace('WordProofTimestamp\\', '', $class);
   $result = str_replace('\\', '/', $result);
   require $result . '.php';
+}
+
+function wordproofGettingStarted($plugin) {
+  if ($plugin === 'wordproof-timestamp/wordproof-timestamp.php' && !isset($_GET['activate-multi'])) {
+    wp_redirect(admin_url('admin.php?page=wordproof-getting-started'));
+    die();
+  }
 }

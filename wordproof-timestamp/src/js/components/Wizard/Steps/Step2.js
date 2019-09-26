@@ -16,15 +16,17 @@ export default class Step2 extends Component {
         <Intro title="Connect WordProof to your website"
                subtitle="Create a WordProof account and paste your site key. Start your 14-day trial today."/>
 
-        <div className="mb-4">
+        <button className={'secondary mb-4'}>Create WordProof Account</button>
+
+        <div className="mb-2">
           <label className="block" htmlFor="site-key">
-            Site key
+            What is your site key?
           </label>
           <span>Your site key is visable after you have created your account.</span>
           <input className="" id="site-key" type="text" placeholder="ey123"/>
         </div>
 
-        <button>Validate Site Key</button>
+        <button className={'primary'}>Validate Site Key</button>
       </div>
     );
   }

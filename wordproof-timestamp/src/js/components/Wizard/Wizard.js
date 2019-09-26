@@ -5,7 +5,7 @@ import './Wizard.scss';
 import Step1 from "./Steps/Step1";
 import Step2 from "./Steps/Step2";
 
-class Wizard extends Component {
+export default class Wizard extends Component {
 
   constructor(props) {
     super(props);
@@ -16,8 +16,8 @@ class Wizard extends Component {
 
   render() {
     return (
-      <div className="wordproof-onboarding-wizard">
-        <div className="container">
+      <div className="wordproof-onboarding-wizard bg-gray-300">
+        <div className="container p-12 bg-white rounded-lg max-w-3xl">
           <StepWizard isHashEnabled={true}>
             <Step1 hashKey={'mode'} />
             <Step2 hashKey={'connect'} />
@@ -27,5 +27,3 @@ class Wizard extends Component {
     );
   }
 }
-
-export default Wizard;

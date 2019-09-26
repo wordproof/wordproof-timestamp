@@ -26,7 +26,7 @@ a {
  */
 
 button {
-  @apply font-semibold py-2 px-3 mt-4 border-b-4 bg-white text-gray-800 border-gray-400
+  @apply font-semibold py-2 px-3 border-b-4 bg-white text-gray-800 border-gray-400
 }
 
 button:hover {
@@ -39,6 +39,14 @@ button.primary {
 
 button.primary:hover {
   @apply bg-blue-400 border-blue-500
+}
+
+button.secondary {
+  @apply bg-pink-600 text-white border-pink-700
+}
+
+button.secondary:hover {
+  @apply bg-pink-500 border-pink-600
 }
 
 /**
@@ -55,7 +63,7 @@ hr {
 **
  */
 input {
-  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight
+  @apply shadow appearance-none border rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight
 }
 
 input:focus {
@@ -65,7 +73,7 @@ input:focus {
 @import "../../../../node_modules/tailwindcss/components";
 @import "../../../../node_modules/tailwindcss/utilities";
 
-#wordproof-onboarding-wizard {
+.wordproof-onboarding-wizard {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -77,5 +85,4 @@ input:focus {
   left: 0;
   right: 0;
   top: 0;
-  background: white;
 }

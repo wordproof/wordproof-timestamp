@@ -4972,6 +4972,11 @@ react-shadow@^16.3.2:
   resolved "https://registry.yarnpkg.com/react-shadow/-/react-shadow-16.3.2.tgz#a431a7101b0e222dbc669c4070ab395f42dbb675"
   integrity sha512-NxFoBvEg2WD3V25jgiWgIltpDfs2XBCbDyi63jEM6Gch8g8r2cqJxSWy2GfG666EfOpRR5Zsrhu0Qn5yze1PrA==
 
+react-step-wizard@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/react-step-wizard/-/react-step-wizard-5.3.0.tgz#2965b647bef457ec2c187e3f02826fcb98975875"
+  integrity sha512-WsYIvfYn9dDQowrqBK0vW5kSzavNGmq7epmcGRET6aFfWlz6Up+M3Hqiwj0S/zyufO3mEhuFGpZCKaygDgwKuA==
+
 react@^16.8.6:
   version "16.9.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.9.0.tgz#40ba2f9af13bc1a38d75dbf2f4359a5185c4f7aa"

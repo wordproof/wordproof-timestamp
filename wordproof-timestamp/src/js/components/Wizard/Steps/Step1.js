@@ -7,9 +7,6 @@ export default class Step1 extends Component {
     super(props);
   }
 
-  componentDidMount() {
-  }
-
   render() {
     return (
       <div className="wordproof-wizard-step container">
@@ -38,7 +35,7 @@ export default class Step1 extends Component {
               Set-up in 5 minutes
             </p>
 
-            <button className="primary" onClick={this.props.nextStep}>
+            <button className="primary" onClick={() => this.props.jumpToStep(1)}>
               Start Trial
             </button>
           </div>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import StepWizard from 'react-step-wizard';
+import StepZilla from "react-stepzilla";
 
 import './Wizard.scss';
 import Step1 from "./Steps/Step1";
@@ -9,19 +9,19 @@ export default class Wizard extends Component {
 
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
+    this.steps = [
+      {name: 'Step 1', component: <Step1 />},
+      {name: 'Step 2', component: <Step2 />},
+    ];
   }
 
   render() {
     return (
       <div className="wordproof-onboarding-wizard bg-gray-300">
         <div className="container p-12 bg-white rounded-lg max-w-3xl">
-          <StepWizard isHashEnabled={true}>
-            <Step1 hashKey={'mode'} />
-            <Step2 hashKey={'connect'} />
-          </StepWizard>
+          <div className='step-progress'>
+            <StepZilla steps={this.steps} showNavigation={false} />
+          </div>
         </div>
       </div>
     );

@@ -58,11 +58,12 @@
     "eosjs-ecc": "^4.0.4",
     "luxon": "^1.16.1",
     "macaddress": "^0.2.9",
+    "promise": "^8.0.3",
     "react": "^16.8.6",
     "react-cookie": "^4.0.1",
     "react-dom": "^16.8.6",
     "react-shadow": "^16.3.2",
-    "react-step-wizard": "^5.3.0",
+    "react-stepzilla": "^6.0.2",
     "striptags": "^3.1.1",
     "tailwindcss": "^1.1.2",
     "unfetch": "^4.1.0"

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Intro from '../Intro';
+import Checkbox from "../../Form/Checkbox";
 
 export default class Step2 extends Component {
 
@@ -17,20 +18,13 @@ export default class Step2 extends Component {
   render() {
     return (
       <div className="wordproof-wizard-step container">
-        <Intro title="Connect WordProof to your website"
-               subtitle="Create a WordProof account and paste your site key. Start your 14-day trial today."/>
+        <Intro title="Content Settings"
+               subtitle="You can always change these settings later."/>
 
-        <button className={'secondary mb-4'}>Create WordProof Account</button>
+        <Checkbox slug={'allowed-post-types'} question={'Which post types do you want to timestamp automatically?'}
+                  options={['post', 'page', 'product']} />
 
-        <div className="mb-2">
-          <label className="block" htmlFor="site-key">
-            What is your site key?
-          </label>
-          <span>Your site key is visable after you have created your account.</span>
-          <input className="" id="site-key" type="text" placeholder="ey123"/>
-        </div>
-
-        <button className={'primary'} onClick={this.validate}>Validate Site Key</button>
+        <button className={'primary'} onClick={this.validate}>Save & Continue</button>
       </div>
     );
   }

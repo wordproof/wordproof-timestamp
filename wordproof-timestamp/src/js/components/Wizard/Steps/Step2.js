@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Intro from '../Intro';
+import TextField from "../../Form/TextField";
 
 export default class Step2 extends Component {
 
@@ -22,13 +23,7 @@ export default class Step2 extends Component {
 
         <button className={'secondary mb-4'}>Create WordProof Account</button>
 
-        <div className="mb-2">
-          <label className="block" htmlFor="site-key">
-            What is your site key?
-          </label>
-          <span>Your site key is visable after you have created your account.</span>
-          <input className="" id="site-key" type="text" placeholder="ey123"/>
-        </div>
+        <TextField slug={'site-key'} question={'What is your site key?'} extra={'Your site key is visible after you have created your account.'} />
 
         <button className={'primary'} onClick={() => this.validate()}>Validate Site Key</button>
       </div>

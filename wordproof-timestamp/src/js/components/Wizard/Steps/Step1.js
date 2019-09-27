@@ -35,7 +35,7 @@ export default class Step1 extends Component {
               Set-up in 5 minutes
             </p>
 
-            <button className="primary" onClick={() => this.props.jumpToStep(1)}>
+            <button className="primary" onClick={this.props.nextStep}>
               Start Trial
             </button>
           </div>

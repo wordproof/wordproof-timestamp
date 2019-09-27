@@ -11,7 +11,7 @@ export default class Step2 extends Component {
   }
 
   validate() {
-    this.props.nextStep();
+    this.props.jumpToStep(2);
   }
 
   render() {
@@ -30,7 +30,7 @@ export default class Step2 extends Component {
           <input className="" id="site-key" type="text" placeholder="ey123"/>
         </div>
 
-        <button className={'primary'} onClick={() => this.validate()}>Validate Site Key</button>
+        <button className={'primary'} onClick={this.validate}>Validate Site Key</button>
       </div>
     );
   }

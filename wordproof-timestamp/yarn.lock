@@ -5002,10 +5002,10 @@ react-shadow@^16.3.2:
   resolved "https://registry.yarnpkg.com/react-shadow/-/react-shadow-16.3.2.tgz#a431a7101b0e222dbc669c4070ab395f42dbb675"
   integrity sha512-NxFoBvEg2WD3V25jgiWgIltpDfs2XBCbDyi63jEM6Gch8g8r2cqJxSWy2GfG666EfOpRR5Zsrhu0Qn5yze1PrA==
 
-react-stepzilla@^6.0.2:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/react-stepzilla/-/react-stepzilla-6.0.2.tgz#ba63bf7c125bf934c2c78b0f228843852b3d0518"
-  integrity sha512-BVzTVj7BxITS5o4gQnb9R7oqbJ5ktzjAEFkFHg07aWL77TKah9aOa2IXGilkKDNrttMYiNfMddLoc5IZyL0Pmg==
+react-step-wizard@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/react-step-wizard/-/react-step-wizard-5.3.0.tgz#2965b647bef457ec2c187e3f02826fcb98975875"
+  integrity sha512-WsYIvfYn9dDQowrqBK0vW5kSzavNGmq7epmcGRET6aFfWlz6Up+M3Hqiwj0S/zyufO3mEhuFGpZCKaygDgwKuA==
 
 react@^16.8.6:
   version "16.9.0"

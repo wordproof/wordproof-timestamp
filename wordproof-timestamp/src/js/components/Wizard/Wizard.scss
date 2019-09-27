@@ -70,6 +70,13 @@ input:focus {
   @apply outline-none shadow-outline
 }
 
+/**
+** WIZARD
+ */
+.wordproof-wizard-step {
+  @apply p-12 bg-white rounded-lg max-w-3xl
+}
+
 @import "../../../../node_modules/tailwindcss/components";
 @import "../../../../node_modules/tailwindcss/utilities";
 

@@ -5,6 +5,7 @@ import './Wizard.scss';
 import Step1 from "./Steps/Step1";
 import Step2 from "./Steps/Step2";
 import Step3 from "./Steps/Step3";
+import Step4 from "./Steps/Step4";
 
 export default class Wizard extends Component {
 
@@ -20,6 +21,7 @@ export default class Wizard extends Component {
             <Step1 hashKey={'mode'} />
             <Step2 hashKey={'connect'} />
             <Step3 hashKey={'customize'} />
+            <Step4 hashKey={'certificate'} />
           </StepWizard>
       </div>
     );

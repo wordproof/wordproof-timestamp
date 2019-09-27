@@ -1,7 +1,8 @@
 import React from 'react'
 
-export default class Checkbox extends React.Component {
+export default class Radiobox extends React.Component {
   render() {
+    console.log(this.props.options);
     return (
       <>
         <div className="mb-2">
@@ -13,9 +14,9 @@ export default class Checkbox extends React.Component {
           <div className={'flex flex-col'}>
             {this.props.options.map((option, key) =>
               <label className={'font-normal my-1'} key={key}>
-                <input name={`wordproof_options[${this.props.slug}][${option}]`}
-                       type="checkbox" placeholder=""/>
-                {option}
+                <input required={true} name={`wordproof_options[${this.props.slug}]`}
+                       type="radio" placeholder="" value={option.value}/>
+                {option.name}
               </label>
             )}
           </div>

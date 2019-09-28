@@ -11,10 +11,12 @@ export default class Step3 extends Component {
                subtitle="You can always change these settings later."/>
 
         <Checkbox slug={'allowed_post_types'} question={'Which post types do you want to timestamp automatically?'}
-                  options={wordproof.registeredPostTypes} get={this.props.get} />
+                  options={wordproof.registeredPostTypes}
+                  update={this.props.update} get={this.props.get} initial={this.props.initial} />
 
         <Radiobox slug={'show_revisions'} question={'Do you want to show revisions to your visitors?'}
-                  options={[{name: 'Yes', value: true},{name: 'No', value: false}]} get={this.props.get}/>
+                  options={[{name: 'Yes', value: true},{name: 'No', value: false}]}
+                  update={this.props.update} get={this.props.get} initial={this.props.initial} />
 
         <button className={'primary'} onClick={() => this.props.nextStep()}>Save & Continue</button>
       </div>

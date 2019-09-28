@@ -32,7 +32,7 @@ export default class Step2 extends Component {
         </a>
 
         <TextField slug={'site_token'} question={'What is your site key?'} extra={'Your site key is visible after you have created your account.'}
-                   handleChange={this.props.update} get={this.props.get}/>
+                   update={this.props.update} get={this.props.get} initial={this.props.initial}/>
 
         <button className={'primary'} onClick={() => this.validate()}>Validate & Continue</button>
       </div>

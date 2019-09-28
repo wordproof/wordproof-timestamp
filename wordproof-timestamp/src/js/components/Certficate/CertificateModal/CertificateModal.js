@@ -42,11 +42,11 @@ export default class CertificateModal extends Component {
                 <MockupBrowser data={this.props.data} changeView={this.changeView.bind(this)} view={this.state.view}/>
               </section>
               <footer className="modal-card-foot">
-                {(wproof.wsfy.noRevisions)
-                  ? <a style={{textAlign: 'center'}} href="https://wordproof.io" target="_blank"
-                       rel="noopener noreferrer nofollow">{ wproofStrings.promotionLinkText }</a>
-                  : <Pagination current={this.props.current} articles={this.state.articles} previous={this.props.previous}
+                {(wproof.wsfy.show_revisions)
+                  ? <Pagination current={this.props.current} articles={this.state.articles} previous={this.props.previous}
                               next={this.props.next} set={this.props.set}/>
+                  : <a style={{textAlign: 'center'}} href="https://wordproof.io" target="_blank"
+                       rel="noopener noreferrer nofollow">{wproofStrings.promotionLinkText}</a>
                 }
               </footer>
             </div>

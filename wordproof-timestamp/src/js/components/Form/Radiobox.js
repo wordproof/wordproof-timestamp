@@ -13,8 +13,9 @@ export default class Radiobox extends React.Component {
           <div className={'flex flex-col'}>
             {this.props.options.map((option, key) =>
               <label className={'font-normal my-1'} key={key}>
-                <input required={true} name={`wordproof_options[${this.props.slug}]`}
-                       type="radio" placeholder="" value={option.value} defaultChecked={this.props.get(this.props.slug) === option.value}/>
+                <input required={true} name={`wordproof_options[${this.props.slug}]`} type="radio" data-slug={this.props.slug}
+                       value={option.value} defaultChecked={this.props.get(this.props.slug) === option.value}
+                       onChange={this.props.update}/>
                 {option.name}
               </label>
             )}

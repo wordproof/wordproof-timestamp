@@ -1,6 +1,19 @@
 import React from 'react'
 
 export default class TextField extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: this.props.initial[this.props.slug]};
+  }
+
+  change(event) {
+    this.setState({value: event.target.value});
+  }
+
+  update() {
+    this.props.update(null, this.props.slug, this.state.value)
+  }
+
   render() {
     return (
       <>
@@ -9,8 +22,8 @@ export default class TextField extends React.Component {
            {this.props.question}
           </label>
           { this.props.extra && <span>{ this.props.extra }</span> }
-          <input onChange={this.props.handleChange} data-slug={this.props.slug} id={`wordproof_options[${this.props.slug}]`}
-                 type="text" value={this.props.get(this.props.slug)}/>
+          <input onChange={(e) => this.change(e)} value={this.state.value} onBlur={() => this.update()}
+                 data-slug={this.props.slug} id={`wordproof_options[${this.props.slug}]`} type="text" />
         </div>
       </>
     )

@@ -8,7 +8,7 @@ export default class Step5 extends Component {
         <Intro title="Great Job!"
                subtitle="The link which opens the Blockchain Certificate pop-up is visable under all timestamped content."/>
 
-        <button className={'primary'} onClick={this.save}>Finish Setup</button>
+        <a className={'wproof-button primary inline-block'} href={wordproof.closeWizard}>Finish Setup</a>
       </div>
     );
   }

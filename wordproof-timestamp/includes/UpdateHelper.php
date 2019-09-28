@@ -39,9 +39,7 @@ class UpdateHelper
       if (isset($wsfyOptions['active']))
           OptionsHelper::set('wsfy_is_active', $wsfyOptions['active']);
 
-    if (!empty($newOptions)) {
-        OptionsHelper::set('wsfy', $newOptions);
-        update_option($this->migration_version_200, true);
-      }
+      OptionsHelper::set('wsfy', $newOptions);
+      update_option($this->migration_version_200, true);
   }
 }

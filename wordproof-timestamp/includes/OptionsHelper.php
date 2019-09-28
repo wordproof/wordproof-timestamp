@@ -8,18 +8,20 @@ class OptionsHelper
 {
 
   public static $prefix = 'wordproof_';
-  public static $options = (object)[
-    'network',
-    'certificate_text',
-    'certificate_dom_selector',
-    'hide_post_column',
-    'automate' => [
-      'site_token',
-      'site_id',
-      'is_active',
-      'show_revisions',
-      'allowed_post_types'
+  public static $optionWSFY = 'wsfy';
+
+  public static $options = [
+    'network' => ['type' => 'text'],
+    'certificate_text' => ['type' => 'text'],
+    'certificate_dom_selector' => ['type' => 'text'],
+    'hide_post_column' => ['type' => 'bool'],
+    'wsfy' => [
+      'site_token' => ['type' => 'text'],
+      'site_id' => ['type' => 'int'],
+      'show_revisions' => ['type' => 'bool'],
+      'allowed_post_types' => ['type' => 'text']
     ],
+    'wsfy_is_active' => ['type' => 'bool'],
     'accountname',
     'balance'
   ];
@@ -49,5 +51,57 @@ class OptionsHelper
 
   public static function getBalance($default = false) {
     return get_option(self::$prefix . 'balance', $default);
+  }
+
+  public static function getWSFY($keys = []) {
+    $options = get_option(self::$prefix . self::$optionWSFY, []);
+    $options = self::prepareWSFY($options);
+
+    if (!empty($keys)) {
+      return (object)array_intersect_key($options, array_flip($keys));
+    }
+    return (object)$options;
+  }
+
+  private static function prepareWSFY($options) {
+    if (!isset($options['allowed_post_types'])) {
+      $options['allowed_post_types'] = ['post', 'page'];
+    }
+
+    return $options;
+  }
+
+  public static function set($key, $value) {
+    if ($key === 'wsfy') {
+
+      if (!is_array($value))
+        return false;
+
+      foreach ($value as $k => $v) {
+        $type = self::$options['wsfy'][$k]['type'];
+        $value[$k] = self::validate($type, $v);
+      }
+
+      $options = (array)self::getWSFY();
+      $options = array_merge($options, $value);
+      return update_option(self::$prefix . $key, $options);
+
+    } else if (isset(self::$options[$key])) {
+        $type = self::$options[$key]['type'];
+        $value = self::validate($type, $value);
+        return update_option(self::$prefix . $key, $value);
+    }
+    return false;
+  }
+
+  private static function validate($type, $value) {
+    switch ($type) {
+      case 'integer':
+        return intval($value);
+      case 'boolean':
+        return boolval($value);
+      default:
+        return sanitize_text_field($value);
+    }
   }
 }

@@ -31,7 +31,7 @@ class GettingStarted {
       wp_enqueue_style('wordproof.getting-started.css', WORDPROOF_URI_CSS . '/getting-started.css', array(), filemtime(WORDPROOF_DIR_CSS . '/getting-started.css'));
       wp_enqueue_script('wordproof.getting-started.js', WORDPROOF_URI_JS . '/getting-started.js', array(), filemtime(WORDPROOF_DIR_JS . '/getting-started.js'), true);
       wp_localize_script('wordproof.getting-started.js', 'wordproof', [
-        'pluginDirUrl' => WORDPROOF_URI
+        'imagesUri' => WORDPROOF_URI_IMAGES,
       ]);
 
         ?>

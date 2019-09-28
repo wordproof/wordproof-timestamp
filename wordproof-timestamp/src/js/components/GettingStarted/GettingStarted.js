@@ -14,7 +14,7 @@ class GettingStarted extends Component {
     return (
       <div className="wordproof-getting-started container bg-white rounded p-4 mt-6">
 
-        <img className="wordproof-logo border-none mx-auto relative w-32" src={`${wordproof.pluginDirUrl}assets/images/wordproof-icon-large.png`} />
+        <img className="wordproof-logo border-none mx-auto relative w-32" src={`${wordproof.imagesUri}/wordproof-icon-large.png`} />
 
         <h1 className="text-lg text-center">Welcome to WordProof!</h1>
         <p className="text-lg text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet.</p>

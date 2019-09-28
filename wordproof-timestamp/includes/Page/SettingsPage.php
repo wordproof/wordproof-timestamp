@@ -39,8 +39,9 @@ class SettingsPage {
             'hidePostColumn' => OptionsHelper::getHidePostColumn(),
             'wsfy' => $wsfy,
             'registeredPostTypes' => get_post_types(['public' => true]),
-            'saveChanges' => 'Save Changes'
-        ]);
+            'saveChanges' => 'Save Changes',
+            'wizardUrl' => admin_url('admin.php?page=wordproof-wizard#connect')
+      ]);
 
         ?>
         <div class="wrap">

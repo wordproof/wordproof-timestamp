@@ -36,7 +36,10 @@ export default class Automate extends Component {
                                         href="https://wordproof.io/we-stamp-for-you">request a WordProof Timestamp
               key</a> for your website, and paste it here:</p>
 
-            <a href={''}>Configure your Site Token</a>
+
+            <a className="button is-primary" href={wordproofSettings.wizardUrl}>Configure your Site Token</a>
+
+            <hr/>
 
             <div className="form-group">
               <label htmlFor="wsfy_settings[show_revisions]" className="label" title="Display Revisions">Show Revisions</label>

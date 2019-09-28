@@ -11,6 +11,10 @@ $wordpress-blue: #3884B5;
 $wordpress-blue-light: #e7f5ff;
 
 .wordproof-admin-app {
+  hr {
+    margin: 20px 0;
+  }
+
   .vo-card {
     position: relative;
     margin-top: 20px;

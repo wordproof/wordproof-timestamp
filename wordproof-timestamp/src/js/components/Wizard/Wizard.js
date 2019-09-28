@@ -6,6 +6,7 @@ import Step1 from "./Steps/Step1";
 import Step2 from "./Steps/Step2";
 import Step3 from "./Steps/Step3";
 import Step4 from "./Steps/Step4";
+import Nav from "./Nav";
 
 export default class Wizard extends Component {
 
@@ -36,7 +37,11 @@ export default class Wizard extends Component {
   render() {
     return (
       <div className="wordproof-onboarding-wizard bg-gray-300">
-          <StepWizard transitions={this.transitions} isHashEnabled={true}>
+        <div className={`flex flew-row justify-center items-center mb-24`}>
+          <img className={`border-none h-12 mr-4`} src={wordproof.imagesUri + '/wordproof-icon-large.png'} />
+          <img className={`border-none h-10`} src={wordproof.imagesUri + '/wordproof-logo.png'} />
+        </div>
+          <StepWizard transitions={this.transitions} isHashEnabled={true} nav={<Nav/>}>
             <Step1 hashKey={'mode'} />
             <Step2 hashKey={'connect'} get={this.getField.bind(this)} update={this.updateField.bind(this)}/>
             <Step3 hashKey={'customize'} get={this.getField.bind(this)} update={this.updateField.bind(this)}/>

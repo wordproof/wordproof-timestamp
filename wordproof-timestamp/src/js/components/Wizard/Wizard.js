@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import axios from 'axios';
+import qs from 'qs';
 import StepWizard from 'react-step-wizard';
 
 import './Wizard.scss';
@@ -17,6 +19,7 @@ export default class Wizard extends Component {
     this.state = {
       fields: {...wordproof.currentValues}
     }
+    console.log(this.state.fields);
   }
 
   updateField(e, slug = null, value = null) {
@@ -27,8 +30,16 @@ export default class Wizard extends Component {
 
     let fields = this.state.fields;
     fields[slug] = value;
-    console.log(fields);
     this.setState(fields);
+    this.updateRequest(slug, value);
+  }
+
+  updateRequest(slug, value) {
+    axios.post(wordproof.updateSettingsEndpoint, qs.stringify({
+      'action': 'wordproof_update_setting',
+      'key': slug,
+      'value': value
+    }));
   }
 
   getField(slug) {

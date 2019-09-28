@@ -20,6 +20,7 @@ class AdminController
 
       new UpdateHelper();
 
+      add_action('admin_post_wordproof_update_setting', [$this, 'updateSetting']);
       add_action('admin_enqueue_scripts', [$this, 'loadAdminAssets']);
 
       //Admin Pages
@@ -31,8 +32,14 @@ class AdminController
       new NotificationHelper();
       new ChainHelper();
       new PostColumnController();
+    }
+  }
 
-
+  public function updateSetting() {
+    $key = $_REQUEST['key'];
+    $value = $_REQUEST['value'];
+    if (!empty($key) && !empty($value)) {
+      OptionsHelper::set($key, $value);
     }
   }
 

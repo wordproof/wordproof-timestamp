@@ -60,6 +60,7 @@
     "luxon": "^1.16.1",
     "macaddress": "^0.2.9",
     "promise": "^8.0.3",
+    "qs": "^6.9.0",
     "react": "^16.8.6",
     "react-cookie": "^4.0.1",
     "react-dom": "^16.8.6",

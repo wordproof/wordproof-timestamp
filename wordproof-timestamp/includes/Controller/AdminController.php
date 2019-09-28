@@ -9,6 +9,7 @@ use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\Page\GettingStarted;
 use WordProofTimestamp\includes\Page\OnboardingWizard;
 use WordProofTimestamp\includes\Page\SettingsPage;
+use WordProofTimestamp\includes\UpdateHelper;
 
 class AdminController
 {
@@ -16,6 +17,8 @@ class AdminController
   public function __construct()
   {
     if (is_admin()) {
+
+      new UpdateHelper();
 
       add_action('admin_enqueue_scripts', [$this, 'loadAdminAssets']);
 

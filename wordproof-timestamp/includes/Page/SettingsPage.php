@@ -28,8 +28,8 @@ class SettingsPage {
     }
 
     public function generateSettingsPage() {
-        $wsfy = get_option('wordproof_wsfy');
-        $wsfyActive = isset($wsfy['active']) ? $wsfy['active'] : false;
+        $wsfy = OptionsHelper::getWSFY();
+        $wsfyActive = isset($wsfy->is_active) ? $wsfy->is_active : false;
 
         wp_localize_script('wordproof.admin.js', 'wordproofSettings', [
             'adminUrl' => admin_url(),

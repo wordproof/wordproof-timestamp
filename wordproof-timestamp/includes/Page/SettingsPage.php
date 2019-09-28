@@ -64,9 +64,8 @@ class SettingsPage {
       if (isset($_POST['wordproof_admin_form_nonce']) && wp_verify_nonce($_POST['wordproof_admin_form_nonce'], 'wordproof_admin_form_nonce')) {
 
           if (isset($_POST['wordproof_network'])) {
-          $value = sanitize_text_field($_POST['wordproof_network']);
-          update_option('wordproof_network', $value);
-        }
+            OptionsHelper::set('network', $_POST['wordproof_network']);
+          }
 
         /**
          * Customize settings
@@ -74,42 +73,28 @@ class SettingsPage {
         if (isset($_POST['wordproof_customize'])) {
 
           if (isset($_POST['wordproof_customize']['hide_post_column'])) {
-            update_option('wordproof_hide_post_column', true);
+            OptionsHelper::set('hide_post_column', true);
           } else {
-            update_option('wordproof_hide_post_column', false);
+            OptionsHelper::set('hide_post_column', false);
           }
 
           if (isset($_POST['wordproof_customize']['certificate_dom_selector'])) {
-            $value = sanitize_text_field($_POST['wordproof_customize']['certificate_dom_selector']);
-            update_option('wordproof_certificate_dom_selector', $value);
+            OptionsHelper::set('certificate_dom_selector', $_POST['wordproof_customize']['certificate_dom_selector']);
           }
 
           if (isset($_POST['wordproof_customize']['certificate_text'])) {
-            $value = sanitize_text_field($_POST['wordproof_customize']['certificate_text']);
-            update_option('wordproof_certificate_text', $value);
+            OptionsHelper::set('certificate_text', $_POST['wordproof_customize']['certificate_text']);
           }
-
         }
 
         /**
          * WSFY settings
          */
         if (isset($_POST['wsfy_settings'])) {
-
-          $post = $_POST['wsfy_settings'];
-          $accessToken = sanitize_text_field($post['access_token']);
-          $siteId = sanitize_text_field($post['site_id']);
-          $revisions = isset($post['no_revisions']) ? true : false;
-          $allowedPostTypes = isset($post['allowed_post_types']) ? array_map('sanitize_text_field', array_values($post['allowed_post_types'])) : [];
-
-          $options = ['accessToken' => $accessToken, 'siteId' => $siteId, 'active' => null, 'noRevisions' => $revisions, 'allowedPostTypes' => $allowedPostTypes];
-          if (empty($accessToken) || empty($siteId)) {
-              $options['active'] = false;
-          } else {
-            $options['active'] = true;
-          }
-
-          update_option('wordproof_wsfy', $options);
+            $post = $_POST['wsfy_settings'];
+            $post['allowed_post_types'] = array_keys($post['allowed_post_types']);
+            $post['show_revisions'] = isset($post['show_revisions']) ? true : false;
+            OptionsHelper::set('wsfy', $post);
         }
 
       }

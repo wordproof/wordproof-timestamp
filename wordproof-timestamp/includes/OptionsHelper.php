@@ -81,7 +81,12 @@ class OptionsHelper
       $values = array_intersect_key($value, $allowed);
       foreach ($values as $k => $v) {
         $type = self::$options['wsfy'][$k]['type'];
-        $values[$k] = self::validate($type, $v);
+
+        if (is_array($v)) {
+          $values[$k] = array_map(['self', 'validate'], $v);
+        } else {
+          $values[$k] = self::validate($v, $type);
+        }
       }
 
       $options = (array)self::getWSFY();
@@ -91,13 +96,13 @@ class OptionsHelper
 
     } else if (isset(self::$options[$key])) {
         $type = self::$options[$key]['type'];
-        $value = self::validate($type, $value);
+        $value = self::validate($value, $type);
         return update_option(self::$prefix . $key, $value);
     }
     return false;
   }
 
-  private static function validate($type, $value) {
+  private static function validate($value, $type = '') {
     switch ($type) {
       case 'integer':
         return intval($value);

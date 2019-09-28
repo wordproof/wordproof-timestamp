@@ -22,9 +22,9 @@ export default class Step1 extends Component {
               Set-up in 20 minutes
             </p>
 
-            <button className="">
+            <a className="wproof-button secondary block" href={wordproof.closeWizard}>
               Start Configuration
-            </button>
+            </a>
           </div>
 
           <div className="border-2 rounded text-center p-4 ml-4">

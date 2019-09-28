@@ -20,32 +20,36 @@ a {
   @apply text-blue-600 underline;
 }
 
+a.wproof-button {
+  @apply no-underline;
+}
+
 /**
 ** BUTTONS
 **
  */
 
-button {
+.wproof-button, button {
   @apply font-semibold py-2 px-3 border-b-4 bg-white text-gray-800 border-gray-400
 }
 
-button:hover {
+.wproof-button:hover, button:hover {
   @apply bg-gray-100 border-gray-100
 }
 
-button.primary {
+.wproof-button.primary, button.primary {
   @apply bg-blue-500 text-white border-blue-700
 }
 
-button.primary:hover {
+.wproof-button.primary:hover, button.primary:hover {
   @apply bg-blue-400 border-blue-500
 }
 
-button.secondary {
+.wproof-button.secondary, button.secondary {
   @apply bg-pink-600 text-white border-pink-700
 }
 
-button.secondary:hover {
+.wproof-button.secondary:hover, button.secondary:hover {
   @apply bg-pink-500 border-pink-600
 }
 

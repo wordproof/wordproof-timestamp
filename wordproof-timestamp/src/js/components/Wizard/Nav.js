@@ -14,7 +14,7 @@ const Nav = (props) => {
   }
 
   return (
-    <div className={`flex flex-row justify-around mb-8`}>{dots}</div>
+    <div className={`flex flex-row justify-around m-10`}>{dots}</div>
   );
 };
 

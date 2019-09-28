@@ -33,7 +33,9 @@ export default class Step2 extends Component {
         <Intro title="Connect WordProof to your website"
                subtitle="Create a WordProof account and paste your site key. Start your 14-day trial today."/>
 
-        <button className={'secondary mb-4'}>Create WordProof Account</button>
+        <a className="wproof-button secondary mb-4 inline-block" href={`https://my.wordproof.io/signup`}>
+          Create WordProof Account
+        </a>
 
         <TextField slug={'site_token'} question={'What is your site key?'} extra={'Your site key is visible after you have created your account.'}
                    handleChange={this.props.update}/>

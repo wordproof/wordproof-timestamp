@@ -65,8 +65,7 @@ class CertificateController
     $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain']);
 
     if (isset($meta->date) && !empty($meta->blockchain)) {
-      $wsfyOptions = get_option('wordproof_wsfy');
-      $wsfyOptions = (isset($wsfyOptions['active']) && $wsfyOptions['active'] === true) ? ['active' => $wsfyOptions['active'], 'noRevisions' => $wsfyOptions['noRevisions'], 'siteId' => $wsfyOptions['siteId']] : '';
+      $wsfyOptions = (OptionsHelper::isWSFYActive()) ? OptionsHelper::getWSFY([], ['site_token']) : [];
       $certificateText = OptionsHelper::getCertificateText();
       $certificateDOMParent = OptionsHelper::getCertificateDomSelector();
 

@@ -53,27 +53,41 @@ class OptionsHelper
     return get_option(self::$prefix . 'balance', $default);
   }
 
-  public static function getWSFY($keys = []) {
+  public static function getWSFY($includes = [], $excludes = []) {
     $options = get_option(self::$prefix . self::$optionWSFY, []);
     $options = self::prepareWSFY($options);
 
-    if (!empty($keys)) {
-      return (object)array_intersect_key($options, array_flip($keys));
+    if (!empty($includes)) {
+      return (object)array_intersect_key($options, array_flip($includes));
+    }
+
+    foreach ($excludes as $exclude) {
+      unset($options[$exclude]);
     }
     return (object)$options;
   }
 
+  public static function isWSFYActive() {
+    return get_option(self::$prefix . 'wsfy_is_active');
+  }
+
   private static function prepareWSFY($options) {
+    //Check values
     if (isset($options['allowed_post_types'])) {
       $options['allowed_post_types'] = array_values($options['allowed_post_types']);
     }
 
+    if (isset($options['show_revisions'])) {
+      $options['show_revisions'] = boolval($options['show_revisions']);
+    }
+
+    //Default values
     if (!isset($options['allowed_post_types'])) {
       $options['allowed_post_types'] = ['post', 'page'];
     }
 
-    if (isset($options['show_revisions'])) {
-      $options['show_revisions'] = boolval($options['show_revisions']);
+    if (!isset($options['show_revisions'])) {
+      $options['show_revisions'] = true;
     }
 
     return $options;

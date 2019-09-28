@@ -77,14 +77,15 @@ class OptionsHelper
       if (!is_array($value))
         return false;
 
-      $values = array_intersect_key(self::$options['wsfy'], array_flip($value));
+      $allowed = array_flip(array_keys(self::$options['wsfy']));
+      $values = array_intersect_key($value, $allowed);
       foreach ($values as $k => $v) {
         $type = self::$options['wsfy'][$k]['type'];
         $values[$k] = self::validate($type, $v);
       }
 
       $options = (array)self::getWSFY();
-      $options = array_intersect_key(self::$options['wsfy'], array_flip($options));
+      $options = array_intersect_key($options, $allowed);
       $options = array_merge($options, $values);
       return update_option(self::$prefix . $key, $options);
 

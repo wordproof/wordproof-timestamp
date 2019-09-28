@@ -41,7 +41,6 @@ class UpdateHelper
 
     if (!empty($newOptions)) {
         OptionsHelper::set('wsfy', $newOptions);
-        error_log(json_encode($newOptions));
         update_option($this->migration_version_200, true);
       }
   }

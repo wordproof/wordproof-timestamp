@@ -2,6 +2,7 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
+use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\PostMetaHelper;
 
 class PostColumnController
@@ -14,7 +15,7 @@ class PostColumnController
     $this->options = get_option('wordproof_wsfy');
 
     $showColumn = true;
-    if (get_option('wordproof_hide_post_column', false)) {
+    if (OptionsHelper::getHidePostColumn()) {
 
       $userMeta = get_userdata(get_current_user_id());
       $roles = $userMeta->roles;

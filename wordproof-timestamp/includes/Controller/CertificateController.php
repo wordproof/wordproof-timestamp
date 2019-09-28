@@ -2,13 +2,13 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
+use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\PostMetaHelper;
 
 class CertificateController
 {
 
   private static $default_template = "<div><p class='wordproof-certificate-link' style='display: none; align-items: center;'><img src='" . WORDPROOF_URI_IMAGES . "/wordproof-icon.png" . "' style='max-width: 30px; max-height: 30px; display: inline-block; margin: 0 10px 0 0;' alt='WordProof timestamp'/><a class='wordproof-certificate-helper' data-post-id='POST_ID' href='CERTIFICATE_URL'>CERTIFICATE_TEXT</a></p></div>";
-  private static $default_text = "View this content's WordProof Timestamp certificate";
   private static $default_url = '#wordproof';
 
   public function __construct()
@@ -46,7 +46,7 @@ class CertificateController
    */
   public function removeText($excerpt)
   {
-    $text = self::getText();
+    $text = OptionsHelper::getCertificateText();
     return str_replace($text, '', $excerpt);
   }
 
@@ -67,8 +67,8 @@ class CertificateController
     if (isset($meta->date) && !empty($meta->blockchain)) {
       $wsfyOptions = get_option('wordproof_wsfy');
       $wsfyOptions = (isset($wsfyOptions['active']) && $wsfyOptions['active'] === true) ? ['active' => $wsfyOptions['active'], 'noRevisions' => $wsfyOptions['noRevisions'], 'siteId' => $wsfyOptions['siteId']] : '';
-      $certificateText = $this->getText();
-      $certificateDOMParent = get_option('wordproof_certificate_dom_selector');
+      $certificateText = OptionsHelper::getCertificateText();
+      $certificateDOMParent = OptionsHelper::getCertificateDomSelector();
 
       wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', array(), filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
 
@@ -127,7 +127,8 @@ class CertificateController
   private function getLink($postId)
   {
     $html = $this->getTemplate();
-    $text = $this::getText();
+    $text = OptionsHelper::getCertificateText();
+
     $url = $this->getUrl();
     $html = str_replace('CERTIFICATE_URL', $url, $html);
     $html = str_replace('CERTIFICATE_TEXT', $text, $html);
@@ -139,12 +140,6 @@ class CertificateController
   {
     $template = self::$default_template;
     return $template;
-  }
-
-  public static function getText()
-  {
-    $text = get_option('wordproof_certificate_text', null) ?: self::$default_text;
-    return stripslashes($text);
   }
 
   private function getUrl()

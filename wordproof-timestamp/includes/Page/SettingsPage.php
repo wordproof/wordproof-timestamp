@@ -3,6 +3,7 @@
 namespace WordProofTimestamp\includes\Page;
 
 use WordProofTimestamp\includes\Controller\CertificateController;
+use WordProofTimestamp\includes\OptionsHelper;
 
 /**
  * Class SettingsPage
@@ -31,11 +32,11 @@ class SettingsPage {
         $wsfyActive = isset($wsfy['active']) ? $wsfy['active'] : false;
 
         wp_localize_script('wordproof.admin.js', 'wordproofSettings', [
-            'network' => get_option('wordproof_network', false),
             'adminUrl' => admin_url(),
-            'certificateText' => CertificateController::getText(),
-            'certificateDOMSelector' => get_option('wordproof_certificate_dom_selector', false),
-            'hidePostColumn' => get_option('wordproof_hide_post_column', false),
+            'network' => OptionsHelper::getNetwork(),
+            'certificateText' => OptionsHelper::getCertificateText(),
+            'certificateDOMSelector' => OptionsHelper::getCertificateDomSelector(),
+            'hidePostColumn' => OptionsHelper::getHidePostColumn(),
             'wsfy' => $wsfy,
             'registeredPostTypes' => get_post_types(['public' => true]),
             'saveChanges' => 'Save Changes'

@@ -5,6 +5,7 @@ namespace WordProofTimestamp\includes\Controller;
 use WordProofTimestamp\includes\ChainHelper;
 use WordProofTimestamp\includes\MetaBox;
 use WordProofTimestamp\includes\NotificationHelper;
+use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\Page\GettingStarted;
 use WordProofTimestamp\includes\Page\OnboardingWizard;
 use WordProofTimestamp\includes\Page\SettingsPage;
@@ -47,9 +48,9 @@ class AdminController
         'ajaxSecurity' => wp_create_nonce('wordproof'),
         'postId' => (!empty($post->ID)) ? $post->ID : false,
         'permalink' => (!empty($post->ID)) ? get_permalink($post) : false,
-        'network' => get_option('wordproof_network', false),
-        'accountName' => get_option('wordproof_accountname', ''),
-        'wordBalance' => get_option('wordproof_balance', 0),
+        'network' => OptionsHelper::getNetwork(),
+        'accountName' => OptionsHelper::getAccountName(''),
+        'wordBalance' => OptionsHelper::getBalance(0),
         'pluginDirUrl' => WORDPROOF_URI
       ));
     }

@@ -16,9 +16,9 @@ class ChainHelper
     $currentPage = get_current_screen()->base;
 
     if (in_array($currentPage, $balanceCheckNeeded)) {
-      $accountName = get_option('wordproof_accountname');
+      $accountName = OptionsHelper::getAccountName();
       if ($accountName !== false) {
-        $chain = get_option('wordproof_network');
+        $chain = OptionsHelper::getNetwork();
         self::sendRequest($accountName, $chain);
       }
     }
@@ -30,7 +30,7 @@ class ChainHelper
     if (!current_user_can('manage_options')) {
       exit;
     }
-    $chain = get_option('wordproof_network');
+    $chain = OptionsHelper::getNetwork();
 
     if (isset($_REQUEST['accountName'])) {
       $accountName = sanitize_text_field($_REQUEST['accountName']);

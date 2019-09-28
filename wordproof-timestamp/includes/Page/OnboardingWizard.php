@@ -2,7 +2,7 @@
 
 namespace WordProofTimestamp\includes\Page;
 
-use WordProofTimestamp\includes\Controller\CertificateController;
+use WordProofTimestamp\includes\OptionsHelper;
 
 /**
  * Class SettingsPage
@@ -34,6 +34,10 @@ class OnboardingWizard {
         'pluginDirUrl' => WORDPROOF_URI,
         'wsfyApiUri' => WORDPROOF_WSFY_API_URI,
         'wsfyValidateTokenEndpoint' => WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE,
+        'currentValues' => [
+            'certificateText' => OptionsHelper::getCertificateText(),
+            'wsfy' => get_option('wordproof_wsfy')
+        ]
       ]);
 
         ?>

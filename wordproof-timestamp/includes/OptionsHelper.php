@@ -19,7 +19,9 @@ class OptionsHelper
       'is_active',
       'show_revisions',
       'allowed_post_types'
-    ]
+    ],
+    'accountname',
+    'balance'
   ];
 
   private static $defaultCertificateText = "View this content's WordProof Timestamp certificate";
@@ -39,5 +41,13 @@ class OptionsHelper
 
   public static function getHidePostColumn() {
     return get_option(self::$prefix . 'hide_post_column');
+  }
+
+  public static function getAccountName($default = false) {
+    return get_option(self::$prefix . 'accountname', $default);
+  }
+
+  public static function getBalance($default = false) {
+    return get_option(self::$prefix . 'balance', $default);
   }
 }

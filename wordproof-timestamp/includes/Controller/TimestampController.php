@@ -2,6 +2,7 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
+use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\PostMetaHelper;
 
 class TimestampController
@@ -39,7 +40,7 @@ class TimestampController
   public function saveTimestampAjax() {
     check_ajax_referer('wordproof', 'security');
     $postId = intval($_REQUEST['post_id']);
-    $chain = get_option('wordproof_network');
+    $chain = OptionsHelper::getNetwork();
     $transactionId = sanitize_text_field($_REQUEST['transaction_id']);
 
     self::saveTimestamp($postId, $chain, $transactionId);

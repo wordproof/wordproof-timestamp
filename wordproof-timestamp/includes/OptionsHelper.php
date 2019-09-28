@@ -97,16 +97,7 @@ class OptionsHelper
     $wsfyKeys = array_flip(array_keys(self::$options['wsfy']));
     if ($key === 'wsfy' || in_array($key, $wsfyKeys)) {
 
-      // key is wsfy with multiple keys
-      if (is_array($value)) {
-        $value = array_intersect_key($value, $wsfyKeys);
-        foreach ($value as $k => $v) {
-          $value[$k] = self::validateData($k, $v);
-        }
-      } else { //if just one value
-        $value = [$key => self::validateData($key, $value)];
-      }
-
+      $value = [$key => self::validateData($key, $value)];
       $options = (array)self::getWSFY();
       $options = array_intersect_key($options, $wsfyKeys);
 

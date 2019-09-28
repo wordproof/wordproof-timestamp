@@ -18,7 +18,7 @@ export default class Step4 extends Component {
         <Intro title="Certificate Link"
                subtitle="The link which opens the Blockchain Certificate pop-up is visable under all timestamped content."/>
 
-        <TextField slug={'certificate_text'} question={'Link Text'} />
+        <TextField slug={'certificate_text'} question={'Link Text'} handleChange={this.props.update}/>
 
         <button className={'primary'} onClick={() => this.save()}>Finish Setup</button>
       </div>

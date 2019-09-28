@@ -9,7 +9,8 @@ export default class TextField extends React.Component {
            {this.props.question}
           </label>
           { this.props.extra && <span>{ this.props.extra }</span> }
-          <input className="" id={`wordproof_options[${this.props.slug}]`} type="text" placeholder=""/>
+          <input onChange={this.props.handleChange} data-slug={this.props.slug} id={`wordproof_options[${this.props.slug}]`}
+                 type="text" placeholder=""/>
         </div>
       </>
     )

@@ -12,6 +12,23 @@ export default class Wizard extends Component {
   constructor(props) {
     super(props);
     this.transitions = {};
+    this.state = {
+      fields: {}
+    }
+  }
+
+  updateField(e) {
+    const slug = e.target.getAttribute('data-slug');
+    const value = e.target.value;
+
+    let fields = this.state.fields;
+    fields[slug] = value;
+    console.log(fields);
+    this.setState(fields);
+  }
+
+  getField(slug) {
+    return this.state.fields[slug];
   }
 
   render() {
@@ -19,9 +36,9 @@ export default class Wizard extends Component {
       <div className="wordproof-onboarding-wizard bg-gray-300">
           <StepWizard transitions={this.transitions} isHashEnabled={true}>
             <Step1 hashKey={'mode'} />
-            <Step2 hashKey={'connect'} />
-            <Step3 hashKey={'customize'} />
-            <Step4 hashKey={'certificate'} />
+            <Step2 hashKey={'connect'} get={this.getField.bind(this)} update={this.updateField.bind(this)}/>
+            <Step3 hashKey={'customize'} get={this.getField.bind(this)} update={this.updateField.bind(this)}/>
+            <Step4 hashKey={'certificate'} get={this.getField.bind(this)} update={this.updateField.bind(this)}/>
           </StepWizard>
       </div>
     );

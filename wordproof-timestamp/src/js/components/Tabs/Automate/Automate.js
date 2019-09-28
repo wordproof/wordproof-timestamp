@@ -4,11 +4,10 @@ export default class Automate extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      accessToken: wordproofSettings.wsfy.accessToken,
-      siteId: wordproofSettings.wsfy.siteId,
-      active: wordproofSettings.wsfy.active,
-      noRevisions: wordproofSettings.wsfy.noRevisions,
-      allowedPostTypes: (wordproofSettings.wsfy.allowedPostTypes) ? wordproofSettings.wsfy.allowedPostTypes : ['post', 'page'],
+      siteToken: wordproofSettings.wsfy.site_token,
+      siteId: wordproofSettings.wsfy.site_id,
+      showRevisions: wordproofSettings.wsfy.show_revisions,
+      allowedPostTypes: wordproofSettings.wsfy.allowed_post_types,
       hideAdvanced: true,
       registeredPostTypes: Object.values(wordproofSettings.registeredPostTypes),
     }
@@ -37,23 +36,13 @@ export default class Automate extends Component {
                                         href="https://wordproof.io/we-stamp-for-you">request a WordProof Timestamp
               key</a> for your website, and paste it here:</p>
 
-            <div className="form-group">
-              <label htmlFor="wsfy_settings[access_token]" className="label" title="Access Token">Access Token</label>
-              <input type="text" className="textinput" name="wsfy_settings[access_token]" id="wsfy_settings[access_token]"
-                     value={this.state.accessToken} onChange={e => this.setState({accessToken: e.target.value})}/>
-            </div>
+            <a href={''}>Configure your Site Token</a>
 
             <div className="form-group">
-              <label htmlFor="wsfy_settings[site_id]" className="label" title="Access Token">Site Id</label>
-              <input type="text" className="textinput" name="wsfy_settings[site_id]" id="wsfy_settings[site_id]"
-                     value={this.state.siteId} onChange={e => this.setState({siteId: e.target.value})}/>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="wsfy_settings[no_revisions]" className="label" title="Display Revisions">Hide Revisions</label>
-              <input type="checkbox" value="1" className="" name="wsfy_settings[no_revisions]" id="wsfy_settings[no_revisions]"
-                     onChange={e => this.setState({noRevisions: e.target.value})}
-                     defaultChecked={this.state.noRevisions}/>
+              <label htmlFor="wsfy_settings[show_revisions]" className="label" title="Display Revisions">Show Revisions</label>
+              <input type="checkbox" value="1" className="" name="wsfy_settings[show_revisions]" id="wsfy_settings[show_revisions]"
+                     onChange={e => this.setState({showRevisions: e.target.value})}
+                     defaultChecked={this.state.showRevisions}/>
             </div>
 
             <div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>
@@ -74,7 +63,7 @@ export default class Automate extends Component {
                  rel="noopener noreferrer">Auto Stamp your Posts</a>
             </div>
 
-            <p>We Stamp For You is {(wordproofSettings.wsfy.active) ? 'active' : 'not activated'}</p>
+            {/*<p>We Stamp For You is {(wordproofSettings) ? 'active' : 'not activated'}</p>*/}
 
             <input type="submit" name="submit" id="submit" className="button is-primary"
                    value={wordproofSettings.saveChanges}/>

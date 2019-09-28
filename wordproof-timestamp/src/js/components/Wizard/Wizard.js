@@ -17,9 +17,11 @@ export default class Wizard extends Component {
     }
   }
 
-  updateField(e) {
-    const slug = e.target.getAttribute('data-slug');
-    const value = e.target.value;
+  updateField(e, slug = null, value = null) {
+    if (e) {
+      slug = e.target.getAttribute('data-slug');
+      value = e.target.value;
+    }
 
     let fields = this.state.fields;
     fields[slug] = value;

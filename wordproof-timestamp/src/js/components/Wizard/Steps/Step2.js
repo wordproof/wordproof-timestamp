@@ -12,15 +12,19 @@ export default class Step2 extends Component {
 
   async validate() {
     const token = this.props.get('site_token');
-    console.log(token);
-    const authorization = `Authorization: Bearer ${token}`;
-    // try {
-    //   const response = await axios.get(wordproof.wsfyApiUri + wordproof.wsfyValidateTokenEndpoint, { headers: { authorization } });
-    //   console.log(response);
-    //   // this.props.nextStep();
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    const config = {
+      headers: {'Authorization': "Bearer " + token}
+    };
+    try {
+      const response = await axios.get(wordproof.wsfyApiUri + wordproof.wsfyValidateTokenEndpoint, config);
+
+      if (response.status && response.status === 200 && response.data.site_id) {
+        this.props.update(null, 'site_id', response.data.site_id);
+        this.props.nextStep();
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   render() {

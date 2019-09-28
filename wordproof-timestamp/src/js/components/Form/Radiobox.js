@@ -2,7 +2,6 @@ import React from 'react'
 
 export default class Radiobox extends React.Component {
   render() {
-    console.log(this.props.options);
     return (
       <>
         <div className="mb-2">

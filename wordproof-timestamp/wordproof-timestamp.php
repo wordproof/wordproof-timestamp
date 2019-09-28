@@ -40,6 +40,7 @@ define('WORDPROOF_URI_SVG', WORDPROOF_URI_ASSETS . '/svg');
 define('WORDPROOF_WSFY_API_IP', ['167.71.143.38']);
 define('WORDPROOF_WSFY_API_URI', 'https://my.wordproof.io/api/');
 define('WORDPROOF_WSFY_ENDPOINT_ARTICLE', 'articles/');
+define('WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE', 'validate/token');
 define('WORDPROOF_WSFY_CRON_HOOK', 'wsfy_save_post_on_cron');
 
 //Web Standards

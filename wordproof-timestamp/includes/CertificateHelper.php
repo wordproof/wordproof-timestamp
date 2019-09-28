@@ -17,6 +17,11 @@ class CertificateHelper {
         return $text;
     }
 
+    public static function getCustomDomainText() {
+        $text = get_option('wordproof_custom_domain', null) ?: self::$default_url;
+        return $text;
+    }
+
     public static function getCertificateUrl() {
         $url = self::$default_url;
         return $url;

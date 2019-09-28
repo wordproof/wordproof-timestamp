@@ -4,6 +4,7 @@ namespace WordProofTimestampFree;
 
 use WordProofTimestampFree\includes\AnalyticsHelper;
 use WordProofTimestampFree\includes\ChainHelper;
+use WordProofTimestampFree\includes\DomainHelper;
 use WordProofTimestampFree\includes\MetaBox;
 use WordProofTimestampFree\includes\NotificationHelper;
 use WordProofTimestampFree\includes\Page\SettingsPage;
@@ -12,6 +13,7 @@ use WordProofTimestampFree\includes\CertificateHelper;
 use WordProofTimestampFree\includes\PostMetaHelper;
 use WordProofTimestampFree\includes\TimestampAjaxHelper;
 use WordProofTimestampFree\includes\Controller\SchemaController;
+
 
 /**
  * Class WordProofTimestampFree
@@ -130,7 +132,7 @@ class WordProofTimestampFree
       'settingsURL' => admin_url('admin.php?page=wordproof'),
       'ajaxSecurity' => wp_create_nonce('wordproof'),
       'postId' => (!empty($post->ID)) ? $post->ID : false,
-      'permalink' => (!empty($post->ID)) ? get_permalink($post) : false,
+      'permalink' => DomainHelper::getPermalinkOrCustomDomain($post),
       'network' => get_option('wordproof_network', false),
       'accountName' => get_option('wordproof_accountname', ''),
       'wordBalance' => get_option('wordproof_balance', 0),

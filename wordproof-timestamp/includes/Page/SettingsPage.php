@@ -12,7 +12,7 @@ class SettingsPage {
 
     public function __construct() {
         add_action('admin_menu', array($this, 'addSettingsPage'));
-	    add_action('admin_post_wordproof_form_action', array($this, 'saveSettings'));
+	      add_action('admin_post_wordproof_form_action', array($this, 'saveSettings'));
     }
 
     public function addSettingsPage() {
@@ -30,6 +30,7 @@ class SettingsPage {
         wp_localize_script('wordproof.admin.js', 'wordproofSettings', [
             'network' => get_option('wordproof_network', false),
             'certificateText' => CertificateHelper::getCertificateText(),
+            'customDomainText' => CertificateHelper::getCustomDomainText(),
             'saveChanges' => __('Save Changes')
         ]);
 
@@ -55,6 +56,10 @@ class SettingsPage {
         if (isset($_POST['wordproof_certificate_text'])) {
           $value = sanitize_text_field($_POST['wordproof_certificate_text']);
           update_option('wordproof_certificate_text', $value);
+        }
+        if (isset($_POST['wordproof_custom_domain'])) {
+          $value = sanitize_text_field($_POST['wordproof_custom_domain']);
+          update_option('wordproof_custom_domain', $value);
         }
       }
       wp_redirect(admin_url('admin.php?page=wordproof'));

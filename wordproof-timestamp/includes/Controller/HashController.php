@@ -3,6 +3,7 @@
 namespace WordProofTimestampFree\includes\Controller;
 
 use WordProofTimestampFree\includes\PostMetaHelper;
+use WordProofTimestampFree\includes\DomainHelper;
 
 class HashController
 {
@@ -84,6 +85,7 @@ class HashController
     $array['title'] = $post->post_title;
     $array['content'] = $post->post_content;
     $array['date'] = get_the_modified_date('c', $post);
+    $array['wordproof_date'] = get_the_modified_date('Y-m-d H:i:s', $post);
     return $array;
   }
 
@@ -96,7 +98,7 @@ class HashController
   {
     $array = [];
     //TODO: Get selected attributes
-    $array['url'] = get_permalink($post);
+    $array['url'] = DomainHelper::getPermalinkOrCustomDomain($post);
     $array = apply_filters('wordproof_hash_attributes', $array);
     return $array;
   }

@@ -6,6 +6,7 @@ import Step1 from "./Steps/Step1";
 import Step2 from "./Steps/Step2";
 import Step3 from "./Steps/Step3";
 import Step4 from "./Steps/Step4";
+import Step5 from "./Steps/Step5";
 import Nav from "./Nav";
 
 export default class Wizard extends Component {
@@ -47,6 +48,7 @@ export default class Wizard extends Component {
             <Step2 hashKey={'connect'} get={this.getField.bind(this)} update={this.updateField.bind(this)} />
             <Step3 hashKey={'customize'} get={this.getField.bind(this)} update={this.updateField.bind(this)} />
             <Step4 hashKey={'certificate'} get={this.getField.bind(this)} update={this.updateField.bind(this)} />
+            <Step5 hashKey={'thanks'} get={this.getField.bind(this)} update={this.updateField.bind(this)} />
           </StepWizard>
       </div>
     );

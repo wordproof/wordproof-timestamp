@@ -11,7 +11,7 @@ export default class TextField extends React.Component {
   }
 
   update() {
-    this.props.update(null, this.props.slug, this.state.value)
+    this.props.update(null, this.props.slug, this.state.value);
   }
 
   render() {

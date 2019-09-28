@@ -37,6 +37,7 @@ class OnboardingWizard {
       );
 
       wp_localize_script('wordproof.wizard.js', 'wordproof', [
+        'updateSettingsEndpoint' => admin_url('admin-post.php'),
         'closeWizard' => admin_url('admin.php?page=wordproof'),
         'imagesUri' => WORDPROOF_URI_IMAGES,
         'wsfyApiUri' => WORDPROOF_WSFY_API_URI,

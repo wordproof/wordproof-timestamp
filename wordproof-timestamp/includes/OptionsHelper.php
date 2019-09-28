@@ -94,42 +94,49 @@ class OptionsHelper
   }
 
   public static function set($key, $value) {
-    if ($key === 'wsfy') {
+    $wsfyKeys = array_flip(array_keys(self::$options['wsfy']));
+    if ($key === 'wsfy' || in_array($key, $wsfyKeys)) {
 
-      if (!is_array($value))
-        return false;
-
-      $allowed = array_flip(array_keys(self::$options['wsfy']));
-      $values = array_intersect_key($value, $allowed);
-      foreach ($values as $k => $v) {
-        $type = self::$options['wsfy'][$k]['type'];
-
-        if (is_array($v)) {
-          $values[$k] = array_map(['self', 'validate'], $v);
-        } else {
-          $values[$k] = self::validate($v, $type);
+      // key is wsfy with multiple keys
+      if (is_array($value)) {
+        $value = array_intersect_key($value, $wsfyKeys);
+        foreach ($value as $k => $v) {
+          $value[$k] = self::validateData($k, $v);
         }
+      } else { //if just one value
+        $value = [$key => self::validateData($key, $value)];
       }
 
       $options = (array)self::getWSFY();
-      $options = array_intersect_key($options, $allowed);
-      $options = array_merge($options, $values);
-      return update_option(self::$prefix . $key, $options);
+      $options = array_intersect_key($options, $wsfyKeys);
+
+      $options = array_merge($options, $value);
+      return update_option(self::$prefix . 'wsfy', $options);
 
     } else if (isset(self::$options[$key])) {
-        $type = self::$options[$key]['type'];
-        $value = self::validate($value, $type);
+        $value = self::validateData($key, $value);
         return update_option(self::$prefix . $key, $value);
     }
+
     return false;
+  }
+
+  private static function validateData($key, $value) {
+    $type = self::$options['wsfy'][$key]['type'];
+
+    if (is_array($value)) {
+      return array_map(['self', 'validate'], $value);
+    } else {
+      return self::validate($value, $type);
+    }
   }
 
   private static function validate($value, $type = '') {
     switch ($type) {
-      case 'integer':
+      case 'int':
         return intval($value);
-      case 'boolean':
-        return boolval($value);
+      case 'bool':
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
       default:
         return sanitize_text_field($value);
     }

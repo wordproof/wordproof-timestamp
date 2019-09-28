@@ -14,7 +14,7 @@ export default class Wizard extends Component {
     super(props);
     this.transitions = {};
     this.state = {
-      fields: {}
+      fields: {...wordproof.currentValues}
     }
   }
 
@@ -44,9 +44,9 @@ export default class Wizard extends Component {
         </div>
           <StepWizard transitions={this.transitions} isHashEnabled={true} nav={<Nav/>}>
             <Step1 hashKey={'mode'} />
-            <Step2 hashKey={'connect'} get={this.getField.bind(this)} update={this.updateField.bind(this)} initial={``}/>
-            <Step3 hashKey={'customize'} get={this.getField.bind(this)} update={this.updateField.bind(this)}/>
-            <Step4 hashKey={'certificate'} get={this.getField.bind(this)} update={this.updateField.bind(this)}/>
+            <Step2 hashKey={'connect'} get={this.getField.bind(this)} update={this.updateField.bind(this)} />
+            <Step3 hashKey={'customize'} get={this.getField.bind(this)} update={this.updateField.bind(this)} />
+            <Step4 hashKey={'certificate'} get={this.getField.bind(this)} update={this.updateField.bind(this)} />
           </StepWizard>
       </div>
     );

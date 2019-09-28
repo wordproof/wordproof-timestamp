@@ -14,7 +14,7 @@ export default class Checkbox extends React.Component {
             {this.props.options.map((option, key) =>
               <label className={'font-normal my-1'} key={key}>
                 <input name={`wordproof_options[${this.props.slug}][${option}]`}
-                       type="checkbox" placeholder=""/>
+                       type="checkbox" placeholder="" value={true} defaultChecked={this.props.get(this.props.slug).includes(option)}/>
                 {option}
               </label>
             )}

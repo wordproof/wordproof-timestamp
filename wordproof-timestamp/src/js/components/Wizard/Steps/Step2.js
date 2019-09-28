@@ -4,12 +4,6 @@ import Intro from '../Intro';
 import TextField from "../../Form/TextField";
 
 export default class Step2 extends Component {
-
-  constructor(props) {
-    super(props);
-    // this.handleChange = this.props.handleChange.bind(this);
-  }
-
   async validate() {
     const token = this.props.get('site_token');
     const config = {
@@ -38,7 +32,7 @@ export default class Step2 extends Component {
         </a>
 
         <TextField slug={'site_token'} question={'What is your site key?'} extra={'Your site key is visible after you have created your account.'}
-                   handleChange={this.props.update}/>
+                   handleChange={this.props.update} get={this.props.get}/>
 
         <button className={'primary'} onClick={() => this.validate()}>Validate & Continue</button>
       </div>

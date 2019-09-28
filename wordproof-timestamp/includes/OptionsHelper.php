@@ -64,8 +64,16 @@ class OptionsHelper
   }
 
   private static function prepareWSFY($options) {
+    if (isset($options['allowed_post_types'])) {
+      $options['allowed_post_types'] = array_values($options['allowed_post_types']);
+    }
+
     if (!isset($options['allowed_post_types'])) {
       $options['allowed_post_types'] = ['post', 'page'];
+    }
+
+    if (isset($options['show_revisions'])) {
+      $options['show_revisions'] = boolval($options['show_revisions']);
     }
 
     return $options;

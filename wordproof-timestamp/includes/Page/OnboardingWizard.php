@@ -30,15 +30,19 @@ class OnboardingWizard {
     public function generateSettingsPage() {
       wp_enqueue_style('wordproof.wizard.css', WORDPROOF_URI_CSS . '/wizard.css', array(), filemtime(WORDPROOF_DIR_CSS . '/wizard.css'));
       wp_enqueue_script('wordproof.wizard.js', WORDPROOF_URI_JS . '/wizard.js', array(), filemtime(WORDPROOF_DIR_JS . '/wizard.js'), true);
+
+      $currentValues = array_merge(
+        ['certificate_text' => OptionsHelper::getCertificateText()],
+        (array)OptionsHelper::getWSFY()
+      );
+
       wp_localize_script('wordproof.wizard.js', 'wordproof', [
         'closeWizard' => admin_url('admin.php?page=wordproof'),
         'imagesUri' => WORDPROOF_URI_IMAGES,
         'wsfyApiUri' => WORDPROOF_WSFY_API_URI,
         'wsfyValidateTokenEndpoint' => WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE,
-        'currentValues' => [
-            'certificateText' => OptionsHelper::getCertificateText(),
-            'wsfy' => get_option('wordproof_wsfy')
-        ]
+        'currentValues' => $currentValues,
+        'registeredPostTypes' => array_values(get_post_types(['public' => true])),
       ]);
 
         ?>

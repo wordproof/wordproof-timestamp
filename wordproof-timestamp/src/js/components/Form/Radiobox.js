@@ -14,7 +14,7 @@ export default class Radiobox extends React.Component {
             {this.props.options.map((option, key) =>
               <label className={'font-normal my-1'} key={key}>
                 <input required={true} name={`wordproof_options[${this.props.slug}]`}
-                       type="radio" placeholder="" value={option.value}/>
+                       type="radio" placeholder="" value={option.value} defaultChecked={this.props.get(this.props.slug) === option.value}/>
                 {option.name}
               </label>
             )}

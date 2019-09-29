@@ -4,6 +4,13 @@ import Intro from '../Intro';
 import TextField from "../../Form/TextField";
 
 export default class Step2 extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null
+    }
+  }
+
   async validate() {
     const token = this.props.get('site_token');
     const config = {
@@ -12,12 +19,17 @@ export default class Step2 extends Component {
     try {
       const response = await axios.get(wordproof.wsfyApiUri + wordproof.wsfyValidateTokenEndpoint, config);
 
-      if (response.status && response.status === 200 && response.data.site_id) {
-        this.props.update(null, 'site_id', response.data.site_id);
-        this.props.nextStep();
+      if (response.status === 200 && response.data.success && response.data.site_id) {
+          this.props.update(null, 'site_id', response.data.site_id);
+          this.props.nextStep();
+      } else {
+        this.setState({error: 'This should not have happened. Please contact us.'});
       }
+
     } catch (error) {
-      console.error(error);
+      if (error.response.status === 401 && error.response.data && error.response.data.message === 'Unauthenticated.') {
+        this.setState({error: 'The key you have filled in is not correct.'});
+      }
     }
   }
 
@@ -32,7 +44,7 @@ export default class Step2 extends Component {
         </a>
 
         <TextField slug={'site_token'} question={'What is your site key?'} extra={'Your site key is visible after you have created your account.'}
-                   update={this.props.update} get={this.props.get} initial={this.props.initial}/>
+                   update={this.props.update} get={this.props.get} initial={this.props.initial} error={this.state.error}/>
 
         <button className={'primary'} onClick={() => this.validate()}>Validate & Continue</button>
       </div>

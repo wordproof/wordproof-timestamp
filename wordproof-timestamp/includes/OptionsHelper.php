@@ -94,27 +94,28 @@ class OptionsHelper
   }
 
   public static function set($key, $value) {
-    $wsfyKeys = array_flip(array_keys(self::$options['wsfy']));
+    $wsfyKeys = array_keys(self::$options['wsfy']);
     if ($key === 'wsfy' || in_array($key, $wsfyKeys)) {
 
-      $value = [$key => self::validateData($key, $value)];
+      $type = self::$options['wsfy'][$key]['type'];
+      $value = [$key => self::validateData($value, $type)];
+
       $options = (array)self::getWSFY();
-      $options = array_intersect_key($options, $wsfyKeys);
+      $options = array_intersect_key($options, array_flip($wsfyKeys));
 
       $options = array_merge($options, $value);
       return update_option(self::$prefix . 'wsfy', $options);
 
     } else if (isset(self::$options[$key])) {
-        $value = self::validateData($key, $value);
+      $type = self::$options[$key]['type'];
+      $value = self::validateData($value, $type);
         return update_option(self::$prefix . $key, $value);
     }
 
     return false;
   }
 
-  private static function validateData($key, $value) {
-    $type = self::$options['wsfy'][$key]['type'];
-
+  private static function validateData($value, $type) {
     if (is_array($value)) {
       return array_map(['self', 'validate'], $value);
     } else {

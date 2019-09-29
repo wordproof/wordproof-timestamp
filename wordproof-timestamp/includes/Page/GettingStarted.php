@@ -34,11 +34,11 @@ class GettingStarted {
         'imagesUri' => WORDPROOF_URI_IMAGES,
       ]);
 
+
+
         ?>
         <div class="wrap">
-
             <div id="wordproof-getting-started"></div>
-
         </div>
         <?php
     }

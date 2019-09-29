@@ -8,7 +8,7 @@ const Nav = (props) => {
     dots.push((
       <span
         key={`step-${i}`}
-        className={`rounded-full h-3 w-3 bg-gray-500 ${isDone ? 'bg-green-400': ''} ${isActive ? 'bg-green-400': ''}`}>
+        className={`rounded-full h-3 w-3 bg-gray-500 ${isDone ? 'bg-green': ''} ${isActive ? 'bg-green': ''}`}>
       </span>
     ));
   }

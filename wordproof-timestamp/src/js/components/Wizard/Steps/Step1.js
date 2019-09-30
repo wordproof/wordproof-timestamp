@@ -15,7 +15,7 @@ export default class Step1 extends Component {
         <h3>Which mode do you want to use?</h3>
         <div className="flex flex-row my-4">
           <div className="border-2 rounded text-center p-4 mr-4">
-            <h2 className="font-semibold my-2">Manuel</h2>
+            <h2 className="font-semibold my-2">Manual</h2>
             <p>
               Tech-savy mode<br/>
               Configure you own blockchain account & wallet<br/>

@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import Metabox from './components/Metabox/Metabox'
 import Dashboard from "./components/Settings/Dashboard";
 import General from "./components/Settings/General";
-import Manuel from "./components/Settings/Manuel";
+import Manual from "./components/Settings/Manual";
 import Automatic from "./components/Settings/Automatic";
 import Support from "./components/Settings/Support";
 
@@ -16,8 +16,8 @@ if (document.querySelector('#wordproof-admin-app-general')) {
   ReactDOM.render(<General/>, document.querySelector('#wordproof-admin-app-general'));
 }
 
-if (document.querySelector('#wordproof-admin-app-manuel')) {
-  ReactDOM.render(<Manuel/>, document.querySelector('#wordproof-admin-app-manuel'));
+if (document.querySelector('#wordproof-admin-app-manual')) {
+  ReactDOM.render(<Manual/>, document.querySelector('#wordproof-admin-app-manual'));
 }
 
 if (document.querySelector('#wordproof-admin-app-automatic')) {

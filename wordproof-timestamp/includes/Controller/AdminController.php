@@ -49,7 +49,7 @@ class AdminController
       'wordproof_page_wordproof-autostamp', //TODO Autostamp
       'toplevel_page_wordproof-dashboard',
       'wordproof_page_wordproof-general',
-      'wordproof_page_wordproof-manuel',
+      'wordproof_page_wordproof-manual',
       'wordproof_page_wordproof-automatic',
       'wordproof_page_wordproof-support',
     ];

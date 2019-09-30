@@ -109,7 +109,6 @@ class Timestamp extends Component {
   render() {
     return (
       <div>
-        <div className="vo-card">
           <h3>How to Timestamp?</h3>
           <p>Go to any WordPress post or page to secure your content with blockchain.</p>
           <h3>You need WORD stamps to Timestamp (it&apos;s free!)</h3>
@@ -129,7 +128,6 @@ class Timestamp extends Component {
             <li>Run the Setup Wizard again and follow each step very carefully. Make sure to save your keys!</li>
             <li>Join the <a href="https://wordproof.io/telegram" target="_blank" rel="noopener noreferrer">WordProof Telegram</a> to ask fellow WordProof users for help.</li>
           </ol>
-        </div>
       </div>
     )
   }

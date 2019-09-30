@@ -14,7 +14,7 @@ class SettingsPage {
     private $settingPages = [
         'dashboard' => 'Dashboard',
         'general' => 'General Settings',
-        'manuel' => 'Manuel',
+        'manual' => 'Manual',
         'automatic' => 'Automatic',
         'support' => 'Support',
     ];
@@ -60,10 +60,10 @@ class SettingsPage {
     $this->renderSettingPage('general');
   }
 
-  public function generateSettingsPage_manuel()
+  public function generateSettingsPage_manual()
   {
     $this->localizeSettingPage();
-    $this->renderSettingPage('manuel');
+    $this->renderSettingPage('manual');
   }
 
   public function generateSettingsPage_automatic()

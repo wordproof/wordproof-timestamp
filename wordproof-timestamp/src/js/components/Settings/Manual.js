@@ -5,7 +5,7 @@ import qs from 'qs';
 import Timestamp from './Timestamp';
 import axios from 'axios';
 
-class Manuel extends Component {
+class Manual extends Component {
   static propTypes = {
     cookies: instanceOf(Cookies).isRequired
   };
@@ -176,4 +176,4 @@ class Manuel extends Component {
   }
 }
 
-export default withCookies(Manuel);
+export default withCookies(Manual);

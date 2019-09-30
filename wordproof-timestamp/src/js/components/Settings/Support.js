@@ -34,9 +34,6 @@ export default class Support extends Component {
           <p>
             Enter the course TODAY via <a href="https://www.everythingeos.io/eos-course-wordproof" rel="noopener noreferrer" target="_blank">this link</a> to get FREE access as a WordProof user.
           </p>
-          <p>
-            <strong>There might be a special coupon for WordProof beta testers soon!</strong>
-          </p>
         </div>
       </div>
     )

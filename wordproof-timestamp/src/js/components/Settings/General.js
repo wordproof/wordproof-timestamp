@@ -20,8 +20,8 @@ export default class General extends Component {
     return (
       <div>
         <div className="vo-card">
-          <p>You can customize the appearance of a few WordProof Timestamp aspects. More options will be added in the
-            near future.</p>
+          <h3>General Settings</h3>
+          <p>The settings below apply to both the automatic and manual modes. Mode-specific settings can be found on the <a href={wordproofSettings.urls.automatic}>Automatic</a> & <a href={wordproofSettings.urls.manual}>Manual</a> pages.</p>
 
           <div className="form-group">
             <label htmlFor="wordproof_customize[certificate_text]" className="label" title="Certificate Text">How do you want to
@@ -38,7 +38,7 @@ export default class General extends Component {
                    id="wordproof_customize[certificate_dom_selector]"/>
           </div>
 
-          <div className="form-group">
+          <div className={`form-group ${ this.state.hideAdvanced ? 'hidden' : '' }`}>
             <label htmlFor="wordproof_customize[hide_post_column]" className="label" title="Display Revisions">Hide Post Column</label>
             <input type="checkbox" value="1" className="" name="wordproof_customize[hide_post_column]"
                    onChange={e => this.setState({hidePostColumn: e.target.value})} defaultChecked={this.state.hidePostColumn}

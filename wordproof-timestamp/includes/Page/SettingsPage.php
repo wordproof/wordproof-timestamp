@@ -94,7 +94,12 @@ class SettingsPage {
       'wsfy' => $wsfy,
       'registeredPostTypes' => get_post_types(['public' => true]),
       'saveChanges' => 'Save Changes',
-      'wizardUrl' => admin_url('admin.php?page=wordproof-wizard#connect')
+      'urls' => [
+        'wizard' => admin_url('admin.php?page=wordproof-wizard'),
+        'wizardConnect' => admin_url('admin.php?page=wordproof-wizard#connect'),
+        'automatic' => admin_url('admin.php?page=wordproof-automatic'),
+        'manual' => admin_url('admin.php?page=wordproof-manual'),
+      ]
     ]);
   }
 

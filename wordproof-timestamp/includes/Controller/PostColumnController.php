@@ -12,8 +12,6 @@ class PostColumnController
 
   public function __construct()
   {
-    $this->options = get_option('wordproof_wsfy');
-
     $showColumn = true;
     if (OptionsHelper::getHidePostColumn()) {
 
@@ -84,7 +82,7 @@ class PostColumnController
 
   public function addTimestampButton($post)
   {
-    if (isset($this->options['active']) && $this->options['active'] === true) {
+    if (OptionsHelper::isWSFYActive()) {
       echo '<br><button class="button wordproof-wsfy-save-post" data-post-id="' . $post->ID . '">Timestamp this post</button>';
       echo '<span class="wordproof-wsfy-message-' . $post->ID . '"> </span>';
     }

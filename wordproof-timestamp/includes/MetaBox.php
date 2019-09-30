@@ -10,9 +10,7 @@ class MetaBox {
 
     public function __construct() {
         if (current_user_can('manage_options')) {
-          $options = get_option('wordproof_wsfy');
-
-          if (!isset($options['active']) || $options['active'] === false) {
+          if (!OptionsHelper::isWSFYActive()) {
             add_action('add_meta_boxes', array($this, 'addMetaBox'));
           }
         }

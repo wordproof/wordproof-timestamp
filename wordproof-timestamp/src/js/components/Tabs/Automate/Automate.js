@@ -4,6 +4,7 @@ export default class Automate extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      wsfyIsActive: wordproofSettings.isWSFYActive,
       siteToken: wordproofSettings.wsfy.site_token,
       siteId: wordproofSettings.wsfy.site_id,
       showRevisions: wordproofSettings.wsfy.show_revisions,
@@ -65,8 +66,6 @@ export default class Automate extends Component {
               <a href={`${wordproofSettings.adminUrl}admin.php?page=wordproof-autostamp`} target="_blank"
                  rel="noopener noreferrer">Auto Stamp your Posts</a>
             </div>
-
-            {/*<p>We Stamp For You is {(wordproofSettings) ? 'active' : 'not activated'}</p>*/}
 
             <input type="submit" name="submit" id="submit" className="button is-primary"
                    value={wordproofSettings.saveChanges}/>

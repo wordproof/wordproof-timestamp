@@ -6,9 +6,7 @@ class NotificationHelper
 {
   public function __construct()
   {
-    $this->options = get_option('wordproof_wsfy');
-
-    if (!isset($this->options['active']) || $this->options['active'] === false) {
+    if (!OptionsHelper::isWSFYActive()) {
       add_action('admin_notices', array($this, 'checkForNotices'));
       add_filter('post_type_labels_post', array($this, 'changePostUpdateMessages'));
       add_filter('post_type_labels_page', array($this, 'changePageUpdateMessages'));

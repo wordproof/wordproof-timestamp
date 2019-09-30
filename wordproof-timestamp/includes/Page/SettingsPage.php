@@ -29,7 +29,7 @@ class SettingsPage {
 
     public function generateSettingsPage() {
         $wsfy = OptionsHelper::getWSFY();
-        $wsfyActive = isset($wsfy->is_active) ? $wsfy->is_active : false;
+        $wsfyActive = OptionsHelper::isWSFYActive();
 
         wp_localize_script('wordproof.admin.js', 'wordproofSettings', [
             'adminUrl' => admin_url(),
@@ -37,6 +37,7 @@ class SettingsPage {
             'certificateText' => OptionsHelper::getCertificateText(),
             'certificateDOMSelector' => OptionsHelper::getCertificateDomSelector(),
             'hidePostColumn' => OptionsHelper::getHidePostColumn(),
+            'isWSFYActive' => $wsfyActive,
             'wsfy' => $wsfy,
             'registeredPostTypes' => get_post_types(['public' => true]),
             'saveChanges' => 'Save Changes',

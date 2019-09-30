@@ -21,6 +21,7 @@ export default class Step2 extends Component {
 
       if (response.status === 200 && response.data.success && response.data.site_id) {
           this.props.update(null, 'site_id', response.data.site_id);
+          this.props.update(null, 'wsfy_is_active', true);
           this.props.nextStep();
       } else {
         this.setState({error: 'This should not have happened. Please contact us.'});

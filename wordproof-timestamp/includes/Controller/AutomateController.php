@@ -2,23 +2,21 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
+use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\Page\AutoStampPage;
 use WordProofTimestamp\includes\PostMetaHelper;
 
 class AutomateController
 {
 
-  public $options;
-
   public function __construct()
   {
-    $this->options = get_option('wordproof_wsfy');
+    if (OptionsHelper::isWSFYActive()) {
+      $options = OptionsHelper::getWSFY([], ['site_token']);
 
-    if (isset($this->options['active']) && $this->options['active']) {
+      if (isset($options->allowed_post_types)) {
 
-      if (isset($this->options['allowedPostTypes'])) {
-
-        foreach ($this->options['allowedPostTypes'] as $postType) {
+        foreach ($options->allowed_post_types as $postType) {
           add_action('publish_' . $postType, [$this, 'setCron']);
         }
 
@@ -41,9 +39,9 @@ class AutomateController
   {
     error_log('Saving post to WSFY servers');
 
-    $options = get_option('wordproof_wsfy');
+    $options = OptionsHelper::getWSFY();
 
-    if (isset($options['accessToken']) && isset($options['siteId'])) {
+    if (isset($options->site_token) && isset($options->site_id)) {
       $post = get_post($postId);
 
       if ($post->post_status != 'publish') {
@@ -63,7 +61,7 @@ class AutomateController
         'headers' => [
           'Accept' => 'application/json',
           'Content-Type' => 'application/json',
-          'Authorization' => 'Bearer ' . $options['accessToken']
+          'Authorization' => 'Bearer ' . $options->site_token
         ],
         'body' => $body
       ]);

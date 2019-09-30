@@ -22,7 +22,7 @@ export default class Step1 extends Component {
               Set-up in 20 minutes
             </p>
 
-            <a className="wproof-button secondary inline-block" href={wordproof.closeWizard}>
+            <a className="wproof-button secondary inline-block mt-3" href={wordproof.closeWizard}>
               Start Configuration
             </a>
           </div>
@@ -35,7 +35,7 @@ export default class Step1 extends Component {
               Set-up in 5 minutes
             </p>
 
-            <button className="primary" onClick={this.props.nextStep}>
+            <button className="primary mt-3" onClick={this.props.nextStep}>
               Start Trial
             </button>
           </div>

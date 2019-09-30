@@ -32,9 +32,8 @@ class GettingStarted {
       wp_enqueue_script('wordproof.getting-started.js', WORDPROOF_URI_JS . '/getting-started.js', array(), filemtime(WORDPROOF_DIR_JS . '/getting-started.js'), true);
       wp_localize_script('wordproof.getting-started.js', 'wordproof', [
         'imagesUri' => WORDPROOF_URI_IMAGES,
+        'wizardUrl' => admin_url('admin.php?page=wordproof-wizard')
       ]);
-
-
 
         ?>
         <div class="wrap">

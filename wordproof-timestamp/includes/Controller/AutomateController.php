@@ -111,6 +111,8 @@ class AutomateController
         die();
       }
     }
+    error_log('WordProof: Update request denied');
+    error_log($_SERVER['REMOTE_ADDR']);
     die();
   }
 

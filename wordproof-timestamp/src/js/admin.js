@@ -15,10 +15,8 @@ if (document.querySelector('#wordproof-admin-app-dashboard')) {
 if (document.querySelector('#wordproof-admin-app-general')) {
   ReactDOM.render(<General/>, document.querySelector('#wordproof-admin-app-general'));
 }
-console.log('show!');
 
 if (document.querySelector('#wordproof-admin-app-manuel')) {
-  console.log('show');
   ReactDOM.render(<Manuel/>, document.querySelector('#wordproof-admin-app-manuel'));
 }
 

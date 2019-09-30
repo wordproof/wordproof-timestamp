@@ -85,6 +85,7 @@ class SettingsPage {
 
     wp_localize_script('wordproof.admin.js', 'wordproofSettings', [
       'adminUrl' => admin_url(),
+      'updateSettingsEndpoint' => admin_url('admin-post.php'),
       'network' => OptionsHelper::getNetwork(),
       'certificateText' => OptionsHelper::getCertificateText(),
       'certificateDOMSelector' => OptionsHelper::getCertificateDomSelector(),
@@ -105,6 +106,7 @@ class SettingsPage {
       <div class='wordproof-admin-app'>
           <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" id="wordproof_admin_form">
               <input type="hidden" name="action" value="wordproof_form_action">
+              <input type="hidden" name="slug" value="<?php echo $slug; ?>">
               <input type="hidden" name="wordproof_admin_form_nonce"
                      value="<?php echo wp_create_nonce('wordproof_admin_form_nonce'); ?>"/>
               <div id="wordproof-admin-app-<?php echo $slug; ?>"></div>
@@ -156,7 +158,11 @@ class SettingsPage {
         }
 
       }
-      wp_redirect(admin_url('admin.php?page=wordproof'));
+
+      $pages = array_flip($this->settingPages);
+      if (in_array($_POST['slug'], $pages)) {
+        wp_redirect(admin_url('admin.php?page=wordproof-' . $_POST['slug']));
+      }
       die();
     }
 }

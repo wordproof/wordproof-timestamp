@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import {instanceOf} from 'prop-types';
 import {withCookies, Cookies} from 'react-cookie';
-import initWallet from '../../../lib/wallet';
-import ConnectionWidget from '../../ConnectionWidget/ConnectionWidget';
+
+import initWallet from '../../lib/wallet';
+import ConnectionWidget from '../ConnectionWidget/ConnectionWidget';
 
 class Timestamp extends Component {
 

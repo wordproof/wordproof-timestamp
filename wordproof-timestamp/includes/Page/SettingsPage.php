@@ -93,10 +93,13 @@ class SettingsPage {
          * WSFY settings
          */
         if (isset($_POST['wsfy_settings'])) {
-            $post = $_POST['wsfy_settings'];
-            $post['allowed_post_types'] = array_keys($post['allowed_post_types']);
-            $post['show_revisions'] = isset($post['show_revisions']) ? true : false;
-            OptionsHelper::set('wsfy', $post);
+          $post = $_POST['wsfy_settings'];
+          
+          $allowedPostTypes = array_keys($post['allowed_post_types']);
+          OptionsHelper::set('allowed_post_types', $allowedPostTypes);
+
+          $showRevisions = isset($post['show_revisions']) ? true : false;
+          OptionsHelper::set('show_revisions', $showRevisions);
         }
 
       }

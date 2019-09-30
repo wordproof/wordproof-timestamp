@@ -95,7 +95,7 @@ class OptionsHelper
 
   public static function set($key, $value) {
     $wsfyKeys = array_keys(self::$options['wsfy']);
-    if ($key === 'wsfy' || in_array($key, $wsfyKeys)) {
+    if (in_array($key, $wsfyKeys)) {
 
       $type = self::$options['wsfy'][$key]['type'];
       $value = [$key => self::validateData($value, $type)];

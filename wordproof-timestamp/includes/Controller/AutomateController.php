@@ -27,7 +27,7 @@ class AutomateController
 
       add_action(WORDPROOF_WSFY_CRON_HOOK, [$this, 'savePost']);
 
-      add_action('admin_post_nopriv_wordproof_wsfy_edit_post', [$this, 'updatePostWithTransaction']);
+      add_action('admin_post_nopriv_wordproof_callback', [$this, 'updatePostWithTransaction']);
 
       if (is_admin()) {
         new AutoStampPage();
@@ -114,12 +114,9 @@ class AutomateController
     die();
   }
 
-  public
-  function setCron($postId)
+  public function setCron($postId)
   {
-    error_log('Logging ' . $postId);
     if (!wp_next_scheduled(WORDPROOF_WSFY_CRON_HOOK, array($postId))) {
-      error_log('Setting cron');
       wp_schedule_single_event(time() + 7, WORDPROOF_WSFY_CRON_HOOK, array($postId));
     }
   }

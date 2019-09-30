@@ -3,13 +3,13 @@ import {instanceOf} from 'prop-types';
 import {withCookies, Cookies} from 'react-cookie';
 import './Admin.scss';
 
-import Dashboard from './Tabs/Dashboard/Dashboard';
-import Setup from './Tabs/Setup/Setup';
-import Customize from './Tabs/Customize/Customize';
-import Timestamp from './Tabs/Timestamp/Timestamp';
-import Automate from './Tabs/Automate/Automate';
-import Support from './Tabs/Support/Support';
-import Learn from './Tabs/Learn/Learn';
+import Dashboard from './Settings/Dashboard/Dashboard';
+import Setup from './Settings/Setup/Setup';
+import Customize from './Settings/Customize/Customize';
+import Timestamp from './Settings/Timestamp/Timestamp';
+import Automate from './Settings/Automate/Automate';
+import Support from './Settings/Support/Support';
+import Learn from './Settings/Learn/Learn';
 
 class Admin extends Component {
 

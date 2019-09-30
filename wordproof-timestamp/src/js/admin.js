@@ -1,10 +1,33 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Metabox from './components/Metabox/Metabox'
-import Admin from './components/Admin';
 
-if (document.querySelector('#wordproof-admin-app')) {
-  ReactDOM.render(<Admin/>, document.querySelector('#wordproof-admin-app'));
+import Metabox from './components/Metabox/Metabox'
+import Dashboard from "./components/Settings/Dashboard";
+import General from "./components/Settings/General";
+import Manuel from "./components/Settings/Manuel";
+import Automatic from "./components/Settings/Automatic";
+import Support from "./components/Settings/Support";
+
+if (document.querySelector('#wordproof-admin-app-dashboard')) {
+  ReactDOM.render(<Dashboard/>, document.querySelector('#wordproof-admin-app-dashboard'));
+}
+
+if (document.querySelector('#wordproof-admin-app-general')) {
+  ReactDOM.render(<General/>, document.querySelector('#wordproof-admin-app-general'));
+}
+console.log('show!');
+
+if (document.querySelector('#wordproof-admin-app-manuel')) {
+  console.log('show');
+  ReactDOM.render(<Manuel/>, document.querySelector('#wordproof-admin-app-manuel'));
+}
+
+if (document.querySelector('#wordproof-admin-app-automatic')) {
+  ReactDOM.render(<Automatic/>, document.querySelector('#wordproof-admin-app-automatic'));
+}
+
+if (document.querySelector('#wordproof-admin-app-support')) {
+  ReactDOM.render(<Support/>, document.querySelector('#wordproof-admin-app-support'));
 }
 
 if (document.querySelector('#wordproof-meta-box-inside')) {

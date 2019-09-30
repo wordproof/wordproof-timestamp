@@ -86,6 +86,8 @@ class AutomateController
         }
 
       }
+    } else {
+      return ['errors' => ['authentication' => ['Please configure your site key']]];
     }
   }
 

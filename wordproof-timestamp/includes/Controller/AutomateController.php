@@ -27,6 +27,7 @@ class AutomateController
 
       add_action(WORDPROOF_WSFY_CRON_HOOK, [$this, 'savePost']);
 
+      add_action('admin_post_nopriv_wordproof_wsfy_edit_post', [$this, 'updatePostWithTransaction']);
       add_action('admin_post_nopriv_wordproof_callback', [$this, 'updatePostWithTransaction']);
 
       if (is_admin()) {

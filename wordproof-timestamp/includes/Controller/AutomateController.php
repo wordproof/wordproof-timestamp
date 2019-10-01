@@ -50,6 +50,7 @@ class AutomateController
 
       $body = json_encode([
         'uid' => $post->ID,
+        'site_id' => $options->site_id,
         'title' => $post->post_title,
         'content' => $post->post_content,
         'date_created' => get_the_date('c', $post),

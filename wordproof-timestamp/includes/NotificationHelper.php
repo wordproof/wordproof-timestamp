@@ -66,7 +66,7 @@ class NotificationHelper
     $message = 'Protect your content and proof the authenticity of your content to visitors and search engines. Start the Wizard to get you started with WordProof!';
     $type = 'info';
     $buttonText = 'Setup WordProof Timestamp';
-    $buttonLink = menu_page_url('wordproof', false) . '#setup';
+    $buttonLink = menu_page_url('wordproof-dashboard', false);
     echo self::getNotificationTemplate($type, $message, $buttonText, $buttonLink);
   }
 

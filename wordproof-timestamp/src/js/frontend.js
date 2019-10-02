@@ -3,28 +3,14 @@ import ReactDOM from 'react-dom';
 
 import Certificate from './components/Certficate/Certificate';
 
-const parameters = [
-  'debug',
-  'siteId',
-  'uid',
-  'certificateDOMParent',
-  'certificateText',
-  'noRevisions',
-  'logo',
-  'icon',
-  'wordproofApi',
-];
-
 let settings = {
   firstModalClick: true,
-  wordproofApi: 'https://wsfy.wordproof.io/api/',
+  wordproofApi: wproof.api + wproof.articlesEndpoint,
   fetchArticlesEndpoint: 'articles'
 };
 
 document.addEventListener('DOMContentLoaded', function () {
   const schema = document.querySelector('script.wordproof-schema');
-
-  setSettings();
 
   if (schema) {
     initModal();
@@ -74,7 +60,7 @@ function getModal() {
 }
 
 function openModal() {
-  if (settings.firstModalClick) {
+  if (wproof.wsfyIsActive && settings.firstModalClick) {
     fetchArticles();
     settings.firstModalClick = false;
   }
@@ -86,8 +72,8 @@ function closeModal() {
 }
 
 function fetchArticles() {
-  if (wproof.wsfy.active && !wproof.wsfy.noRevisions) {
-    fetch(settings.wordproofApi + 'site/' + wproof.wsfy.siteId + '/' + settings.fetchArticlesEndpoint + '/' + wproof.uid).then((response) => {
+  if (wproof.wsfy.show_revisions) {
+    fetch(settings.wordproofApi + wproof.uid).then((response) => {
       if (response.ok) {
         return response.json();
       }
@@ -97,26 +83,6 @@ function fetchArticles() {
         script.innerHTML = JSON.stringify(schema);
         document.dispatchEvent(new CustomEvent('newArticles', {detail: schema}));
       }
-    });
-  }
-}
-
-function setSettings() {
-  debug();
-
-  if (wproof.wsfy.noRevisions) {
-    settings.fetchArticlesEndpoint = 'article';
-  }
-
-  if (wproof.debug) {
-    settings.wordproofApi = 'http://wsfy.test/api/';
-  }
-}
-
-function debug() {
-  if (wproof.debug) {
-    parameters.forEach((parameter) => {
-      console.log(parameter + ' => ' + wproof[parameter]);
     });
   }
 }

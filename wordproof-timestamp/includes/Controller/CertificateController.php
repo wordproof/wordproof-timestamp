@@ -65,7 +65,8 @@ class CertificateController
     $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain']);
 
     if (isset($meta->date) && !empty($meta->blockchain)) {
-      $wsfyOptions = (OptionsHelper::isWSFYActive()) ? OptionsHelper::getWSFY([], ['site_token']) : [];
+      $wsfyIsActive = OptionsHelper::isWSFYActive();
+      $wsfyOptions = ($wsfyIsActive) ? OptionsHelper::getWSFY([], ['site_token']) : [];
       $certificateText = OptionsHelper::getCertificateText();
       $certificateDOMParent = OptionsHelper::getCertificateDomSelector();
 
@@ -73,9 +74,12 @@ class CertificateController
 
       wp_localize_script('wordproof.frontend.js', 'wproof', array(
         'uid' => $post->ID,
+        'api' => WORDPROOF_WSFY_API_URI,
+        'articlesEndpoint' => WORDPROOF_WSFY_ENDPOINT_ARTICLE,
         'css' => WORDPROOF_URI_CSS . '/frontend.css',
         'icon' => WORDPROOF_URI_IMAGES . '/wordproof-icon.png',
         'logo' => WORDPROOF_URI_IMAGES . '/wordproof-logo.png',
+        'wsfyIsActive' => $wsfyIsActive,
         'wsfy' => $wsfyOptions,
         'certificateText' => $certificateText,
         'certificateDOMParent' => (isset($certificateDOMParent)) ? $certificateDOMParent : ''

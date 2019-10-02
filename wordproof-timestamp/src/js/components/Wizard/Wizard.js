@@ -35,7 +35,7 @@ export default class Wizard extends Component {
   }
 
   updateRequest(slug, value) {
-    axios.post(wordproof.updateSettingsEndpoint, qs.stringify({
+    axios.post(wordproof.urls.settings, qs.stringify({
       'action': 'wordproof_update_setting',
       'key': slug,
       'value': value
@@ -49,10 +49,10 @@ export default class Wizard extends Component {
   render() {
     return (
       <div className="wordproof-onboarding-wizard bg-gray-300">
-        <a href={wordproof.closeWizard} className={`absolute top-0 right-0 p-1 mx-4 my-2`}>Close Wizard</a>
+        <a href={wordproof.urls.dashboard} className={`absolute top-0 right-0 p-1 mx-4 my-2`}>Close Wizard</a>
         <div className={`flex flew-row justify-center items-center`}>
-          <img className={`border-none h-12 mr-4`} src={wordproof.imagesUri + '/wordproof-icon-large.png'} />
-          <img className={`border-none h-10`} src={wordproof.imagesUri + '/wordproof-logo.png'} />
+          <img className={`border-none h-12 mr-4`} src={wordproof.urls.images + '/wordproof-icon-large.png'} />
+          <img className={`border-none h-10`} src={wordproof.urls.images + '/wordproof-logo.png'} />
         </div>
           <StepWizard transitions={this.transitions} isHashEnabled={true} nav={<Nav/>}>
             <Step1 hashKey={'mode'} />

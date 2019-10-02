@@ -37,10 +37,13 @@ class OnboardingWizard {
       );
 
       wp_localize_script('wordproof.wizard.js', 'wordproof', [
-        'updateSettingsEndpoint' => admin_url('admin-post.php'),
-        'closeWizard' => admin_url('admin.php?page=wordproof'),
-        'imagesUri' => WORDPROOF_URI_IMAGES,
-        'wsfyApiUri' => WORDPROOF_WSFY_API_URI,
+        'urls' => [
+          'dashboard' => admin_url('admin.php?page=wordproof-dashboard'),
+          'manual' => admin_url('admin.php?page=wordproof-manual'),
+          'api' => WORDPROOF_WSFY_API_URI,
+          'images' => WORDPROOF_URI_IMAGES,
+          'settings' => admin_url('admin-post.php')
+        ],
         'wsfyValidateTokenEndpoint' => WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE,
         'currentValues' => $currentValues,
         'registeredPostTypes' => array_values(get_post_types(['public' => true])),

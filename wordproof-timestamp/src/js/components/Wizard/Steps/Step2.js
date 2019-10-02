@@ -17,7 +17,7 @@ export default class Step2 extends Component {
       headers: {'Authorization': "Bearer " + token}
     };
     try {
-      const response = await axios.get(wordproof.wsfyApiUri + wordproof.wsfyValidateTokenEndpoint, config);
+      const response = await axios.get(wordproof.urls.api + wordproof.wsfyValidateTokenEndpoint, config);
 
       if (response.status === 200 && response.data.success && response.data.site_id) {
           this.props.update(null, 'site_id', response.data.site_id);

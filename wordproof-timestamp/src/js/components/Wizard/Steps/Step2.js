@@ -40,7 +40,7 @@ export default class Step2 extends Component {
         <Intro title="Connect WordProof to your website"
                subtitle="Create a WordProof account and paste your site key. Start your 14-day trial today."/>
 
-        <a className="wproof-button secondary mb-4 inline-block" href={`https://my.wordproof.io/signup`}>
+        <a className="wproof-button secondary mb-4 inline-block" href={`${wordproof.urls.signup}?url=${wordproof.urls.site}`} target="_blank" rel="noopener noreferrer">
           Create WordProof Account
         </a>
 

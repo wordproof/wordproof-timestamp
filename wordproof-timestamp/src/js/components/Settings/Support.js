@@ -18,6 +18,8 @@ export default class Support extends Component {
                     <ul>
                         <li><a href="https://wordproof.io/guide" target="_blank" rel="noopener noreferrer">How to:
                             WordProof Timestamp Setup Guide</a></li>
+                        <li><a href={'https://wordpress.org/support/plugin/wordproof-timestamp/'} target="_blank"
+                               rel="noopener noreferrer">The WordPress support forum</a></li>
                         <li><a href="https://t.me/joinchat/DVuJAEfhf2QURBBjOWc2XA" target="_blank"
                                rel="noopener noreferrer">Telegram User Group</a></li>
                         <li><a href="https://t.me/WordProof" target="_blank" rel="noopener noreferrer">Telegram

@@ -19,7 +19,13 @@ export default class Wizard extends Component {
     this.state = {
       fields: {...wordproof.currentValues}
     }
-    console.log(this.state.fields);
+    this.navLabels = [
+      'mode',
+      'site key',
+      'content settings',
+      'certificate link',
+      'finish'
+    ]
   }
 
   updateField(e, slug = null, value = null) {
@@ -54,7 +60,7 @@ export default class Wizard extends Component {
           <img className={`border-none h-12 mr-4`} src={wordproof.urls.images + '/wordproof-icon-large.png'} />
           <img className={`border-none h-10`} src={wordproof.urls.images + '/wordproof-logo.png'} />
         </div>
-          <StepWizard transitions={this.transitions} isHashEnabled={true} nav={<Nav/>}>
+          <StepWizard transitions={this.transitions} isHashEnabled={true} nav={<Nav labels={this.navLabels}/>}>
             <Step1 hashKey={'mode'} />
             <Step2 hashKey={'connect'} get={this.getField.bind(this)} update={this.updateField.bind(this)} initial={wordproof.currentValues} />
             <Step3 hashKey={'customize'} get={this.getField.bind(this)} update={this.updateField.bind(this)} initial={wordproof.currentValues} />

@@ -54,7 +54,7 @@ export default class Wizard extends Component {
 
   render() {
     return (
-      <div className="wordproof-onboarding-wizard bg-gray-300">
+      <div className="wordproof-onboarding-wizard bg-blueish">
         <a href={wordproof.urls.dashboard} className={`absolute top-0 right-0 p-1 mx-4 my-2`}>Close Wizard</a>
         <div className={`flex flew-row justify-center items-center`}>
           <img className={`border-none h-12 mr-4`} src={wordproof.urls.images + '/wordproof-icon-large.png'} />

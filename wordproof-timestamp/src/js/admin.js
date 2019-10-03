@@ -70,7 +70,7 @@ async function postColumnSave(ev) {
   } else if (response.success) {
 
     ev.target.style.display = 'none';
-    document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = '👍 Post sent to WSFY';
+    document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = '👍 Post sent to My WordProof';
 
   } else if (response.message) {
 
@@ -107,7 +107,7 @@ async function autoStampSave(postId) {
   if (response.errors) {
     document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = 'Something went wrong. ' + JSON.stringify(response.errors);
   } else if (response.success) {
-    document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = '✅ Post sent to WSFY';
+    document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = '✅ Post sent to My WordProof';
   } else if (response.message) {
     document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = 'Something went wrong. ' + JSON.stringify(response.message);
   }

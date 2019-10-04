@@ -20,6 +20,7 @@ export default class Wizard extends Component {
       fields: {...wordproof.currentValues}
     }
     this.navLabels = [
+      '',
       'mode',
       'site key',
       'content settings',

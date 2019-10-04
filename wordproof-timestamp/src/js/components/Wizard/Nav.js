@@ -2,7 +2,7 @@ import React from 'react'
 
 const Nav = (props) => {
     const dots = [];
-    for (let i = 0; i <= props.totalSteps - 1; i += 1) {
+    for (let i = 1; i <= props.totalSteps; i += 1) {
         const isActive = props.currentStep === i;
         const isDone = props.currentStep > i;
         dots.push((

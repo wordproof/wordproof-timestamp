@@ -73,7 +73,7 @@ function closeModal() {
 
 function fetchArticles() {
   if (wproof.wsfy.show_revisions) {
-    fetch(settings.wordproofApi + wproof.uid).then((response) => {
+    fetch(settings.wordproofApi + wproof.uid + '?site_id=' + wproof.wsfy.site_id).then((response) => {
       if (response.ok) {
         return response.json();
       }

@@ -78,7 +78,8 @@ input:focus {
 ** WIZARD
  */
 .wordproof-wizard-step {
-  @apply p-12 bg-white rounded-lg max-w-3xl
+  @apply p-12 bg-white rounded-lg max-w-3xl;
+  min-width: 600px;
 }
 
 @import "../../../../node_modules/tailwindcss/components";

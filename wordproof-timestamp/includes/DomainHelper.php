@@ -19,4 +19,25 @@ class DomainHelper
     }
     return $permalink;
   }
+
+  public static function getCustomDomain() {
+    $custom_domain = get_option('wordproof_custom_domain');
+    return $custom_domain; 
+  }
+
+  public static function replaceDomainInContent($content, $domain) {
+    $url = get_site_url();
+    $parsed_url = parse_url($url);
+    $host = $parsed_url['host'];
+    $port = $parsed_url['port'];
+
+    $host_with_port = '';
+    if ($port) {
+      $host_with_port = "${host}:${port}";
+    } else {
+      $host_with_port = "${host}";
+    }
+
+    return str_replace($host_with_port, $domain, $content);
+  }
 }

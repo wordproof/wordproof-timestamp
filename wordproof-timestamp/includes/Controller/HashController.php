@@ -83,9 +83,13 @@ class HashController
     $array['type'] = WEB_ARTICLE_TIMESTAMP;
     $array['version'] = CURRENT_WEB_ARTICLE_TIMESTAMP_VERSION;
     $array['title'] = $post->post_title;
-    $array['content'] = $post->post_content;
+    $custom_domain = DomainHelper::getCustomDomain();
+    if ($custom_domain) {
+      $array['content'] = DomainHelper::replaceDomainInContent($post->post_content, $custom_domain);
+    } else {
+      $array['content'] = $post->post_content;
+    }
     $array['date'] = get_the_modified_date('c', $post);
-    $array['wordproof_date'] = get_the_modified_date('Y-m-d H:i:s', $post);
     return $array;
   }
 

@@ -17,21 +17,4 @@ class DomainHelper
 
     return $permalink;
   }
-
-  public static function replaceDomainInContent($content, $domain)
-  {
-    $url = get_site_url();
-    $parsedUrl = parse_url($url);
-    $host = $parsedUrl['host'];
-    $port = $parsedUrl['port'];
-
-    $hostWithPort = '';
-    if ($port) {
-      $hostWithPort = "${host}:${port}";
-    } else {
-      $hostWithPort = "${host}";
-    }
-
-    return str_replace($hostWithPort, $domain, $content);
-  }
 }

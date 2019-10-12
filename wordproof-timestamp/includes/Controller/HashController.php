@@ -3,6 +3,7 @@
 namespace WordProofTimestamp\includes\Controller;
 
 use WordProofTimestamp\includes\DomainHelper;
+use WordProofTimestamp\includes\PostHelper;
 
 class HashController
 {
@@ -52,7 +53,7 @@ class HashController
     $array['type'] = WEB_ARTICLE_TIMESTAMP;
     $array['version'] = CURRENT_WEB_ARTICLE_TIMESTAMP_VERSION;
     $array['title'] = $post->post_title;
-    $array['content'] = $post->post_content;
+    $array['content'] = PostHelper::getContent($post);
     $array['date'] = get_the_modified_date('c', $post);
     return $array;
   }

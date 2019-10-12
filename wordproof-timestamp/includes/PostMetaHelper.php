@@ -7,6 +7,7 @@ class PostMetaHelper {
   public static function savePostMeta($postId, $meta, $remote = false) {
     if (current_user_can('manage_options') || $remote) {
       do_action('wordproof_before_saving_timestamp_meta_data', $postId);
+      $meta['pluginVersion'] = WORDPROOF_VERSION;
       $result = update_post_meta($postId, 'wordproof_timestamp_data', $meta);
       do_action('wordproof_after_saving_timestamp_meta_data', $postId);
       return $result;
@@ -38,7 +39,7 @@ class PostMetaHelper {
   }
 
   /**
-   * @param $post
+   * @param $postId
    * @return array
    */
   private static function getTimestampPostMeta($postId) {
@@ -46,6 +47,7 @@ class PostMetaHelper {
 
     //Remap old meta
     if (isset($meta['wordproof_date'])) {
+      $meta['pluginVersion'] = ($meta['pluginVersion']) ? $meta['pluginVersion'] : '';
       $meta['blockchain'] = ($meta['wordproof_network']) ? $meta['wordproof_network'] : '';
       $meta['transactionId'] = ($meta['wordproof_transaction_id']) ? $meta['wordproof_transaction_id'] : '';
       $meta['hash'] = ($meta['wordproof_hash']) ? $meta['wordproof_hash'] : '';
@@ -62,6 +64,7 @@ class PostMetaHelper {
 
       if (isset($wordproof_date) && !empty($wordproof_date)) {
         $meta = [];
+        $meta['pluginVersion'] = '';
         $meta['blockchain'] = get_post_meta($postId, 'wordproof_network', true);
         $meta['hash'] = "";
         $meta['title'] = get_post_meta($$postId, 'wordproof_title', true);
@@ -70,7 +73,6 @@ class PostMetaHelper {
         $meta['attributes'] = [];
         $meta['attributes']['url'] = DomainHelper::getPermalink($postId);
         $meta['transactionId'] = get_post_meta($postId, 'wordproof_transaction_id', true);
-
       }
     }
 

@@ -4,7 +4,7 @@ Tags: blockchain, timestamp, eosio, eos, telos, web30, copyright, scatter, decen
 Requires at least: 4.6
 Tested up to: 5.2.3
 Requires PHP: 5.3
-Stable tag: 2.0.2
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,10 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 6. WordProof Setup Wizard - Create a free Telos blockchain account.
 
 == Changelog ==
+
+= 2.1.0 =
+*Release date: October 12th, 2019*
+* Thanks to the Pull Request by Tomoharu, GetShifter.io users can now use WordProof by setting their custom domain.
 
 = 2.0.2 =
 *Release date: October 5th, 2019*

@@ -68,7 +68,7 @@ class PostMetaHelper {
         $meta['content'] = get_post_meta($postId, 'wordproof_content', true);
         $meta['date'] = date('c', strtotime($wordproof_date));
         $meta['attributes'] = [];
-        $meta['attributes']['url'] = get_permalink($postId);
+        $meta['attributes']['url'] = DomainHelper::getPermalink($postId);
         $meta['transactionId'] = get_post_meta($postId, 'wordproof_transaction_id', true);
 
       }

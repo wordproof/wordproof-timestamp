@@ -2,6 +2,7 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
+use WordProofTimestamp\includes\DomainHelper;
 use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\PostMetaHelper;
 
@@ -65,7 +66,7 @@ class PostColumnController
 
       } else if ($meta->date !== get_the_modified_date('c', $post->ID)) {
 
-        echo '<a target="_blank" rel="noopener noreferrer" href="' . get_permalink($post->ID) . '#wordproof">🚨 Timestamp is outdated</a>';
+        echo '<a target="_blank" rel="noopener noreferrer" href="' . DomainHelper::getPermalink($post->ID) . '#wordproof">🚨 Timestamp is outdated</a>';
         $this->addTimestampButton($post);
 
       } else if (empty($meta->blockchain)) {
@@ -74,7 +75,7 @@ class PostColumnController
 
       } else {
 
-        echo '<a target="_blank" rel="noopener noreferrer" href="' . get_permalink($post->ID) . '#wordproof">✅ Certificate</a>';
+        echo '<a target="_blank" rel="noopener noreferrer" href="' . DomainHelper::getPermalink($post->ID) . '#wordproof">✅ Certificate</a>';
 
       }
     }

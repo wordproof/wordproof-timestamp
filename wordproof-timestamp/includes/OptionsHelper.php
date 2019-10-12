@@ -14,6 +14,7 @@ class OptionsHelper
     'network' => ['type' => 'text'],
     'certificate_text' => ['type' => 'text'],
     'certificate_dom_selector' => ['type' => 'text'],
+    'custom_domain' => ['type' => 'text'],
     'hide_post_column' => ['type' => 'bool'],
     'wsfy' => [
       'site_token' => ['type' => 'text'],
@@ -22,8 +23,8 @@ class OptionsHelper
       'allowed_post_types' => ['type' => 'text']
     ],
     'wsfy_is_active' => ['type' => 'bool'],
-    'accountname',
-    'balance'
+    'accountname' => ['type' => 'text'],
+    'balance' => ['type' => 'text'],
   ];
 
   private static $defaultCertificateText = "View this content's WordProof Timestamp certificate";
@@ -51,6 +52,10 @@ class OptionsHelper
 
   public static function getBalance($default = false) {
     return get_option(self::$prefix . 'balance', $default);
+  }
+
+  public static function getCustomDomain($default = false) {
+    return get_option(self::$prefix . 'custom_domain', $default);
   }
 
   public static function getWSFY($includes = [], $excludes = []) {

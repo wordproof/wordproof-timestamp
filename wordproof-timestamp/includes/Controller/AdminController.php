@@ -3,6 +3,7 @@
 namespace WordProofTimestamp\includes\Controller;
 
 use WordProofTimestamp\includes\ChainHelper;
+use WordProofTimestamp\includes\DomainHelper;
 use WordProofTimestamp\includes\MetaBox;
 use WordProofTimestamp\includes\NotificationHelper;
 use WordProofTimestamp\includes\OptionsHelper;
@@ -64,7 +65,7 @@ class AdminController
         'settingsURL' => admin_url('admin.php?page=wordproof'),
         'ajaxSecurity' => wp_create_nonce('wordproof'),
         'postId' => (!empty($post->ID)) ? $post->ID : false,
-        'permalink' => (!empty($post->ID)) ? get_permalink($post) : false,
+        'permalink' => (!empty($post->ID)) ? DomainHelper::getPermalink($post->ID) : false,
         'network' => OptionsHelper::getNetwork(),
         'accountName' => OptionsHelper::getAccountName(''),
         'wordBalance' => OptionsHelper::getBalance(0),

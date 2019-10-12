@@ -2,6 +2,7 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
+use WordProofTimestamp\includes\DomainHelper;
 use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\PostMetaHelper;
 
@@ -30,7 +31,7 @@ class TimestampController
     echo json_encode(array(
       'success' => true,
       'data' => array(
-        'url' => get_permalink($postId) . '#wordproof'
+        'url' => DomainHelper::getPermalink($postId) . '#wordproof'
       ),
     ));
     exit;
@@ -48,7 +49,7 @@ class TimestampController
     echo json_encode(array(
       'success' => true,
       'data' => array(
-        'url' => get_permalink($postId) . '#wordproof'
+        'url' => DomainHelper::getPermalink($postId) . '#wordproof'
       ),
     ));
     exit;

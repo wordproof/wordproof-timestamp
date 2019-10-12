@@ -2,6 +2,7 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
+use WordProofTimestamp\includes\DomainHelper;
 use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\Page\AutoStampPage;
 use WordProofTimestamp\includes\PostMetaHelper;
@@ -56,7 +57,7 @@ class AutomateController
         'content' => $post->post_content,
         'date_created' => get_the_date('c', $post),
         'date_modified' => get_the_modified_date('c', $post),
-        'url' => get_permalink($post),
+        'url' => DomainHelper::getPermalink($post),
       ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
       $result = wp_remote_post(WORDPROOF_WSFY_API_URI . WORDPROOF_WSFY_ENDPOINT_ARTICLE, [

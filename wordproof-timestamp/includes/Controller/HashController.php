@@ -2,6 +2,8 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
+use WordProofTimestamp\includes\DomainHelper;
+
 class HashController
 {
 
@@ -64,7 +66,7 @@ class HashController
   {
     $array = [];
     //TODO: Get selected attributes
-    $array['url'] = get_permalink($post);
+    $array['url'] = DomainHelper::getPermalink($post->ID);
     $array = apply_filters('wordproof_hash_attributes', $array);
     return $array;
   }

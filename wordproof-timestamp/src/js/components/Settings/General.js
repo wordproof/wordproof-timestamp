@@ -6,6 +6,7 @@ export default class General extends Component {
     this.state = {
       certificateText: wordproofSettings.certificateText,
       certificateDOMSelector: wordproofSettings.certificateDOMSelector,
+      customDomain: wordproofSettings.customDomain,
       hidePostColumn: wordproofSettings.hidePostColumn,
       hideAdvanced: true
     }
@@ -36,6 +37,14 @@ export default class General extends Component {
             <input type="text" className="textinput" name="wordproof_customize[certificate_dom_selector]" placeholder="eg. .entry-meta or #mydiv"
                    value={this.state.certificateDOMSelector} onChange={e => this.setState({certificateDOMSelector: e.target.value})}
                    id="wordproof_customize[certificate_dom_selector]"/>
+          </div>
+
+          <div className={`form-group ${ this.state.hideAdvanced ? 'hidden' : '' }`}>
+            <label htmlFor="wordproof_customize[custom_domain]" className="label" title="Custom Domain">Custom Domain</label>
+            <input type="text" className="textinput" name="wordproof_customize[custom_domain]" placeholder=""
+                   value={this.state.customDomain} onChange={e => this.setState({customDomain: e.target.value})}
+                   id="wordproof_customize[custom_domain]"/>
+            <p>For some setups (eg. GetShifter.io), a custom URL should be supplied to correctly show the link in the certificate. Do not add a &#39;/&#39; at the end of your custom URL.</p>
           </div>
 
           <div className={`form-group ${ this.state.hideAdvanced ? 'hidden' : '' }`}>

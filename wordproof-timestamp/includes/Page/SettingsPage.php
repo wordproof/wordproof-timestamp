@@ -89,6 +89,7 @@ class SettingsPage {
       'network' => OptionsHelper::getNetwork(),
       'certificateText' => OptionsHelper::getCertificateText(),
       'certificateDOMSelector' => OptionsHelper::getCertificateDomSelector(),
+      'customDomain' => OptionsHelper::getCustomDomain(),
       'hidePostColumn' => OptionsHelper::getHidePostColumn(),
       'isWSFYActive' => $wsfyActive,
       'wsfy' => $wsfy,
@@ -146,6 +147,10 @@ class SettingsPage {
 
           if (isset($_POST['wordproof_customize']['certificate_text'])) {
             OptionsHelper::set('certificate_text', $_POST['wordproof_customize']['certificate_text']);
+          }
+
+          if (isset($_POST['wordproof_customize']['custom_domain'])) {
+            OptionsHelper::set('custom_domain', $_POST['wordproof_customize']['custom_domain']);
           }
         }
 

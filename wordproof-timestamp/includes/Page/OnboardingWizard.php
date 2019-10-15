@@ -32,7 +32,7 @@ class OnboardingWizard {
       wp_enqueue_script('wordproof.wizard.js', WORDPROOF_URI_JS . '/wizard.js', array(), filemtime(WORDPROOF_DIR_JS . '/wizard.js'), true);
 
       $currentValues = array_merge(
-        ['certificate_text' => OptionsHelper::getCertificateText()],
+        ['certificate_text' => OptionsHelper::getCertificateText(), 'isWSFYActive' => OptionsHelper::isWSFYActive()],
         (array)OptionsHelper::getWSFY()
       );
 

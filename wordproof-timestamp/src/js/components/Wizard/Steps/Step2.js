@@ -11,6 +11,11 @@ export default class Step2 extends Component {
     }
   }
 
+  deactivate() {
+      this.props.update(null, 'wsfy_is_active', false);
+      this.props.nextStep();
+  }
+
   async validate() {
     const token = this.props.get('site_token');
     const config = {
@@ -46,6 +51,10 @@ export default class Step2 extends Component {
 
         <TextField slug={'site_token'} question={'What is your site key?'} extra={'Your site key is visible after you have created your account.'}
                    update={this.props.update} get={this.props.get} initial={this.props.initial} error={this.state.error}/>
+
+          {(wordproof.currentValues.isWSFYActive) &&
+            <span className={'block underline cursor-pointer text-xs text-gray-500 mb-3'} onClick={() => this.deactivate()}>Click here to deactivate automatic timestamping</span>
+          }
 
         <button className={'primary'} onClick={() => this.validate()}>Validate & Continue</button>
       </div>

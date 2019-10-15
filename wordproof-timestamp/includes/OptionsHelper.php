@@ -73,7 +73,7 @@ class OptionsHelper
   }
 
   public static function isWSFYActive() {
-    return get_option(self::$prefix . 'wsfy_is_active');
+    return boolval(get_option(self::$prefix . 'wsfy_is_active'));
   }
 
   private static function prepareWSFY($options) {

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ShadowDOM from 'react-shadow';
 
+
 import MockupBrowser from "./MockupBrowser/MockupBrowser";
 import Pagination from "./Pagination/Pagination";
 // import styles from '../Certificate.scss';

@@ -1,88 +1,49 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Certificate from './components/Certficate/Certificate';
+import Modal from "./components/Certficate/Modal/Modal";
+import Link from "./components/Certficate/Link/Link";
 
-let settings = {
-  firstModalClick: true,
-  wordproofApi: wproof.api + wproof.articlesEndpoint,
-  fetchArticlesEndpoint: 'articles'
-};
+// let settings = {
+//   firstModalClick: true,
+//   wordproofApi: wproof.api + wproof.articlesEndpoint,
+//   fetchArticlesEndpoint: 'articles'
+// };
 
 document.addEventListener('DOMContentLoaded', function () {
   const schema = document.querySelector('script.wordproof-schema');
 
   if (schema) {
-    initModal();
-    initLink();
+    console.log('rendering');
+    renderModal();
+    renderLink();
   }
 });
 
-/**
- * Render modal and set event listeners
- */
-function initModal() {
-  //Render Modal
-  renderModal();
-
-  //Close Modal
-  let modal = getModal();
-  modal.querySelector('.wordproof-modal-background').addEventListener('click', closeModal);
-  modal.querySelector('.wordproof-modal-close').addEventListener('click', closeModal);
-
-  //Open Modal
-  if (window.location.href.indexOf("#wordproof") > -1) {
-    openModal();
-  }
-}
-
-function initLink() {
-  let link = document.querySelector('.wordproof-certificate-link');
-
-  if (wproof.certificateDOMParent) {
-    const newLocation = document.querySelector(wproof.certificateDOMParent);
-
-    if (newLocation) {
-      link = newLocation.appendChild(link);
-    }
-  }
-
-  link.style.display = 'flex';
-  link.addEventListener('click', openModal);
-}
-
 function renderModal() {
-  ReactDOM.render(<Certificate settings={wproof} />, document.querySelector('#wordproof-certificate-container'));
+  ReactDOM.render(
+      <Modal/>,
+      document.querySelector('#wordproof-certificate-modal'));
 }
 
-function getModal() {
-  return document.querySelector('#wordproof-certificate-container .shadowHost').shadowRoot.querySelector('.modal');
+function renderLink() {
+  ReactDOM.render(
+      <Link text={wordproof.link.text} url={wordproof.link.url} postId={wordproof.link.postId}/>,
+      document.querySelector('#wordproof-certificate-link'));
 }
 
-function openModal() {
-  if (wproof.wsfyIsActive && settings.firstModalClick) {
-    fetchArticles();
-    settings.firstModalClick = false;
-  }
-  getModal().classList.add('is-active');
-}
-
-function closeModal() {
-  getModal().classList.remove('is-active');
-}
-
-function fetchArticles() {
-  if (wproof.wsfy.show_revisions) {
-    fetch(settings.wordproofApi + wproof.uid + '?site_id=' + wproof.wsfy.site_id).then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-    }).then((schema) => {
-      if (typeof schema === 'object' && !(schema instanceof Array)) {
-        const script = document.querySelector('script.wordproof-schema');
-        script.innerHTML = JSON.stringify(schema);
-        document.dispatchEvent(new CustomEvent('newArticles', {detail: schema}));
-      }
-    });
-  }
-}
+// function fetchArticles() {
+//   if (wproof.wsfy.show_revisions) {
+//     fetch(settings.wordproofApi + wproof.uid + '?site_id=' + wproof.wsfy.site_id).then((response) => {
+//       if (response.ok) {
+//         return response.json();
+//       }
+//     }).then((schema) => {
+//       if (typeof schema === 'object' && !(schema instanceof Array)) {
+//         const script = document.querySelector('script.wordproof-schema');
+//         script.innerHTML = JSON.stringify(schema);
+//         document.dispatchEvent(new CustomEvent('newArticles', {detail: schema}));
+//       }
+//     });
+//   }
+// }

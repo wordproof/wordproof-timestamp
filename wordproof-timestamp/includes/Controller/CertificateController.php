@@ -54,8 +54,6 @@ class CertificateController
     if (isset($meta->date) && !empty($meta->blockchain)) {
       $wsfyIsActive = OptionsHelper::isWSFYActive();
       $wsfyOptions = ($wsfyIsActive) ? OptionsHelper::getWSFY([], ['site_token']) : [];
-      $certificateText = OptionsHelper::getCertificateText();
-      $certificateDOMParent = OptionsHelper::getCertificateDomSelector();
 
       wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', [], filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
 
@@ -65,16 +63,15 @@ class CertificateController
           'text' => OptionsHelper::getCertificateText(),
           'postId' => $post->ID,
         ],
-        'uid' => $post->ID,
-        'api' => WORDPROOF_WSFY_API_URI,
-        'articlesEndpoint' => WORDPROOF_WSFY_ENDPOINT_ARTICLE,
-        'css' => WORDPROOF_URI_CSS . '/frontend.css',
-        'icon' => WORDPROOF_URI_IMAGES . '/wordproof-icon.png',
-        'logo' => WORDPROOF_URI_IMAGES . '/wordproof-logo.png',
-        'wsfyIsActive' => $wsfyIsActive,
-        'wsfy' => $wsfyOptions,
-        'certificateText' => $certificateText,
-        'certificateDOMParent' => (isset($certificateDOMParent)) ? $certificateDOMParent : ''
+        'modal' => [
+          'uid' => $post->ID,
+          'css' => WORDPROOF_URI_CSS . '/frontend.css',
+        ],
+        'automate' => [
+          'active' => $wsfyIsActive,
+          'api' => WORDPROOF_WSFY_API_URI . WORDPROOF_WSFY_ENDPOINT_ARTICLE,
+          'options' => $wsfyOptions,
+        ]
       ]);
 
       wp_localize_script('wordproof.frontend.js', 'wproofStrings', [

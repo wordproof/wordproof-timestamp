@@ -2,8 +2,7 @@ import React from 'react';
 
 class Link extends React.Component {
     openModal = () => {
-        const event = new Event('wordproof.modal.open');
-        document.dispatchEvent(event);
+        document.dispatchEvent(new Event('wordproof.modal.open'));
     };
 
     render() {

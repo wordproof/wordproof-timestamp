@@ -6,5 +6,8 @@ module.exports = {
         blueish: '#f8faff'
       }
     }
+  },
+  corePlugins: {
+    preflight: true,
   }
-}
+};

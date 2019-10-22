@@ -3,6 +3,8 @@ import React from 'react';
 import root from 'react-shadow';
 import './Modal.scss';
 
+import getArticles from "./schemaHelper";
+
 import {LockUnsecure} from './components/Lock';
 import BlockIntegrity from "./Dashboard/BlockIntegrity";
 import BlockLastEdit from "./Dashboard/BlockLastEdit";
@@ -14,6 +16,7 @@ class Modal extends React.Component {
         super(props);
         this.state = {
             active: true,
+            articles: null,
             view: 'overview'
         };
 
@@ -22,11 +25,16 @@ class Modal extends React.Component {
             'compare',
             'importance',
         ];
+    }
 
+    componentDidMount() {
         this.prepare();
     }
 
-    changeView = () => {
+    changeView = (view) => {
+        if (this.views.includes(view)) {
+            this.setState({view: view});
+        }
 
     };
 
@@ -34,7 +42,7 @@ class Modal extends React.Component {
         document.addEventListener('wordproof.modal.open', this.open);
         document.addEventListener('wordproof.modal.close', this.close);
         window.addEventListener('keydown', this.handleKey);
-        this.retrieveRevisions();
+        this.getArticles();
     };
 
     handleKey = (e) => {
@@ -52,8 +60,12 @@ class Modal extends React.Component {
         this.setState({active: true});
     };
 
-    retrieveRevisions = () => {
-      if (wordproof.automate.active) {
+    getArticles = () => {
+        const schema = JSON.parse(document.querySelector('script.wordproof-schema').innerHTML);
+        const articles = getArticles(schema);
+        this.setState({articles: articles});
+
+        if (wordproof.automate.active) {
           fetch(wordproof.automate.api + wordproof.modal.uid + '?site_id=' + wordproof.automate.options.site_id).then((response) => {
               if (response.ok) {
                   return response.json();
@@ -62,8 +74,8 @@ class Modal extends React.Component {
               if (typeof schema === 'object' && !(schema instanceof Array)) {
                   const script = document.querySelector('script.wordproof-schema');
                   script.innerHTML = JSON.stringify(schema);
-                  console.log(schema);
-                  // document.dispatchEvent(new CustomEvent('newArticles', {detail: schema}));
+                  const articles = getArticles(schema);
+                  this.setState({articles: articles});
               }
           });
       }
@@ -88,7 +100,7 @@ class Modal extends React.Component {
                             </div>
                             <div className={'w-2/3 py-4 text-left px-6'}>
                                 <BlockIntegrity />
-                                <BlockLastEdit />
+                                <BlockLastEdit articles={this.state.articles} />
                             </div>
                         </div>
                     </div>

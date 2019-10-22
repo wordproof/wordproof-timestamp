@@ -15,7 +15,7 @@ export default class BlockLastEdit extends React.Component {
 
     render() {
         return (
-            <Block icon={<Clock/>} title={'Test'} description={'test'} linkText={'View Previous Versions'} onLinkClick={this.click}
+            <Block icon={<Clock/>} title={'Test'} description={'test'} showLink={this.props.articles.length > 1} linkText={'View Previous Versions'} onLinkClick={this.click}
                    endingIcon={<Check/>} endingText={'Hello Goodbye'}/>
         )
     }

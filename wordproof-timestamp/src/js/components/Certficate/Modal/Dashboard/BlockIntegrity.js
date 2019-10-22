@@ -9,7 +9,7 @@ export default class BlockIntegrity extends React.Component {
 
     render() {
         return (
-            <Block icon={<Pen />} title={'Test'} description={'test'} linkText={'text'} onLinkClick={this.click}
+            <Block icon={<Pen />} title={'Test'} description={'test'} showLink={true} linkText={'text'} onLinkClick={this.click}
                 endingIcon={<Check/>} endingText={'Hello Goodbye'} />
         )
     }

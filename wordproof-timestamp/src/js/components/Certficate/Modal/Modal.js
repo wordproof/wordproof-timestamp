@@ -55,6 +55,7 @@ class Modal extends React.Component {
     };
 
     navigation = () => {
+        document.addEventListener('wordproof.modal.navigate.overview', () => this.changeView('overview'));
         document.addEventListener('wordproof.modal.navigate.compare', () => this.changeView('compare'));
     };
 

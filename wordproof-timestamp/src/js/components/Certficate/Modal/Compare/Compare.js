@@ -66,7 +66,7 @@ export default class Compare extends React.Component {
     render() {
         return (
             <>
-                <Nav title={'Browse through previous versions'}/>
+                <Nav title={'Browse through previous versions'} backView={'overview'}/>
 
                 <div className={'flex flex-row'}>
                     <div className={'w-1/2 m-4'}>

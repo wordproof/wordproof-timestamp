@@ -10,7 +10,7 @@ export default class BlockLastEdit extends React.Component {
     }
 
     click = () => {
-        this.change
+        document.dispatchEvent(new Event('wordproof.modal.navigate.compare'));
     };
 
     render() {

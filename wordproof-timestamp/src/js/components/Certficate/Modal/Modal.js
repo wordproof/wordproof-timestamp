@@ -5,10 +5,8 @@ import './Modal.scss';
 
 import getArticles from "./schemaHelper";
 
-import {LockUnsecure} from './components/Lock';
-import BlockIntegrity from "./Dashboard/BlockIntegrity";
-import BlockLastEdit from "./Dashboard/BlockLastEdit";
-import Nav from "./components/Nav";
+import Overview from "./Overview/Overview";
+import Compare from "./Compare/Compare";
 
 class Modal extends React.Component {
 
@@ -21,7 +19,7 @@ class Modal extends React.Component {
         };
 
         this.views = [
-            'dashboard',
+            'overview',
             'compare',
             'importance',
         ];
@@ -35,14 +33,29 @@ class Modal extends React.Component {
         if (this.views.includes(view)) {
             this.setState({view: view});
         }
+    };
 
+    renderView = () => {
+        switch(this.state.view) {
+            case 'overview':
+                return <Overview articles={this.state.articles}/>;
+            case 'compare':
+                return <Compare articles={this.state.articles}/>;
+            default:
+                return null;
+        }
     };
 
     prepare = () => {
         document.addEventListener('wordproof.modal.open', this.open);
         document.addEventListener('wordproof.modal.close', this.close);
         window.addEventListener('keydown', this.handleKey);
+        this.navigation();
         this.getArticles();
+    };
+
+    navigation = () => {
+        document.addEventListener('wordproof.modal.navigate.compare', () => this.changeView('compare'));
     };
 
     handleKey = (e) => {
@@ -52,7 +65,10 @@ class Modal extends React.Component {
     };
 
     close = () => {
-        this.setState({active: false});
+        this.setState({
+            view: 'overview',
+            active: false
+        });
     };
 
     open = () => {
@@ -92,17 +108,8 @@ class Modal extends React.Component {
                     <div className="modal-container bg-white w-11/12 md:max-w-3xl mx-auto rounded-lg rounded-bl-none shadow z-50 overflow-y-auto"
                          aria-modal={this.state.active} role={'modal'} aria-labelledby={''} aria-describedby={''}>
 
-                        <Nav title={'This Content is WordProof'}/>
+                        {this.renderView()}
 
-                        <div className={'flex flex-row'}>
-                            <div className={'w-1/3'}>
-                                <LockUnsecure className={'w-full'}/>
-                            </div>
-                            <div className={'w-2/3 py-4 text-left px-6'}>
-                                <BlockIntegrity />
-                                <BlockLastEdit articles={this.state.articles} />
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <link rel="stylesheet" type="text/css" href={wordproof.modal.css}/>

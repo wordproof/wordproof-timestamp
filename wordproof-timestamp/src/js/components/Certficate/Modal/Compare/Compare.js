@@ -7,6 +7,7 @@ import Text from "./Text";
 import SelectArticle from "./SelectArticle";
 import Removed from "./Removed";
 import Added from "./Added";
+import ButtonList from "./ButtonList";
 
 export default class Compare extends React.Component {
 
@@ -78,6 +79,8 @@ export default class Compare extends React.Component {
                         <Text text={this.state.newText}/>
                     </div>
                 </div>
+
+                <ButtonList/>
             </>
         );
     }

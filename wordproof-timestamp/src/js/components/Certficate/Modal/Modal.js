@@ -7,6 +7,8 @@ import getArticles from "./schemaHelper";
 
 import Overview from "./Overview/Overview";
 import Compare from "./Compare/Compare";
+import CompareRaw from "./Compare/CompareRaw";
+import OverviewImportance from "./Overview/OverviewImportance";
 
 class Modal extends React.Component {
 
@@ -20,8 +22,9 @@ class Modal extends React.Component {
 
         this.views = [
             'overview',
+            'overview.importance',
             'compare',
-            'importance',
+            'compare.raw',
         ];
     }
 
@@ -39,8 +42,12 @@ class Modal extends React.Component {
         switch(this.state.view) {
             case 'overview':
                 return <Overview articles={this.state.articles}/>;
+            case 'overview.importance':
+                return <OverviewImportance/>;
             case 'compare':
                 return <Compare articles={this.state.articles}/>;
+            case 'compare.raw':
+                return <CompareRaw articles={this.state.articles}/>;
             default:
                 return null;
         }
@@ -56,7 +63,9 @@ class Modal extends React.Component {
 
     navigation = () => {
         document.addEventListener('wordproof.modal.navigate.overview', () => this.changeView('overview'));
+        document.addEventListener('wordproof.modal.navigate.overview.importance', () => this.changeView('overview.importance'));
         document.addEventListener('wordproof.modal.navigate.compare', () => this.changeView('compare'));
+        document.addEventListener('wordproof.modal.navigate.compare.raw', () => this.changeView('compare.raw'));
     };
 
     handleKey = (e) => {

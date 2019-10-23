@@ -1,9 +1,10 @@
 import React from 'react';
-import { renderToString } from 'react-dom/server'
+import {renderToString} from 'react-dom/server'
 import {diffWords} from 'diff';
 
 import Nav from "../components/Nav";
 import Text from "./Text";
+import SelectArticle from "./SelectArticle";
 import Removed from "./Removed";
 import Added from "./Added";
 
@@ -12,8 +13,10 @@ export default class Compare extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            old: this.props.articles[1].content,
-            new: this.props.articles[0].content,
+            oldIndex: 1,
+            newIndex: 0,
+            oldText: '',
+            newText: '',
         }
     }
 
@@ -22,47 +25,42 @@ export default class Compare extends React.Component {
     }
 
     compare = () => {
-        console.log(this.props.articles);
-        let changes = diffWords(this.state.old.toString(), this.state.new.toString());
-        console.log(changes);
+        const oldContent = this.props.articles[this.state.oldIndex].content;
+        const newContent = this.props.articles[this.state.newIndex].content;
+        let changes = diffWords(oldContent.toString(), newContent.toString());
         this.handleChanges(changes);
     };
 
     handleChanges = (list) => {
         let oldText = [];
         let newText = [];
-        console.log(list);
 
         list.forEach((change) => {
             if (change.removed) {
-                oldText.push(renderToString(<Removed>{ change.value }</Removed>));
-                newText.push(renderToString(<Removed>{ change.value }</Removed>));
+                oldText.push(renderToString(<Removed>{change.value}</Removed>));
+                newText.push(renderToString(<Removed>{change.value}</Removed>));
             } else if (change.added) {
-                // oldText.push(renderToString(<Added>{ change.value }</Added>));
-                // oldText.push(renderToString(<Blank/>));
-                newText.push(renderToString(<Added>{ change.value }</Added>));
+                newText.push(renderToString(<Added>{change.value}</Added>));
             } else {
                 oldText.push(change.value);
                 newText.push(change.value);
             }
         });
 
-        // console.log('new:');
-        // console.log(oldText);
-        // console.log(newText);
-
         this.setState({
-            old: oldText.join(''),
-            new: newText.join('')
+            oldText: oldText.join(''),
+            newText: newText.join('')
         });
     };
 
-    changeNew = () => {
-
+    setNew = (index) => {
+        this.setState({newIndex: index});
+        this.compare();
     };
 
-    changeOld = () => {
-
+    setOld = (index) => {
+        this.setState({oldIndex: index});
+        this.compare();
     };
 
     render() {
@@ -71,8 +69,14 @@ export default class Compare extends React.Component {
                 <Nav title={'Browse through previous versions'}/>
 
                 <div className={'flex flex-row'}>
-                    <Text text={this.state.old}/>
-                    <Text text={this.state.new}/>
+                    <div className={'w-1/2 m-4'}>
+                        <SelectArticle articles={this.props.articles} selected={1} for={'old'} setOld={this.setOld}/>
+                        <Text text={this.state.oldText}/>
+                    </div>
+                    <div className={'w-1/2 m-4'}>
+                        <SelectArticle articles={this.props.articles} selected={0} for={'new'} setNew={this.setNew}/>
+                        <Text text={this.state.newText}/>
+                    </div>
                 </div>
             </>
         );

@@ -1,6 +1,6 @@
 import React from 'react';
 import Block from './Block';
-import {Pen, Check} from '../components/Icons';
+import {Pen, Check, Cross} from '../components/Icons';
 
 export default class BlockIntegrity extends React.Component {
     click = () => {
@@ -10,7 +10,7 @@ export default class BlockIntegrity extends React.Component {
     render() {
         return (
             <Block icon={<Pen />} title={'Test'} description={'test'} showLink={true} linkText={'text'} onLinkClick={this.click}
-                endingIcon={<Check/>} endingText={'Hello Goodbye'} />
+                endingIcon={this.props.valid ? <Check/> : <Cross/>} endingText={'Hello Goodbye'} />
         )
     }
 }

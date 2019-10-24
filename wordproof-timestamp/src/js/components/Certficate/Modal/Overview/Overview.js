@@ -17,10 +17,10 @@ export default class Overview extends React.Component {
 
                 <div className={'flex flex-row'}>
                     <div className={'w-1/3 overflow-hidden'}>
-                        <Locks/>
+                        <Locks secure={this.props.valid}/>
                     </div>
                     <div className={'w-2/3 py-4 text-left px-6'}>
-                        <BlockIntegrity />
+                        <BlockIntegrity valid={this.props.valid} />
                         <BlockLastEdit articles={this.props.articles} />
                     </div>
                 </div>

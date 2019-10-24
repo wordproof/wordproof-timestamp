@@ -1,6 +1,7 @@
 import React from 'react';
 
 import root from 'react-shadow';
+import {sha256} from 'js-sha256';
 import './Modal.scss';
 
 import getArticles from "./schemaHelper";
@@ -17,7 +18,8 @@ class Modal extends React.Component {
         this.state = {
             active: true,
             articles: null,
-            view: 'overview'
+            view: 'overview',
+            validTimestamp: null,
         };
 
         this.views = [
@@ -35,6 +37,17 @@ class Modal extends React.Component {
          */
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.articles !== this.state.articles) {
+            //TODO: Check transaction on blockchain
+            const local = this.state.articles[0].hash;
+            const hashed = sha256(JSON.stringify(this.state.articles[0].raw));
+            console.log(local === hashed);
+            this.setState({validTimestamp: local === hashed});
+            //TODO: check if this article is the newest version ($meta->date !== get_the_modified_date('c', $post->ID))
+        }
+    }
+
     changeView = (view) => {
         if (this.views.includes(view)) {
             this.setState({view: view});
@@ -44,7 +57,7 @@ class Modal extends React.Component {
     renderView = () => {
         switch(this.state.view) {
             case 'overview':
-                return <Overview articles={this.state.articles}/>;
+                return <Overview valid={this.state.validTimestamp} articles={this.state.articles}/>;
             case 'overview.importance':
                 return <OverviewImportance/>;
             case 'compare':

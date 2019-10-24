@@ -29,10 +29,15 @@ const Check = props => (
 );
 
 const Cross = props => (
-    <svg viewBox={'0 0 23 24'} width={18} height={18} {...props}>
-        <g transform="translate(0 .785)" fill="none" fillRule="evenodd">
-            <circle fill="#00D1B1" cx={11.5} cy={11.5} r={11.5} />
-            <path stroke="#FFF" strokeWidth={3} d="M4 12.75L9.134 18 18 6" />
+    <svg viewBox={'0 0 23 23'}  width={18} height={18} {...props}>
+        <g fill="none" fillRule="evenodd">
+            <circle cx={11.5} cy={11.5} r={11.5} fill="#FF4343" />
+            <path
+                d="M6.5 6.75l10 10M6.75 17L16.5 6.75"
+                stroke="#FFF"
+                strokeWidth={3}
+                strokeLinecap="square"
+            />
         </g>
     </svg>
 );

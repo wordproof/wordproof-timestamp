@@ -59,6 +59,7 @@
     "eos-transit-scatter-provider": "^3.0.1",
     "eosjs": "^20.0.0",
     "eosjs-ecc": "^4.0.4",
+    "js-sha256": "^0.9.0",
     "luxon": "^1.16.1",
     "macaddress": "^0.2.9",
     "promise": "^8.0.3",

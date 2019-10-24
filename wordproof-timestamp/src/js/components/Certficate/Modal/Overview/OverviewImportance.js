@@ -1,7 +1,5 @@
 import React from 'react';
 import Nav from "../components/Nav";
-import BlockIntegrity from "./BlockIntegrity";
-import BlockLastEdit from "./BlockLastEdit";
 import Locks from "./Locks";
 
 export default class OverviewImportance extends React.Component {

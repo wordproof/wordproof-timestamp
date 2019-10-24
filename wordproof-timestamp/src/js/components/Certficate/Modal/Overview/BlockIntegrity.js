@@ -4,7 +4,7 @@ import {Pen, Check} from '../components/Icons';
 
 export default class BlockIntegrity extends React.Component {
     click = () => {
-        console.log('integre');
+        document.dispatchEvent(new Event('wordproof.modal.navigate.overview.importance'));
     };
 
     render() {

@@ -30,6 +30,9 @@ class Modal extends React.Component {
 
     componentDidMount() {
         this.prepare();
+        /**
+         * TODO: Is article secure? Set locks.
+         */
     }
 
     changeView = (view) => {

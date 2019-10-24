@@ -19,7 +19,7 @@ export default class SelectArticle extends React.Component {
 
     render() {
         return (
-            <select className={'w-full bg-white border-2 border-gray-300 mb-3 py-2 px-3'} onChange={(e) => this.change(e)} value={this.state.value}>
+            <select className={'w-full bg-white border-2 border-gray-300 mb-3 py-2 px-3 h-10 max-h-full'} onChange={(e) => this.change(e)} value={this.state.value}>
                 {this.props.articles.map((article, index) => {
                     return (<option data-for={this.props.for} key={index} value={index}>{article.date}</option>)
                 })}

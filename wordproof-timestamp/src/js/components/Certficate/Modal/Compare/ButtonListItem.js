@@ -1,6 +1,10 @@
 import React from 'react';
 
 export default class ButtonListItem extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     click(e) {
         if (this.props.navigate) {
             e.preventDefault();
@@ -10,8 +14,10 @@ export default class ButtonListItem extends React.Component {
 
     render() {
         return (
-            <a className={'text-blue-600'} href={this.props.href} target="_blank" rel="noopener noreferrer"
-               onClick={ (e) => this.click(e) }>{ this.props.children }</a>
+            <a className={'text-darkblue inline-flex items-center w-full justify-center'} href={this.props.href}
+               target="_blank" rel="noopener noreferrer" onClick={ (e) => this.click(e) }>
+                <span className={'mr-4'} style={this.iconStyle}>{ this.props.icon }</span> { this.props.children }
+            </a>
         );
     }
 }

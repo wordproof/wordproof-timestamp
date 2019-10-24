@@ -12,7 +12,7 @@ export default class Block extends React.Component {
                             <p className={``}>{this.props.description}</p>
 
                             {this.props.showLink &&
-                                <button className={`text-blue-700`}
+                                <button className={`text-darkblue`}
                                         onClick={this.props.onLinkClick}>&gt; {this.props.linkText}</button>
                             }
                         </div>

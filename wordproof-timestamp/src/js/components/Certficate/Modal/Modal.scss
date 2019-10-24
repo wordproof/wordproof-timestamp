@@ -34,6 +34,19 @@
   }
 }
 
+.h {
+  &-modal {
+    height: 33rem;
+
+    > div:first-child {
+      height: 12%;
+    }
+    > div:last-child {
+      height: 88%;
+    }
+  }
+}
+
 @import "~tailwindcss/components";
 
 @import "~tailwindcss/utilities";

@@ -69,18 +69,22 @@ export default class Compare extends React.Component {
             <>
                 <Nav title={'Browse through previous versions'} backView={'overview'}/>
 
-                <div className={'flex flex-row mx-6'}>
-                    <div className={'w-1/2 m-6'}>
-                        <SelectArticle articles={this.props.articles} selected={1} for={'old'} setOld={this.setOld}/>
-                        <Text text={this.state.oldText}/>
+                <div>
+                    <div className={'flex flex-row mx-6'}>
+                        <div className={'w-1/2 m-6 hidden md:block'}>
+                            <SelectArticle articles={this.props.articles} selected={1} for={'old'}
+                                           setOld={this.setOld}/>
+                            <Text text={this.state.oldText}/>
+                        </div>
+                        <div className={'md:w-1/2 m-6 w-full'}>
+                            <SelectArticle articles={this.props.articles} selected={0} for={'new'}
+                                           setNew={this.setNew}/>
+                            <Text text={this.state.newText}/>
+                        </div>
                     </div>
-                    <div className={'w-1/2 m-6'}>
-                        <SelectArticle articles={this.props.articles} selected={0} for={'new'} setNew={this.setNew}/>
-                        <Text text={this.state.newText}/>
-                    </div>
-                </div>
 
-                <ButtonList/>
+                    <ButtonList/>
+                </div>
             </>
         );
     }

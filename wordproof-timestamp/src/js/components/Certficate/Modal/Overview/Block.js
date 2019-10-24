@@ -9,7 +9,7 @@ export default class Block extends React.Component {
                         <div className={'w-1/12'}>{this.props.icon}</div>
                         <div className={'pl-3'}>
                             <h3 className={`text-lg text-black`}>{this.props.title}</h3>
-                            <p className={``}>{this.props.description}</p>
+                            <p className={`mb-1`}>{this.props.description}</p>
 
                             {this.props.showLink &&
                                 <button className={`text-darkblue`}

@@ -11,10 +11,10 @@ export default class ButtonList extends React.Component {
         return (
             <div className={'shadow-lg mx-6 mb-1 border-gray-300 bg-gray-200 border rounded-lg'}>
                 <div className={'flex items-center flex-wrap'}>
-                    <ButtonListItem href={''} icon={<QuestionMark/>}>Test</ButtonListItem>
-                    <ButtonListItem href={''} navigate={'compare.raw'} icon={<Eye/>}>Raw</ButtonListItem>
-                    <ButtonListItem href={''} icon={<Clock color={'#0017B1'}/>}>Test</ButtonListItem>
-                    <ButtonListItem href={''} icon={<Blockchain/>}>Test</ButtonListItem>
+                    <ButtonListItem href={''} icon={<QuestionMark/>}>{wStrings.compare.buttons.explanation}</ButtonListItem>
+                    <ButtonListItem href={''} navigate={'compare.raw'} icon={<Eye/>}>{wStrings.compare.buttons.raw}</ButtonListItem>
+                    <ButtonListItem href={''} icon={<Clock color={'#0017B1'}/>}>{wStrings.compare.buttons.checker}</ButtonListItem>
+                    <ButtonListItem href={''} icon={<Blockchain/>}>{wStrings.compare.buttons.blockchain}</ButtonListItem>
                 </div>
             </div>
         );

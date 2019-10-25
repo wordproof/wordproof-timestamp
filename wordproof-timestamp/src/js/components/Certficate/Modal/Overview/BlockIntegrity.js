@@ -9,8 +9,10 @@ export default class BlockIntegrity extends React.Component {
 
     render() {
         return (
-            <Block icon={<Pen />} title={'Test'} description={'test'} showLink={true} linkText={'text'} onLinkClick={this.click}
-                endingIcon={this.props.valid ? <Check/> : <Cross/>} endingText={'Hello Goodbye'} />
+            <Block icon={<Pen />} title={this.props.valid ? wStrings.overview.block.importance.valid.title : wStrings.overview.block.importance.invalid.title}
+                   description={this.props.valid ? wStrings.overview.block.importance.invalid.description : wStrings.overview.block.importance.invalid.description}
+                   showLink={true} linkText={wStrings.overview.block.importance.linkText} onLinkClick={this.click}
+                   endingIcon={this.props.valid ? <Check/> : <Cross/>} endingText={wStrings.overview.block.importance.subText} />
         )
     }
 }

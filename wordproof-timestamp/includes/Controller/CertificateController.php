@@ -42,7 +42,7 @@ class CertificateController
     global $post;
     $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain']);
     if (isset($meta->date) && !empty($meta->blockchain)) {
-      echo '<div id="wordproof-certificate-modal"></div>';
+      echo '<div id="wordproof-certificate-modal" style="position: relative; z-index: 999;"></div>';
     }
   }
 
@@ -66,6 +66,7 @@ class CertificateController
         'modal' => [
           'uid' => $post->ID,
           'css' => WORDPROOF_URI_CSS . '/frontend.css',
+          'dateFormat' => null, //TODO
         ],
         'automate' => [
           'active' => $wsfyIsActive,
@@ -74,24 +75,50 @@ class CertificateController
         ]
       ]);
 
-      wp_localize_script('wordproof.frontend.js', 'wproofStrings', [
-        'title' => __('Timestamp Certificate', 'wordproof-timestamp'),
-        'subtitle' => __('Protected with', 'wordproof-timestamp'),
-        'readMore' => __('Read More', 'wordproof-timestamp'),
-        'switchRaw' => __('Raw', 'wordproof-timestamp'),
-        'switchArticle' => __('Article', 'wordproof-timestamp'),
-        'switchAbout' => __('About this Timestamp Certificate', 'wordproof-timestamp'),
-        'switchAboutReturn' => __('Back to Timestamp Certificate', 'wordproof-timestamp'),
-        'blockchainLink' => __('View on the blockchain', 'wordproof-timestamp'),
-        'timestampChecker' => __('Timestamp Checker', 'wordproof-timestamp'),
-        'dateModification' => __('Modification Date', 'wordproof-timestamp'),
-        'promotionLinkText' => __('Protect your content on the blockchain with WordProof Timestamp', 'wordproof-timestamp'),
-        'buttonPrevious' => __('Previous', 'wordproof-timestamp'),
-        'buttonNext' => __('Next', 'wordproof-timestamp'),
-        'aboutTitle' => __('What is this Timestamp Certificate', 'wordproof-timestamp'),
-        'aboutText' => sprintf(
-          __('This content is protected with WordProof, a new web standard for a more trustworthy internet. This timestamp exists of a unique hash (summary) based on the title, date and content of this page. It is stored in the blockchain and can never be altered.<br/><br/>You can verify this Timestamp Certificate yourself with the <a target="_blank" rel="noopener noreferrer" href="%s">WordProof Timestamp Checker</a>. The hash of this post is', 'wordproof-timestamp')
-          , 'https://wordproof.io/check/'),
+      wp_localize_script('wordproof.frontend.js', 'wStrings', [
+        'previous' => __('Previous', 'wordproof-timestamp'),
+        'overview' => [
+          'block' => [
+            'importance' => [
+              'valid' => [
+                'title' => __('Content has not changed since the last timestamp', 'wordproof-timestamp'),
+                'description' => __('Not the website nor a third party has modified the content of this page since it was last timestamped on the blockchain.', 'wordproof-timestamp'),
+              ],
+              'invalid' => [
+                'title' => __('Content has changed since the last timestamp', 'wordproof-timestamp'),
+                'description' => __('The website has updated the content of this page since it was last timestamped on the blockchain.', 'wordproof-timestamp'),
+              ],
+              'linkText' => __('Why is this important?', 'wordproof-timestamp'),
+              'subText' => sprintf(__('Published by %s'), 'MARIJN'),
+            ],
+            'compare' => [
+              'title' => __('Discover how this content changed over time', 'wordproof-timestamp'),
+              'description' => __('Because this website timestamps every revision on the blockchain, you can compare the different versions.', 'wordproof-timestamp'),
+              'linkText' => __('View previous versions', 'wordproof-timestamp'),
+              'subText' => sprintf(__('Last edit on %s at x'), 'today'),
+            ],
+          ],
+          'nav' => [
+            'valid' => __('This content is WordProof', 'wordproof-timestamp'),
+            'invalid' => __('This content is not WordProof', 'wordproof-timestamp'),
+          ]
+        ],
+        'importance' => [
+          'title' => __('This content is not WordProof', 'wordproof-timestamp'),
+          'text' => __('This content is not WordProof', 'wordproof-timestamp'),
+          'cta' => __('This content is not WordProof', 'wordproof-timestamp'),
+        ],
+        'compare' => [
+          'nav' => __('Browse through previous versions', 'wordproof-timestamp'),
+          'created' => __('created', 'wordproof-timestamp'),
+          'recent' => __('recent', 'wordproof-timestamp'),
+          'buttons' => [
+            'explanation' => __('Explanation', 'wordproof-timestamp'),
+            'raw' => __('View raw input', 'wordproof-timestamp'),
+            'checker' => __('Timestamp check', 'wordproof-timestamp'),
+            'blockchain' => __('View on blockchain', 'wordproof-timestamp'),
+          ]
+        ],
       ]);
     }
   }

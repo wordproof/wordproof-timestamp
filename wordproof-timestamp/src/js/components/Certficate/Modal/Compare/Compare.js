@@ -83,7 +83,7 @@ export default class Compare extends React.Component {
                         </div>
                     </div>
 
-                    <ButtonList view={'compare'}/>
+                    <ButtonList view={'compare'} hrefBlockchain={this.props.articles[this.state.newIndex].transactionUrl}/>
                 </div>
             </>
         );

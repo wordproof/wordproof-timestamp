@@ -42,7 +42,7 @@ export default class CompareRaw extends React.Component {
                         </div>
                     </div>
 
-                    <ButtonList view={'raw'}/>
+                    <ButtonList view={'raw'} hrefBlockchain={this.props.articles[this.state.index].transactionUrl}/>
                 </div>
             </>
         );

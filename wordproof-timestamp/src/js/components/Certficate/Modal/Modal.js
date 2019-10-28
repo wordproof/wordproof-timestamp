@@ -69,7 +69,7 @@ class Modal extends React.Component {
             case 'compare':
                 return <Compare articles={this.state.articles}/>;
             case 'compare.raw':
-                return <CompareRaw articles={this.state.articles}/>;
+                return <CompareRaw raw={this.state.articles[0].raw}/>;
             default:
                 return null;
         }

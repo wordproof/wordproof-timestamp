@@ -123,6 +123,10 @@ class CertificateController
             'raw' => __('View raw input', 'wordproof-timestamp'),
             'checker' => __('Timestamp check', 'wordproof-timestamp'),
             'blockchain' => __('View on blockchain', 'wordproof-timestamp'),
+          ],
+          'raw' => [
+            'title' => 'Title',
+            'text' => 'Explanation',
           ]
         ],
       ]);

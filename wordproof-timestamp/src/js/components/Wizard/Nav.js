@@ -10,7 +10,7 @@ const Nav = (props) => {
                 <span className={`text-gray-500 pb-3`}>{props.labels[i]}</span>
                 <span className={`h-8 w-8 p-2 bg-blueish`}>
                     <span
-                        className={`block rounded-full w-full h-full bg-gray-500 ${isDone ? 'bg-green' : ''} ${isActive ? 'bg-green' : ''}`}>
+                        className={`block rounded-full w-full h-full bg-gray-500 ${isDone ? 'bg-wordproof' : ''} ${isActive ? 'bg-wordproof' : ''}`}>
                 </span>
                 </span>
             </div>

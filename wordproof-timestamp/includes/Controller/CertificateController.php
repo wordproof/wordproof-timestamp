@@ -66,7 +66,7 @@ class CertificateController
         'modal' => [
           'uid' => $post->ID,
           'css' => WORDPROOF_URI_CSS . '/frontend.css',
-          'dateFormat' => null, //TODO
+          'locale' => get_locale(),
           'lastModified' => get_the_modified_date('c', $post->ID),
         ],
         'automate' => [
@@ -124,6 +124,7 @@ class CertificateController
           'nav' => __('Browse through previous versions', 'wordproof-timestamp'),
           'created' => __('created', 'wordproof-timestamp'),
           'recent' => __('recent', 'wordproof-timestamp'),
+          'at' => __('at', 'wordproof-timestamp'),
           'buttons' => [
             'explanation' => __('Explanation', 'wordproof-timestamp'),
             'raw' => __('View raw input', 'wordproof-timestamp'),

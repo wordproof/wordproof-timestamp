@@ -18,9 +18,9 @@ class OnboardingWizard {
   public function addSettingsPage()
   {
     add_submenu_page(
-      null,
+      'wordproof-dashboard',
       'WordProof Wizard',
-      'Onboarding Wizard',
+      'Setup Wizard',
       'manage_options',
       'wordproof-wizard',
       array($this, 'generateSettingsPage')

@@ -14,7 +14,7 @@ export default class Step1 extends Component {
 
         <h3>Which mode do you want to use?</h3>
         <div className="flex flex-row my-4">
-          <div className="border-2 rounded text-center p-4 mr-4">
+          <div className="border-2 rounded text-center p-4 mr-4 w-1/2">
             <h2 className="font-semibold my-2">Manual</h2>
             <p>
               Tech-savy mode<br/>
@@ -27,7 +27,7 @@ export default class Step1 extends Component {
             </a>
           </div>
 
-          <div className="border-2 rounded text-center p-4 ml-4">
+          <div className="border-2 rounded text-center p-4 ml-4 w-1/2">
             <h2 className="font-semibold my-2">Automatic</h2>
             <p>
               Activate & never look back<br/>

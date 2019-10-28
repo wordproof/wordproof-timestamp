@@ -98,8 +98,14 @@ class CertificateController
               'subText' => sprintf(__('Published by %s'), $author),
             ],
             'compare' => [
-              'title' => __('Discover how this content changed over time', 'wordproof-timestamp'),
-              'description' => __('Because this website timestamps every revision on the blockchain, you can compare the different versions.', 'wordproof-timestamp'),
+              'withRevisions' => [
+                'title' => __('Discover how this content changed over time', 'wordproof-timestamp'),
+                'description' => __('Because this website timestamps every revision on the blockchain, you can compare the different versions.', 'wordproof-timestamp'),
+              ],
+              'withoutRevisions' => [
+                'title' => __('Don\'t discover how this content changed over time', 'wordproof-timestamp'),
+                'description' => __('Because this website timestamps every revision on the blockchain, you can compare the different versions.', 'wordproof-timestamp'),
+              ],
               'linkText' => __('View previous versions', 'wordproof-timestamp'),
               'subText' => sprintf(__('Last edit on %s at %s'), $date, $time),
             ],

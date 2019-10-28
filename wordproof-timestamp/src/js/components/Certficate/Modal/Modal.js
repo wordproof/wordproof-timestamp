@@ -65,7 +65,7 @@ class Modal extends React.Component {
             case 'overview':
                 return <Overview valid={this.state.validTimestamp} articles={this.state.articles}/>;
             case 'overview.importance':
-                return <OverviewImportance/>;
+                return <OverviewImportance valid={this.state.validTimestamp}/>;
             case 'compare':
                 return <Compare articles={this.state.articles}/>;
             case 'compare.raw':

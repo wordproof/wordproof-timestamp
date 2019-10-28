@@ -15,7 +15,7 @@ export default class OverviewImportance extends React.Component {
 
                 <div className={'flex flex-row'}>
                     <div className={'w-1/3 overflow-hidden'}>
-                        <Locks/>
+                        <Locks secure={this.props.valid}/>
                     </div>
                     <div className={'w-2/3 py-4 text-left px-6'}>
                         <h2>{ wStrings.importance.title }</h2>

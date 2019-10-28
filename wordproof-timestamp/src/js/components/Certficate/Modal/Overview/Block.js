@@ -3,11 +3,11 @@ import React from 'react';
 export default class Block extends React.Component {
     render() {
         return (
-            <div className={`border-2 border-solid border-gray-300 rounded-lg px-4 py-5 mb-3`}>
+            <div className={`border-2 border-solid border-gray-300 rounded-lg p-4 md:px-4 md:py-5 mb-3`}>
                 <div className={`flex flex-col`}>
-                    <div className={`flex flex-row text-base text-gray-700`}>
-                        <div className={'w-1/12'}>{this.props.icon}</div>
-                        <div className={'pl-3'}>
+                    <div className={`flex flex-col md:flex-row text-base text-gray-700`}>
+                        <div className={'mb-2 md:m-0 md:w-1/12'}>{this.props.icon}</div>
+                        <div className={'md:pl-3'}>
                             <h3 className={`text-lg text-black`}>{this.props.title}</h3>
                             <p className={`mb-1`}>{this.props.description}</p>
 

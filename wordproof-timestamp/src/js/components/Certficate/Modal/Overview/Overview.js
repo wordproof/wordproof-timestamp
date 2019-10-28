@@ -20,7 +20,7 @@ export default class Overview extends React.Component {
                     <div className={'hidden md:block md:w-1/3 overflow-hidden'}>
                         <Locks secure={this.props.valid}/>
                     </div>
-                    <div className={'w-full md:w-2/3 py-4 text-left px-6'}>
+                    <div className={'w-full md:w-2/3 p-2 md:py-4 md:px-6 text-left'}>
                         <BlockIntegrity valid={this.props.valid} />
                         <BlockLastEdit articles={this.props.articles} />
                     </div>

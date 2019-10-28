@@ -7,6 +7,8 @@ module.exports = {
             colors: {
                 yellowAccent: '#FDDD7E',
                 wordproof: '#00CBA9',
+                wordproofLight: '#00d5bc',
+                wordproofDark: '#009e86',
                 blueish: '#f8faff',
                 darkblue: '#0017B1'
             }

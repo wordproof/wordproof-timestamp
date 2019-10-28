@@ -16,7 +16,7 @@ export default class Nav extends React.Component {
             <div className={'flex flex-row items-center py-3 px-3 border-b-2 border-solid border-gray-300'}>
                 <div className={'w-1/3'}>
                     {(this.props.backView)
-                        ? <button className={'btn btn-outline trans inline-flex items-center justify-center'} onClick={this.changeView}>
+                        ? <button className={'btn btn-outline btn-sm inline-flex items-center justify-center'} onClick={this.changeView}>
                             <span className={'mr-2'}><ArrowLeft/></span> {wStrings.previous}</button>
                         : <Logo/>
                     }

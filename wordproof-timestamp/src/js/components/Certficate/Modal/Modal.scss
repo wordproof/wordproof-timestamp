@@ -9,6 +9,10 @@
 
 @import "~tailwindcss/base";
 
+h2 {
+  @apply text-darkblue text-xl mb-2
+}
+
 .wordproof-modal-logo {
   max-height: 30px;
   width: auto;
@@ -19,7 +23,16 @@
 }
 
 .btn {
-  @apply px-3 py-1 cursor-pointer rounded-lg;
+  @apply px-3 py-2 cursor-pointer rounded trans font-semibold text-base;
+
+  &-primary {
+    box-shadow: 0px 2px 0px 0px #009e86;
+    @apply bg-wordproof text-white;
+
+    &:hover {
+      @apply bg-wordproofDark;
+    }
+  }
 
   &-outline {
     @apply bg-white text-darkblue border border-darkblue;
@@ -31,6 +44,10 @@
         @apply fill-white trans;
       }
     }
+  }
+
+  &-sm {
+    @apply px-3 py-1;
   }
 }
 

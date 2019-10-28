@@ -4,8 +4,8 @@ import Locks from "./Locks";
 
 export default class OverviewImportance extends React.Component {
 
-    constructor(props) {
-        super(props);
+    click() {
+        //TODO
     }
 
     render() {
@@ -18,7 +18,9 @@ export default class OverviewImportance extends React.Component {
                         <Locks/>
                     </div>
                     <div className={'w-2/3 py-4 text-left px-6'}>
-                        <p>Text</p>
+                        <h2>{ wStrings.importance.title }</h2>
+                        <p>{ wStrings.importance.text }</p>
+                        <button className={'btn btn-primary mt-4'} onClick={this.click}>{ wStrings.importance.cta }</button>
                     </div>
                 </div>
             </>

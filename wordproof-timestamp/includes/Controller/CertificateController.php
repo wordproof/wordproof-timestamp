@@ -125,8 +125,9 @@ class CertificateController
             'blockchain' => __('View on blockchain', 'wordproof-timestamp'),
           ],
           'raw' => [
-            'title' => 'Title',
-            'text' => 'Explanation',
+            'nav' => __('Check it yourself', 'wordproof-timestamp'),
+            'title' => __('Title', 'wordproof-timestamp'),
+            'text' => __('Text', 'wordproof-timestamp'),
           ]
         ],
       ]);

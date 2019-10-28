@@ -6,7 +6,7 @@ export default class CompareRaw extends React.Component {
         console.log(this.props.raw);
         return (
             <>
-                <Nav title={'Check it yourself'} backView={'compare'}/>
+                <Nav title={ wStrings.compare.raw.nav} backView={'compare'}/>
 
                 <div className={'flex flex-row'}>
                     <div className={'w-1/2 m-4'}>

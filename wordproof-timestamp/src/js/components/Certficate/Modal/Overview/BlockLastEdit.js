@@ -1,6 +1,6 @@
 import React from 'react';
 import Block from './Block';
-import {Check, Clock, Cross, Pen} from '../components/Icons';
+import {Check, Clock} from '../components/Icons';
 
 export default class BlockLastEdit extends React.Component {
 

@@ -75,6 +75,11 @@ class CertificateController
         ]
       ]);
 
+      $date = get_the_date('', $post->ID);
+      $time = get_the_time('', $post->ID);
+      $user = get_user_by('id', $post->post_author);
+      $author = $user->display_name;
+
       wp_localize_script('wordproof.frontend.js', 'wStrings', [
         'previous' => __('Previous', 'wordproof-timestamp'),
         'overview' => [
@@ -89,13 +94,13 @@ class CertificateController
                 'description' => __('The website has updated the content of this page since it was last timestamped on the blockchain.', 'wordproof-timestamp'),
               ],
               'linkText' => __('Why is this important?', 'wordproof-timestamp'),
-              'subText' => sprintf(__('Published by %s'), 'MARIJN'),
+              'subText' => sprintf(__('Published by %s'), $author),
             ],
             'compare' => [
               'title' => __('Discover how this content changed over time', 'wordproof-timestamp'),
               'description' => __('Because this website timestamps every revision on the blockchain, you can compare the different versions.', 'wordproof-timestamp'),
               'linkText' => __('View previous versions', 'wordproof-timestamp'),
-              'subText' => sprintf(__('Last edit on %s at x'), 'today'),
+              'subText' => sprintf(__('Last edit on %s at %s'), $date, $time),
             ],
           ],
           'nav' => [

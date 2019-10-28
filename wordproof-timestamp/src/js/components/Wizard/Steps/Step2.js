@@ -41,7 +41,7 @@ export default class Step2 extends Component {
 
   render() {
     return (
-      <div className="wordproof-wizard-step container">
+      <div className="wordproof-wizard-step">
         <Intro title="Connect WordProof to your website"
                subtitle="Create a WordProof account and paste your site key. Start your 14-day trial today."/>
 

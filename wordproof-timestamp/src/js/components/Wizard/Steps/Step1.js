@@ -9,7 +9,7 @@ export default class Step1 extends Component {
 
   render() {
     return (
-      <div className="wordproof-wizard-step container">
+      <div className="wordproof-wizard-step">
         <Intro title="Welcome to WordProof Timestamp!" subtitle="Let's get you set up!" />
 
         <h3>Which mode do you want to use?</h3>

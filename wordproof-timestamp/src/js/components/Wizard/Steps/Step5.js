@@ -4,7 +4,7 @@ import Intro from '../Intro';
 export default class Step5 extends Component {
   render() {
     return (
-      <div className="wordproof-wizard-step container">
+      <div className="wordproof-wizard-step">
         <Intro title="Great Job!"
                subtitle="You've completed all the steps!"/>
 

@@ -10,7 +10,7 @@ export default class Step4 extends Component {
 
   render() {
     return (
-      <div className="wordproof-wizard-step container">
+      <div className="wordproof-wizard-step">
         <Intro title="Certificate Link"
                subtitle="The link which opens the Blockchain Certificate pop-up is visable under all timestamped content."/>
 

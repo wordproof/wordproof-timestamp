@@ -1,5 +1,3 @@
-@import "../../../../node_modules/tailwindcss/base";
-
 /**
 ** TYPOGRAPHY
 **
@@ -77,13 +75,6 @@ input:focus {
 /**
 ** WIZARD
  */
-.wordproof-wizard-step {
-  @apply p-12 bg-white rounded-lg max-w-3xl;
-  min-width: 600px;
-}
-
-@import "../../../../node_modules/tailwindcss/components";
-@import "../../../../node_modules/tailwindcss/utilities";
 
 .wordproof-onboarding-wizard {
   align-items: center;
@@ -98,3 +89,28 @@ input:focus {
   right: 0;
   top: 0;
 }
+
+.wizard-container {
+  width: 800px;
+
+  @media screen and (max-width: 900px) {
+    width: 700px;
+  }
+
+  @media screen and (max-width: 700px) {
+    width: 500px;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 450px;
+  }
+}
+
+.wordproof-wizard-step {
+  @apply p-12 bg-white rounded-lg max-w-3xl;
+}
+
+@import "../../../../node_modules/tailwindcss/components";
+@import "../../../../node_modules/tailwindcss/utilities";
+
+

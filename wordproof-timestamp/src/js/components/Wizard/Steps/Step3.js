@@ -6,7 +6,7 @@ import Radiobox from "../../Form/Radiobox";
 export default class Step3 extends Component {
   render() {
     return (
-      <div className="wordproof-wizard-step container">
+      <div className="wordproof-wizard-step">
         <Intro title="Content Settings"
                subtitle="You can always change these settings later."/>
 

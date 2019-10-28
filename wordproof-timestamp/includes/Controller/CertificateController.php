@@ -67,6 +67,7 @@ class CertificateController
           'uid' => $post->ID,
           'css' => WORDPROOF_URI_CSS . '/frontend.css',
           'dateFormat' => null, //TODO
+          'lastModified' => get_the_modified_date('c', $post->ID),
         ],
         'automate' => [
           'active' => $wsfyIsActive,

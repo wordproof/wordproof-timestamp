@@ -42,9 +42,15 @@ class Modal extends React.Component {
             //TODO: Check transaction on blockchain
             const local = this.state.articles[0].hash;
             const hashed = sha256(JSON.stringify(this.state.articles[0].raw));
-            console.log(local === hashed);
-            this.setState({validTimestamp: local === hashed});
-            //TODO: check if this article is the newest version ($meta->date !== get_the_modified_date('c', $post->ID))
+
+            const modified = new Date(this.state.articles[0].date);
+            const lastEdited = new Date(wordproof.modal.lastModified);
+
+            if (local === hashed && modified.getTime() === lastEdited.getTime()) {
+                this.setState({validTimestamp: true});
+            } else {
+                this.setState({validTimestamp: false});
+            }
         }
     }
 

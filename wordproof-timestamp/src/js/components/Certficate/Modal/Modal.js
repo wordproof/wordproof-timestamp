@@ -16,7 +16,7 @@ class Modal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            active: true,
+            active: false,
             articles: null,
             view: 'overview',
             validTimestamp: null,
@@ -46,11 +46,8 @@ class Modal extends React.Component {
             const modified = new Date(this.state.articles[0].date);
             const lastEdited = new Date(wordproof.modal.lastModified);
 
-            if (local === hashed && modified.getTime() === lastEdited.getTime()) {
-                this.setState({validTimestamp: true});
-            } else {
-                this.setState({validTimestamp: false});
-            }
+            const valid = (local === hashed) && (modified.getTime() === lastEdited.getTime());
+            this.setState({validTimestamp: valid});
         }
     }
 

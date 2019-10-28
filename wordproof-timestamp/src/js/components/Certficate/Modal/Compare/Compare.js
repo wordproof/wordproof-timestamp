@@ -83,7 +83,7 @@ export default class Compare extends React.Component {
                         </div>
                     </div>
 
-                    <ButtonList/>
+                    <ButtonList view={'compare'}/>
                 </div>
             </>
         );

@@ -13,6 +13,8 @@ export default class SelectArticle extends React.Component {
             this.props.setOld(event.target.value);
         } else if (this.props.for === 'new') {
             this.props.setNew(event.target.value);
+        } else if (this.props.for === 'raw') {
+            this.props.setArticle(event.target.value);
         }
         this.setState({value: event.target.value});
     }

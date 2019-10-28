@@ -4,7 +4,11 @@ export default class Text extends React.Component {
     render() {
         return (
             <div className={'w-full py-5 px-4 rounded-lg border-2 border-gray-300 overflow-y-scroll'} style={{'maxHeight': '280px'}}>
-                <div className={'w-full'} dangerouslySetInnerHTML={ {__html: this.props.text } }/>
+                {this.props.raw ? (
+                    <div className={'w-full'}>{this.props.text}</div>
+                ) : (
+                    <div className={'w-full'} dangerouslySetInnerHTML={{__html: this.props.text}}/>
+                )}
             </div>
         );
     }

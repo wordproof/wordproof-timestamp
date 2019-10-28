@@ -127,6 +127,7 @@ class CertificateController
           'buttons' => [
             'explanation' => __('Explanation', 'wordproof-timestamp'),
             'raw' => __('View raw input', 'wordproof-timestamp'),
+            'compare' => __('Compare', 'wordproof-timestamp'),
             'checker' => __('Timestamp check', 'wordproof-timestamp'),
             'blockchain' => __('View on blockchain', 'wordproof-timestamp'),
           ],

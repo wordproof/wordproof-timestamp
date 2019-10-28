@@ -66,7 +66,7 @@ class Modal extends React.Component {
             case 'compare':
                 return <Compare articles={this.state.articles}/>;
             case 'compare.raw':
-                return <CompareRaw raw={this.state.articles[0].raw}/>;
+                return <CompareRaw articles={this.state.articles}/>;
             default:
                 return null;
         }
@@ -134,7 +134,7 @@ class Modal extends React.Component {
                         aria-hidden={true}>
                     </div>
 
-                    <div className="modal-container h-modal overflow-x-hidden overflow-y-auto bg-white w-11/12 md:max-w-4xl mx-auto rounded-lg rounded-bl-none shadow z-50 overflow-y-auto"
+                    <div className="modal-container h-modal overflow-x-hidden overflow-y-auto bg-white w-11/12 md:max-w-4xl mx-auto rounded-lg shadow z-50 overflow-y-auto"
                          aria-modal={this.state.active} role={'modal'} aria-labelledby={''} aria-describedby={''}>
 
                         {this.renderView()}

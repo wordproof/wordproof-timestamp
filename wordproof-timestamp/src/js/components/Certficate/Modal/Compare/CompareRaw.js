@@ -1,21 +1,48 @@
 import React from 'react';
 import Nav from "../components/Nav";
+import SelectArticle from "./SelectArticle";
+import Text from "./Text";
+import ButtonList from "./ButtonList";
 
 export default class CompareRaw extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            index: 0,
+        }
+    }
+
+    setArticle = (index) => {
+        this.setState({index: index})
+    };
+
     render() {
-        console.log(this.props.raw);
         return (
             <>
-                <Nav title={ wStrings.compare.raw.nav} backView={'compare'}/>
+                <Nav title={wStrings.compare.raw.nav} backView={'compare'}/>
 
-                <div className={'flex flex-row'}>
-                    <div className={'w-1/2 m-4'}>
-                        <div className={'text-sm bg-gray-300 px-6 py-4 rounded overflow-x-scroll'}>{JSON.stringify(this.props.raw)}</div>
+                <div>
+
+                    <div className={'flex flex-row pt-6 px-12'}>
+                        <SelectArticle articles={this.props.articles} selected={0} for={'raw'}
+                                       setArticle={this.setArticle}/>
                     </div>
-                    <div className={'w-1/2 m-4'}>
-                        <h2>{ wStrings.compare.raw.title }</h2>
-                        <p>{ wStrings.compare.raw.text }</p>
+
+                    <div className={'flex flex-row mx-6'}>
+                        <div className={'md:w-1/2 hidden md:block'}>
+                            <div className={'m-6 mt-0'}>
+                                <Text text={JSON.stringify(this.props.articles[this.state.index].raw)} raw={true}/>
+                            </div>
+                        </div>
+                        <div className={'md:w-1/2 w-full'}>
+                            <div className={'m-6 mt-0'}>
+                                <Text text={this.props.articles[this.state.index].content}/>
+                            </div>
+                        </div>
                     </div>
+
+                    <ButtonList view={'raw'}/>
                 </div>
             </>
         );

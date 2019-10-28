@@ -22,7 +22,7 @@ export default class Nav extends React.Component {
                     }
                 </div>
                 <div className={'w-2/3 flex flex-row items-center justify-end'}>
-                    <span className={'hidden md:inline'}>{ this.props.title}</span>
+                    <span className={'hidden md:inline text-darkblue font-medium'}>{ this.props.title}</span>
                     <Close className={'modal-close-icon cursor-pointer ml-3'} onClick={this.close}/>
                 </div>
             </div>

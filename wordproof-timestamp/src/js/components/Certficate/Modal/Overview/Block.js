@@ -8,11 +8,11 @@ export default class Block extends React.Component {
                     <div className={`flex flex-col md:flex-row text-base text-gray-700`}>
                         <div className={'mb-2 md:m-0 md:w-1/12'}>{this.props.icon}</div>
                         <div className={'md:pl-3'}>
-                            <h3 className={`text-lg text-black`}>{this.props.title}</h3>
-                            <p className={`mb-1`}>{this.props.description}</p>
+                            <h3 className={`text-lg text-black font-medium`}>{this.props.title}</h3>
+                            <p className={`mb-2`}>{this.props.description}</p>
 
                             {this.props.showLink &&
-                                <button className={`text-darkblue`}
+                                <button className={`text-darkblue font-medium`}
                                         onClick={this.props.onLinkClick}>&gt; {this.props.linkText}</button>
                             }
                         </div>

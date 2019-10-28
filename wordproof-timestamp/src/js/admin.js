@@ -64,17 +64,17 @@ async function postColumnSave(ev) {
 
   if (response.errors) {
 
-    ev.target.style.display = 'none';
+    ev.target.style.display = 'none'; // eslint-disable-line
     document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = 'Something went wrong. ' + JSON.stringify(response.errors);
 
   } else if (response.success) {
 
-    ev.target.style.display = 'none';
+    ev.target.style.display = 'none'; // eslint-disable-line
     document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = '👍 Post sent to My WordProof';
 
   } else if (response.message) {
 
-    ev.target.style.display = 'none';
+    ev.target.style.display = 'none'; // eslint-disable-line
     document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = 'Something went wrong. ' + JSON.stringify(response.message);
 
   }

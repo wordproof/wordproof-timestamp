@@ -116,6 +116,7 @@ class CertificateController
           ]
         ],
         'importance' => [
+          'nav' => __('This content is not WordProof', 'wordproof-timestamp'),
           'title' => __('This content is not WordProof', 'wordproof-timestamp'),
           'text' => __('This content is not WordProof', 'wordproof-timestamp'),
           'cta' => __('This content is not WordProof', 'wordproof-timestamp'),

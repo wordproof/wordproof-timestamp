@@ -11,7 +11,7 @@ export default class OverviewImportance extends React.Component {
     render() {
         return (
             <>
-                <Nav title={'This Content is WordProof'} backView={'overview'}/>
+                <Nav title={ wStrings.importance.nav } backView={'overview'}/>
 
                 <div className={'flex flex-row'}>
                     <div className={'w-1/3 overflow-hidden'}>

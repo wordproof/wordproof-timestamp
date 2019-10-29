@@ -11,7 +11,7 @@ export default class CompareExplanation extends React.Component {
     render() {
         return (
             <>
-                <Nav title={wStrings.explanation.nav} backView={'compare'}/>
+                <Nav title={wStrings.importance.nav} backView={'compare'}/>
 
                 <div className={'flex flex-row'}>
                     <div className={'w-1/3 overflow-hidden'}>

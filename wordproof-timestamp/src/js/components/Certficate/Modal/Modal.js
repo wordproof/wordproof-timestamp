@@ -77,8 +77,12 @@ class Modal extends React.Component {
         document.addEventListener('wordproof.modal.open', this.open);
         document.addEventListener('wordproof.modal.close', this.close);
         window.addEventListener('keydown', this.handleKey);
+        
         this.navigation();
         this.getArticles();
+
+        if (window.location.hash.includes('wordproof'))
+            this.open();
     };
 
     navigation = () => {

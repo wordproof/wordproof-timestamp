@@ -137,10 +137,10 @@ class Modal extends React.Component {
                     </div>
 
                     <div className="modal-container h-modal overflow-x-hidden overflow-y-auto bg-white w-11/12 md:max-w-4xl mx-auto rounded-lg shadow z-50 overflow-y-auto"
-                         aria-modal={this.state.active} role={'modal'} aria-labelledby={''} aria-describedby={''}>
-
-                        {this.renderView()}
-
+                         aria-modal={this.state.active} role={'modal'} aria-describedby={'WordProof Timestamp Certificate'}>
+                        <div className={'h-full'} role={'document'}>
+                            { this.renderView() }
+                        </div>
                     </div>
                 </div>
                 <link rel="stylesheet" type="text/css" href={wordproof.modal.css}/>

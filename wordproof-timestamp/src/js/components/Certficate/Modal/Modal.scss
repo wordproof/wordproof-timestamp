@@ -55,10 +55,10 @@ h2 {
   &-modal {
     height: 528px;
 
-    > div:first-child {
+    > div > div:first-child {
       height: 12%;
     }
-    > div:last-child {
+    > div > div:last-child {
       height: 88%;
     }
   }

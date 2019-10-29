@@ -25,8 +25,8 @@ export default class CompareRaw extends React.Component {
                 <div>
 
                     <div className={'flex flex-row pt-6 px-12'}>
-                        <SelectArticle articles={this.props.articles} selected={0} for={'raw'}
-                                       setArticle={this.setArticle}/>
+                        <SelectArticle articles={this.props.articles} selected={this.state.index} for={'raw'}
+                                       setArticle={this.setArticle} disabledIndexes={[]}/>
                     </div>
 
                     <div className={'flex flex-row mx-6'}>
@@ -42,7 +42,7 @@ export default class CompareRaw extends React.Component {
                         </div>
                     </div>
 
-                    <ButtonList view={'hide'} hrefBlockchain={this.props.articles[this.state.index].transactionUrl}/>
+                    <ButtonList view={(this.props.noRevisions) ? 'hide' : 'raw'} hrefBlockchain={this.props.articles[this.state.index].transactionUrl}/>
                 </div>
             </>
         );

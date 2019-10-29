@@ -1,12 +1,6 @@
 import React from 'react';
 
 export default class SelectArticle extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: this.props.selected
-        }
-    }
 
     dateToLocale = (iso, index) => {
         const locale = wordproof.modal.locale.replace('_', '-');
@@ -38,9 +32,9 @@ export default class SelectArticle extends React.Component {
 
     render() {
         return (
-            <select className={'w-full bg-white border-2 border-gray-300 mb-3 py-2 px-3 h-10 max-h-full'} onChange={(e) => this.change(e)} value={this.state.value}>
+            <select className={'w-full bg-white border-2 border-gray-300 mb-3 py-2 px-3 h-10 max-h-full'} onChange={(e) => this.change(e)} value={this.props.selected}>
                 {this.props.articles.map((article, index) => {
-                    return (<option data-for={this.props.for} key={index} value={index}>{ this.dateToLocale(article.date, index) }</option>)
+                    return (<option disabled={this.props.disabledIndexes.includes(index)} data-for={this.props.for} key={index} value={index}>{ this.dateToLocale(article.date, index) }</option>)
                 })}
             </select>
         );

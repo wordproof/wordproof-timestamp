@@ -18,12 +18,13 @@ export default class Compare extends React.Component {
             newIndex: 0,
             oldText: '',
             newText: '',
+            oldDisabled: [],
+            newDisabled: [],
         }
     }
 
     componentDidMount() {
         if (this.props.noRevisions) {
-            console.log('go');
             document.dispatchEvent(new Event('wordproof.modal.navigate.compare.raw'));
         } else {
             this.compare();
@@ -34,6 +35,7 @@ export default class Compare extends React.Component {
         const oldContent = this.props.articles[this.state.oldIndex].content;
         const newContent = this.props.articles[this.state.newIndex].content;
         let changes = diffWords(oldContent.toString(), newContent.toString());
+        this.getSelectArrays();
         this.handleChanges(changes);
     };
 
@@ -43,7 +45,7 @@ export default class Compare extends React.Component {
 
         list.forEach((change) => {
             if (change.removed) {
-                oldText.push(renderToString(<Removed>{change.value}</Removed>));
+                oldText.push(change.value);
                 newText.push(renderToString(<Removed>{change.value}</Removed>));
             } else if (change.added) {
                 newText.push(renderToString(<Added>{change.value}</Added>));
@@ -60,13 +62,29 @@ export default class Compare extends React.Component {
     };
 
     setNew = (index) => {
-        this.setState({newIndex: index});
-        this.compare();
+        this.setState({newIndex: index}, this.compare);
     };
 
     setOld = (index) => {
-        this.setState({oldIndex: index});
-        this.compare();
+        this.setState({oldIndex: index}, this.compare);
+    };
+
+    getSelectArrays = () => {
+        const lastIndex = this.props.articles.length - 1;
+        let oldDisabled = this.range(0, this.state.newIndex);
+        let newDisabled = this.range(this.state.oldIndex, lastIndex);
+        this.setState({
+            oldDisabled: oldDisabled,
+            newDisabled: newDisabled
+        })
+    };
+
+    range = (start, end) => {
+        let list = [];
+        for (let i = parseInt(start); i <= parseInt(end); i++) {
+            list.push(i);
+        }
+        return list;
     };
 
     render() {
@@ -77,18 +95,23 @@ export default class Compare extends React.Component {
                 <div>
                     <div className={'flex flex-row mx-6'}>
                         <div className={'w-1/2 m-6 hidden md:block'}>
-                            <SelectArticle articles={this.props.articles} selected={1} for={'old'}
-                                           setOld={this.setOld}/>
+                            <SelectArticle articles={this.props.articles} selected={this.state.oldIndex} for={'old'}
+                                           setOld={this.setOld} disabledIndexes={this.state.oldDisabled}/>
                             <Text text={this.state.oldText}/>
                         </div>
                         <div className={'md:w-1/2 m-6 w-full'}>
-                            <SelectArticle articles={this.props.articles} selected={0} for={'new'}
-                                           setNew={this.setNew}/>
+                            <div className={'md:hidden'}>
+                                <SelectArticle articles={this.props.articles} selected={this.state.oldIndex} for={'old'}
+                                               setOld={this.setOld} disabledIndexes={this.state.oldDisabled}/>
+                            </div>
+                            <SelectArticle articles={this.props.articles} selected={this.state.newIndex} for={'new'}
+                                           setNew={this.setNew} disabledIndexes={this.state.newDisabled}/>
                             <Text text={this.state.newText}/>
                         </div>
                     </div>
 
-                    <ButtonList view={'compare'} hrefBlockchain={this.props.articles[this.state.newIndex].transactionUrl}/>
+                    <ButtonList view={'compare'}
+                                hrefBlockchain={this.props.articles[this.state.newIndex].transactionUrl}/>
                 </div>
             </>
         );

@@ -19,7 +19,7 @@ export default class BlockLastEdit extends React.Component {
             <Block icon={<Clock/>}
                    title={withRevisions ? wStrings.overview.block.compare.withRevisions.title : wStrings.overview.block.compare.withoutRevisions.title}
                    description={withRevisions ? wStrings.overview.block.compare.withRevisions.description : wStrings.overview.block.compare.withoutRevisions.description}
-                   showLink={withRevisions} linkText={wStrings.overview.block.compare.linkText} onLinkClick={this.click}
+                   linkText={wStrings.overview.block.compare.linkText} onLinkClick={this.click}
                    endingIcon={<Check/>} endingText={wStrings.overview.block.compare.subText}/>
         )
     }

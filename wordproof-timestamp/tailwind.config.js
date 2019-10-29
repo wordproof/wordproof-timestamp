@@ -49,6 +49,8 @@ module.exports = {
         maxWidth: {
             '3xl': '768px',
             '4xl': '896px',
+            '1/4': '25%',
+
         },
         borderRadius: {
             'none': '0',

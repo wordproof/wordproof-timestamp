@@ -22,7 +22,12 @@ export default class Compare extends React.Component {
     }
 
     componentDidMount() {
-        this.compare();
+        if (this.props.noRevisions) {
+            console.log('go');
+            document.dispatchEvent(new Event('wordproof.modal.navigate.compare.raw'));
+        } else {
+            this.compare();
+        }
     }
 
     compare = () => {

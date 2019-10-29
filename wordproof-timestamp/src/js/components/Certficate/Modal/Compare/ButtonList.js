@@ -6,7 +6,7 @@ export default class ButtonList extends React.Component {
     render() {
         return (
             <div className={'shadow-lg mx-6 mb-1 border-gray-300 bg-gray-200 border rounded-lg'}>
-                <div className={'flex items-center flex-wrap'}>
+                <div className={'flex items-center flex-wrap flex-grow justify-around md:justify-between px-4'}>
                     <ButtonListItem href={''} navigate={'compare.explanation'} icon={<QuestionMark/>}>{wStrings.compare.buttons.explanation}</ButtonListItem>
                     {(this.props.view === 'compare') &&
                         <ButtonListItem href={''} navigate={'compare.raw'} hideMobile={true}

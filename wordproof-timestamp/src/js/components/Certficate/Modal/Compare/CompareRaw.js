@@ -20,7 +20,7 @@ export default class CompareRaw extends React.Component {
     render() {
         return (
             <>
-                <Nav title={wStrings.compare.raw.nav} backView={'compare'}/>
+                <Nav title={wStrings.compare.raw.nav} backView={(this.props.noRevisions) ? 'overview' : 'compare'}/>
 
                 <div>
 
@@ -42,7 +42,7 @@ export default class CompareRaw extends React.Component {
                         </div>
                     </div>
 
-                    <ButtonList view={'raw'} hrefBlockchain={this.props.articles[this.state.index].transactionUrl}/>
+                    <ButtonList view={'hide'} hrefBlockchain={this.props.articles[this.state.index].transactionUrl}/>
                 </div>
             </>
         );

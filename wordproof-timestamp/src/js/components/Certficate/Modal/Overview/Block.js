@@ -11,10 +11,8 @@ export default class Block extends React.Component {
                             <h3 className={`text-lg text-black font-medium`}>{this.props.title}</h3>
                             <p className={`mb-2`}>{this.props.description}</p>
 
-                            {this.props.showLink &&
                                 <button className={`text-darkblue font-medium`}
                                         onClick={this.props.onLinkClick}>&gt; {this.props.linkText}</button>
-                            }
                         </div>
                     </div>
                     <div className={`flex flex-row text-sm mt-4 text-gray-600`}>

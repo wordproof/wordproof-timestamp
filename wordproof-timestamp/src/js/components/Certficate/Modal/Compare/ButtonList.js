@@ -3,15 +3,11 @@ import ButtonListItem from "./ButtonListItem";
 import {QuestionMark, Eye, Clock, Blockchain} from "../components/Icons";
 
 export default class ButtonList extends React.Component {
-    toRaw() {
-        document.dispatchEvent(new Event('wordproof.modal.navigate.compare.raw'));
-    }
-
     render() {
         return (
             <div className={'shadow-lg mx-6 mb-1 border-gray-300 bg-gray-200 border rounded-lg'}>
                 <div className={'flex items-center flex-wrap'}>
-                    <ButtonListItem href={'https://wordproof.io/explanation'} icon={<QuestionMark/>}>{wStrings.compare.buttons.explanation}</ButtonListItem>
+                    <ButtonListItem href={''} navigate={'compare.explanation'} icon={<QuestionMark/>}>{wStrings.compare.buttons.explanation}</ButtonListItem>
                     {(this.props.view === 'compare') &&
                         <ButtonListItem href={''} navigate={'compare.raw'} hideMobile={true}
                                     icon={<Eye/>}>{wStrings.compare.buttons.raw}</ButtonListItem>

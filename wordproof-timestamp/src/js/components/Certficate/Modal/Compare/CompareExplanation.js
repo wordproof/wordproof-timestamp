@@ -1,0 +1,29 @@
+import React from 'react';
+import Nav from "../components/Nav";
+import Locks from "../Overview/Locks";
+
+export default class CompareExplanation extends React.Component {
+
+    click() {
+        document.dispatchEvent(new Event('wordproof.modal.navigate.compare'));
+    }
+
+    render() {
+        return (
+            <>
+                <Nav title={wStrings.explanation.nav} backView={'compare'}/>
+
+                <div className={'flex flex-row'}>
+                    <div className={'w-1/3 overflow-hidden'}>
+                        <Locks secure={this.props.valid}/>
+                    </div>
+                    <div className={'w-2/3 py-4 text-left px-6'}>
+                        <h2>{ wStrings.explanation.title }</h2>
+                        <p>{ wStrings.explanation.text }</p>
+                        <button className={'btn btn-primary mt-4'} onClick={this.click}>{ wStrings.explanation.cta }</button>
+                    </div>
+                </div>
+            </>
+        );
+    }
+}

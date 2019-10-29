@@ -9,6 +9,7 @@ import getArticles from "./schemaHelper";
 import Overview from "./Overview/Overview";
 import Compare from "./Compare/Compare";
 import CompareRaw from "./Compare/CompareRaw";
+import CompareExplanation from "./Compare/CompareExplanation";
 import OverviewImportance from "./Overview/OverviewImportance";
 
 class Modal extends React.Component {
@@ -27,14 +28,12 @@ class Modal extends React.Component {
             'overview.importance',
             'compare',
             'compare.raw',
+            'compare.explanation',
         ];
     }
 
     componentDidMount() {
         this.prepare();
-        /**
-         * TODO: Is article secure? Set locks.
-         */
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -65,6 +64,8 @@ class Modal extends React.Component {
                 return <OverviewImportance valid={this.state.validTimestamp}/>;
             case 'compare':
                 return <Compare articles={this.state.articles}/>;
+            case 'compare.explanation':
+                return <CompareExplanation valid={this.state.validTimestamp}/>;
             case 'compare.raw':
                 return <CompareRaw articles={this.state.articles}/>;
             default:
@@ -85,6 +86,7 @@ class Modal extends React.Component {
         document.addEventListener('wordproof.modal.navigate.overview.importance', () => this.changeView('overview.importance'));
         document.addEventListener('wordproof.modal.navigate.compare', () => this.changeView('compare'));
         document.addEventListener('wordproof.modal.navigate.compare.raw', () => this.changeView('compare.raw'));
+        document.addEventListener('wordproof.modal.navigate.compare.explanation', () => this.changeView('compare.explanation'));
     };
 
     handleKey = (e) => {

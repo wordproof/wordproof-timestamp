@@ -134,10 +134,14 @@ class CertificateController
           ],
           'raw' => [
             'nav' => __('Check it yourself', 'wordproof-timestamp'),
-            'title' => __('Title', 'wordproof-timestamp'),
-            'text' => __('Text', 'wordproof-timestamp'),
           ]
         ],
+        'explanation' => [
+          'nav' => __('Check it yourself', 'wordproof-timestamp'),
+          'title' => __('Title', 'wordproof-timestamp'),
+          'text' => __('Text', 'wordproof-timestamp'),
+          'cta' => __('Back', 'wordproof-timestamp'),
+        ]
       ]);
     }
   }

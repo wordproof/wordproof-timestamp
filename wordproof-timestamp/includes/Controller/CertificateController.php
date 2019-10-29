@@ -122,7 +122,7 @@ class CertificateController
         ],
         'compare' => [
           'nav' => __('Browse through previous versions', 'wordproof-timestamp'),
-          'created' => __('created', 'wordproof-timestamp'),
+          'first' => __('first timestamp', 'wordproof-timestamp'),
           'recent' => __('recent', 'wordproof-timestamp'),
           'at' => __('at', 'wordproof-timestamp'),
           'buttons' => [
@@ -135,12 +135,6 @@ class CertificateController
           'raw' => [
             'nav' => __('Check it yourself', 'wordproof-timestamp'),
           ]
-        ],
-        'explanation' => [
-          'nav' => __('Check it yourself', 'wordproof-timestamp'),
-          'title' => __('Title', 'wordproof-timestamp'),
-          'text' => __('Text', 'wordproof-timestamp'),
-          'cta' => __('Back', 'wordproof-timestamp'),
         ]
       ]);
     }

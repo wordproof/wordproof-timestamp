@@ -20,7 +20,7 @@ export default class SelectArticle extends React.Component {
             string =  wStrings.compare.recent + ' ' + string;
 
         if (index === this.props.articles.length-1)
-            string =  wStrings.compare.created + ' ' + string;
+            string =  wStrings.compare.first + ' ' + string;
 
         return string;
     };

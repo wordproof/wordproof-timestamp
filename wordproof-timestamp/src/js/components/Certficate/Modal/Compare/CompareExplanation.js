@@ -18,9 +18,9 @@ export default class CompareExplanation extends React.Component {
                         <Locks secure={this.props.valid}/>
                     </div>
                     <div className={'w-2/3 py-4 text-left px-6'}>
-                        <h2>{ wStrings.explanation.title }</h2>
-                        <p>{ wStrings.explanation.text }</p>
-                        <button className={'btn btn-primary mt-4'} onClick={this.click}>{ wStrings.explanation.cta }</button>
+                        <h2>{ wStrings.importance.title }</h2>
+                        <p>{ wStrings.importance.text }</p>
+                        <button className={'btn btn-primary mt-4'} onClick={this.click}>{ wStrings.importance.cta }</button>
                     </div>
                 </div>
             </>

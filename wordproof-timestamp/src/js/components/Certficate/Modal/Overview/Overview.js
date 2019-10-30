@@ -3,7 +3,6 @@ import Nav from "../components/Nav";
 import BlockIntegrity from "./BlockIntegrity";
 import BlockLastEdit from "./BlockLastEdit";
 import Locks from "./Locks";
-// import MobileCornerBackground fr,om "./MobileCornerBackground";
 
 export default class Overview extends React.Component {
 
@@ -14,7 +13,7 @@ export default class Overview extends React.Component {
     render() {
         return (
             <>
-                <Nav title={wStrings.overview.nav.valid}/>
+                <Nav title={this.props.valid ? wStrings.overview.nav.valid : wStrings.overview.nav.invalid}/>
 
                 <div className={'flex flex-row'}>
                     <div className={'hidden md:block md:w-1/3 overflow-hidden'}>
@@ -25,8 +24,6 @@ export default class Overview extends React.Component {
                         <BlockLastEdit articles={this.props.articles} />
                     </div>
                 </div>
-
-                {/*<MobileCornerBackground/>*/}
             </>
         );
     }

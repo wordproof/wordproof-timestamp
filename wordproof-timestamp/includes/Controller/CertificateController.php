@@ -95,19 +95,20 @@ class CertificateController
                 'description' => __('The website has updated the content of this page since it was last timestamped on the blockchain.', 'wordproof-timestamp'),
               ],
               'linkText' => __('Why is this important?', 'wordproof-timestamp'),
-              'subText' => sprintf(__('Published by %s'), $author),
+              'subText' => sprintf(__('Last edit on %s at %s'), $date, $time),
             ],
             'compare' => [
               'withRevisions' => [
                 'title' => __('Discover how this content changed over time', 'wordproof-timestamp'),
                 'description' => __('Because this website timestamps every revision on the blockchain, you can compare the different versions.', 'wordproof-timestamp'),
+                'linkText' => __('View previous versions', 'wordproof-timestamp'),
               ],
               'withoutRevisions' => [
-                'title' => __('Don\'t discover how this content changed over time', 'wordproof-timestamp'),
-                'description' => __('Because this website timestamps every revision on the blockchain, you can compare the different versions.', 'wordproof-timestamp'),
+                'title' => __('Verify the fingerprint of this content', 'wordproof-timestamp'),
+                'description' => __('See how this unique fingerprint was generated and verify it in the blockchain.', 'wordproof-timestamp'),
+                'linkText' => __('View the input of this timestamp', 'wordproof-timestamp'),
               ],
-              'linkText' => __('View previous versions', 'wordproof-timestamp'),
-              'subText' => sprintf(__('Last edit on %s at %s'), $date, $time),
+              'subText' => sprintf(__('Published by %s'), $author),
             ],
           ],
           'nav' => [
@@ -116,10 +117,13 @@ class CertificateController
           ]
         ],
         'importance' => [
-          'nav' => __('This content is not WordProof', 'wordproof-timestamp'),
-          'title' => __('This content is not WordProof', 'wordproof-timestamp'),
-          'text' => __('This content is not WordProof', 'wordproof-timestamp'),
-          'cta' => __('This content is not WordProof', 'wordproof-timestamp'),
+          'title' => __('Why does a timestamp on the blockchain matter?', 'wordproof-timestamp'),
+          'paragraphs' => [
+            __('The unique fingerprint (called the hash) of the latest version of this content has been added to the blockchain. It can’t be changed or removed.', 'wordproof-timestamp'),
+            __('Both you and the website have access to the hash and input that corresponds to this hash.', 'wordproof-timestamp'),
+            __('You have proof that the owner of this content created it and that it was not tampered with.', 'wordproof-timestamp'),
+            __('The website has proof of having this content at certain points in time, which can be used for copyright conflicts.', 'wordproof-timestamp'),
+          ],
         ],
         'compare' => [
           'nav' => __('Browse through previous versions', 'wordproof-timestamp'),
@@ -128,10 +132,10 @@ class CertificateController
           'at' => __('at', 'wordproof-timestamp'),
           'buttons' => [
             'explanation' => __('Explanation', 'wordproof-timestamp'),
-            'raw' => __('View raw input', 'wordproof-timestamp'),
+            'raw' => __('Raw input', 'wordproof-timestamp'),
             'compare' => __('Compare', 'wordproof-timestamp'),
             'checker' => __('Timestamp check', 'wordproof-timestamp'),
-            'blockchain' => __('View on blockchain', 'wordproof-timestamp'),
+            'blockchain' => __('View on Blockchain', 'wordproof-timestamp'),
           ],
           'raw' => [
             'nav' => __('Check it yourself', 'wordproof-timestamp'),

@@ -6,7 +6,7 @@ export default class CompareExplanation extends React.Component {
     render() {
         return (
             <>
-                <Nav  title={ this.props.valid ? wStrings.overview.nav.valid : wStrings.overview.nav.invalid } backView={'overview'} />
+                <Nav title={ this.props.valid ? wStrings.overview.nav.valid : wStrings.overview.nav.invalid } backView={'compare'} />
 
                 <div className={'flex flex-row'}>
                     <div className={'hidden md:block md:w-1/3 overflow-hidden'}>

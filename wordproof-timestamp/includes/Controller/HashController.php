@@ -22,7 +22,7 @@ class HashController
 
     $fields = self::getFields($post);
     $fields = array_merge($fields['properties'], $fields['attributes']);
-    $object = json_encode($fields, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+    $object = json_encode($fields, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
     if ($raw) {
       return $object;
@@ -43,32 +43,65 @@ class HashController
   }
 
   /**
-   * WEB_ARTICLE_TIMESTAMP properties, to be expanded in the future
    * @param $post
-   * @return array
+   * @return array|null
    */
   private static function getProperties($post)
   {
-    $array = [];
-    $array['type'] = WEB_ARTICLE_TIMESTAMP;
-    $array['version'] = CURRENT_WEB_ARTICLE_TIMESTAMP_VERSION;
-    $array['title'] = $post->post_title;
-    $array['content'] = PostHelper::getContent($post);
-    $array['date'] = get_the_modified_date('c', $post);
-    return $array;
+    switch (self::getType($post)) {
+      case ARTICLE_TIMESTAMP:
+        $array = [];
+        $array['type'] = ARTICLE_TIMESTAMP;
+        $array['version'] = CURRENT_TIMESTAMP_STANDARD_VERSION;
+        $array['title'] = $post->post_title;
+        $array['content'] = PostHelper::getContent($post);
+        $array['date'] = get_the_modified_date('c', $post);
+        return $array;
+      case MEDIA_OBJECT_TIMESTAMP:
+        $array = [];
+        $array['type'] = MEDIA_OBJECT_TIMESTAMP;
+        $array['version'] = CURRENT_TIMESTAMP_STANDARD_VERSION;
+        $array['title'] = $post->post_title;
+        $array['contentUrl'] = $post->guid;
+        $array['encodingFormat'] = $post->post_mime_type;
+        $array['date'] = get_the_modified_date('c', $post);
+        return $array;
+      default:
+        return null;
+    }
   }
 
   /**
-   * WEB_ARTICLE_TIMESTAMP attributes, to be expanded in the future
    * @param $post
-   * @return array
+   * @return array|mixed|void|null
    */
   private static function getAttributes($post)
   {
-    $array = [];
-    //TODO: Get selected attributes
-    $array['url'] = DomainHelper::getPermalink($post->ID);
-    $array = apply_filters('wordproof_hash_attributes', $array);
-    return $array;
+    switch (self::getType($post)) {
+      case ARTICLE_TIMESTAMP:
+        $array = []; //TODO: Get selected attributes
+        $array['url'] = DomainHelper::getPermalink($post->ID);
+        $array = apply_filters('wordproof_hash_attributes', $array);
+        return $array;
+      case MEDIA_OBJECT_TIMESTAMP:
+        $array = [];
+        return $array;
+      default:
+        return null;
+    }
+  }
+
+  public static function getType($post)
+  {
+    $postType = get_post_type($post);
+    switch ($postType) {
+      case 'page':
+      case 'post':
+        return ARTICLE_TIMESTAMP;
+      case 'attachment':
+        return MEDIA_OBJECT_TIMESTAMP;
+      default:
+        return null;
+    }
   }
 }

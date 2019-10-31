@@ -44,8 +44,9 @@ define('WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE', 'validate/token');
 define('WORDPROOF_WSFY_CRON_HOOK', 'wsfy_save_post_on_cron');
 
 //Web Standards
-define('WEB_ARTICLE_TIMESTAMP', 'WebArticleTimestamp');
-define('CURRENT_WEB_ARTICLE_TIMESTAMP_VERSION', '0.1.1');
+define('ARTICLE_TIMESTAMP', 'ArticleTimestamp');
+define('MEDIA_OBJECT_TIMESTAMP', 'MediaObjectTimestamp');
+define('CURRENT_TIMESTAMP_STANDARD_VERSION', '0.2');
 
 // Init plugin
 spl_autoload_register(__NAMESPACE__ . '\\autoload');

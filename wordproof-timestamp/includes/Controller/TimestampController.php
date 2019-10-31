@@ -37,7 +37,6 @@ class TimestampController
     exit;
   }
 
-
   public function saveTimestampAjax() {
     check_ajax_referer('wordproof', 'security');
     $postId = intval($_REQUEST['post_id']);

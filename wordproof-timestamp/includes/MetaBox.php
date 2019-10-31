@@ -11,7 +11,7 @@ class MetaBox {
     public function __construct() {
         if (current_user_can('manage_options')) {
           if (!OptionsHelper::isWSFYActive()) {
-            add_action('add_meta_boxes', array($this, 'addMetaBox'));
+            add_action('add_meta_boxes', [$this, 'addMetaBox']);
           }
         }
     }

@@ -3,6 +3,7 @@ export default function getJSON(schema) {
 
   let object = {};
   switch(type) {
+    case 'ArticleTimestamp':
     case 'WebArticleTimestamp':
       object.type = schema['@context']['@type'];
       object.version = schema['@context']['@version'];
@@ -12,6 +13,14 @@ export default function getJSON(schema) {
       object = checkAttribute(object, schema, 'author');
       object = checkAttribute(object, schema, 'previousVersion');
       object = checkAttribute(object, schema, 'url');
+      break;
+    case 'MediaObjectTimestamp':
+      object.type = schema['@context']['@type'];
+      object.version = schema['@context']['@version'];
+      object.title = schema.title;
+      object.contentUrl = schema.contentUrl;
+      object.encodingFormat = schema.encodingFormat;
+      object.date = schema.date;
       break;
     default:
       object.title = schema.title;

@@ -1,4 +1,4 @@
-import getJSON from "../../../lib/WebArticleTimestamp";
+import getJSON from "../../../lib/TimestampStandard";
 import striptags from "striptags";
 
 export default function getArticles(schema) {

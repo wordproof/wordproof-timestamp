@@ -26,11 +26,28 @@ class CertificateController
     }
   }
 
+  public function showCertificate() {
+    global $post;
+    $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain', 'type']);
+
+    $allowed = false;
+    switch($meta->type) {
+      case 'WebArticleTimestamp':
+      case ARTICLE_TIMESTAMP:
+        $allowed = true;
+        break;
+      default:
+        return false;
+    }
+
+    if (isset($meta->date) && !empty($meta->blockchain) && $allowed) {
+      return true;
+    }
+  }
+
   public function addLink($content)
   {
-    global $post;
-    $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain']);
-    if (isset($meta->date) && !empty($meta->blockchain)) {
+    if ($this->showCertificate()) {
       $content .= '<div id="wordproof-certificate-link"></div>';
     }
 
@@ -39,19 +56,16 @@ class CertificateController
 
   public function addModal()
   {
-    global $post;
-    $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain']);
-    if (isset($meta->date) && !empty($meta->blockchain)) {
+    if ($this->showCertificate()) {
       echo '<div id="wordproof-certificate-modal" style="position: relative; z-index: 999;"></div>';
     }
   }
 
   public function addScript()
   {
-    global $post;
-    $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain']);
+    if ($this->showCertificate()) {
+      global $post;
 
-    if (isset($meta->date) && !empty($meta->blockchain)) {
       $wsfyIsActive = OptionsHelper::isWSFYActive();
       $wsfyOptions = ($wsfyIsActive) ? OptionsHelper::getWSFY([], ['site_token']) : [];
 

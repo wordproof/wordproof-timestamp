@@ -50,15 +50,8 @@ class AutomateController
         return ['errors' => ['post_status' => ['Post needs to be published']]];
       }
 
-      $body = json_encode([
-        'uid' => $post->ID,
-        'site_id' => $options->site_id,
-        'title' => $post->post_title,
-        'content' => $post->post_content,
-        'date_created' => get_the_date('c', $post),
-        'date_modified' => get_the_modified_date('c', $post),
-        'url' => DomainHelper::getPermalink($post),
-      ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+      $type = HashController::getType($post);
+      $body = json_encode(self::getBody($type, $post, $options), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
       $result = wp_remote_post(WORDPROOF_WSFY_API_URI . WORDPROOF_WSFY_ENDPOINT_ARTICLE, [
         'headers' => [
@@ -92,6 +85,38 @@ class AutomateController
     } else {
       return ['errors' => ['authentication' => ['Please configure your site key']]];
     }
+  }
+
+  private static function getBody($type, $post, $options) {
+    switch($type) {
+      case ARTICLE_TIMESTAMP:
+        $fields = HashController::getFields($post);
+        return [
+          'version' => $fields['properties']['version'],
+          'uid' => $post->ID,
+          'site_id' => $options->site_id,
+          'title' => $fields['properties']['title'],
+          'content' => $fields['properties']['content'],
+          'date_created' => get_the_date('c', $post),
+          'date_modified' => $fields['properties']['date'],
+          'url' => $fields['attributes']['url'],
+        ];
+      case MEDIA_OBJECT_TIMESTAMP:
+        $fields = HashController::getFields($post);
+        return [
+          'version' => CURRENT_TIMESTAMP_STANDARD_VERSION,
+          'uid' => $post->ID,
+          'site_id' => $options->site_id,
+          'title' => $fields['properties']['title'],
+          'content_url' => $fields['properties']['contentUrl'],
+          'encoding_format' => $fields['properties']['encodingFormat'],
+          'date_created' => get_the_date('c', $post),
+          'date_modified' => $fields['properties']['date'],
+        ];
+      default:
+        return null;
+    }
+
   }
 
   public function updatePostWithTransaction()

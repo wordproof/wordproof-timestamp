@@ -10,7 +10,7 @@ use WordProofTimestamp\includes\PostMetaHelper;
 class AutomateController
 {
 
-  protected $responses = (object)[
+  protected $responses = [
     'unauthenticated' => 'unauthenticated',
     'origin_not_allowed' => 'origin_not_allowed',
     'valid_endpoint' => 'valid_endpoint',
@@ -21,6 +21,7 @@ class AutomateController
   public function __construct()
   {
     //TODO: Create separate callback controller
+    add_action('admin_post_nopriv_wordproof_test_callback', [$this, 'processCallback']);
     add_action('admin_post_nopriv_wordproof_callback', [$this, 'processCallback']);
     add_action('admin_post_nopriv_wordproof_wsfy_edit_post', [$this, 'processCallback']);
 
@@ -135,22 +136,24 @@ class AutomateController
       $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
 
       switch($action) {
-        case 'check_callback':
-          return $this->handleCheckCallback();
-        case 'modify_post':
+        case 'wordproof_test_callback':
+          $this->handleCheckCallback();
+          break;
+        case 'wordproof_callback':
         default:
-          return $this->handleModifyPost();
+          $this->handleModifyPost();
+          break;
       }
     } else {
       error_log('WordProof: Update request denied');
       error_log($_SERVER['REMOTE_ADDR']);
-      echo json_encode(['success' => false, 'response' => $this->responses->origin_not_allowed]);
+      echo json_encode(['success' => false, 'response' => $this->responses['origin_not_allowed'], 'remote_addr' => $_SERVER['REMOTE_ADDR']]);
       die();
     }
   }
 
   public function handleCheckCallback() {
-    echo json_encode(['success' => true, 'response' => $this->responses->valid_endpoint]);
+    echo json_encode(['success' => true, 'response' => $this->responses['valid_endpoint']]);
     die();
   }
 
@@ -165,11 +168,11 @@ class AutomateController
       $meta->transactionId = $transactionId;
 
       PostMetaHelper::savePostMeta($postId, (array)$meta, true);
-      echo json_encode(['success' => true, 'response' => $this->responses->post_modified]);
+      echo json_encode(['success' => true, 'response' => $this->responses['post_modified']]);
       die();
     } else {
       error_log('Post ' . $postId . ' not updated. ');
-      echo json_encode(['success' => false, 'response' => $this->responses->post_not_modified]);
+      echo json_encode(['success' => false, 'response' => $this->responses['post_not_modified']]);
       die();
     }
   }

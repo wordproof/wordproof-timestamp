@@ -69,6 +69,9 @@ class CertificateController
       $wsfyIsActive = OptionsHelper::isWSFYActive();
       $wsfyOptions = ($wsfyIsActive) ? OptionsHelper::getWSFY([], ['site_token']) : [];
 
+      $endpoint = str_replace('$postId', $post->ID, WORDPROOF_WSFY_ENDPOINT_ARTICLE);
+      $endpoint = str_replace('$siteId', $wsfyOptions->site_id, $endpoint);
+
       wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', [], filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
 
       wp_localize_script('wordproof.frontend.js', 'wordproof', [
@@ -85,7 +88,7 @@ class CertificateController
         ],
         'automate' => [
           'active' => $wsfyIsActive,
-          'api' => WORDPROOF_WSFY_API_URI . WORDPROOF_WSFY_ENDPOINT_ARTICLE,
+          'api' => WORDPROOF_WSFY_API_URI . $endpoint,
           'options' => $wsfyOptions,
         ]
       ]);

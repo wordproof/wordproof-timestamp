@@ -77,7 +77,7 @@ class Modal extends React.Component {
         document.addEventListener('wordproof.modal.open', this.open);
         document.addEventListener('wordproof.modal.close', this.close);
         window.addEventListener('keydown', this.handleKey);
-        
+
         this.navigation();
         this.getArticles();
 
@@ -117,7 +117,7 @@ class Modal extends React.Component {
         this.setState({articles: articles});
 
         if (wordproof.automate.active) {
-          fetch(wordproof.automate.api + wordproof.modal.uid + '?site_id=' + wordproof.automate.options.site_id).then((response) => {
+          fetch(wordproof.automate.api).then((response) => {
               if (response.ok) {
                   return response.json();
               }

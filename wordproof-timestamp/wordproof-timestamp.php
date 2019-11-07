@@ -38,8 +38,8 @@ define('WORDPROOF_URI_JS', WORDPROOF_URI_ASSETS . '/js');
 define('WORDPROOF_URI_CSS', WORDPROOF_URI_ASSETS . '/css');
 define('WORDPROOF_URI_IMAGES', WORDPROOF_URI_ASSETS . '/images');
 define('WORDPROOF_URI_SVG', WORDPROOF_URI_ASSETS . '/svg');
-define('WORDPROOF_WSFY_ENDPOINT_ARTICLE', 'articles/');
-define('WORDPROOF_WSFY_ENDPOINT_RETRY_CALLBACK', 'articles/{id}/callback/retry');
+define('WORDPROOF_WSFY_ENDPOINT_ARTICLE', 'sites/$siteId/articles/');
+define('WORDPROOF_WSFY_ENDPOINT_RETRY_CALLBACK', 'sites/$siteId/articles/$postId/callback/retry');
 define('WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE', 'validate/token');
 define('WORDPROOF_WSFY_CRON_HOOK', 'wsfy_save_post_on_cron');
 

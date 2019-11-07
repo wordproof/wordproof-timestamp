@@ -19,6 +19,7 @@ if (!defined('WPINC')) {
   die();
 }
 
+define('WORDPROOF_DEVELOPMENT', true);
 define('WORDPROOF_VERSION', '2.2.0');
 define('WORDPROOF_SLUG', 'wordproof');
 define('WORDPROOF_PREFIX', 'wordproof');
@@ -37,16 +38,23 @@ define('WORDPROOF_URI_JS', WORDPROOF_URI_ASSETS . '/js');
 define('WORDPROOF_URI_CSS', WORDPROOF_URI_ASSETS . '/css');
 define('WORDPROOF_URI_IMAGES', WORDPROOF_URI_ASSETS . '/images');
 define('WORDPROOF_URI_SVG', WORDPROOF_URI_ASSETS . '/svg');
-define('WORDPROOF_WSFY_API_IP', ['167.71.143.38']);
-define('WORDPROOF_WSFY_API_URI', 'https://my.wordproof.io/api/');
 define('WORDPROOF_WSFY_ENDPOINT_ARTICLE', 'articles/');
+define('WORDPROOF_WSFY_ENDPOINT_RETRY_CALLBACK', 'articles/{id}/callback/retry');
 define('WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE', 'validate/token');
 define('WORDPROOF_WSFY_CRON_HOOK', 'wsfy_save_post_on_cron');
+
+if (WORDPROOF_DEVELOPMENT) {
+  define('WORDPROOF_WSFY_API_IP', ['167.71.143.38', '127.0.0.1']);
+  define('WORDPROOF_WSFY_API_URI', 'https://staging.wordproof.io/api/');
+} else {
+  define('WORDPROOF_WSFY_API_IP', ['167.71.143.38']);
+  define('WORDPROOF_WSFY_API_URI', 'https://my.wordproof.io/api/');
+}
 
 //Web Standards
 define('ARTICLE_TIMESTAMP', 'ArticleTimestamp');
 define('MEDIA_OBJECT_TIMESTAMP', 'MediaObjectTimestamp');
-define('CURRENT_TIMESTAMP_STANDARD_VERSION', '0.2');
+define('CURRENT_TIMESTAMP_STANDARD_VERSION', '0.2.0');
 
 // Init plugin
 spl_autoload_register(__NAMESPACE__ . '\\autoload');

@@ -63,38 +63,54 @@ class AutomateController
 
       $type = HashController::getType($post);
       $body = json_encode(self::getBody($type, $post, $options), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-
-      $result = wp_remote_post(WORDPROOF_WSFY_API_URI . WORDPROOF_WSFY_ENDPOINT_ARTICLE, [
-        'headers' => [
-          'Accept' => 'application/json',
-          'Content-Type' => 'application/json',
-          'Authorization' => 'Bearer ' . $options->site_token
-        ],
-        'body' => $body
-      ]);
+      $endpoint = str_replace('$postId', $postId, WORDPROOF_WSFY_ENDPOINT_ARTICLE);
+      $endpoint = str_replace('$siteId', $options->site_id, $endpoint);
+      $result = self::postToMy($endpoint, $options->site_token, $body);
 
       $code = wp_remote_retrieve_response_code($result);
 
       if ($code === 201) {
-
-        error_log('Post saved to WSFY Servers. Saving post locally.');
         TimestampController::saveTimestamp($postId, '', '', true);
-
       } else {
-
-        if (isset($result)) {
-          if (is_wp_error($result)) {
-            return ['errors' => $result->get_error_message()];
-          } else if (is_array($result) && isset($result['body'])) {
-            return $result['body'];
-          } else {
-            return $result;
-          }
-        }
-
+        return self::returnError($result);
       }
     } else {
       return ['errors' => ['authentication' => ['Please configure your site key']]];
+    }
+  }
+
+  public static function retryCallback($postId) {
+    $options = OptionsHelper::getWSFY();
+
+    if (isset($options->site_token) && isset($options->site_id)) {
+      $endpoint = str_replace('$postId', $postId, WORDPROOF_WSFY_ENDPOINT_ARTICLE);
+      $endpoint = str_replace('$siteId', $options->site_id, $endpoint);
+      $result = self::postToMy($endpoint, $options->site_token, []);
+    } else {
+      return ['errors' => ['authentication' => ['Please configure your site key']]];
+    }
+  }
+
+  private static function postToMy($endpoint, $token, $body) {
+    return $result = wp_remote_post(WORDPROOF_WSFY_API_URI . $endpoint, [
+      'headers' => [
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json',
+        'Authorization' => 'Bearer ' . $token
+      ],
+      'body' => $body
+    ]);
+  }
+
+  private static function returnError($result) {
+    if (isset($result)) {
+      if (is_wp_error($result)) {
+        return ['errors' => $result->get_error_message()];
+      } else if (is_array($result) && isset($result['body'])) {
+        return $result['body'];
+      } else {
+        return $result;
+      }
     }
   }
 
@@ -104,8 +120,6 @@ class AutomateController
         $fields = HashController::getFields($post);
         return [
           'version' => $fields['properties']['version'],
-          'uid' => $post->ID,
-          'site_id' => $options->site_id,
           'title' => $fields['properties']['title'],
           'content' => $fields['properties']['content'],
           'date_created' => get_the_date('c', $post),
@@ -116,8 +130,6 @@ class AutomateController
         $fields = HashController::getFields($post);
         return [
           'version' => CURRENT_TIMESTAMP_STANDARD_VERSION,
-          'uid' => $post->ID,
-          'site_id' => $options->site_id,
           'title' => $fields['properties']['title'],
           'content_url' => $fields['properties']['contentUrl'],
           'encoding_format' => $fields['properties']['encodingFormat'],

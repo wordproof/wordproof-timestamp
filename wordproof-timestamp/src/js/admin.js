@@ -38,10 +38,15 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function initPostsButtons() {
-  let buttons = document.querySelectorAll('.wordproof-wsfy-save-post');
+  let stampButtons = document.querySelectorAll('.wordproof-wsfy-save-post');
+  let retryCallbackButtons = document.querySelectorAll('.wordproof-wsfy-request-callback');
 
-  buttons.forEach(function (button) {
+  stampButtons.forEach(function (button) {
     button.addEventListener('click', postColumnSave);
+  });
+
+  retryCallbackButtons.forEach(function (button) {
+    button.addEventListener('click', postColumnRetry);
   });
 }
 
@@ -80,6 +85,34 @@ async function postColumnSave(ev) {
   }
 }
 
+async function postColumnRetry(ev) {
+  ev.preventDefault();
+  var postId = ev.target.dataset.postId;
+  var response = await retryCallback(postId);
+  console.log(response);
+
+  if (typeof response === 'string') {
+    response = JSON.parse(response);
+  }
+
+  if (response.errors) {
+
+    ev.target.style.display = 'none'; // eslint-disable-line
+    document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = 'Something went wrong. ' + JSON.stringify(response.errors);
+
+  } else if (response.success) {
+
+    ev.target.style.display = 'none'; // eslint-disable-line
+    document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = '👍 Post sent to My WordProof';
+
+  } else if (response.message) {
+
+    ev.target.style.display = 'none'; // eslint-disable-line
+    document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = 'Something went wrong. ' + JSON.stringify(response.message);
+
+  }
+}
+
 function savePost(postId) {
   return new Promise(function (resolve, reject) {
 
@@ -89,6 +122,26 @@ function savePost(postId) {
   Http.open('POST', wordproofData.ajaxURL, true);
   Http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   Http.send('action=wordproof_wsfy_save_post&post_id=' + postId + '&security=' + wordproofData.ajaxSecurity);
+
+  Http.onreadystatechange = function () {
+    if (Http.readyState === 4 && Http.status === 200) {
+      resolve(JSON.parse(Http.responseText));
+    } else if (Http.readyState === 4) {
+      reject(JSON.parse(Http.responseText));
+    }
+  }
+});
+}
+
+function retryCallback(postId) {
+  return new Promise(function (resolve, reject) {
+
+  console.log('Retry callback ' + postId);
+
+  const Http = new XMLHttpRequest();
+  Http.open('POST', wordproofData.ajaxURL, true);
+  Http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  Http.send('action=wordproof_wsfy_retry_callback&post_id=' + postId + '&security=' + wordproofData.ajaxSecurity);
 
   Http.onreadystatechange = function () {
     if (Http.readyState === 4 && Http.status === 200) {

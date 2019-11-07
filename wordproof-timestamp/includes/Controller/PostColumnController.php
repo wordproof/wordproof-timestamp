@@ -24,7 +24,7 @@ class PostColumnController
       }
     }
 
-    if ($showColumn) {
+    if ($showColumn) { //TODO also on CPT's
       add_filter('manage_posts_columns', array($this, 'addColumn'));
       add_action('manage_posts_custom_column', array($this, 'addColumnContent'), 10, 2);
       add_filter('manage_pages_columns', array($this, 'addColumn'));
@@ -32,6 +32,7 @@ class PostColumnController
     }
 
     add_action('wp_ajax_wordproof_wsfy_save_post', [$this, 'savePost']);
+    add_action('wp_ajax_wordproof_wsfy_retry_callback', [$this, 'retryCallback']);
   }
 
   function savePost()
@@ -43,12 +44,22 @@ class PostColumnController
     die();
   }
 
+  function retryCallback()
+  {
+    check_ajax_referer('wordproof', 'security');
+    $postId = intval($_REQUEST['post_id']);
+    $result = AutomateController::retryCallback($postId);
+    echo json_encode($result);
+    die();
+  }
+
   public function addColumn($defaults)
   {
     $defaults['wordproof'] = 'WordProof';
     return $defaults;
   }
 
+  //TODO: Create React component
   public function addColumnContent($column_name)
   {
     global $post;
@@ -72,6 +83,7 @@ class PostColumnController
       } else if (empty($meta->blockchain)) {
 
         echo '<span>🕓 Waiting for callback</span>';
+        $this->addRequestCallbackButton($post);
 
       } else {
 
@@ -85,6 +97,14 @@ class PostColumnController
   {
     if (OptionsHelper::isWSFYActive()) {
       echo '<br><button class="button wordproof-wsfy-save-post" data-post-id="' . $post->ID . '">Timestamp this post</button>';
+      echo '<span class="wordproof-wsfy-message-' . $post->ID . '"> </span>';
+    }
+  }
+
+  public function addRequestCallbackButton($post)
+  {
+    if (OptionsHelper::isWSFYActive()) {
+      echo '<br><button class="button wordproof-wsfy-request-callback" data-post-id="' . $post->ID . '">Request new callback</button>';
       echo '<span class="wordproof-wsfy-message-' . $post->ID . '"> </span>';
     }
   }

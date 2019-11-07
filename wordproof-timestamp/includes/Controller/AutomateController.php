@@ -10,8 +10,20 @@ use WordProofTimestamp\includes\PostMetaHelper;
 class AutomateController
 {
 
+  protected $responses = (object)[
+    'unauthenticated' => 'unauthenticated',
+    'origin_not_allowed' => 'origin_not_allowed',
+    'valid_endpoint' => 'valid_endpoint',
+    'post_modified' => 'post_modified',
+    'post_not_modified' => 'post_not_modified',
+  ];
+
   public function __construct()
   {
+    //TODO: Create separate callback controller
+    add_action('admin_post_nopriv_wordproof_callback', [$this, 'processCallback']);
+    add_action('admin_post_nopriv_wordproof_wsfy_edit_post', [$this, 'processCallback']);
+
     if (OptionsHelper::isWSFYActive()) {
       $options = OptionsHelper::getWSFY([], ['site_token']);
 
@@ -28,8 +40,6 @@ class AutomateController
 
       add_action(WORDPROOF_WSFY_CRON_HOOK, [$this, 'savePost']);
 
-      add_action('admin_post_nopriv_wordproof_wsfy_edit_post', [$this, 'updatePostWithTransaction']);
-      add_action('admin_post_nopriv_wordproof_callback', [$this, 'updatePostWithTransaction']);
 
       if (is_admin()) {
         new AutoStampPage();
@@ -119,31 +129,49 @@ class AutomateController
 
   }
 
-  public function updatePostWithTransaction()
+  public function processCallback()
   {
     if (in_array($_SERVER['REMOTE_ADDR'], WORDPROOF_WSFY_API_IP)) {
-      $postId = intval($_REQUEST['uid']);
-      $chain = ($_REQUEST['chain']) ? sanitize_text_field($_REQUEST['chain']) : '';
-      $transactionId = ($_REQUEST['transactionId']) ? sanitize_text_field($_REQUEST['transactionId']) : '';
-      $meta = PostMetaHelper::getPostMeta($postId);
+      $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
 
-      if (!empty($meta)) {
-        $meta->blockchain = $chain;
-        $meta->transactionId = $transactionId;
-
-        PostMetaHelper::savePostMeta($postId, (array)$meta, true);
-        error_log('Post meta updated with transactional data for ' . $postId);
-        echo json_encode(['success' => true]);
-        die();
-      } else {
-        error_log('Post ' . $postId . ' not updated. ');
-        echo json_encode(['success' => false]);
-        die();
+      switch($action) {
+        case 'check_callback':
+          return $this->handleCheckCallback();
+        case 'modify_post':
+        default:
+          return $this->handleModifyPost();
       }
+    } else {
+      error_log('WordProof: Update request denied');
+      error_log($_SERVER['REMOTE_ADDR']);
+      echo json_encode(['success' => false, 'response' => $this->responses->origin_not_allowed]);
+      die();
     }
-    error_log('WordProof: Update request denied');
-    error_log($_SERVER['REMOTE_ADDR']);
+  }
+
+  public function handleCheckCallback() {
+    echo json_encode(['success' => true, 'response' => $this->responses->valid_endpoint]);
     die();
+  }
+
+  public function handleModifyPost() {
+    $postId = intval($_REQUEST['uid']);
+    $chain = ($_REQUEST['chain']) ? sanitize_text_field($_REQUEST['chain']) : '';
+    $transactionId = ($_REQUEST['transactionId']) ? sanitize_text_field($_REQUEST['transactionId']) : '';
+    $meta = PostMetaHelper::getPostMeta($postId);
+
+    if (!empty($meta)) {
+      $meta->blockchain = $chain;
+      $meta->transactionId = $transactionId;
+
+      PostMetaHelper::savePostMeta($postId, (array)$meta, true);
+      echo json_encode(['success' => true, 'response' => $this->responses->post_modified]);
+      die();
+    } else {
+      error_log('Post ' . $postId . ' not updated. ');
+      echo json_encode(['success' => false, 'response' => $this->responses->post_not_modified]);
+      die();
+    }
   }
 
   public function setCron($postId)

@@ -69,7 +69,7 @@ class CertificateController
       $wsfyIsActive = OptionsHelper::isWSFYActive();
       $wsfyOptions = ($wsfyIsActive) ? OptionsHelper::getWSFY([], ['site_token']) : [];
 
-      $endpoint = str_replace('$postId', $post->ID, WORDPROOF_WSFY_ENDPOINT_ARTICLE);
+      $endpoint = str_replace('$postId', $post->ID, WORDPROOF_WSFY_ENDPOINT_ITEM);
       $endpoint = str_replace('$siteId', $wsfyOptions->site_id, $endpoint);
 
       wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', [], filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);

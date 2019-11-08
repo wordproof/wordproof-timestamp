@@ -28,7 +28,6 @@ class WordProofTimestamp
     new AutomateController();
 
     add_action('activated_plugin', [$this, 'gettingStarted']);
-
   }
 
   /**

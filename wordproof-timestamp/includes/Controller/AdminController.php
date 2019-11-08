@@ -12,6 +12,7 @@ use WordProofTimestamp\includes\Page\OnboardingWizard;
 use WordProofTimestamp\includes\Page\SettingsPage;
 use WordProofTimestamp\includes\UpdateHelper;
 
+
 class AdminController
 {
 

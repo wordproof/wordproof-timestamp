@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import './components/Admin.scss';
 
 import Metabox from './components/Metabox/Metabox'
 import Dashboard from "./components/Settings/Dashboard";

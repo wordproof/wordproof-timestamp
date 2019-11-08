@@ -63,11 +63,11 @@ export default class Automatic extends Component {
                             })}
                         </div>
 
-                        {/*<div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>*/}
-                        {/*    <label htmlFor="" className="label">Tools</label>*/}
-                        {/*    <a href={`${wordproofSettings.adminUrl}admin.php?page=wordproof-autostamp`} target="_blank"*/}
-                        {/*       rel="noopener noreferrer">Auto Stamp your Posts</a>*/}
-                        {/*</div>*/}
+                        <div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>
+                            <label htmlFor="" className="label">Tools</label>
+                            <a href={`${wordproofSettings.adminUrl}admin.php?page=wordproof-autostamp`} target="_blank"
+                               rel="noopener noreferrer">Auto Stamp your Posts</a>
+                        </div>
 
                         <input type="submit" name="submit" id="submit" className="button is-primary"
                                value={wordproofSettings.saveChanges}/>

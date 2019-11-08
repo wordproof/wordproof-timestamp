@@ -62,7 +62,6 @@ async function postColumnSave(ev) {
   ev.preventDefault();
   var postId = ev.target.dataset.postId;
   var response = await savePost(postId);
-  console.log(response);
 
   if (typeof response === 'string') {
     response = JSON.parse(response);

@@ -18,6 +18,7 @@ export default function getJSON(schema) {
       object.type = schema['@context']['@type'];
       object.version = schema['@context']['@version'];
       object.title = schema.title;
+      object.contentHash = schema.contentHash;
       object.contentUrl = schema.contentUrl;
       object.encodingFormat = schema.encodingFormat;
       object.date = schema.date;

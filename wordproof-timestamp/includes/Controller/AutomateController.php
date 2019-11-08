@@ -119,6 +119,7 @@ class AutomateController
       case ARTICLE_TIMESTAMP:
         $fields = HashController::getFields($post);
         return [
+          'type' => ARTICLE_TIMESTAMP,
           'version' => $fields['properties']['version'],
           'title' => $fields['properties']['title'],
           'content' => $fields['properties']['content'],
@@ -129,8 +130,10 @@ class AutomateController
       case MEDIA_OBJECT_TIMESTAMP:
         $fields = HashController::getFields($post);
         return [
+          'type' => MEDIA_OBJECT_TIMESTAMP,
           'version' => CURRENT_TIMESTAMP_STANDARD_VERSION,
           'title' => $fields['properties']['title'],
+          'content_hash' => $fields['properties']['contentHash'],
           'content_url' => $fields['properties']['contentUrl'],
           'encoding_format' => $fields['properties']['encodingFormat'],
           'date_created' => get_the_date('c', $post),

@@ -89,7 +89,8 @@ class SchemaController
         $array['transactionId'] = $meta->transactionId;
         $array['hash'] = $meta->hash;
         $array['title'] = $meta->title;
-        $array['contentUrl'] = $meta->contentUrl; //TODO
+        $array['contentHash'] = $meta->contentHash;
+        $array['contentUrl'] = $meta->contentUrl;
         $array['encodingFormat'] = $meta->encodingFormat;
         $array['date'] = $meta->date;
 

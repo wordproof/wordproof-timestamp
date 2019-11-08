@@ -62,6 +62,7 @@ class HashController
         $array['type'] = MEDIA_OBJECT_TIMESTAMP;
         $array['version'] = CURRENT_TIMESTAMP_STANDARD_VERSION;
         $array['title'] = $post->post_title;
+        $array['contentHash'] = hash_file('sha256', get_attached_file($post->ID));
         $array['contentUrl'] = $post->guid;
         $array['encodingFormat'] = $post->post_mime_type;
         $array['date'] = get_the_modified_date('c', $post);

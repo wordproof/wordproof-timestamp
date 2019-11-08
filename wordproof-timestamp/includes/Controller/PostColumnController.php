@@ -29,6 +29,8 @@ class PostColumnController
       add_action('manage_posts_custom_column', array($this, 'addColumnContent'), 10, 2);
       add_filter('manage_pages_columns', array($this, 'addColumn'));
       add_action('manage_pages_custom_column', array($this, 'addColumnContent'), 10, 2);
+      add_filter('manage_media_columns', array($this, 'addColumn'));
+      add_action('manage_media_custom_column', array($this, 'addColumnContent'), 10, 2);
     }
 
     add_action('wp_ajax_wordproof_wsfy_save_post', [$this, 'savePost']);
@@ -66,7 +68,7 @@ class PostColumnController
     if ($column_name == 'wordproof') {
 
       $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain']);
-      if ($post->post_status !== 'publish') {
+      if ($post->post_status !== 'publish' && $post->post_status !== 'inherit') {
 
         echo '<span>🕓 Not published yet</span>';
 

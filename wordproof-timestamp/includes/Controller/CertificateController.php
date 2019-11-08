@@ -87,6 +87,7 @@ class CertificateController
           'lastModified' => get_the_modified_date('c', $post->ID),
         ],
         'automate' => [
+          'dom' => OptionsHelper::getCertificateDomSelector(),
           'active' => $wsfyIsActive,
           'api' => WORDPROOF_WSFY_API_URI . $endpoint,
           'options' => $wsfyOptions,

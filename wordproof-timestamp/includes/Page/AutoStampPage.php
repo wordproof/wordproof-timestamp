@@ -38,6 +38,9 @@ class AutoStampPage
           <h1>WordProof Settings</h1>
           <p>Start auto-stamping <?php echo sizeof($posts); ?> posts which are not timestamped yet. We will skip posts
               that are stamped already. <strong>Please make sure your setup works beforehand.</strong></p>
+          <p>Timestamp all of your posts cost <?php echo sizeof($posts); ?> timestamps. If you don't have enough
+              timestamps, you <a href="https://my.wordproof.io/sites/upgrade" target="_blank" rel="noopener noreferrer">can
+                  upgrade your plan</a>. If you pay for a yearly plan, you'll get a big timestamp bonus</p>
           <button class="wordproof-auto-stamp-submit button button-primary">Start Auto-Stamping</button>
           <div class="wordproof-status"></div>
           <p class="wordproof-status-left"></p>
@@ -48,13 +51,15 @@ class AutoStampPage
     <?php
   }
 
-  public function initDeletion() {
+  public function initDeletion()
+  {
     if (isset($_GET['remove_timestamp']) && !empty($_GET['remove_timestamp'])) {
       self::removeTimestamp(intval($_GET['remove_timestamp']));
     }
   }
 
-  public function retrievePosts() {
+  public function retrievePosts()
+  {
     $cpt = 'post';
     $offset = 0;
     $force = false;
@@ -71,7 +76,8 @@ class AutoStampPage
     return self::getPosts($cpt, $offset, $force);
   }
 
-  public function localizeScript($posts) {
+  public function localizeScript($posts)
+  {
     wp_localize_script('wordproof.admin.js', 'wordproofAutoStamp', [
       'posts' => $posts,
       'loading' => admin_url() . 'images/spinner-2x.gif'

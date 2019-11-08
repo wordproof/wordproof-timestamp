@@ -49,7 +49,7 @@ export default class Automatic extends Component {
                                    defaultChecked={this.state.showRevisions}/>
                         </div>
 
-                        <div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>
+                        <div className={`form-group`}>
                             <label htmlFor="" className="label">Post Types to timestamp automatically</label>
 
                             {this.state.registeredPostTypes.map((value) => {
@@ -63,18 +63,11 @@ export default class Automatic extends Component {
                             })}
                         </div>
 
-                        <div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>
-                            <label htmlFor="" className="label">Tools</label>
-                            <a href={`${wordproofSettings.adminUrl}admin.php?page=wordproof-autostamp`} target="_blank"
-                               rel="noopener noreferrer">Auto Stamp your Posts</a>
-                        </div>
-
                         <input type="submit" name="submit" id="submit" className="button is-primary"
                                value={wordproofSettings.saveChanges}/>
 
-                        <button className={`button button-modest ${this.state.hideAdvanced ? '' : 'hidden'}`}
-                                onClick={this.handleAdvancedOptions}>Show advanced settings
-                        </button>
+                        <a href={`${wordproofSettings.adminUrl}admin.php?page=wordproof-autostamp`} target="_blank"
+                           rel="noopener noreferrer" style={{display: 'block', 'paddingTop': '10px'}}>Auto-stamp all posts</a>
 
                     </div>
                     <div className="vo-col">

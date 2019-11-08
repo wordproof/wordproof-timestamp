@@ -63,8 +63,10 @@ class AutomateController
 
       $type = HashController::getType($post);
       $body = json_encode(self::getBody($type, $post, $options), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-      $endpoint = str_replace('$postId', $postId, WORDPROOF_WSFY_ENDPOINT_ARTICLE);
+
+      $endpoint = str_replace('$postId', $postId, WORDPROOF_WSFY_ENDPOINT_ITEM);
       $endpoint = str_replace('$siteId', $options->site_id, $endpoint);
+
       $result = self::postToMy($endpoint, $options->site_token, $body);
 
       $code = wp_remote_retrieve_response_code($result);
@@ -83,7 +85,7 @@ class AutomateController
     $options = OptionsHelper::getWSFY();
 
     if (isset($options->site_token) && isset($options->site_id)) {
-      $endpoint = str_replace('$postId', $postId, WORDPROOF_WSFY_ENDPOINT_ARTICLE);
+      $endpoint = str_replace('$postId', $postId, WORDPROOF_WSFY_ENDPOINT_RETRY_CALLBACK);
       $endpoint = str_replace('$siteId', $options->site_id, $endpoint);
       $result = self::postToMy($endpoint, $options->site_token, []);
     } else {
@@ -121,6 +123,7 @@ class AutomateController
         return [
           'type' => ARTICLE_TIMESTAMP,
           'version' => $fields['properties']['version'],
+          'uid' => $post->ID,
           'title' => $fields['properties']['title'],
           'content' => $fields['properties']['content'],
           'date_created' => get_the_date('c', $post),
@@ -132,6 +135,7 @@ class AutomateController
         return [
           'type' => MEDIA_OBJECT_TIMESTAMP,
           'version' => CURRENT_TIMESTAMP_STANDARD_VERSION,
+          'uid' => $post->ID,
           'title' => $fields['properties']['title'],
           'content_hash' => $fields['properties']['contentHash'],
           'content_url' => $fields['properties']['contentUrl'],

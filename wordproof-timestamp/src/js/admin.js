@@ -88,29 +88,9 @@ async function postColumnSave(ev) {
 async function postColumnRetry(ev) {
   ev.preventDefault();
   var postId = ev.target.dataset.postId;
-  var response = await retryCallback(postId);
-  console.log(response);
-
-  if (typeof response === 'string') {
-    response = JSON.parse(response);
-  }
-
-  if (response.errors) {
-
-    ev.target.style.display = 'none'; // eslint-disable-line
-    document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = 'Something went wrong. ' + JSON.stringify(response.errors);
-
-  } else if (response.success) {
-
-    ev.target.style.display = 'none'; // eslint-disable-line
-    document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = '👍 Post sent to My WordProof';
-
-  } else if (response.message) {
-
-    ev.target.style.display = 'none'; // eslint-disable-line
-    document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = 'Something went wrong. ' + JSON.stringify(response.message);
-
-  }
+  var response = retryCallback(postId);
+  ev.target.style.display = 'none'; // eslint-disable-line
+  document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = '👍 Post sent to My WordProof';
 }
 
 function savePost(postId) {
@@ -134,23 +114,10 @@ function savePost(postId) {
 }
 
 function retryCallback(postId) {
-  return new Promise(function (resolve, reject) {
-
-  console.log('Retry callback ' + postId);
-
   const Http = new XMLHttpRequest();
   Http.open('POST', wordproofData.ajaxURL, true);
   Http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   Http.send('action=wordproof_wsfy_retry_callback&post_id=' + postId + '&security=' + wordproofData.ajaxSecurity);
-
-  Http.onreadystatechange = function () {
-    if (Http.readyState === 4 && Http.status === 200) {
-      resolve(JSON.parse(Http.responseText));
-    } else if (Http.readyState === 4) {
-      reject(JSON.parse(Http.responseText));
-    }
-  }
-});
 }
 
 async function autoStampSave(postId) {

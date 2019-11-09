@@ -86,7 +86,7 @@ class AutomateController
     if (isset($options->site_token) && isset($options->site_id)) {
       $endpoint = str_replace('$postId', $postId, WORDPROOF_WSFY_ENDPOINT_RETRY_CALLBACK);
       $endpoint = str_replace('$siteId', $options->site_id, $endpoint);
-      $result = self::postToMy($endpoint, $options->site_token, []);
+      self::postToMy($endpoint, $options->site_token, []);
     } else {
       return ['errors' => ['authentication' => ['Please configure your site key']]];
     }

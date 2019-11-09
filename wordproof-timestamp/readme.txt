@@ -4,7 +4,7 @@ Tags: blockchain, timestamp, eosio, eos, telos, web30, copyright, scatter, decen
 Requires at least: 4.6
 Tested up to: 5.3.0
 Requires PHP: 5.3
-Stable tag: 2.2.0
+Stable tag: 2.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,14 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 6. WordProof Setup Wizard - Create a free Telos blockchain account.
 
 == Changelog ==
+= 2.3.0 =
+*Release date: November 9th, 2019*
+* We have included many improvements!
+* Timestamp Standard 0.2.0 is now supported
+* Timestamp your Media using the MediaObjectTimestamp standard
+* Callback didn't come through? Retry from your the posts overview
+* The auto stamper tool is more accessible
+* DOM Selector bug is fixed
 
 = 2.2.0 =
 *Release date: October 12th, 2019*

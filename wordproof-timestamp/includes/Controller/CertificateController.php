@@ -30,14 +30,13 @@ class CertificateController
     global $post;
     $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain', 'type']);
 
-    $allowed = false;
     switch($meta->type) {
       case 'WebArticleTimestamp':
       case ARTICLE_TIMESTAMP:
         $allowed = true;
         break;
       default:
-        return false;
+        $allowed = false;
     }
 
     if (isset($meta->date) && !empty($meta->blockchain) && $allowed) {
@@ -69,8 +68,8 @@ class CertificateController
       $wsfyIsActive = OptionsHelper::isWSFYActive();
       $wsfyOptions = ($wsfyIsActive) ? OptionsHelper::getWSFY([], ['site_token']) : [];
 
-      $endpoint = str_replace('$postId', $post->ID, WORDPROOF_WSFY_ENDPOINT_ITEM);
-      $endpoint = str_replace('$siteId', $wsfyOptions->site_id, $endpoint);
+      $endpoint = str_replace('$siteId', $wsfyOptions->site_id, WORDPROOF_WSFY_ENDPOINT_ITEM);
+      $endpoint .= $post->ID;
 
       wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', [], filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
 

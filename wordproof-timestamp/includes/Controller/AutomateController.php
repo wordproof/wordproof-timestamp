@@ -62,10 +62,9 @@ class AutomateController
       }
 
       $type = HashController::getType($post);
-      $body = json_encode(self::getBody($type, $post, $options), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+      $body = json_encode(self::getBody($type, $post), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-      $endpoint = str_replace('$postId', $postId, WORDPROOF_WSFY_ENDPOINT_ITEM);
-      $endpoint = str_replace('$siteId', $options->site_id, $endpoint);
+      $endpoint = str_replace('$siteId', $options->site_id, WORDPROOF_WSFY_ENDPOINT_ITEM);
 
       $result = self::postToMy($endpoint, $options->site_token, $body);
 
@@ -116,7 +115,7 @@ class AutomateController
     }
   }
 
-  private static function getBody($type, $post, $options) {
+  private static function getBody($type, $post) {
     switch($type) {
       case ARTICLE_TIMESTAMP:
         $fields = HashController::getFields($post);

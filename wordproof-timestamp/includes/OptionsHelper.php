@@ -77,7 +77,6 @@ class OptionsHelper
   }
 
   private static function prepareWSFY($options) {
-    //Check values
     if (isset($options['allowed_post_types'])) {
       $options['allowed_post_types'] = array_values($options['allowed_post_types']);
     }

@@ -90,7 +90,7 @@ async function postColumnRetry(ev) {
   var postId = ev.target.dataset.postId;
   retryCallback(postId);
   ev.target.style.display = 'none'; // eslint-disable-line
-  document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = '👍 Post sent to My WordProof';
+  document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = '👍 Requesting new callback';
 }
 
 function savePost(postId) {

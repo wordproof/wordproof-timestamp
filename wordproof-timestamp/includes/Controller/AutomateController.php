@@ -57,7 +57,7 @@ class AutomateController
     if (isset($options->site_token) && isset($options->site_id)) {
       $post = get_post($postId);
 
-      if ($post->post_status != 'publish') {
+      if ($post->post_status !== 'publish' && $post->post_status !== 'inherit') {
         return ['errors' => ['post_status' => ['Post needs to be published']]];
       }
 
@@ -171,6 +171,7 @@ class AutomateController
   }
 
   public function handleCheckCallback() {
+    error_log('WordProof: Callback successfully tested');
     echo json_encode(['success' => true, 'response' => $this->responses['valid_endpoint']]);
     die();
   }

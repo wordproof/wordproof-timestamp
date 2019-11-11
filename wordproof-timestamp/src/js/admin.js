@@ -88,7 +88,7 @@ async function postColumnSave(ev) {
 async function postColumnRetry(ev) {
   ev.preventDefault();
   var postId = ev.target.dataset.postId;
-  var response = retryCallback(postId);
+  retryCallback(postId);
   ev.target.style.display = 'none'; // eslint-disable-line
   document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = '👍 Post sent to My WordProof';
 }

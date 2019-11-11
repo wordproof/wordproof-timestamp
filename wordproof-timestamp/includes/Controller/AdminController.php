@@ -47,7 +47,7 @@ class AdminController
 
   public function loadAdminAssets($hookSuffix)
   {
-    $allowedPages = ['edit.php', 'post-new.php', 'post.php',
+    $allowedPages = ['edit.php', 'post-new.php', 'post.php', 'upload.php',
       'admin_page_wordproof-autostamp',
       'toplevel_page_wordproof-dashboard',
       'wordproof_page_wordproof-general',

@@ -38,7 +38,7 @@ export default class Automatic extends Component {
                             Set your Site Key
                         </a>
 
-                        <hr/>
+                        <hr className={'mt-4'}/>
 
                         <div className="form-group">
                             <label htmlFor="wsfy_settings[show_revisions]" className="label" title="Display Revisions">Show

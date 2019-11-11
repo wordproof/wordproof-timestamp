@@ -18,8 +18,10 @@ class CertificateController
   public function init()
   {
     if (is_singular()) {
+      if (is_main_query())
+        add_filter('the_content', [$this, 'addLink']);
+
       add_action('wp_head', [$this, 'addSchema']);
-      add_filter('the_content', [$this, 'addLink']);
       add_action('wp_footer', [$this, 'addModal']);
       add_action('wp_enqueue_scripts', [$this, 'addScript']);
       add_filter('script_loader_tag', [$this, 'addScriptAttribute'], 10, 2);

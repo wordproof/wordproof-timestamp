@@ -114,7 +114,7 @@ class CertificateController
                 'description' => __('The website has updated the content of this page since it was last timestamped on the blockchain.', 'wordproof-timestamp'),
               ],
               'linkText' => __('Why is this important?', 'wordproof-timestamp'),
-              'subText' => sprintf(__('Last edit on %s at %s'), $date, $time),
+              'subText' => sprintf(__('Last edit on %s at %s', 'wordproof-timestamp'), $date, $time),
             ],
             'compare' => [
               'withRevisions' => [
@@ -127,7 +127,7 @@ class CertificateController
                 'description' => __('See how this unique fingerprint was generated and verify it in the blockchain.', 'wordproof-timestamp'),
                 'linkText' => __('View the input of this timestamp', 'wordproof-timestamp'),
               ],
-              'subText' => sprintf(__('Published by %s'), $author),
+              'subText' => sprintf(__('Published by %s', 'wordproof-timestamp'), $author),
             ],
           ],
           'nav' => [

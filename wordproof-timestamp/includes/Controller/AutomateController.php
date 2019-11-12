@@ -26,7 +26,7 @@ class AutomateController
     add_action('admin_post_nopriv_wordproof_wsfy_edit_post', [$this, 'processCallback']);
 
     if (OptionsHelper::isWSFYActive()) {
-      $options = OptionsHelper::getWSFY([], ['site_token']);
+      $options = OptionsHelper::getWSFY(['site_token']);
 
       if (isset($options->allowed_post_types)) {
 

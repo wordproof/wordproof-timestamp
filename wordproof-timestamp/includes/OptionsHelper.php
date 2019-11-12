@@ -58,7 +58,7 @@ class OptionsHelper
     return get_option(self::$prefix . 'custom_domain', $default);
   }
 
-  public static function getWSFY($includes = [], $excludes = []) {
+  public static function getWSFY($excludes = []) {
     $options = get_option(self::$prefix . self::$optionWSFY, []);
     $options = self::prepareWSFY($options);
 
@@ -77,7 +77,7 @@ class OptionsHelper
   }
 
   private static function prepareWSFY($options) {
-    if (isset($options['allowed_post_types'])) {
+    if (isset($options['allowed_post_types']) && is_array($options['allowed_post_types'])) {
       $options['allowed_post_types'] = array_values($options['allowed_post_types']);
     }
 

@@ -68,7 +68,7 @@ class CertificateController
       global $post;
 
       $wsfyIsActive = OptionsHelper::isWSFYActive();
-      $wsfyOptions = ($wsfyIsActive) ? OptionsHelper::getWSFY([], ['site_token']) : [];
+      $wsfyOptions = ($wsfyIsActive) ? OptionsHelper::getWSFY(['site_token']) : [];
 
       $endpoint = str_replace('$siteId', $wsfyOptions->site_id, WORDPROOF_WSFY_ENDPOINT_ITEM);
       $endpoint .= $post->ID;

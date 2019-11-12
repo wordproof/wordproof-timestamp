@@ -155,7 +155,7 @@ class AutomateController
 
       switch($action) {
         case 'wordproof_test_callback':
-          $this->handleCheckCallback();
+          $this->handleTestCallback();
           break;
         case 'wordproof_callback':
         default:
@@ -170,7 +170,7 @@ class AutomateController
     }
   }
 
-  public function handleCheckCallback() {
+  public function handleTestCallback() {
     error_log('WordProof: Callback successfully tested');
     echo json_encode(['success' => true, 'response' => $this->responses['valid_endpoint']]);
     die();

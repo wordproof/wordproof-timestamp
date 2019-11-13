@@ -10,12 +10,11 @@ export default class Step1 extends Component {
   render() {
     return (
       <div className="wordproof-wizard-step">
-        <Intro title="Welcome to WordProof Timestamp!" subtitle="Let's get you set up!" />
+        <Intro title="Welcome to WordProof Timestamp!" subtitle="Select your preferred way to use the plugin" />
 
-        <h3>Which mode do you want to use?</h3>
         <div className="flex flex-row my-4">
           <div className="border-2 rounded text-center p-4 mr-4 w-1/2">
-            <h2 className="font-semibold my-2">Manual</h2>
+            <h2 className="font-semibold my-2">Manually</h2>
             <p>
               Tech-savy mode<br/>
               Configure you own blockchain account & wallet<br/>
@@ -28,7 +27,7 @@ export default class Step1 extends Component {
           </div>
 
           <div className="border-2 rounded text-center p-4 ml-4 w-1/2">
-            <h2 className="font-semibold my-2">Automatic</h2>
+            <h2 className="font-semibold my-2">Automatically</h2>
             <p>
               Activate & never look back<br/>
               Download your blockchain certificates<br/>
@@ -36,7 +35,7 @@ export default class Step1 extends Component {
             </p>
 
             <button className="primary mt-3" onClick={this.props.nextStep}>
-              Start Trial
+              Get Started
             </button>
           </div>
         </div>

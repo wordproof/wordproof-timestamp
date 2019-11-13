@@ -43,10 +43,10 @@ export default class Step2 extends Component {
     return (
       <div className="wordproof-wizard-step">
         <Intro title="Connect WordProof to your website"
-               subtitle="Create a WordProof account and paste your site key. Start your 14-day trial today."/>
+               subtitle="Paste your site key to connect your site to My WordProof. Create a free account if you don’t have one yet."/>
 
         <a className="wproof-button secondary mb-4 inline-block" href={`${wordproof.urls.signup}?source=${wordproof.urls.site}`} target="_blank" rel="noopener noreferrer">
-          Create WordProof Account
+            Create My WordProof Account
         </a>
 
         <TextField slug={'site_token'} question={'What is your site key?'} extra={'Your site key is visible after you have created your account.'}

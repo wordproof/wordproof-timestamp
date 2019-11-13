@@ -83,12 +83,12 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 
 == Changelog ==
 = 2.3.1 =
-*Release date: November 10th, 2019*
+*Release date: November 13th, 2019*
 * Fixed small bugs
 * Add filter 'wordproof_hash_post_content' before hashing the content of ArticleTimestamp
 
 = 2.3.0 =
-*Release date: November 9th, 2019*
+*Release date: November 12th, 2019*
 * Timestamp Standard 0.2.0 is now supported
 * Timestamp your Media using the MediaObjectTimestamp standard
 * Callback didn't come through? Retry from your the posts overview

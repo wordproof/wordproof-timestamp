@@ -19,7 +19,7 @@ if (!defined('WPINC')) {
   die();
 }
 
-define('WORDPROOF_DEVELOPMENT', true);
+define('WORDPROOF_DEVELOPMENT', false);
 define('WORDPROOF_VERSION', '2.3.1');
 define('WORDPROOF_SLUG', 'wordproof');
 define('WORDPROOF_PREFIX', 'wordproof');

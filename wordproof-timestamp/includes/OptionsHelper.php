@@ -62,10 +62,6 @@ class OptionsHelper
     $options = get_option(self::$prefix . self::$optionWSFY, []);
     $options = self::prepareWSFY($options);
 
-    if (!empty($includes)) {
-      return (object)array_intersect_key($options, array_flip($includes));
-    }
-
     foreach ($excludes as $exclude) {
       unset($options[$exclude]);
     }

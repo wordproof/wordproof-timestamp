@@ -75,7 +75,7 @@ async function postColumnSave(ev) {
   } else if (response.success) {
 
     ev.target.style.display = 'none'; // eslint-disable-line
-    document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = '👍 Post sent to My WordProof';
+    document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = '👍 Post is sent to My WordProof';
 
   } else if (response.message) {
 

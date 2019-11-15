@@ -75,18 +75,13 @@ class OptionsHelper
   private static function prepareWSFY($options) {
     if (isset($options['allowed_post_types']) && is_array($options['allowed_post_types'])) {
       $options['allowed_post_types'] = array_values($options['allowed_post_types']);
+    } else {
+      $options['allowed_post_types'] = ['post', 'page'];
     }
 
     if (isset($options['show_revisions'])) {
       $options['show_revisions'] = boolval($options['show_revisions']);
-    }
-
-    //Default values
-    if (!isset($options['allowed_post_types'])) {
-      $options['allowed_post_types'] = ['post', 'page'];
-    }
-
-    if (!isset($options['show_revisions'])) {
+    } else {
       $options['show_revisions'] = true;
     }
 

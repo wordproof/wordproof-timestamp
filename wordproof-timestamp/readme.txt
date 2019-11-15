@@ -82,7 +82,7 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 6. WordProof Setup Wizard - Create a free Telos blockchain account.
 
 == Changelog ==
-= 2.3.1 =
+= 2.3.2 =
 *Release date: November 15th, 2019*
 * Add option for additional whitelisted IP's for rare server setups
 * Small visual enhancements

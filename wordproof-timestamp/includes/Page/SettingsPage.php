@@ -165,6 +165,10 @@ class SettingsPage {
 
           $showRevisions = isset($post['show_revisions']) ? true : false;
           OptionsHelper::set('show_revisions', $showRevisions);
+
+          if (isset($post['whitelisted_ips']) && !empty($post['whitelisted_ips'])) {
+            OptionsHelper::set('whitelisted_ips', explode(',', $post['whitelisted_ips']));
+          }
         }
 
       }

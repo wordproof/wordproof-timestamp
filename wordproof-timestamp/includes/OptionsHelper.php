@@ -20,7 +20,8 @@ class OptionsHelper
       'site_token' => ['type' => 'text'],
       'site_id' => ['type' => 'int'],
       'show_revisions' => ['type' => 'bool'],
-      'allowed_post_types' => ['type' => 'text']
+      'allowed_post_types' => ['type' => 'text'],
+      'whitelisted_ips' => ['type' => 'text']
     ],
     'wsfy_is_active' => ['type' => 'bool'],
     'accountname' => ['type' => 'text'],
@@ -66,6 +67,22 @@ class OptionsHelper
       unset($options[$exclude]);
     }
     return (object)$options;
+  }
+
+  public static function getWSFYField($field) {
+    $options = self::getWSFY();
+    if (isset($options->$field))
+      return $options->$field;
+
+    return null;
+  }
+
+  public static function getWSFYAllowedIps() {
+    $whitelistedIps = self::getWSFYField('whitelisted_ips');
+    if (is_array($whitelistedIps))
+      return array_merge(WORDPROOF_WSFY_API_IP, $whitelistedIps);
+
+    return WORDPROOF_WSFY_API_IP;
   }
 
   public static function isWSFYActive() {

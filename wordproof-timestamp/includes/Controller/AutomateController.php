@@ -2,7 +2,6 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
-use WordProofTimestamp\includes\DomainHelper;
 use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\Page\AutoStampPage;
 use WordProofTimestamp\includes\PostMetaHelper;
@@ -150,7 +149,7 @@ class AutomateController
 
   public function processCallback()
   {
-    if (in_array($_SERVER['REMOTE_ADDR'], WORDPROOF_WSFY_API_IP)) {
+    if (in_array($_SERVER['REMOTE_ADDR'], OptionsHelper::getWSFYAllowedIps())) {
       $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
 
       switch($action) {

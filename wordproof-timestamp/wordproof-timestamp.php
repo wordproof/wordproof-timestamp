@@ -43,11 +43,10 @@ define('WORDPROOF_WSFY_ENDPOINT_RETRY_CALLBACK', 'sites/$siteId/items/$postId/ca
 define('WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE', 'validate/token');
 define('WORDPROOF_WSFY_CRON_HOOK', 'wsfy_save_post_on_cron');
 
+define('WORDPROOF_WSFY_API_IP', ['167.71.143.38']);
 if (WORDPROOF_DEVELOPMENT) {
-  define('WORDPROOF_WSFY_API_IP', ['167.71.143.38', '127.0.0.1']);
   define('WORDPROOF_WSFY_API_URI', 'https://staging.wordproof.io/api/');
 } else {
-  define('WORDPROOF_WSFY_API_IP', ['167.71.143.38']);
   define('WORDPROOF_WSFY_API_URI', 'https://my.wordproof.io/api/');
 }
 

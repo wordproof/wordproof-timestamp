@@ -128,6 +128,7 @@ class AutomateController
           'date_created' => get_the_date('c', $post),
           'date_modified' => $fields['properties']['date'],
           'url' => $fields['attributes']['url'],
+          'callback_url' => site_url(),
         ];
       case MEDIA_OBJECT_TIMESTAMP:
         $fields = HashController::getFields($post);
@@ -141,6 +142,7 @@ class AutomateController
           'encoding_format' => $fields['properties']['encodingFormat'],
           'date_created' => get_the_date('c', $post),
           'date_modified' => $fields['properties']['date'],
+          'callback_url' => site_url(),
         ];
       default:
         return null;

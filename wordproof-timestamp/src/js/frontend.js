@@ -20,8 +20,17 @@ function initModal() {
 }
 
 function initLink() {
-  let parent = (wordproof.automate.dom) ? wordproof.automate.dom : '#wordproof-certificate-link';
+  if (wordproof.automate.dom)
+    addLinkContainer(wordproof.automate.dom);
+
   ReactDOM.render(
       <Link text={wordproof.link.text} url={wordproof.link.url} postId={wordproof.link.postId}/>,
-      document.querySelector(parent));
+      document.querySelector('#wordproof-certificate-link'));
+}
+
+function addLinkContainer(parentQuery) {
+  let parent = document.querySelector(parentQuery);
+  let div = document.createElement('div');
+  div.setAttribute('id', 'wordproof-certificate-link');
+  parent.appendChild(div);
 }

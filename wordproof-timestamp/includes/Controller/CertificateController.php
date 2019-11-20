@@ -48,7 +48,7 @@ class CertificateController
 
   public function addLink($content)
   {
-    if ($this->showCertificate()) {
+    if ($this->showCertificate() && empty(OptionsHelper::getCertificateDomSelector())) {
       $content .= '<div id="wordproof-certificate-link"></div>';
     }
 

@@ -15,6 +15,21 @@ $transition: 0.4s ease-in-out;
 @import "./Metabox/Metabox";
 @import "./ConnectionWidget/ConnectionWidget";
 
+#wp-admin-bar-wordproof-balance {
+
+  span.wordproof-icon {
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25px auto;
+    width: 21px;
+    height: 18px;
+    top: 4px;
+    margin-right: 4px;
+    position: relative;
+  }
+}
+
 .wordproof-admin-app {
   hr {
     margin: 20px 0;

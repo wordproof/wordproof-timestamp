@@ -52,7 +52,15 @@ class OptionsHelper
   }
 
   public static function getBalance($default = false) {
-    return get_option(self::$prefix . 'balance', $default);
+    $balance = intval(get_option(self::$prefix . 'balance', $default));
+    wp_cache_set('balance', $balance, 'wordproof');
+    return $balance;
+  }
+
+  public static function getBalanceCache($default = false) {
+    if (wp_cache_get('balance', 'wordproof'))
+      return wp_cache_get('balance', 'wordproof');
+    return self::getBalance();
   }
 
   public static function getCustomDomain($default = false) {

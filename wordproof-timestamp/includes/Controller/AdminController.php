@@ -32,6 +32,7 @@ class AdminController
 
       new PostColumnController();
       new DashboardWidgetController();
+      new AdminBarController();
       new MetaBox();
       new NotificationHelper();
       new ChainHelper();
@@ -48,6 +49,8 @@ class AdminController
 
   public function loadAdminAssets($hookSuffix)
   {
+    wp_enqueue_style('wordproof.admin.css', WORDPROOF_URI_CSS . '/admin.css', array(), filemtime(WORDPROOF_DIR_CSS . '/admin.css'));
+
     $allowedPages = ['edit.php', 'post-new.php', 'post.php', 'upload.php',
       'admin_page_wordproof-autostamp',
       'toplevel_page_wordproof-dashboard',
@@ -59,7 +62,6 @@ class AdminController
 
     if (in_array($hookSuffix, $allowedPages)) {
       global $post;
-      wp_enqueue_style('wordproof.admin.css', WORDPROOF_URI_CSS . '/admin.css', array(), filemtime(WORDPROOF_DIR_CSS . '/admin.css'));
 
       wp_enqueue_script('wordproof.admin.js', WORDPROOF_URI_JS . '/admin.js', array(), filemtime(WORDPROOF_DIR_JS . '/admin.js'), true);
       wp_localize_script('wordproof.admin.js', 'wordproofData', array(

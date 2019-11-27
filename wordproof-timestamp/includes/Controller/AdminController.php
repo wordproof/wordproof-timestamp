@@ -30,10 +30,11 @@ class AdminController
       new OnboardingWizard();
       new GettingStarted();
 
+      new PostColumnController();
+      new DashboardWidgetController();
       new MetaBox();
       new NotificationHelper();
       new ChainHelper();
-      new PostColumnController();
     }
   }
 

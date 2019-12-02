@@ -51,7 +51,7 @@ if (document.querySelector('#wordproof-meta-box-inside')) {
  */
 if (document.querySelectorAll('.wordproof-timestamp-button')) {
   document.querySelectorAll('.wordproof-timestamp-button').forEach((element) => {
-    ReactDOM.render(<TimestampButton post={JSON.parse(decodeURIComponent(element.dataset.post))} meta={JSON.parse(decodeURIComponent(element.dataset.meta))}/>, element);
+    ReactDOM.render(<TimestampButton automate={element.dataset.automate} post={JSON.parse(decodeURIComponent(element.dataset.post))} meta={JSON.parse(decodeURIComponent(element.dataset.meta))}/>, element);
   })
 }
 

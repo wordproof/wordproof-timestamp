@@ -68,30 +68,38 @@ class PostColumnController
     if ($column_name == 'wordproof') {
 
       $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain']);
-      if ($post->post_status !== 'publish' && $post->post_status !== 'inherit') {
+//      if ( !== 'publish' && $post->post_status !== 'inherit') {
+//
+//        echo '<span>🕓 Not published yet</span>';
+//
+//      } else if (empty($meta->date)) {
+//
+//        echo '<span>🚨 Not timestamped</span>';
+//        $this->addTimestampButton($post);
+//
+//      } else if ($meta->date !== ) {
+//
+//        echo '<a target="_blank" rel="noopener noreferrer" href="' . DomainHelper::getPermalink($post->ID) . '#wordproof">🚨 Timestamp is outdated</a>';
+//        $this->addTimestampButton($post);
+//
+//      } else if (empty($meta->blockchain)) {
+//
+//        echo '<span>🕓 Waiting for callback</span>';
+//        $this->addRequestCallbackButton($post);
+//
+//      } else {
+//
+//        echo '<a target="_blank" rel="noopener noreferrer" href="' . DomainHelper::getPermalink($post->ID) . '#wordproof">✅ Certificate</a>';
+//
+//      }
 
-        echo '<span>🕓 Not published yet</span>';
+      $postData = [
+        'id' => $post->ID,
+        'date_modified' => get_the_modified_date('c', $post->ID),
+        'status' => $post->post_status,
+      ];
 
-      } else if (empty($meta->date)) {
-
-        echo '<span>🚨 Not timestamped</span>';
-        $this->addTimestampButton($post);
-
-      } else if ($meta->date !== get_the_modified_date('c', $post->ID)) {
-
-        echo '<a target="_blank" rel="noopener noreferrer" href="' . DomainHelper::getPermalink($post->ID) . '#wordproof">🚨 Timestamp is outdated</a>';
-        $this->addTimestampButton($post);
-
-      } else if (empty($meta->blockchain)) {
-
-        echo '<span>🕓 Waiting for callback</span>';
-        $this->addRequestCallbackButton($post);
-
-      } else {
-
-        echo '<a target="_blank" rel="noopener noreferrer" href="' . DomainHelper::getPermalink($post->ID) . '#wordproof">✅ Certificate</a>';
-
-      }
+      echo '<div class="wordproof-timestamp-button" data-post="'. urlencode(json_encode($postData)).'" data-meta="'. urlencode(json_encode($meta)).'"></div>';
     }
   }
 

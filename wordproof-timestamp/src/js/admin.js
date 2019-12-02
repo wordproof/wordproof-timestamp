@@ -9,7 +9,11 @@ import General from "./components/Settings/General";
 import Manual from "./components/Settings/Manual";
 import Automatic from "./components/Settings/Automatic";
 import Support from "./components/Settings/Support";
+import TimestampButton from "./components/Extras/TimestampButton";
 
+/**
+ * Settings
+ */
 if (document.querySelector('#wordproof-admin-app-dashboard')) {
   ReactDOM.render(<Dashboard/>, document.querySelector('#wordproof-admin-app-dashboard'));
 }
@@ -30,13 +34,25 @@ if (document.querySelector('#wordproof-admin-app-support')) {
   ReactDOM.render(<Support/>, document.querySelector('#wordproof-admin-app-support'));
 }
 
+/**
+ * Settings
+ */
+
+if (document.querySelector('#wordproof-dashboard-widget')) {
+  ReactDOM.render(<Widget/>, document.querySelector('#wordproof-dashboard-widget'));
+}
+
 if (document.querySelector('#wordproof-meta-box-inside')) {
   ReactDOM.render(<Metabox/>, document.querySelector('#wordproof-meta-box-inside'));
 }
 
-console.log('h');
-if (document.querySelector('#wordproof-dashboard-widget')) {
-  ReactDOM.render(<Widget/>, document.querySelector('#wordproof-dashboard-widget'));
+/**
+ *
+ */
+if (document.querySelectorAll('.wordproof-timestamp-button')) {
+  document.querySelectorAll('.wordproof-timestamp-button').forEach((element) => {
+    ReactDOM.render(<TimestampButton post={JSON.parse(decodeURIComponent(element.dataset.post))} meta={JSON.parse(decodeURIComponent(element.dataset.meta))}/>, element);
+  })
 }
 
 document.addEventListener('DOMContentLoaded', function () {

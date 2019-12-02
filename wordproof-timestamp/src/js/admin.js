@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './components/Admin.scss';
 
+import Widget from './components/Dashboard/Widget'
 import Metabox from './components/Metabox/Metabox'
 import Dashboard from "./components/Settings/Dashboard";
 import General from "./components/Settings/General";
@@ -31,6 +32,11 @@ if (document.querySelector('#wordproof-admin-app-support')) {
 
 if (document.querySelector('#wordproof-meta-box-inside')) {
   ReactDOM.render(<Metabox/>, document.querySelector('#wordproof-meta-box-inside'));
+}
+
+console.log('h');
+if (document.querySelector('#wordproof-dashboard-widget')) {
+  ReactDOM.render(<Widget/>, document.querySelector('#wordproof-dashboard-widget'));
 }
 
 document.addEventListener('DOMContentLoaded', function () {

@@ -2,6 +2,7 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
+use WordProofTimestamp\includes\AnalyticsHelper;
 use WordProofTimestamp\includes\DomainHelper;
 use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\PostMetaHelper;
@@ -17,17 +18,23 @@ class DashboardWidgetController
   }
 
   public function hook() {
+    wp_localize_script('wordproof.admin.js', 'wordproofWidget', array(
+      'unprotectedMessage' => $this->getUnprotectedWarning(),
+      'isActive' => (AnalyticsHelper::walletIsConnected() || OptionsHelper::isWSFYActive())
+    ));
+
     wp_add_dashboard_widget(
       'wordproof_dashboard_widget',
       'WordProof Timestamp',
       [$this, 'render']
     );
+
     $this->sortWidgets();
   }
 
   public function render()
   {
-    echo $this->getUnprotectedWarning();
+    echo '<div id="wordproof-dashboard-widget"></div>';
   }
 
   public function sortWidgets()
@@ -71,4 +78,6 @@ class DashboardWidgetController
     $s = $wpdb->get_var($wpdb->prepare("SELECT count(*) FROM $wpdb->postmeta AS `M` INNER JOIN $wpdb->posts AS `P` ON `M`.`post_id` = `P`.`ID` WHERE `M`.`meta_key` = 'wordproof_timestamp_data' AND `P`.`post_status` = %s AND `P`.`post_type` = %s", $postStatus, $postType));
     return intval($s);
   }
+
+//  public function
 }

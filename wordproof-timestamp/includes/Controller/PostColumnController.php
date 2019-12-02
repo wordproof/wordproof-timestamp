@@ -77,23 +77,7 @@ class PostColumnController
         'permalink' => get_permalink($post),
       ];
 
-      echo '<div class="wordproof-timestamp-button" data-automate="'.OptionsHelper::isWSFYActive().'" data-post="'. urlencode(json_encode($postData)).'" data-meta="'. urlencode(json_encode($meta)).'"></div>';
-    }
-  }
-
-  public function addTimestampButton($post)
-  {
-    if (OptionsHelper::isWSFYActive()) {
-      echo '<br><button class="button wordproof-wsfy-save-post" data-post-id="' . $post->ID . '">Timestamp this post</button>';
-      echo '<span class="wordproof-wsfy-message-' . $post->ID . '"> </span>';
-    }
-  }
-
-  public function addRequestCallbackButton($post)
-  {
-    if (OptionsHelper::isWSFYActive()) {
-      echo '<br><button class="button wordproof-wsfy-request-callback" data-post-id="' . $post->ID . '">Request new callback</button>';
-      echo '<span class="wordproof-wsfy-message-' . $post->ID . '"> </span>';
+      echo '<div class="wordproof-timestamp-button" data-automate="' . OptionsHelper::isWSFYActive() . '" data-post="' . urlencode(json_encode($postData)) . '" data-meta="' . urlencode(json_encode($meta)) . '"></div>';
     }
   }
 }

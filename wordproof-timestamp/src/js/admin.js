@@ -56,90 +56,14 @@ if (document.querySelectorAll('.wordproof-timestamp-button')) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  initPostsButtons();
   initAutoStamper();
 });
-
-function initPostsButtons() {
-  let stampButtons = document.querySelectorAll('.wordproof-wsfy-save-post');
-  let retryCallbackButtons = document.querySelectorAll('.wordproof-wsfy-request-callback');
-
-  stampButtons.forEach(function (button) {
-    button.addEventListener('click', postColumnSave);
-  });
-
-  retryCallbackButtons.forEach(function (button) {
-    button.addEventListener('click', postColumnRetry);
-  });
-}
 
 function initAutoStamper() {
   let submit = document.querySelector('.wordproof-auto-stamp-submit');
   if (submit) {
     submit.addEventListener('click', startAutoStamper);
   }
-}
-
-async function postColumnSave(ev) {
-  ev.preventDefault();
-  var postId = ev.target.dataset.postId;
-  var response = await savePost(postId);
-
-  if (typeof response === 'string') {
-    response = JSON.parse(response);
-  }
-
-  if (response.errors) {
-
-    ev.target.style.display = 'none'; // eslint-disable-line
-    document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = 'Something went wrong. ' + JSON.stringify(response.errors);
-
-  } else if (response.success) {
-
-    ev.target.style.display = 'none'; // eslint-disable-line
-    document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = '👍 Post is sent to My WordProof';
-
-  } else if (response.message) {
-
-    ev.target.style.display = 'none'; // eslint-disable-line
-    document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = 'Something went wrong. ' + JSON.stringify(response.message);
-
-  }
-}
-
-async function postColumnRetry(ev) {
-  ev.preventDefault();
-  var postId = ev.target.dataset.postId;
-  retryCallback(postId);
-  ev.target.style.display = 'none'; // eslint-disable-line
-  document.querySelector('.wordproof-wsfy-message-' + postId).innerHTML = '👍 Requesting new callback';
-}
-
-function savePost(postId) {
-  return new Promise(function (resolve, reject) {
-
-  console.log('Saving ' + postId);
-
-  const Http = new XMLHttpRequest();
-  Http.open('POST', wordproofData.ajaxURL, true);
-  Http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  Http.send('action=wordproof_wsfy_save_post&post_id=' + postId + '&security=' + wordproofData.ajaxSecurity);
-
-  Http.onreadystatechange = function () {
-    if (Http.readyState === 4 && Http.status === 200) {
-      resolve(JSON.parse(Http.responseText));
-    } else if (Http.readyState === 4) {
-      reject(JSON.parse(Http.responseText));
-    }
-  }
-});
-}
-
-function retryCallback(postId) {
-  const Http = new XMLHttpRequest();
-  Http.open('POST', wordproofData.ajaxURL, true);
-  Http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  Http.send('action=wordproof_wsfy_retry_callback&post_id=' + postId + '&security=' + wordproofData.ajaxSecurity);
 }
 
 async function autoStampSave(postId) {

@@ -54,7 +54,7 @@ class DashboardWidgetController
       'post_status' => $status,
       'meta_query' => [
         'key' => 'wordproof_timestamp_data',
-        'compare' => 'NOT EXISTS'
+        'compare' => $compare
       ],
     ]);
 

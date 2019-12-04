@@ -33,8 +33,9 @@ class AdminController
 
       new PostColumnController();
       new DashboardWidgetController();
+      new PostWidgetController();
       new AdminBarController();
-      new MetaBox();
+
       new NotificationHelper();
       new ChainHelper();
     }
@@ -69,6 +70,16 @@ class AdminController
           'recentUnstampedPages' => DashboardWidgetController::getRecentPosts('page'),
           'recentUnstampeditems' => DashboardWidgetController::getRecentPosts(''),
           'recentStampedItems' => DashboardWidgetController::getRecentPosts('', 'EXISTS'),
+        ]);
+        break;
+      case 'post-new.php':
+      case 'post.php':
+        wp_localize_script('wordproof.admin.js', 'wordproofPost', [
+          'isActive' => (AnalyticsHelper::walletIsConnected() || OptionsHelper::isWSFYActive()),
+          'isWSFYActive' => OptionsHelper::isWSFYActive(),
+          'balance' => OptionsHelper::getBalanceCache(),
+          'unprotectedAmount' => DashboardWidgetController::getUnprotectedCount(),
+          'isTimestamped' => PostWidgetController::isTimestamped(),
         ]);
         break;
       default:

@@ -2,8 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './components/Admin.scss';
 
-import Widget from './components/Dashboard/Widget'
-import Metabox from './components/Metabox/Metabox'
+import DashboardWidget from './components/Widgets/Dashboard'
+import PostWidget from './components/Widgets/Post'
 import Dashboard from "./components/Settings/Dashboard";
 import General from "./components/Settings/General";
 import Manual from "./components/Settings/Manual";
@@ -40,12 +40,14 @@ if (document.querySelector('#wordproof-admin-app-support')) {
 
 if (document.querySelectorAll('#wordproof-dashboard-widget')) {
   document.querySelectorAll('#wordproof-dashboard-widget').forEach((element) => {
-    ReactDOM.render(<Widget/>, element);
+    ReactDOM.render(<DashboardWidget/>, element);
   })
 }
 
-if (document.querySelector('#wordproof-meta-box-inside')) {
-  ReactDOM.render(<Metabox/>, document.querySelector('#wordproof-meta-box-inside'));
+if (document.querySelectorAll('#wordproof-post-widget')) {
+  document.querySelectorAll('#wordproof-post-widget').forEach((element) => {
+    ReactDOM.render(<PostWidget/>, element);
+  })
 }
 
 /**

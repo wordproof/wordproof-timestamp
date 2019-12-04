@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import TimestampButton from "../Extras/TimestampButton";
 
-export default class Widget extends Component {
+export default class Dashboard extends Component {
 
     constructor(props) {
         super(props);

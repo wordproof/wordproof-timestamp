@@ -31,7 +31,7 @@ $transition: 0.4s ease-in-out;
   }
 }
 
-#wordproof-dashboard-widget {
+#wordproof-dashboard-widget, #wordproof-post-widget {
   table {
     width: 100%;
   }
@@ -50,6 +50,10 @@ $transition: 0.4s ease-in-out;
 
   .mt-2 {
     margin-top: 8px;
+  }
+
+  .pt-2 {
+    padding-top: 8px;
   }
 }
 

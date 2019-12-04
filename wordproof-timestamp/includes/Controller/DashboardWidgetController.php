@@ -105,7 +105,7 @@ class DashboardWidgetController
 
   public static function getUnprotectedCount()
   {
-    return self::getUnprotectedPosts('page') + self::getUnprotectedPosts('post');
+    return self::getUnprotectedPosts('page') + self::getUnprotectedPosts('post') +  self::getUnprotectedPosts('attachment');
   }
 
   private static function getUnprotectedPosts($postType)

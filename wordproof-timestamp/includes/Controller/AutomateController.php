@@ -61,14 +61,15 @@ class AutomateController
       }
 
       $type = HashController::getType($post);
-      $body = json_encode(self::getBody($type, $post), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+      $body = self::getBody($type, $post);
+      if (!empty(OptionsHelper::getCustomDomain()))
+        $body['overwrite_callback'] = site_url('/') . 'wp-admin/admin-post.php';
 
       $endpoint = str_replace('$siteId', $options->site_id, WORDPROOF_WSFY_ENDPOINT_ITEM);
-
-      $result = self::postToMy($endpoint, $options->site_token, $body);
+      $result = self::request($endpoint, $options->site_token, $body);
 
       $code = wp_remote_retrieve_response_code($result);
-
       if ($code === 201) {
         TimestampController::saveTimestamp($postId, '', '', true);
       } else {
@@ -85,20 +86,30 @@ class AutomateController
     if (isset($options->site_token) && isset($options->site_id)) {
       $endpoint = str_replace('$postId', $postId, WORDPROOF_WSFY_ENDPOINT_RETRY_CALLBACK);
       $endpoint = str_replace('$siteId', $options->site_id, $endpoint);
-      self::postToMy($endpoint, $options->site_token, []);
+
+      $body = [];
+      if (!empty(OptionsHelper::getCustomDomain()))
+        $body['overwrite_callback'] = site_url('/') . 'wp-admin/admin-post.php';
+
+      $result = self::request($endpoint, $options->site_token, $body);
+      $code = wp_remote_retrieve_response_code($result);
+
+      if ($code !== 201 || $code !== 200) {
+        return self::returnError($result);
+      }
     } else {
       return ['errors' => ['authentication' => ['Please configure your site key']]];
     }
   }
 
-  private static function postToMy($endpoint, $token, $body) {
+  private static function request($endpoint, $token, $body) {
     return $result = wp_remote_post(WORDPROOF_WSFY_API_URI . $endpoint, [
       'headers' => [
         'Accept' => 'application/json',
         'Content-Type' => 'application/json',
         'Authorization' => 'Bearer ' . $token
       ],
-      'body' => $body
+      'body' => json_encode($body, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
     ]);
   }
 
@@ -176,6 +187,7 @@ class AutomateController
   }
 
   public function handleModifyPost() {
+    //todo: balance
     $postId = intval($_REQUEST['uid']);
     $chain = ($_REQUEST['chain']) ? sanitize_text_field($_REQUEST['chain']) : '';
     $transactionId = ($_REQUEST['transactionId']) ? sanitize_text_field($_REQUEST['transactionId']) : '';

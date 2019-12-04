@@ -9,7 +9,8 @@ export default class TimestampButton extends Component {
         this.state = {
             'status': this.getStatus(),
             'show': true,
-            'message': ''
+            'message': '',
+            'hideLabels': props.onlyShowActions
         };
     }
 
@@ -34,11 +35,11 @@ export default class TimestampButton extends Component {
             case 'not_published':
                 return <span>🕓 Not published yet</span>;
             case 'not_timestamped':
-                return <div><span>🚨 Not timestamped</span> {this.getTimestampButton()}</div>;
+                return <div><span hidden={this.state.hideLabels}>🚨 Not timestamped</span> {this.getTimestampButton()}</div>;
             case 'outdated':
-                return <div><span>🚨 Timestamp is outdated</span> {this.getTimestampButton()}</div>;
+                return <div><span hidden={this.state.hideLabels}>🚨 Timestamp is outdated</span> {this.getTimestampButton()}</div>;
             case 'awaiting_callback':
-                return <div><span>🕓 Waiting for callback</span> {this.getRetryCallbackButton()}</div>;
+                return <div><span hidden={this.state.hideLabels}>🕓 Waiting for callback</span> {this.getRetryCallbackButton()}</div>;
             case 'timestamped':
                 return <a href={this.props.post.permalink + '#wordproof'}>✅ Certificate</a>;
             default:

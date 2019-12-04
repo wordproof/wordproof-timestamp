@@ -2,6 +2,7 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
+use WordProofTimestamp\includes\AnalyticsHelper;
 use WordProofTimestamp\includes\ChainHelper;
 use WordProofTimestamp\includes\DomainHelper;
 use WordProofTimestamp\includes\MetaBox;
@@ -39,7 +40,8 @@ class AdminController
     }
   }
 
-  public function updateSetting() {
+  public function updateSetting()
+  {
     $key = $_REQUEST['key'];
     $value = $_REQUEST['value'];
     if (!empty($key) && !empty($value)) {
@@ -49,32 +51,45 @@ class AdminController
 
   public function loadAdminAssets($hookSuffix)
   {
+    global $post;
+
     wp_enqueue_style('wordproof.admin.css', WORDPROOF_URI_CSS . '/admin.css', array(), filemtime(WORDPROOF_DIR_CSS . '/admin.css'));
+    wp_enqueue_script('wordproof.admin.js', WORDPROOF_URI_JS . '/admin.js', array(), filemtime(WORDPROOF_DIR_JS . '/admin.js'), true);
 
-    $allowedPages = ['edit.php', 'post-new.php', 'post.php', 'upload.php',
-      'admin_page_wordproof-autostamp',
-      'toplevel_page_wordproof-dashboard',
-      'wordproof_page_wordproof-general',
-      'wordproof_page_wordproof-manual',
-      'wordproof_page_wordproof-automatic',
-      'wordproof_page_wordproof-support',
-    ];
-
-    if (in_array($hookSuffix, $allowedPages)) {
-      global $post;
-
-      wp_enqueue_script('wordproof.admin.js', WORDPROOF_URI_JS . '/admin.js', array(), filemtime(WORDPROOF_DIR_JS . '/admin.js'), true);
-      wp_localize_script('wordproof.admin.js', 'wordproofData', array(
-        'ajaxURL' => admin_url('admin-ajax.php'),
-        'settingsURL' => admin_url('admin.php?page=wordproof'),
-        'ajaxSecurity' => wp_create_nonce('wordproof'),
-        'postId' => (!empty($post->ID)) ? $post->ID : false,
-        'permalink' => (!empty($post->ID)) ? DomainHelper::getPermalink($post->ID) : false,
-        'network' => OptionsHelper::getNetwork(),
-        'accountName' => OptionsHelper::getAccountName(''),
-        'wordBalance' => OptionsHelper::getBalance(0),
-        'pluginDirUrl' => WORDPROOF_URI
-      ));
+    switch ($hookSuffix) {
+      case 'index.php':
+        wp_localize_script('wordproof.admin.js', 'wordproofDashboard', [
+          'timestampCount' => AnalyticsHelper::getTimestampCount(),
+          'isActive' => (AnalyticsHelper::walletIsConnected() || OptionsHelper::isWSFYActive()),
+          'isWSFYActive' => OptionsHelper::isWSFYActive(),
+          'unprotectedAmount' => DashboardWidgetController::getUnprotectedCount(),
+          'unprotectedMessage' => DashboardWidgetController::getUnprotectedWarning(),
+          'balance' => OptionsHelper::getBalanceCache(),
+          'recentUnstampedPosts' => DashboardWidgetController::getRecentPosts('post'),
+          'recentUnstampedPages' => DashboardWidgetController::getRecentPosts('page'),
+          'recentUnstampeditems' => DashboardWidgetController::getRecentPosts(''),
+          'recentStampedItems' => DashboardWidgetController::getRecentPosts('', 'EXISTS'),
+        ]);
+        break;
+      default:
+        break;
     }
+    wp_localize_script('wordproof.admin.js', 'wordproofData', array(
+      'ajaxURL' => admin_url('admin-ajax.php'),
+      'settingsURL' => admin_url('admin.php?page=wordproof'),
+      'ajaxSecurity' => wp_create_nonce('wordproof'),
+      'postId' => (!empty($post->ID)) ? $post->ID : false,
+      'permalink' => (!empty($post->ID)) ? DomainHelper::getPermalink($post->ID) : false,
+      'network' => OptionsHelper::getNetwork(),
+      'accountName' => OptionsHelper::getAccountName(''),
+      'pluginDirUrl' => WORDPROOF_URI,
+      'urls' => [
+        'dashboard' => admin_url('admin.php?page=wordproof-dashboard'),
+        'autostamp' => admin_url('admin.php?page=wordproof-dashboard'),
+        'wizard' => admin_url('admin.php?page=wordproof-wizard'),
+        'site' => get_site_url(),
+        'ajax' => admin_url('admin-ajax.php'),
+      ],
+    ));
   }
 }

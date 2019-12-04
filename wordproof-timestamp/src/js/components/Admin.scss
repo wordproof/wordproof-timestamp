@@ -12,11 +12,12 @@ $progress-color: #ffbe00;
 $failed-color: #e7694f;
 $transition: 0.4s ease-in-out;
 
+//@import "~tailwindcss/base";
+
 @import "./Metabox/Metabox";
 @import "./ConnectionWidget/ConnectionWidget";
 
 #wp-admin-bar-wordproof-balance {
-
   span.wordproof-icon {
     display: inline-block;
     background-repeat: no-repeat;
@@ -27,6 +28,28 @@ $transition: 0.4s ease-in-out;
     top: 4px;
     margin-right: 4px;
     position: relative;
+  }
+}
+
+#wordproof-dashboard-widget {
+  table {
+    width: 100%;
+  }
+
+  .block {
+    display: block;
+  }
+
+  .mb-2 {
+    margin-bottom: 8px;
+  }
+
+  .mb-3 {
+    margin-bottom: 12px;
+  }
+
+  .mt-2 {
+    margin-top: 8px;
   }
 }
 
@@ -238,3 +261,7 @@ $transition: 0.4s ease-in-out;
     height: 20px;
   }
 }
+
+//@import "~tailwindcss/components";
+//
+//@import "~tailwindcss/utilities";

@@ -38,8 +38,10 @@ if (document.querySelector('#wordproof-admin-app-support')) {
  * Settings
  */
 
-if (document.querySelector('#wordproof-dashboard-widget')) {
-  ReactDOM.render(<Widget/>, document.querySelector('#wordproof-dashboard-widget'));
+if (document.querySelectorAll('#wordproof-dashboard-widget')) {
+  document.querySelectorAll('#wordproof-dashboard-widget').forEach((element) => {
+    ReactDOM.render(<Widget/>, element);
+  })
 }
 
 if (document.querySelector('#wordproof-meta-box-inside')) {

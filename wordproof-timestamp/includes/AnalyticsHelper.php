@@ -45,4 +45,12 @@ class AnalyticsHelper
     }
     update_option(self::$optionWalletConnected, true);
   }
+
+  public static function walletIsConnected() {
+    return boolval(get_option(self::$optionWalletConnected, false));
+  }
+
+  public static function getTimestampCount() {
+    return intval(get_option(self::$optionTimestampCount, 0));
+  }
 }

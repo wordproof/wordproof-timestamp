@@ -75,8 +75,9 @@ $transition: 0.4s ease-in-out;
       box-shadow: 0px 2px 0px 0px darken($grey-lighter, 10);
       position: relative;
       font-weight: 500;
-      padding: 4px 25px 31px 25px;
+      padding: 8px 23px;
       border: none;
+      box-sizing: content-box;
       margin-right: 10px;
 
       &.is-primary {

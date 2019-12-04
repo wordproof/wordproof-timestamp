@@ -57,7 +57,7 @@ class OptionsHelper
     return $balance;
   }
 
-  public static function getBalanceCache($default = false) {
+  public static function getBalanceCache() {
     if (wp_cache_get('balance', 'wordproof'))
       return wp_cache_get('balance', 'wordproof');
     return self::getBalance();

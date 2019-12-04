@@ -57,6 +57,12 @@ $transition: 0.4s ease-in-out;
   }
 }
 
+.wordproof-timestamp-button {
+  .block {
+    display: block;
+  }
+}
+
 .wordproof-admin-app {
   hr {
     margin: 20px 0;
@@ -230,7 +236,7 @@ $transition: 0.4s ease-in-out;
 
   .textinput {
     width: 100%;
-    max-width: 350px;
+    max-width: 450px;
     padding: 7px 10px;
     border-radius: 4px;
   }

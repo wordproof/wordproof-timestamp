@@ -103,7 +103,7 @@ export default class Dashboard extends Component {
                     <tr key={i}>
                         <td>{item.post.title}</td>
                         <td><TimestampButton automate={wordproofDashboard.isWSFYActive} post={item.post}
-                                             meta={item.meta}/></td>
+                                             meta={item.meta} onlyShowActions={true}/></td>
                     </tr>
                 );
             })}

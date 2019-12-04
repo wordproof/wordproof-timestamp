@@ -41,7 +41,9 @@ export default class TimestampButton extends Component {
             case 'awaiting_callback':
                 return <div><span hidden={this.state.hideLabels}>🕓 Waiting for callback</span> {this.getRetryCallbackButton()}</div>;
             case 'timestamped':
-                return <a href={this.props.post.permalink + '#wordproof'}>✅ Certificate</a>;
+                if (this.props.post.type === 'post' || this.props.post.type === 'page')
+                    return <a href={this.props.post.permalink + '#wordproof'}>✅ Certificate</a>;
+                return <span>✅ Timestamped</span>;
             default:
                 return false;
         }
@@ -59,8 +61,8 @@ export default class TimestampButton extends Component {
     getTimestampButton() {
         if (this.props.automate && this.state.show) {
             return (
-                <button className={'button'} disabled={this.state.disabled}
-                        onClick={() => this.request('wordproof_wsfy_save_post')}>Timestamp this post</button>
+                <button className={'button block'} disabled={this.state.disabled}
+                        onClick={() => this.request('wordproof_wsfy_save_post')}>Timestamp this {this.props.post.type}</button>
             );
         }
     }
@@ -91,15 +93,15 @@ export default class TimestampButton extends Component {
             result.data = JSON.parse(result.data);
 
         if (result.data.errors)
-            return '🤭 Something went wrong. ' + JSON.stringify(result.errors);
+            return <span>🤭 Something went wrong {JSON.stringify(result.errors)}</span>;
 
         if (result.data && result.data.message === 'Unauthenticated.')
-            return '🔐 Please check if your Site Key if present and valid';
+            return <span>🔐 <a href={wordproofData.urls.wizardConnect}>Please check if your Site Key if present and valid</a></span>;
 
         if (result.data && result.data.success)
-            return '👍 ' + TimestampButton.uppercase(postType) + ' is sent to My WordProof';
+            return <span>👍 {TimestampButton.uppercase(postType)} is sent to My WordProof</span>;
 
-        return '🤭 Something went wrong.';
+        return <span>🤭 Something went wrong.</span>;
     }
 
     static uppercase(string) {
@@ -110,7 +112,7 @@ export default class TimestampButton extends Component {
         return (
             <div className={'wordproof-timestamp-button-inner'}>
                 {(this.state.show) ? this.renderView() : ''}
-                <span>{this.state.message}</span>
+                { this.state.message }
             </div>
         );
     }

@@ -98,6 +98,7 @@ class AdminController
         'dashboard' => admin_url('admin.php?page=wordproof-dashboard'),
         'autostamp' => admin_url('admin.php?page=wordproof-dashboard'),
         'wizard' => admin_url('admin.php?page=wordproof-wizard'),
+        'wizardConnect' => admin_url('admin.php?page=wordproof-wizard#connect'),
         'site' => get_site_url(),
         'ajax' => admin_url('admin-ajax.php'),
       ],

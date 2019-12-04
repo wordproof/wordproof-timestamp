@@ -187,9 +187,9 @@ class AutomateController
   }
 
   public function handleModifyPost() {
-    //todo: balance
     $postId = intval($_REQUEST['uid']);
     $chain = ($_REQUEST['chain']) ? sanitize_text_field($_REQUEST['chain']) : '';
+    $balance = ($_REQUEST['balance']) ? intval($_REQUEST['balance']) : false;
     $transactionId = ($_REQUEST['transactionId']) ? sanitize_text_field($_REQUEST['transactionId']) : '';
     $meta = PostMetaHelper::getPostMeta($postId);
 
@@ -198,6 +198,10 @@ class AutomateController
       $meta->transactionId = $transactionId;
 
       PostMetaHelper::savePostMeta($postId, (array)$meta, true);
+
+      if ($balance)
+        OptionsHelper::set('balance', $balance);
+
       echo json_encode(['success' => true, 'response' => $this->responses['post_modified']]);
       die();
     } else {

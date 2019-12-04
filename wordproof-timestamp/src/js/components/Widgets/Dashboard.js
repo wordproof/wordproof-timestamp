@@ -96,7 +96,7 @@ export default class Dashboard extends Component {
     }
 
     getTable(posts) {
-        return (<table className={'mb-3'}>
+        return (posts.length === 0) ? <span className={'block mb-3'}><i>No posts found.</i></span> : <table className={'mb-3'}>
             <tbody>
             {posts.map((item, i) => {
                 return (
@@ -108,7 +108,7 @@ export default class Dashboard extends Component {
                 );
             })}
             </tbody>
-        </table>);
+        </table>;
     }
 
     render() {

@@ -58,7 +58,7 @@ class CertificateController
   public function addModal()
   {
     if ($this->showCertificate()) {
-      echo '<div id="wordproof-certificate-modal" style="position: relative; z-index: 999;"></div>';
+      echo '<div id="wordproof-certificate-modal" style="position: relative; z-index: 9999999999;"></div>';
     }
   }
 

@@ -34,8 +34,8 @@ export default class Dashboard extends Component {
                         <h3>How to timestamp your content</h3>
                         <p>After setting up WordProof with the Setup Wizard, here is how you timestamp:</p>
                         <ul>
-                            <li><Check/> New content will be timestamped automatically after publishing</li>
-                            <li><Check/> Existing content can be timestamped in two ways:
+                            <li>- New content will be timestamped automatically after publishing</li>
+                            <li>- Existing content can be timestamped in two ways:
                             <ol className={'pt-2'}>
                                 <li>Use the ‘Timestamp’ button in the WordProof Column on the Posts / Pages overview page</li>
                                 <li>Use the Bulk Timestamp tool</li>

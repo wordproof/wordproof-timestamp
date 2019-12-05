@@ -11,7 +11,7 @@ export default class Upgrade extends Component {
   render() {
     return (
         <Template current={'upgrade'}>
-          <h3>Bulk</h3>
+          <h3>Upgrade</h3>
         </Template>
     )
   }

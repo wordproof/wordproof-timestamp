@@ -82,10 +82,10 @@ export default class Settings extends Component {
                            id="wordproof_customize[hide_post_column]"/>
                 </div>
 
-                <input type="submit" name="submit" id="submit" className="button is-primary"
+                <input type="submit" name="submit" id="submit" className="wbtn wbtn-primary"
                        value={wordproofSettings.saveChanges}/>
 
-                <button className={`button button-modest ${this.state.hideAdvanced ? '' : 'hidden'}`}
+                <button className={`block underline text-blue-500 bg-transparant border-0 p-0 mt-4 cursor-pointer ${this.state.hideAdvanced ? '' : 'hidden'}`}
                         onClick={this.handleAdvancedOptions}>Show advanced settings
                 </button>
 

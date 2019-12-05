@@ -11,7 +11,7 @@ export default class Template extends Component {
     render() {
         return (
             <>
-                <div className={'flex flex-row justify-center mb-10'}>
+                <div className={'flex flex-row justify-center mb-8'}>
                     <WordproofWithLogo/>
                 </div>
                 <div className={'bg-white shadow px-6 mb-6 flex justify-between'}>

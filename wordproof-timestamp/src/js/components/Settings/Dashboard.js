@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Template from "./Partials/Template";
+import ModeDisplay from "../Extras/ModeDisplay";
 
 export default class Dashboard extends Component {
     constructor(props) {
@@ -33,24 +34,9 @@ export default class Dashboard extends Component {
                             automatically.</p>
 
 
-                        {wordproofSettings.isWSFYActive
-                            ? <div>
-                                <p>🎉 You are automatically timestamping your content!</p>
-                                <a className="button is-primary" href={wordproofSettings.urls.wizard}>Click here if you
-                                    want to restart the Setup Wizard</a>
-                            </div>
-                            : wordproofSettings.network
-                                ? <div>
-                                    <p>🙌 You&apos;ve configured WordProof to timestamp manually</p>
-                                    <a className="button is-primary" href={wordproofSettings.urls.wizard}>Click here if
-                                        you want to restart the Setup Wizard</a>
-                                </div>
-                                : <div>
-                                    <p>❌ Let&apos;s get you going quickly. Launch the Setup Wizard to get started.</p>
-                                    <a className="button is-primary" href={wordproofSettings.urls.wizard}>Launch
-                                        Wizard</a>
-                                </div>
-                        }
+                        <h3>Mode</h3>
+                        <p>We recommend you to use the Automatic mode. The manual mode is for tech-savvy blockchain users.</p>
+                        <ModeDisplay/>
 
                         <h3>Need some help?</h3>
                         <p>We want to help you if you have any problems!</p>

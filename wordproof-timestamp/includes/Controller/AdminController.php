@@ -87,7 +87,6 @@ class AdminController
       case 'wordproof_page_wordproof-bulk':
       case 'wordproof_page_wordproof-support':
         $wsfy = OptionsHelper::getWSFY();
-        $wsfyActive = OptionsHelper::isWSFYActive();
 
       wp_enqueue_script('wordproof.settings.admin.js', WORDPROOF_URI_JS . '/settings.js', array(), filemtime(WORDPROOF_DIR_JS . '/settings.js'), true);
       wp_enqueue_style('wordproof.settings.admin.css', WORDPROOF_URI_CSS . '/settings.css', array(), filemtime(WORDPROOF_DIR_CSS . '/settings.css'));
@@ -100,7 +99,8 @@ class AdminController
           'certificateDOMSelector' => OptionsHelper::getCertificateDomSelector(),
           'customDomain' => OptionsHelper::getCustomDomain(),
           'hidePostColumn' => OptionsHelper::getHidePostColumn(),
-          'isWSFYActive' => $wsfyActive,
+          'walletIsConnected' => AnalyticsHelper::walletIsConnected(),
+          'isWSFYActive' => OptionsHelper::isWSFYActive(),
           'wsfy' => $wsfy,
           'registeredPostTypes' => get_post_types(['public' => true]),
           'saveChanges' => 'Save Changes',
@@ -127,7 +127,7 @@ class AdminController
       'pluginDirUrl' => WORDPROOF_URI,
       'urls' => [
         'dashboard' => admin_url('admin.php?page=wordproof-dashboard'),
-        'autostamp' => admin_url('admin.php?page=wordproof-dashboard'),
+        'bulk' => admin_url('admin.php?page=wordproof-bulk'),
         'wizard' => admin_url('admin.php?page=wordproof-wizard'),
         'wizardConnect' => admin_url('admin.php?page=wordproof-wizard#connect'),
         'site' => get_site_url(),

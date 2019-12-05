@@ -16,6 +16,7 @@ class SettingsPage
     'dashboard' => 'Dashboard',
     'settings' => 'Settings',
     'support' => 'Support',
+    'upgrade' => 'Upgrade',
     'bulk' => 'Bulk',
   ];
 
@@ -66,6 +67,11 @@ class SettingsPage
   public function generateSettingsPage_bulk()
   {
     $this->renderSettingPage('bulk');
+  }
+
+  public function generateSettingsPage_upgrade()
+  {
+    $this->renderSettingPage('upgrade');
   }
 
   public function renderSettingPage($slug)

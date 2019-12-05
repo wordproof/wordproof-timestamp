@@ -22,3 +22,7 @@ if (document.querySelector('#wordproof-admin-app-bulk')) {
 if (document.querySelector('#wordproof-admin-app-support')) {
   ReactDOM.render(<Support/>, document.querySelector('#wordproof-admin-app-support'));
 }
+
+if (document.querySelector('#wordproof-admin-app-upgrade')) {
+  ReactDOM.render(<Support/>, document.querySelector('#wordproof-admin-app-upgrade'));
+}

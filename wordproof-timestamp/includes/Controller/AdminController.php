@@ -85,6 +85,7 @@ class AdminController
       case 'toplevel_page_wordproof-dashboard':
       case 'wordproof_page_wordproof-settings':
       case 'wordproof_page_wordproof-bulk':
+      case 'wordproof_page_wordproof-upgrade':
       case 'wordproof_page_wordproof-support':
         $wsfy = OptionsHelper::getWSFY();
 
@@ -107,8 +108,11 @@ class AdminController
           'urls' => [
             'wizard' => admin_url('admin.php?page=wordproof-wizard'),
             'wizardConnect' => admin_url('admin.php?page=wordproof-wizard#connect'),
-            'automatic' => admin_url('admin.php?page=wordproof-automatic'),
-            'manual' => admin_url('admin.php?page=wordproof-manual'),
+            'settings' => admin_url('admin.php?page=wordproof-settings'),
+            'dashboard' => admin_url('admin.php?page=wordproof-dashboard'),
+            'bulk' => admin_url('admin.php?page=wordproof-bulk'),
+            'upgrade' => admin_url('admin.php?page=wordproof-upgrade'),
+            'support' => admin_url('admin.php?page=wordproof-support'),
           ]
         ]);
         break;

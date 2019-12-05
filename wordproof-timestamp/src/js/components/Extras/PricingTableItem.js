@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Check} from "./Images";
 import PricingListItem from "./PricingListItem";
 
 export default class PricingTableItem extends Component {
@@ -15,50 +14,50 @@ export default class PricingTableItem extends Component {
         this.setState({'period': (this.state.period === 'annual' ? 'month' : 'annual')})
     }
 
+    static capitalize([firstLetter, ...rest]) {
+        return [firstLetter.toLocaleUpperCase(), ...rest].join('');
+    }
+
     render() {
         const object = {
             'free' : {
                 'timestamps': '10',
+                'bonus': '0',
                 'month' : {
                     'price': '0',
-                    'bonus': '0',
                 },
                 'annual' : {
                     'price': '0',
-                    'bonus': '0',
                 }
             },
             'hobby' : {
                 'timestamps': '25',
+                'bonus': '100',
                 'month' : {
                     'price': '7.50',
-                    'bonus': '0',
                 },
                 'annual' : {
                     'price': '6.50',
-                    'bonus': '100',
                 }
             },
             'professional' : {
                 'timestamps': '100',
+                'bonus': '200',
                 'month' : {
                     'price': '12.50',
-                    'bonus': '0',
                 },
                 'annual' : {
                     'price': '11.50',
-                    'bonus': '300',
                 }
             },
             'business' : {
                 'timestamps': '250',
+                'bonus': '1000',
                 'month' : {
                     'price': '25.00',
-                    'bonus': '0',
                 },
                 'annual' : {
                     'price': '22.00',
-                    'bonus': '1000',
                 }
             },
         };
@@ -70,7 +69,7 @@ export default class PricingTableItem extends Component {
                     <><span className="text-sm font-medium bg-orange-400 py-1 px-2 rounded text-white align-middle mb-4 inline-block">Recommended</span><br/></>
                     : '' }
 
-                <strong className={'block'}>{ this.props.plan }</strong>
+                <strong className={'block'}>{ PricingTableItem.capitalize(this.props.plan) }</strong>
 
                 <div className="flex flex-row items-baseline justify-center m-6">
                     <span className="text-2xl">€</span>
@@ -79,11 +78,12 @@ export default class PricingTableItem extends Component {
                 </div>
 
                 <ul>
-                    <PricingListItem text={'10 timestamps per month'}/>
-                    <PricingListItem text={'10 timestamps per month'}/>
-                    <PricingListItem text={'10 timestamps per month'}/>
-                    <PricingListItem text={'10 timestamps per month'}/>
-                    <PricingListItem text={'10 timestamps per month'}/>
+                    <PricingListItem><strong>{object[this.props.plan].timestamps} timestamps</strong> per month</PricingListItem>
+                    <PricingListItem>Posts, pages and media files</PricingListItem>
+                    <PricingListItem>View certificate text</PricingListItem>
+                    <PricingListItem>Download certificates</PricingListItem>
+                    <PricingListItem>Compare unlimited revisions</PricingListItem>
+                    <PricingListItem icon={(this.state.period === 'annual' ? 'check' : 'cross')}>{object[this.props.plan].bonus} bonus timestamps</PricingListItem>
                 </ul>
 
                 <a href={''} className={`wbtn ${(this.props.recommended) ? 'wbtn-primary' : ''}`}>Sign Up Today</a>

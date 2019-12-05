@@ -9,15 +9,15 @@ use WordProofTimestamp\includes\OptionsHelper;
  * Class SettingsPage
  * @package WordProofTimestamp\includes\Page
  */
-class SettingsPage {
+class SettingsPage
+{
 
-    private $settingPages = [
-        'dashboard' => 'Dashboard',
-        'general' => 'General Settings',
-        'manual' => 'Manual',
-        'automatic' => 'Automatic',
-        'support' => 'Support',
-    ];
+  private $settingPages = [
+    'dashboard' => 'Dashboard',
+    'settings' => 'Settings',
+    'support' => 'Support',
+    'bulk' => 'Bulk',
+  ];
 
   public function __construct()
   {
@@ -53,19 +53,9 @@ class SettingsPage {
     $this->renderSettingPage('dashboard');
   }
 
-  public function generateSettingsPage_general()
+  public function generateSettingsPage_settings()
   {
-    $this->renderSettingPage('general');
-  }
-
-  public function generateSettingsPage_manual()
-  {
-    $this->renderSettingPage('manual');
-  }
-
-  public function generateSettingsPage_automatic()
-  {
-    $this->renderSettingPage('automatic');
+    $this->renderSettingPage('settings');
   }
 
   public function generateSettingsPage_support()
@@ -73,79 +63,86 @@ class SettingsPage {
     $this->renderSettingPage('support');
   }
 
-  public function renderSettingPage($slug) {
+  public function generateSettingsPage_bulk()
+  {
+    $this->renderSettingPage('bulk');
+  }
+
+  public function renderSettingPage($slug)
+  {
     ?>
       <div class="wrap">
-          <h1>WordProof Settings</h1>
+          <h1></h1>
 
-      <div class='wordproof-admin-app'>
-          <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" id="wordproof_admin_form">
-              <input type="hidden" name="action" value="wordproof_form_action">
-              <input type="hidden" name="slug" value="<?php echo $slug; ?>">
-              <input type="hidden" name="wordproof_admin_form_nonce"
-                     value="<?php echo wp_create_nonce('wordproof_admin_form_nonce'); ?>"/>
-              <div id="wordproof-admin-app-<?php echo $slug; ?>"></div>
-          </form>
-      </div>
+          <div class='wordproof-admin-app'>
+              <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post"
+                    id="wordproof_admin_form">
+                  <input type="hidden" name="action" value="wordproof_form_action">
+                  <input type="hidden" name="slug" value="<?php echo $slug; ?>">
+                  <input type="hidden" name="wordproof_admin_form_nonce"
+                         value="<?php echo wp_create_nonce('wordproof_admin_form_nonce'); ?>"/>
+                  <div id="wordproof-admin-app-<?php echo $slug; ?>"></div>
+              </form>
+          </div>
       </div>
     <?php
   }
 
-    public function saveSettings()
-    {
-      if (isset($_POST['wordproof_admin_form_nonce']) && wp_verify_nonce($_POST['wordproof_admin_form_nonce'], 'wordproof_admin_form_nonce')) {
+  public function saveSettings()
+  {
+    if (isset($_POST['wordproof_admin_form_nonce']) && wp_verify_nonce($_POST['wordproof_admin_form_nonce'], 'wordproof_admin_form_nonce')) {
 
-          if (isset($_POST['wordproof_network'])) {
-            OptionsHelper::set('network', $_POST['wordproof_network']);
-          }
-
-        /**
-         * Customize settings
-         */
-        if (isset($_POST['wordproof_customize'])) {
-
-          if (isset($_POST['wordproof_customize']['hide_post_column'])) {
-            OptionsHelper::set('hide_post_column', true);
-          } else {
-            OptionsHelper::set('hide_post_column', false);
-          }
-
-          if (isset($_POST['wordproof_customize']['certificate_dom_selector'])) {
-            OptionsHelper::set('certificate_dom_selector', $_POST['wordproof_customize']['certificate_dom_selector']);
-          }
-
-          if (isset($_POST['wordproof_customize']['certificate_text'])) {
-            OptionsHelper::set('certificate_text', $_POST['wordproof_customize']['certificate_text']);
-          }
-
-          if (isset($_POST['wordproof_customize']['custom_domain'])) {
-            OptionsHelper::set('custom_domain', $_POST['wordproof_customize']['custom_domain']);
-          }
-        }
-
-        /**
-         * WSFY settings
-         */
-        if (isset($_POST['wsfy_settings'])) {
-          $post = $_POST['wsfy_settings'];
-
-          $allowedPostTypes = array_keys($post['allowed_post_types']);
-          OptionsHelper::set('allowed_post_types', $allowedPostTypes);
-
-          $showRevisions = isset($post['show_revisions']) ? true : false;
-          OptionsHelper::set('show_revisions', $showRevisions);
-
-          if (isset($post['whitelisted_ips']) && !empty($post['whitelisted_ips'])) {
-            OptionsHelper::set('whitelisted_ips', explode(',', $post['whitelisted_ips']));
-          }
-        }
-
+      if (isset($_POST['wordproof_network'])) {
+        OptionsHelper::set('network', $_POST['wordproof_network']);
       }
 
-      $pages = array_flip($this->settingPages);
-      if (in_array($_POST['slug'], $pages)) {
-        wp_redirect(admin_url('admin.php?page=wordproof-' . $_POST['slug']));
+      /**
+       * Customize settings
+       */
+      if (isset($_POST['wordproof_customize'])) {
+
+        if (isset($_POST['wordproof_customize']['hide_post_column'])) {
+          OptionsHelper::set('hide_post_column', true);
+        } else {
+          OptionsHelper::set('hide_post_column', false);
+        }
+
+        if (isset($_POST['wordproof_customize']['certificate_dom_selector'])) {
+          OptionsHelper::set('certificate_dom_selector', $_POST['wordproof_customize']['certificate_dom_selector']);
+        }
+
+        if (isset($_POST['wordproof_customize']['certificate_text'])) {
+          OptionsHelper::set('certificate_text', $_POST['wordproof_customize']['certificate_text']);
+        }
+
+        if (isset($_POST['wordproof_customize']['custom_domain'])) {
+          OptionsHelper::set('custom_domain', $_POST['wordproof_customize']['custom_domain']);
+        }
       }
-      die();
+
+      /**
+       * WSFY settings
+       */
+      if (isset($_POST['wsfy_settings'])) {
+        $post = $_POST['wsfy_settings'];
+
+        $allowedPostTypes = array_keys($post['allowed_post_types']);
+        OptionsHelper::set('allowed_post_types', $allowedPostTypes);
+
+        $showRevisions = isset($post['show_revisions']) ? true : false;
+        OptionsHelper::set('show_revisions', $showRevisions);
+
+        if (isset($post['whitelisted_ips']) && !empty($post['whitelisted_ips'])) {
+          OptionsHelper::set('whitelisted_ips', explode(',', $post['whitelisted_ips']));
+        }
+      }
+
     }
+
+    $pages = array_flip($this->settingPages);
+    if (in_array($_POST['slug'], $pages)) {
+      wp_redirect(admin_url('admin.php?page=wordproof-' . $_POST['slug']));
+    }
+    die();
+  }
 }

@@ -74,7 +74,7 @@ class AdminController
         break;
       case 'post-new.php':
       case 'post.php':
-        wp_localize_script('wordproof.admin.js', 'wordproofPost', [
+      wp_localize_script('wordproof.admin.js', 'wordproofPost', [
           'isActive' => (AnalyticsHelper::walletIsConnected() || OptionsHelper::isWSFYActive()),
           'isWSFYActive' => OptionsHelper::isWSFYActive(),
           'balance' => OptionsHelper::getBalanceCache(),
@@ -83,14 +83,16 @@ class AdminController
         ]);
         break;
       case 'toplevel_page_wordproof-dashboard':
-      case 'wordproof_page_wordproof-manual':
-      case 'wordproof_page_wordproof-automatic':
+      case 'wordproof_page_wordproof-settings':
+      case 'wordproof_page_wordproof-bulk':
       case 'wordproof_page_wordproof-support':
-      case 'wordproof_page_wordproof-general':
         $wsfy = OptionsHelper::getWSFY();
         $wsfyActive = OptionsHelper::isWSFYActive();
 
-        wp_localize_script('wordproof.admin.js', 'wordproofSettings', [
+      wp_enqueue_script('wordproof.settings.admin.js', WORDPROOF_URI_JS . '/settings.js', array(), filemtime(WORDPROOF_DIR_JS . '/settings.js'), true);
+      wp_enqueue_style('wordproof.settings.admin.css', WORDPROOF_URI_CSS . '/settings.css', array(), filemtime(WORDPROOF_DIR_CSS . '/settings.css'));
+
+      wp_localize_script('wordproof.settings.admin.js', 'wordproofSettings', [
           'adminUrl' => admin_url(),
           'updateSettingsEndpoint' => admin_url('admin-post.php'),
           'network' => OptionsHelper::getNetwork(),

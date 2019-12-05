@@ -4,35 +4,7 @@ import './components/Admin.scss';
 
 import DashboardWidget from './components/Widgets/Dashboard'
 import PostWidget from './components/Widgets/Post'
-import Dashboard from "./components/Settings/Dashboard";
-import General from "./components/Settings/General";
-import Manual from "./components/Settings/Manual";
-import Automatic from "./components/Settings/Automatic";
-import Support from "./components/Settings/Support";
 import TimestampButton from "./components/Extras/TimestampButton";
-
-/**
- * Settings
- */
-if (document.querySelector('#wordproof-admin-app-dashboard')) {
-  ReactDOM.render(<Dashboard/>, document.querySelector('#wordproof-admin-app-dashboard'));
-}
-
-if (document.querySelector('#wordproof-admin-app-general')) {
-  ReactDOM.render(<General/>, document.querySelector('#wordproof-admin-app-general'));
-}
-
-if (document.querySelector('#wordproof-admin-app-manual')) {
-  ReactDOM.render(<Manual/>, document.querySelector('#wordproof-admin-app-manual'));
-}
-
-if (document.querySelector('#wordproof-admin-app-automatic')) {
-  ReactDOM.render(<Automatic/>, document.querySelector('#wordproof-admin-app-automatic'));
-}
-
-if (document.querySelector('#wordproof-admin-app-support')) {
-  ReactDOM.render(<Support/>, document.querySelector('#wordproof-admin-app-support'));
-}
 
 /**
  * Settings

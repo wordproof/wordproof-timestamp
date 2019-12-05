@@ -14,7 +14,6 @@ class Manual extends Component {
         super(props)
         this.state = {
             network: wordproofSettings.network,
-            hideAdvanced: true,
             notificationMessage: null,
             showTimestamp: false
         }
@@ -74,17 +73,9 @@ class Manual extends Component {
         return this.state.network === name;
     }
 
-    handleAdvancedOptions = (e) => {
-        e.preventDefault();
-        this.setState({hideAdvanced: false});
-    }
-
     render() {
         return (
             <>
-
-                <strong>Manual Settings</strong>
-
                 {!this.state.showTimestamp ?
                     <div>
                         <p>The WordProof Timestamp set-up consists of three steps and takes about 15 minutes. You only
@@ -115,7 +106,7 @@ class Manual extends Component {
                                 <span>EOS</span>
                             </label>
                             <label htmlFor="wordproof_network_jungle"
-                                   className={`radio-box ${this.checkActiveRadio('eos_jungle') ? 'selected' : ''} ${this.state.hideAdvanced ? 'hidden' : ''}`}>
+                                   className={`radio-box ${this.checkActiveRadio('eos_jungle') ? 'selected' : ''} ${this.props.hideAdvanced ? 'hidden' : ''}`}>
                                 <input type="radio" id="wordproof_network_jungle" name="wordproof_network"
                                        data-readable-name="EOS Jungle"
                                        value="eos_jungle"
@@ -161,10 +152,6 @@ class Manual extends Component {
 
                         <button className="button is-primary" onClick={this.handleSave}>
                             Save and check connection
-                        </button>
-
-                        <button className={`button button-modest ${this.state.hideAdvanced ? '' : 'hidden'}`}
-                                onClick={this.handleAdvancedOptions}>Show advanced settings
                         </button>
                     </div>
 

@@ -50,58 +50,27 @@ class SettingsPage {
 
   public function generateSettingsPage_dashboard()
   {
-    $this->localizeSettingPage();
     $this->renderSettingPage('dashboard');
   }
 
   public function generateSettingsPage_general()
   {
-    $this->localizeSettingPage();
     $this->renderSettingPage('general');
   }
 
   public function generateSettingsPage_manual()
   {
-    $this->localizeSettingPage();
     $this->renderSettingPage('manual');
   }
 
   public function generateSettingsPage_automatic()
   {
-    $this->localizeSettingPage();
     $this->renderSettingPage('automatic');
   }
 
   public function generateSettingsPage_support()
   {
-    $this->localizeSettingPage();
     $this->renderSettingPage('support');
-  }
-
-
-  public function localizeSettingPage() {
-    $wsfy = OptionsHelper::getWSFY();
-    $wsfyActive = OptionsHelper::isWSFYActive();
-
-    wp_localize_script('wordproof.admin.js', 'wordproofSettings', [
-      'adminUrl' => admin_url(),
-      'updateSettingsEndpoint' => admin_url('admin-post.php'),
-      'network' => OptionsHelper::getNetwork(),
-      'certificateText' => OptionsHelper::getCertificateText(),
-      'certificateDOMSelector' => OptionsHelper::getCertificateDomSelector(),
-      'customDomain' => OptionsHelper::getCustomDomain(),
-      'hidePostColumn' => OptionsHelper::getHidePostColumn(),
-      'isWSFYActive' => $wsfyActive,
-      'wsfy' => $wsfy,
-      'registeredPostTypes' => get_post_types(['public' => true]),
-      'saveChanges' => 'Save Changes',
-      'urls' => [
-        'wizard' => admin_url('admin.php?page=wordproof-wizard'),
-        'wizardConnect' => admin_url('admin.php?page=wordproof-wizard#connect'),
-        'automatic' => admin_url('admin.php?page=wordproof-automatic'),
-        'manual' => admin_url('admin.php?page=wordproof-manual'),
-      ]
-    ]);
   }
 
   public function renderSettingPage($slug) {

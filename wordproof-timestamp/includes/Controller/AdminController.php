@@ -82,9 +82,38 @@ class AdminController
           'isTimestamped' => PostWidgetController::isTimestamped(),
         ]);
         break;
+      case 'toplevel_page_wordproof-dashboard':
+      case 'wordproof_page_wordproof-manual':
+      case 'wordproof_page_wordproof-automatic':
+      case 'wordproof_page_wordproof-support':
+      case 'wordproof_page_wordproof-general':
+        $wsfy = OptionsHelper::getWSFY();
+        $wsfyActive = OptionsHelper::isWSFYActive();
+
+        wp_localize_script('wordproof.admin.js', 'wordproofSettings', [
+          'adminUrl' => admin_url(),
+          'updateSettingsEndpoint' => admin_url('admin-post.php'),
+          'network' => OptionsHelper::getNetwork(),
+          'certificateText' => OptionsHelper::getCertificateText(),
+          'certificateDOMSelector' => OptionsHelper::getCertificateDomSelector(),
+          'customDomain' => OptionsHelper::getCustomDomain(),
+          'hidePostColumn' => OptionsHelper::getHidePostColumn(),
+          'isWSFYActive' => $wsfyActive,
+          'wsfy' => $wsfy,
+          'registeredPostTypes' => get_post_types(['public' => true]),
+          'saveChanges' => 'Save Changes',
+          'urls' => [
+            'wizard' => admin_url('admin.php?page=wordproof-wizard'),
+            'wizardConnect' => admin_url('admin.php?page=wordproof-wizard#connect'),
+            'automatic' => admin_url('admin.php?page=wordproof-automatic'),
+            'manual' => admin_url('admin.php?page=wordproof-manual'),
+          ]
+        ]);
+        break;
       default:
         break;
     }
+
     wp_localize_script('wordproof.admin.js', 'wordproofData', array(
       'ajaxURL' => admin_url('admin-ajax.php'),
       'settingsURL' => admin_url('admin.php?page=wordproof'),

@@ -77,7 +77,7 @@ class Manual extends Component {
         return (
             <>
                 {!this.state.showTimestamp ?
-                    <div>
+                    <div className={'mb-8'}>
                         <p>The WordProof Timestamp set-up consists of three steps and takes about 15 minutes. You only
                             need to do this once using the WordProof Account Creator tool, which will guide you through
                             the process of creating a blockchain account and configuring your wallet.</p>
@@ -147,7 +147,7 @@ class Manual extends Component {
 
                         <button className="button is-primary"
                                 onClick={(e) => this.handleWindowPopup(e, 'https://wordproof.io/setup', this.state.network)}>
-                            Launch the Setup Wizard
+                            Launch the Manual Setup Wizard
                         </button>
 
                         <button className="button is-primary" onClick={this.handleSave}>

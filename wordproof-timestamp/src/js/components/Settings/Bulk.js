@@ -10,7 +10,7 @@ export default class Bulk extends Component {
 
   render() {
     return (
-        <Template>
+        <Template current={'bulk'}>
           <h3>Bulk</h3>
         </Template>
     )

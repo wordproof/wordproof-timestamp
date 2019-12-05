@@ -24,8 +24,6 @@ export default class Automatic extends Component {
         return (
 
             <>
-                <strong>Automatic Settings</strong>
-
                 <div className="form-group">
                     <label htmlFor="wsfy_settings[show_revisions]" className="label" title="Display Revisions">Show
                         Revisions</label>
@@ -49,7 +47,7 @@ export default class Automatic extends Component {
                     })}
                 </div>
 
-                <div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>
+                <div className={`form-group ${this.props.hideAdvanced ? 'hidden' : ''}`}>
                     <label htmlFor="wsfy_settings[whitelisted_ips]" className="label" title="Whitelisted IPs">Whitelisted
                         IP&apos;s</label>
                     <input type="text" className="textinput" name="wsfy_settings[whitelisted_ips]" placeholder=""
@@ -60,13 +58,6 @@ export default class Automatic extends Component {
                         this IP or IP&apos;s to this field to allow callbacks from this origin. Be careful with shared
                         hosting environments. Use a comma to separate multiple IP&apos;s. </p>
                 </div>
-
-                <input type="submit" name="submit" id="submit" className="button is-primary"
-                       value={wordproofSettings.saveChanges}/>
-
-                <a href={`${wordproofSettings.adminUrl}admin.php?page=wordproof-autostamp`} target="_blank"
-                   rel="noopener noreferrer" style={{display: 'block', 'paddingTop': '10px'}}>Auto-stamp all posts</a>
-
             </>
         )
     }

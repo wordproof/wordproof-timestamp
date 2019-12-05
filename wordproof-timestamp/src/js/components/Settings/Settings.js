@@ -35,7 +35,7 @@ export default class Settings extends Component {
 
     render() {
         return (
-            <Template>
+            <Template current={'settings'}>
                 <h3>General Settings</h3>
                 <p>The settings below apply to both the automatic and manual modes. Mode-specific settings can be found
                     on the <a href={wordproofSettings.urls.automatic}>Automatic</a> & <a

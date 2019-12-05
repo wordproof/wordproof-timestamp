@@ -6,7 +6,7 @@ export default class ModeDisplay extends Component {
         const manual = !wordproofSettings.isWSFYActive && wordproofSettings.walletIsConnected;
         const styles = {minWidth: '160px'};
         return (
-            <div className={'flex flex-row '}>
+            <div className={'flex flex-row mb-4'}>
                 <div className={`rounded-lg shadow mr-4 p-4 ${(automatic) ? 'bg-blue-500' : 'bg-blue-200'}`} style={styles}>
                     <span className={`block pb-16 ${(automatic) ? 'font-semibold text-white' : 'text-blue-500'}`}>Automatic</span>
                     <span className={'block text-right text-white'}>{(automatic) ? 'active' : 'inactive'}</span>

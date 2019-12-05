@@ -9,7 +9,7 @@ export default class Support extends Component {
 
     render() {
         return (
-            <Template>
+            <Template current={'support'}>
                 <h3>Support</h3>
                 <p>Thank you for using the WordProof Timestamp plugin! Blockchain is a difficult technology which
                     requires the set-up of a wallet. This can be a daunting process, but we have a great community

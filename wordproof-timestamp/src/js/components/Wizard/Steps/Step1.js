@@ -10,31 +10,32 @@ export default class Step1 extends Component {
   render() {
     return (
       <div className="wordproof-wizard-step">
-        <Intro title="Welcome to WordProof Timestamp!" subtitle="Select your preferred way to use the plugin" />
+        <Intro title="Welcome to WordProof Timestamp!" subtitle="Let&apos;s get your set up!" />
 
-        <div className="flex flex-row my-4">
-          <div className="border-2 rounded text-center p-4 mr-4 w-1/2">
-            <h2 className="font-semibold my-2">Manually</h2>
+        <strong className={'mb-2 block'}>Which mode do you want to use?</strong>
+        <div className="flex flex-row">
+          <div className="border-2 rounded shadow-lg bg-purple-600 text-center p-4 mr-4 w-1/2 text-white">
+            <h2 className="font-semibold my-2 text-white">Manual</h2>
+            <span className={'italic'}>tech-savvy</span>
             <p>
-              Tech-savy mode<br/>
-              Configure you own blockchain account & wallet<br/>
-              Set-up in 20 minutes
+              Your own blockchain account & wallet<br/>
+              Set-up in 15 minutes
             </p>
 
-            <a className="wproof-button secondary inline-block mt-3" href={wordproof.urls.manual}>
+            <a className="wbtn inline-block mt-3" href={wordproof.urls.manual}>
               Start Configuration
             </a>
           </div>
 
-          <div className="border-2 rounded text-center p-4 ml-4 w-1/2">
-            <h2 className="font-semibold my-2">Automatically</h2>
+          <div className="border-2 rounded shadow-lg bg-blue-600 text-center p-4 ml-4 w-1/2 text-white">
+            <h2 className="font-semibold my-2 text-white">Automatic</h2>
+            <span className={'italic'}>recommended</span>
             <p>
-              Activate & never look back<br/>
-              Download your blockchain certificates<br/>
+              Easy to use<br/>
               Set-up in 5 minutes
             </p>
 
-            <button className="primary mt-3" onClick={this.props.nextStep}>
+            <button className="wbtn inline-block mt-3" onClick={this.props.nextStep}>
               Get Started
             </button>
           </div>

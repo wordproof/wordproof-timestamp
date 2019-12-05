@@ -50,7 +50,7 @@ export default class Step2 extends Component {
         <Intro title="Connect WordProof to your website"
                subtitle="Paste your site key to connect your site to My WordProof. Create a free account if you don’t have one yet."/>
 
-        <a className="wproof-button secondary mb-4 inline-block" href={`${wordproof.urls.signup}?source=${wordproof.urls.site}`} target="_blank" rel="noopener noreferrer">
+        <a className="wbtn wbtn-secondary mb-4 inline-block" href={`${wordproof.urls.signup}?source=${wordproof.urls.site}`} target="_blank" rel="noopener noreferrer">
             Create My WordProof Account
         </a>
 
@@ -61,7 +61,7 @@ export default class Step2 extends Component {
             <span className={'block underline cursor-pointer text-xs text-gray-500 mb-3'} onClick={() => this.deactivate()}>Click here to deactivate automatic timestamping</span>
           }
 
-        <button className={'primary'} onClick={() => this.validate()}>Validate & Continue</button>
+        <button className={'wbtn wbtn-primary'} onClick={() => this.validate()}>Validate & Continue</button>
       </div>
     );
   }

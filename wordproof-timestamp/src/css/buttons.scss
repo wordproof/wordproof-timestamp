@@ -1,0 +1,19 @@
+.wbtn {
+  @apply bg-gray-200 px-4 py-3 font-semibold rounded relative text-gray-700 no-underline cursor-pointer border-0;
+  box-shadow: 0px 2px 0px 0px theme('colors.gray-300');
+  box-sizing: content-box;
+
+  &-primary {
+    @apply bg-wordproof text-white ;
+    box-shadow: 0px 2px 0px 0px theme('colors.wordproofDark');
+  }
+
+  &-secondary {
+    @apply bg-blue-500 text-white ;
+    box-shadow: 0px 2px 0px 0px theme('colors.blue.600');
+  }
+
+  &-large {
+    @apply px-6 py-4;
+  }
+}

@@ -16,7 +16,7 @@ export default class Step4 extends Component {
 
         <TextField slug={'certificate_text'} question={'Link Text'} update={this.props.update} get={this.props.get} initial={this.props.initial} />
 
-        <button className={'primary'} onClick={() => this.save()}>Save & Continue</button>
+        <button className={'wbtn wbtn-primary'} onClick={() => this.save()}>Save & Continue</button>
       </div>
     );
   }

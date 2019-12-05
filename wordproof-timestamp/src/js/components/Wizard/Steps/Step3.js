@@ -18,7 +18,7 @@ export default class Step3 extends Component {
                   options={[{name: 'Yes', value: true},{name: 'No', value: false}]}
                   update={this.props.update} get={this.props.get} initial={this.props.initial} />
 
-        <button className={'primary'} onClick={() => this.props.nextStep()}>Save & Continue</button>
+        <button className={'wbtn wbtn-primary'} onClick={() => this.props.nextStep()}>Save & Continue</button>
       </div>
     );
   }

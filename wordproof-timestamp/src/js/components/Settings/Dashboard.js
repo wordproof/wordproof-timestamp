@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import Template from "./Partials/Template";
 
 export default class Dashboard extends Component {
     constructor(props) {
@@ -17,9 +18,10 @@ export default class Dashboard extends Component {
 
     render() {
         return (
-            <div>
-                <div className="vo-card vo-columns">
-                    <div className="vo-col">
+            <Template>
+
+                <div className="flex flex-row">
+                    <div className="w-1/2 pr-3">
                         <h3>Welcome to WordProof Timestamp</h3>
                         <p>The WordProof Timestamp for WordPress plugin lets you timestamp content on the blockchain.
                             You can
@@ -65,7 +67,7 @@ export default class Dashboard extends Component {
 
 
                     </div>
-                    <div className="vo-col">
+                    <div className="w-1/2 pl-3">
                         {wordproofSettings.isWSFYActive
                         &&
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/So_iNDb15-s" frameBorder="0"
@@ -74,7 +76,7 @@ export default class Dashboard extends Component {
                         }
                     </div>
                 </div>
-            </div>
+            </Template>
         )
     }
 }

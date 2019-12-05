@@ -3,14 +3,27 @@
   box-shadow: 0px 2px 0px 0px theme('colors.gray.400');
   box-sizing: content-box;
 
+  &:hover {
+    @apply text-white bg-gray-400;
+  }
+
   &-primary {
     @apply bg-wordproof text-white ;
     box-shadow: 0px 2px 0px 0px theme('colors.wordproofDark');
+
+    &:hover {
+      @apply bg-wordproofVeryLight;
+      box-shadow: 0px 2px 0px 0px theme('colors.wordproofLight');
+    }
   }
 
   &-secondary {
     @apply bg-blue-500 text-white ;
     box-shadow: 0px 2px 0px 0px theme('colors.blue.600');
+
+    &:hover {
+      @apply text-gray-100 bg-blue-600;
+    }
   }
 
   &-large {

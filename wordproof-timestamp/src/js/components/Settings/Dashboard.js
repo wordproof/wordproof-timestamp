@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Template from "./Partials/Template";
 import ModeDisplay from "../Extras/ModeDisplay";
+import {Check} from "../Extras/Images";
 
 export default class Dashboard extends Component {
     constructor(props) {
@@ -19,38 +20,33 @@ export default class Dashboard extends Component {
 
     render() {
         return (
-            <Template>
-
+            <Template current={'dashboard'}>
                 <div className="flex flex-row">
                     <div className="w-1/2 pr-3">
-                        <h3>Welcome to WordProof Timestamp</h3>
-                        <p>The WordProof Timestamp for WordPress plugin lets you timestamp content on the blockchain.
-                            You can
-                            either timestamp content manually (using your own blockchain account and wallet) or
-                            automatically.</p>
+                        <h3>Welcome to WordProof!</h3>
+                        <p>By using WordProof Timestamp, you will...</p>
+                        <ul>
+                            <li><Check/> Protect your copyright</li>
+                            <li><Check/> Increase your trustworthiness</li>
+                            <li><Check/> Add timestamps to your structured data</li>
+                        </ul>
 
-                        <h3>Mode</h3>
-                        <p>You can either timestamp content manually (using your own blockchain account and wallet) or
-                            automatically.</p>
-
+                        <h3>How to timestamp your content</h3>
+                        <p>After setting up WordProof with the Setup Wizard, here is how you timestamp:</p>
+                        <ul>
+                            <li><Check/> New content will be timestamped automatically after publishing</li>
+                            <li><Check/> Existing content can be timestamped in two ways:
+                            <ol className={'pt-2'}>
+                                <li>Use the ‘Timestamp’ button in the WordProof Column on the Posts / Pages overview page</li>
+                                <li>Use the Bulk Timestamp tool</li>
+                            </ol></li>
+                        </ul>
 
                         <h3>Mode</h3>
                         <p>We recommend you to use the Automatic mode. The manual mode is for tech-savvy blockchain users.</p>
                         <ModeDisplay/>
 
-                        <h3>Need some help?</h3>
-                        <p>We want to help you if you have any problems!</p>
-                        <ul>
-                            <li><a href="https://wordproof.io/guide" target="_blank" rel="noopener noreferrer">How to:
-                                WordProof Timestamp Setup Guide</a></li>
-                            <li><a href={'https://wordpress.org/support/plugin/wordproof-timestamp/'} target="_blank"
-                                   rel="noopener noreferrer">Post a question on the WordPress forum</a></li>
-                            <li><a href="https://t.me/joinchat/DVuJAEfhf2QURBBjOWc2XA" target="_blank"
-                                   rel="noopener noreferrer">Join our Telegram User Group</a></li>
-                        </ul>
-                        <p>For other inquiries, <a href="mailto:info@wordproof.io" target="_blank"
-                                                   rel="noopener noreferrer">Send an email</a>.</p>
-
+                        <span>To switch between modes, restart <a href={wordproofData.urls.wizard}>the Setup Wizard</a>.</span>
 
                     </div>
                     <div className="w-1/2 pl-3">
@@ -60,6 +56,18 @@ export default class Dashboard extends Component {
                                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen></iframe>
                         }
+
+                        <h3>Support</h3>
+                        <p>The following resources might be helpful in case you need help:</p>
+                        <ul>
+                            <li><a href="https://wordproof.io/guide" target="_blank" rel="noopener noreferrer">How to: WordProof Timestamp Setup Guide</a></li>
+                            <li><a href={'https://wordpress.org/support/plugin/wordproof-timestamp/'} target="_blank"
+                                   rel="noopener noreferrer">Post a question on the WordPress forum</a></li>
+                            <li><a href="https://t.me/joinchat/DVuJAEfhf2QURBBjOWc2XA" target="_blank"
+                                   rel="noopener noreferrer">Join our Telegram User Group</a></li>
+                        </ul>
+                        <p>For other inquiries, please <a href="mailto:info@wordproof.io" target="_blank"
+                                                   rel="noopener noreferrer">send an email</a>.</p>
                     </div>
                 </div>
             </Template>

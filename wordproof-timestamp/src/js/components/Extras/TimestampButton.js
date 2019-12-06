@@ -87,8 +87,6 @@ export default class TimestampButton extends Component {
         if (typeof result === 'string')
             result = JSON.parse(result);
 
-        console.log(result);
-
         if (result.data && typeof result.data === 'string')
             result.data = JSON.parse(result.data);
 

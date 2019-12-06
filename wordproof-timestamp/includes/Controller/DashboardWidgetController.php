@@ -44,7 +44,7 @@ class DashboardWidgetController
     $wp_meta_boxes['dashboard']['normal']['core'] = $sortedDashboard;
   }
 
-  public static function getRecentPosts($postType, $compare = 'NOT EXISTS')
+  public static function getRecentPosts($postType, $compare = 'NOT EXISTS', $amount = 3, $postsOnly = false)
   {
     $status = ($postType === 'attachment') ? 'inherit' : 'publish';
 
@@ -52,7 +52,7 @@ class DashboardWidgetController
 
     $query = new \WP_Query([
       'post_type' => $postType,
-      'posts_per_page' => 3,
+      'posts_per_page' => $amount,
       'post_status' => $status,
       'meta_query' => [
         [
@@ -62,6 +62,9 @@ class DashboardWidgetController
       ]
     ]);
     $posts = $query->get_posts();
+
+    if ($postsOnly)
+      return $posts;
 
     foreach ($posts as $post) {
       $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain']);
@@ -103,12 +106,12 @@ class DashboardWidgetController
     return $amount > 0;
   }
 
-  public static function getUnprotectedCount()
+  public static function getTotalUnprotectedCount()
   {
-    return self::getUnprotectedPosts('page') + self::getUnprotectedPosts('post') +  self::getUnprotectedPosts('attachment');
+    return self::getUnprotectedPostsCount('page') + self::getUnprotectedPostsCount('post') +  self::getUnprotectedPostsCount('attachment');
   }
 
-  private static function getUnprotectedPosts($postType)
+  public static function getUnprotectedPostsCount($postType)
   {
     $postStatus = ($postType === 'attachment') ? 'inherit' : 'publish';
     $total = wp_count_posts($postType)->$postStatus;
@@ -120,6 +123,14 @@ class DashboardWidgetController
   {
     global $wpdb;
     $s = $wpdb->get_var($wpdb->prepare("SELECT count(*) FROM $wpdb->postmeta AS `M` INNER JOIN $wpdb->posts AS `P` ON `M`.`post_id` = `P`.`ID` WHERE `M`.`meta_key` = 'wordproof_timestamp_data' AND `P`.`post_status` = %s AND `P`.`post_type` = %s", $postStatus, $postType));
+    return intval($s);
+  }
+
+  private static function getUnprotectedPostIds($postType)
+  {
+    $postStatus = ($postType === 'attachment') ? 'inherit' : 'publish';
+    global $wpdb;
+    $s = $wpdb->get_var($wpdb->prepare("SELECT `ID` FROM $wpdb->posts AS `P` INNER JOIN $wpdb->postmeta AS `M` ON `P`.`ID` = `M`.`post_id` WHERE `M`.`meta_key` = 'wordproof_timestamp_data' AND `P`.`post_status` = %s AND `P`.`post_type` = %s", $postStatus, $postType));
     return intval($s);
   }
 }

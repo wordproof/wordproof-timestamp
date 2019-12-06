@@ -63,7 +63,7 @@ class AdminController
           'timestampCount' => AnalyticsHelper::getTimestampCount(),
           'isActive' => (AnalyticsHelper::walletIsConnected() || OptionsHelper::isWSFYActive()),
           'isWSFYActive' => OptionsHelper::isWSFYActive(),
-          'unprotectedAmount' => DashboardWidgetController::getUnprotectedCount(),
+          'unprotectedAmount' => DashboardWidgetController::getTotalUnprotectedCount(),
           'unprotectedMessage' => DashboardWidgetController::getUnprotectedWarning(),
           'balance' => OptionsHelper::getBalanceCache(),
           'recentUnstampedPosts' => DashboardWidgetController::getRecentPosts('post'),
@@ -74,25 +74,25 @@ class AdminController
         break;
       case 'post-new.php':
       case 'post.php':
-      wp_localize_script('wordproof.admin.js', 'wordproofPost', [
+        wp_localize_script('wordproof.admin.js', 'wordproofPost', [
           'isActive' => (AnalyticsHelper::walletIsConnected() || OptionsHelper::isWSFYActive()),
           'isWSFYActive' => OptionsHelper::isWSFYActive(),
           'balance' => OptionsHelper::getBalanceCache(),
-          'unprotectedAmount' => DashboardWidgetController::getUnprotectedCount(),
+          'unprotectedAmount' => DashboardWidgetController::getTotalUnprotectedCount(),
           'isTimestamped' => PostWidgetController::isTimestamped(),
         ]);
         break;
       case 'toplevel_page_wordproof-dashboard':
       case 'wordproof_page_wordproof-settings':
-      case 'wordproof_page_wordproof-bulk':
       case 'wordproof_page_wordproof-upgrade':
       case 'wordproof_page_wordproof-support':
+      case 'wordproof_page_wordproof-bulk':
         $wsfy = OptionsHelper::getWSFY();
 
-      wp_enqueue_script('wordproof.settings.admin.js', WORDPROOF_URI_JS . '/settings.js', array(), filemtime(WORDPROOF_DIR_JS . '/settings.js'), true);
-      wp_enqueue_style('wordproof.settings.admin.css', WORDPROOF_URI_CSS . '/settings.css', array(), filemtime(WORDPROOF_DIR_CSS . '/settings.css'));
+        wp_enqueue_script('wordproof.settings.admin.js', WORDPROOF_URI_JS . '/settings.js', array(), filemtime(WORDPROOF_DIR_JS . '/settings.js'), true);
+        wp_enqueue_style('wordproof.settings.admin.css', WORDPROOF_URI_CSS . '/settings.css', array(), filemtime(WORDPROOF_DIR_CSS . '/settings.css'));
 
-      wp_localize_script('wordproof.settings.admin.js', 'wordproofSettings', [
+        wp_localize_script('wordproof.settings.admin.js', 'wordproofSettings', [
           'adminUrl' => admin_url(),
           'updateSettingsEndpoint' => admin_url('admin-post.php'),
           'network' => OptionsHelper::getNetwork(),
@@ -113,6 +113,13 @@ class AdminController
             'bulk' => admin_url('admin.php?page=wordproof-bulk'),
             'upgrade' => admin_url('admin.php?page=wordproof-upgrade'),
             'support' => admin_url('admin.php?page=wordproof-support'),
+          ],
+          'bulk' => [
+            'counts' => [
+              'post' => wp_list_pluck(DashboardWidgetController::getRecentPosts('post', 'NOT EXISTS', 1000, true), 'ID'),
+              'page' => wp_list_pluck(DashboardWidgetController::getRecentPosts('page', 'NOT EXISTS', 1000, true), 'ID'),
+              'attachment' => wp_list_pluck(DashboardWidgetController::getRecentPosts('attachment', 'NOT EXISTS', 1000, true), 'ID'),
+            ]
           ]
         ]);
         break;

@@ -9,7 +9,9 @@ export default class Bulk extends Component {
         super(props);
         this.state = {
             selected: [],
-            messages: []
+            messages: [],
+            count: 0,
+            running: false,
         }
     }
 
@@ -25,8 +27,15 @@ export default class Bulk extends Component {
         this.setState({selected: selected});
     }
 
+    getAmountOfPosts() {
+        let amount = 0;
+        this.state.selected.map((type) => {
+            amount = amount + (wordproofSettings.bulk.counts[type]).length;
+        });
+        return amount;
+    }
+
     addMessage(message) {
-        console.log(message);
         let messages = this.state.messages;
         messages.push(message);
         this.setState({messages: messages});
@@ -34,12 +43,34 @@ export default class Bulk extends Component {
 
     startTimestamping(e) {
         e.preventDefault();
+
+        this.setState({running: true});
+
+        let array = [];
         this.state.selected.map((type) => {
+            let n = [];
             wordproofSettings.bulk.counts[type].map((id) => {
-                console.log(id);
-                this.sendRequest(id, type);
-            })
-        })
+                n.push({type: type, id: id});
+            });
+            array = array.concat(n);
+        });
+
+        let promise = Promise.resolve();
+        array.forEach((el) => {
+            promise = promise.then(() => {
+
+                this.sendRequest(el.id, el.type);
+                this.setState({count: this.state.count + 1});
+
+                return new Promise((resolve) => {
+                    setTimeout(resolve, 1000);
+                });
+            });
+        });
+
+        promise.then(() => {
+            this.setState({running: false, count: 0});
+        });
     }
 
     async sendRequest(id, type) {
@@ -50,13 +81,6 @@ export default class Bulk extends Component {
         }));
 
         this.addMessage(TimestampButton.retrieveMessage(result, type));
-    }
-
-    renderMessages() {
-        this.state.messages.map((message) => {
-            console.log(message);
-            return (message);
-        })
     }
 
     render() {
@@ -86,9 +110,17 @@ export default class Bulk extends Component {
                     </tbody>
                 </table>
 
-                <button onClick={(e) => this.startTimestamping(e)} className={'wbtn wbtn-primary'}>Start Timestamping</button>
+                {(this.state.running) ? <span className={'block mt-4'}>Timestamped {this.state.count } / { this.getAmountOfPosts()} items</span> : ''}
 
-                {this.renderMessages()}
+                <button disabled={this.state.running} onClick={(e) => this.startTimestamping(e)}
+                        className={'wbtn wbtn-primary my-4'}>Start Timestamping
+                </button>
+
+                <div className={'block'}>
+                    {this.state.messages.map((message, key) => (
+                    <span key={key} className={'block mb-2'}>{message}</span>
+                ))}
+                </div>
 
             </Template>
         )

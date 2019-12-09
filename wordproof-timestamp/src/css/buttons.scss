@@ -3,7 +3,7 @@
   box-shadow: 0px 2px 0px 0px theme('colors.gray.400');
   box-sizing: content-box;
 
-  &:hover {
+  &:hover, &:disabled {
     @apply text-white bg-gray-400;
   }
 
@@ -11,7 +11,7 @@
     @apply bg-wordproof text-white ;
     box-shadow: 0px 2px 0px 0px theme('colors.wordproofDark');
 
-    &:hover {
+    &:hover, &:disabled {
       @apply bg-wordproofVeryLight;
       box-shadow: 0px 2px 0px 0px theme('colors.wordproofLight');
     }
@@ -21,12 +21,17 @@
     @apply bg-blue-500 text-white ;
     box-shadow: 0px 2px 0px 0px theme('colors.blue.600');
 
-    &:hover {
+    &:hover, &:disabled {
       @apply text-gray-100 bg-blue-600;
     }
+
   }
 
   &-large {
     @apply px-6 py-4;
+  }
+
+  &:disabled {
+    @apply cursor-not-allowed;
   }
 }

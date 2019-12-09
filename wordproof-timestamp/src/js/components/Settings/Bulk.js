@@ -75,7 +75,7 @@ export default class Bulk extends Component {
     }
 
     async sendRequest(id, type) {
-        const result = await axios.post(wordproofData.urls.ajax, qs.stringify({
+        const result = await axios.post(wordproofData.ajaxURL, qs.stringify({
             'action': 'wordproof_wsfy_save_post',
             'post_id': id,
             'security': wordproofData.ajaxSecurity

@@ -13,7 +13,7 @@ class Manual extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            network: wordproofSettings.network,
+            network: wordproofData.network,
             notificationMessage: null,
             showTimestamp: false
         }
@@ -28,7 +28,7 @@ class Manual extends Component {
     }
 
     updateRequest(slug, value) {
-        axios.post(wordproofSettings.updateSettingsEndpoint, qs.stringify({
+        axios.post(wordproofSettings.urls.updateSettings, qs.stringify({
             'action': 'wordproof_update_setting',
             'key': slug,
             'value': value
@@ -93,7 +93,7 @@ class Manual extends Component {
                                        data-readable-name="Telos"
                                        value="telos_main"
                                        checked={this.state.network === "telos_main"} onChange={this.handleNetwork}/>
-                                <img src={`${wordproofData.pluginDirUrl}assets/images/telos.png`} alt="telos"/>
+                                <img src={`${wordproofSettings.urls.pluginDir}assets/images/telos.png`} alt="telos"/>
                                 <span>Telos</span>
                             </label>
                             <label htmlFor="wordproof_network_eos"
@@ -102,7 +102,7 @@ class Manual extends Component {
                                        data-readable-name="EOS"
                                        value="eos_main"
                                        checked={this.state.network === "eos_main"} onChange={this.handleNetwork}/>
-                                <img src={`${wordproofData.pluginDirUrl}assets/images/eos.png`} alt="telos"/>
+                                <img src={`${wordproofSettings.urls.pluginDir}assets/images/eos.png`} alt="telos"/>
                                 <span>EOS</span>
                             </label>
                             <label htmlFor="wordproof_network_jungle"
@@ -111,7 +111,7 @@ class Manual extends Component {
                                        data-readable-name="EOS Jungle"
                                        value="eos_jungle"
                                        checked={this.state.network === "eos_jungle"} onChange={this.handleNetwork}/>
-                                <img src={`${wordproofData.pluginDirUrl}assets/images/eos.png`} alt="telos"/>
+                                <img src={`${wordproofSettings.urls.pluginDir}assets/images/eos.png`} alt="telos"/>
                                 <span>EOS Jungle<br/>Testnet</span>
                             </label>
                         </div>

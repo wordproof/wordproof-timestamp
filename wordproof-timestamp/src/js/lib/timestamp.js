@@ -1,5 +1,5 @@
 export default async function timestamp(wallet) {
-  const postId = wordproofData.postId;
+  const postId = wordproofPost.postId;
   const hash = await getHashById(postId);
   const transactionData = getTransactionData(wallet, hash);
 

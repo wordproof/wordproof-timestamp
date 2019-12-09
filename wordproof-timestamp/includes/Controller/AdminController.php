@@ -5,7 +5,6 @@ namespace WordProofTimestamp\includes\Controller;
 use WordProofTimestamp\includes\AnalyticsHelper;
 use WordProofTimestamp\includes\ChainHelper;
 use WordProofTimestamp\includes\DomainHelper;
-use WordProofTimestamp\includes\MetaBox;
 use WordProofTimestamp\includes\NotificationHelper;
 use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\Page\GettingStarted;
@@ -77,6 +76,7 @@ class AdminController
         wp_localize_script('wordproof.admin.js', 'wordproofPost', [
           'isActive' => (AnalyticsHelper::walletIsConnected() || OptionsHelper::isWSFYActive()),
           'isWSFYActive' => OptionsHelper::isWSFYActive(),
+          'postId' => (!empty($post->ID)) ? $post->ID : false,
           'balance' => OptionsHelper::getBalanceCache(),
           'unprotectedAmount' => DashboardWidgetController::getTotalUnprotectedCount(),
           'isTimestamped' => PostWidgetController::isTimestamped(),
@@ -93,9 +93,6 @@ class AdminController
         wp_enqueue_style('wordproof.settings.admin.css', WORDPROOF_URI_CSS . '/settings.css', array(), filemtime(WORDPROOF_DIR_CSS . '/settings.css'));
 
         wp_localize_script('wordproof.settings.admin.js', 'wordproofSettings', [
-          'adminUrl' => admin_url(),
-          'updateSettingsEndpoint' => admin_url('admin-post.php'),
-          'network' => OptionsHelper::getNetwork(),
           'certificateText' => OptionsHelper::getCertificateText(),
           'certificateDOMSelector' => OptionsHelper::getCertificateDomSelector(),
           'customDomain' => OptionsHelper::getCustomDomain(),
@@ -115,6 +112,8 @@ class AdminController
             'upgrade' => admin_url('admin.php?page=wordproof-upgrade'),
             'upgradeExternal' => 'https://my.wordproof.io/sites/upgrade',
             'support' => admin_url('admin.php?page=wordproof-support'),
+            'updateSettings' => admin_url('admin-post.php'),
+            'pluginDir' => WORDPROOF_URI,
           ],
           'bulk' => [
             'counts' => [
@@ -131,13 +130,9 @@ class AdminController
 
     wp_localize_script('wordproof.admin.js', 'wordproofData', array(
       'ajaxURL' => admin_url('admin-ajax.php'),
-      'settingsURL' => admin_url('admin.php?page=wordproof'),
       'ajaxSecurity' => wp_create_nonce('wordproof'),
-      'postId' => (!empty($post->ID)) ? $post->ID : false,
       'permalink' => (!empty($post->ID)) ? DomainHelper::getPermalink($post->ID) : false,
       'network' => OptionsHelper::getNetwork(),
-      'accountName' => OptionsHelper::getAccountName(''),
-      'pluginDirUrl' => WORDPROOF_URI,
       'urls' => [
         'dashboard' => admin_url('admin.php?page=wordproof-dashboard'),
         'bulk' => admin_url('admin.php?page=wordproof-bulk'),

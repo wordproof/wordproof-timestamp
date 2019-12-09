@@ -156,7 +156,7 @@ class DashboardWidgetController
 
   private static function getUnprotectedPostIds($postType)
   {
-    //TODO: refactor please
+    //TODO: We should use something like this. Now using get_posts with wp_list_pluck
     $postStatus = ($postType === 'attachment') ? 'inherit' : 'publish';
     global $wpdb;
     $s = $wpdb->get_var($wpdb->prepare("SELECT `ID` FROM $wpdb->posts AS `P` INNER JOIN $wpdb->postmeta AS `M` ON `P`.`ID` = `M`.`post_id` WHERE `M`.`meta_key` = 'wordproof_timestamp_data' AND `P`.`post_status` = %s AND `P`.`post_type` = %s", $postStatus, $postType));

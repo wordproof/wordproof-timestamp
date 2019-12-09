@@ -145,6 +145,7 @@ class AdminController
         'wizardConnect' => admin_url('admin.php?page=wordproof-wizard#connect'),
         'site' => get_site_url(),
         'ajax' => admin_url('admin-ajax.php'),
+        'upgradeExternal' => 'https://my.wordproof.io/sites/upgrade',
       ],
     ));
   }

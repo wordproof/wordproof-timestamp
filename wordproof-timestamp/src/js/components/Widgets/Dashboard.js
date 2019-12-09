@@ -56,7 +56,7 @@ export default class Dashboard extends Component {
                         <strong>Recently placed timestamps:</strong>
                         {this.getTable(wordproofDashboard.recentStampedItems)}
 
-                        <a href={''} className={'button button-primary'}>Upgrade your plan for more timestamps</a>
+                        <a href={wordproofData.urls.upgradeExternal} className={'button button-primary'}>Upgrade your plan for more timestamps</a>
                     </>
                 );
             case 'not_timestamped':
@@ -69,7 +69,7 @@ export default class Dashboard extends Component {
                         <strong>Recent pages</strong>
                         {this.getTable(wordproofDashboard.recentUnstampedPages)}
 
-                        <a href={''} className={'button button-primary'}>Timestamp
+                        <a href={wordproofData.urls.bulk} className={'button button-primary'}>Timestamp
                             all {wordproofDashboard.unprotectedAmount} pieces of content</a>
                     </>
                 );
@@ -86,7 +86,7 @@ export default class Dashboard extends Component {
 
                     <span className={'block mb-3'}>{wordproofDashboard.unprotectedMessage}</span>
 
-                    <a href={''} className={'button button-primary'}>Timestamp
+                    <a href={wordproofData.urls.bulk} className={'button button-primary'}>Timestamp
                         all {wordproofDashboard.unprotectedAmount} pieces of content</a>
                 </>);
             default:

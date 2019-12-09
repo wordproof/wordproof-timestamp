@@ -2,9 +2,6 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
-use WordProofTimestamp\includes\AnalyticsHelper;
-use WordProofTimestamp\includes\DomainHelper;
-use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\PostMetaHelper;
 
 class DashboardWidgetController
@@ -86,6 +83,10 @@ class DashboardWidgetController
     return $result;
   }
 
+  /**
+   * @return string
+   * TODO: Yup. Refactor this please.
+   */
   public static function getUnprotectedWarning()
   {
     $pages = self::getUnprotectedPostsCount('page');
@@ -94,28 +95,51 @@ class DashboardWidgetController
     if (!self::showWarning($pages) && !self::showWarning($posts) && !self::showWarning($attachments))
       return 'Everything is protected. Congratulations!';
 
-    $string = '';
-    $string .= (self::showWarning($pages)) ? $pages . ' pages ' : '';
-    $string .= (self::showWarning($posts)) ? ',' : '';
-    $string .= (self::showWarning($posts) && !self::showWarning($attachments)) ? ' and ' . $posts . ' of your posts' : '';
-    $string .= (self::showWarning($posts) && self::showWarning($attachments)) ? $posts . ' posts ' : '';
-    $string .= (self::showWarning($attachments)) ? 'and ' . $attachments . ' of your attachments ' : '';
-    $string .= 'are at risk of copying and miss potential SEO benefits. Timestamp them today.';
-    return $string;
+    $end = ' are at risk of copying and miss potential SEO benefits. Timestamp them today.';
+
+    if (boolval($pages) && boolval($posts) && boolval($attachments))
+      return $pages . ' pages, ' . $posts . ' posts and ' . $attachments . ' of your attachments' . $end;
+
+    if (boolval($pages) && boolval($posts))
+      return $pages . ' pages and ' . $posts . ' of your posts' . $end;
+
+    if (boolval($pages) && boolval($attachments))
+      return $pages . ' pages and ' . $posts . ' of your attachments' . $end;
+
+    if (boolval($posts) && boolval($attachments))
+      return $posts . ' posts and ' . $attachments . ' of your attachments' . $end;
+
+    if (boolval($pages))
+      return self::getOneliner($pages, 'pages') . $end;
+
+    if (boolval($posts))
+      return self::getOneliner($pages, 'posts') . $end;
+
+    if (boolval($attachments))
+      return self::getOneliner($pages, 'attachments') . $end;
   }
+
 
   private static function showWarning($amount)
   {
     return $amount > 0;
   }
 
+
+  private static function getOneliner($amount, $type)
+  {
+    return $amount . ' of your ' . $type;
+  }
+
   public static function getTotalUnprotectedCount()
   {
+    //TODO: refactor please
     return self::getUnprotectedPostsCount('page') + self::getUnprotectedPostsCount('post') +  self::getUnprotectedPostsCount('attachment');
   }
 
   public static function getUnprotectedPostsCount($postType)
   {
+    //TODO: refactor please
     $postStatus = ($postType === 'attachment') ? 'inherit' : 'publish';
     $total = wp_count_posts($postType)->$postStatus;
     $protected = self::getProtectedPosts($postType, $postStatus);
@@ -124,6 +148,7 @@ class DashboardWidgetController
 
   private static function getProtectedPosts($postType, $postStatus)
   {
+    //TODO: refactor please
     global $wpdb;
     $s = $wpdb->get_var($wpdb->prepare("SELECT count(*) FROM $wpdb->postmeta AS `M` INNER JOIN $wpdb->posts AS `P` ON `M`.`post_id` = `P`.`ID` WHERE `M`.`meta_key` = 'wordproof_timestamp_data' AND `P`.`post_status` = %s AND `P`.`post_type` = %s", $postStatus, $postType));
     return intval($s);
@@ -131,6 +156,7 @@ class DashboardWidgetController
 
   private static function getUnprotectedPostIds($postType)
   {
+    //TODO: refactor please
     $postStatus = ($postType === 'attachment') ? 'inherit' : 'publish';
     global $wpdb;
     $s = $wpdb->get_var($wpdb->prepare("SELECT `ID` FROM $wpdb->posts AS `P` INNER JOIN $wpdb->postmeta AS `M` ON `P`.`ID` = `M`.`post_id` WHERE `M`.`meta_key` = 'wordproof_timestamp_data' AND `P`.`post_status` = %s AND `P`.`post_type` = %s", $postStatus, $postType));

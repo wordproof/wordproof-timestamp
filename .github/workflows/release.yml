@@ -1,0 +1,97 @@
+# This is a sample workflows file for GitHub Actions.
+#
+# This workflow detects a tag, creates a package with the tag, then automatically uploads the package to GitHub releases.
+#
+# At first, please change PACKAGE_NAME to your package name.
+# Also, if you need:
+# - change FILES_TO_ARCIVE
+# - comment out the composer install section
+# - uncomment npm install section
+
+# Workflow Document: https://help.github.com/en/articles/workflow-syntax-for-github-actions
+#
+name: release
+
+# see: https://help.github.com/en/articles/workflow-syntax-for-github-actions#on
+on:
+  push:
+    tags:
+      - dev_*
+      - 0.*.*
+      - 1.*.*
+      - 2.*.*
+
+    # - v*.*.*  # to use filters. wildcard characters are supported.
+env:
+  PACKAGE_NAME: 'wordproof-timestamp'
+  TAG: ${{ github.ref }}
+  IS_DEV: ${{ startsWith(github.ref, 'refs/tags/dev_') }}
+# https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs
+jobs:
+  release:
+    name: Release
+
+    # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idruns-on
+    runs-on: ubuntu-latest
+
+    # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idsteps
+    steps:
+
+    # [official action] clone code to workspace
+    # https://github.com/actions/checkout
+    - uses: actions/checkout@v1
+
+    # remove this step if you want to update the version manually.
+    # NOTICE: ref_type exists only for events of type create. see https://developer.github.com/v3/activity/events/types/#createevent
+    - name: overview
+      run: |
+        echo TAG ${TAG}
+        echo IS_DEV ${IS_DEV}
+        pwd
+        ls -al
+    - name: install dependencies
+      run: |
+        cd wordproof-timestamp
+        yarn install
+    - name: build development
+      if: startsWith(github.ref, 'refs/tags/dev_') == true
+      run: |
+        cd wordproof-timestamp
+        yarn dev
+    - name: build production 
+      if: startsWith(github.ref, 'refs/tags/dev_') == false
+      run: |
+        cd wordproof-timestamp
+        yarn build
+    - name: add version
+      run: |
+        cd wordproof-timestamp
+        export REF=$(jq --raw-output .ref "$GITHUB_EVENT_PATH")
+        export TAG=$(echo ${REF} | cut -c 11-)
+        sed -i -e "s/{release version}/${TAG}/g" ${PACKAGE_NAME}.php
+        
+    # create a zip acrive for installing to WordPress.
+    # please change FILES_TO_ARCIVE to your project name.
+    - name: create archive
+      env:
+        FILES_TO_ARCIVE: "*.php *.md LICENSE readme.txt gpl.txt includes/ assets/"
+      run: |
+        ls -al
+        cd wordproof-timestamp
+        pwd
+        zip -r ../${PACKAGE_NAME}.zip ${FILES_TO_ARCIVE}
+
+    # upload zip arvive by ghr.
+    # `secrets.GITHUB_TOKEN` for using ghr is issued temporarily when executing action. No special settings are required.
+    # ghr - Easily ship your project to your user using Github Releases : https://deeeet.com/ghr/
+    - name: upload to github release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GOPATH: /home/runner/go
+      run: |
+        # retrieve tag and replase version number in file.
+        export REF=$(jq --raw-output .ref "$GITHUB_EVENT_PATH")
+        export TAG=$(echo ${REF} | cut -c 11-)
+        # install ghr, then upload archve.
+        go get -u github.com/tcnksm/ghr
+        ${GOPATH}/bin/ghr -b "${PACKAGE_NAME} ${TAG}" -replace ${TAG} ${PACKAGE_NAME}.zip

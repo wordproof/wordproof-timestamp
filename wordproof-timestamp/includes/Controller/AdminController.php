@@ -68,7 +68,7 @@ class AdminController
           'balance' => OptionsHelper::getBalanceCache(),
           'recentUnstampedPosts' => DashboardWidgetController::getRecentPosts('post'),
           'recentUnstampedPages' => DashboardWidgetController::getRecentPosts('page'),
-          'recentUnstampeditems' => DashboardWidgetController::getRecentPosts(''),
+          'recentUnstampeditems' => DashboardWidgetController::getRecentPosts(['post', 'page']),
           'recentStampedItems' => DashboardWidgetController::getRecentPosts('', 'EXISTS'),
         ]);
         break;

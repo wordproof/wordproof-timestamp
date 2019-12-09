@@ -64,7 +64,6 @@ export default class Dashboard extends Component {
                     <>
                         <p>Timestamp your first content!</p>
                         <strong>Recent posts</strong>
-
                         {this.getTable(wordproofDashboard.recentUnstampedPosts)}
                         <br/>
                         <strong>Recent pages</strong>

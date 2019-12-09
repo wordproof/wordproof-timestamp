@@ -88,9 +88,12 @@ class DashboardWidgetController
 
   public static function getUnprotectedWarning()
   {
-    $pages = self::getUnprotectedPosts('page');
-    $posts = self::getUnprotectedPosts('post');
-    $attachments = self::getUnprotectedPosts('attachment');
+    $pages = self::getUnprotectedPostsCount('page');
+    $posts = self::getUnprotectedPostsCount('post');
+    $attachments = self::getUnprotectedPostsCount('attachment');
+    if (!self::showWarning($pages) && !self::showWarning($posts) && !self::showWarning($attachments))
+      return 'Everything is protected. Congratulations!';
+    
     $string = '';
     $string .= (self::showWarning($pages)) ? $pages . ' pages ' : '';
     $string .= (self::showWarning($posts)) ? ',' : '';

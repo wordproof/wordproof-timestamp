@@ -113,9 +113,11 @@ export default class Bulk extends Component {
 
                 {(this.state.running) ? <span className={'block mt-4'}>Timestamped {this.state.count } / { this.getAmountOfPosts()} items</span> : ''}
 
-                <button disabled={this.state.running || this.state.done} onClick={(e) => this.startTimestamping(e)}
+                <button disabled={this.state.running || this.state.done || this.getAmountOfPosts() > wordproofSettings.balance} onClick={(e) => this.startTimestamping(e)}
                         className={'wbtn wbtn-primary my-4'}>Start Timestamping
                 </button>
+
+                {(this.getAmountOfPosts() > wordproofSettings.balance) ? <span className={'block mt-2'}>You do not have enough timestamps. Please <a href={wordproofSettings.urls.upgradeExternal} target="_blank" rel="noopener noreferrer">upgrade your plan</a>.</span> : ''}
 
                 <div className={'block'}>
                     {this.state.messages.map((message, key) => (

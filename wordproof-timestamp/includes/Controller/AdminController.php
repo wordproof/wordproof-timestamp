@@ -105,6 +105,7 @@ class AdminController
           'wsfy' => $wsfy,
           'registeredPostTypes' => get_post_types(['public' => true]),
           'saveChanges' => 'Save Changes',
+          'balance' => OptionsHelper::getBalanceCache(),
           'urls' => [
             'wizard' => admin_url('admin.php?page=wordproof-wizard'),
             'wizardConnect' => admin_url('admin.php?page=wordproof-wizard#connect'),
@@ -112,6 +113,7 @@ class AdminController
             'dashboard' => admin_url('admin.php?page=wordproof-dashboard'),
             'bulk' => admin_url('admin.php?page=wordproof-bulk'),
             'upgrade' => admin_url('admin.php?page=wordproof-upgrade'),
+            'upgradeExternal' => 'https://my.wordproof.io/sites/upgrade',
             'support' => admin_url('admin.php?page=wordproof-support'),
           ],
           'bulk' => [

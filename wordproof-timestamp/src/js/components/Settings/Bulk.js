@@ -15,12 +15,18 @@ export default class Bulk extends Component {
 
     setPostType(e) {
         let selected = this.state.selected;
-        selected.push(e.target.value);
-        console.log(selected);
+        let index = selected.indexOf(e.target.value);
+
+        if (index > -1) {
+            selected.splice(index, 1);
+        } else {
+            selected.push(e.target.value);
+        }
         this.setState({selected: selected});
     }
 
     addMessage(message) {
+        console.log(message);
         let messages = this.state.messages;
         messages.push(message);
         this.setState({messages: messages});
@@ -37,19 +43,19 @@ export default class Bulk extends Component {
     }
 
     async sendRequest(id, type) {
-        const result = await axios.post(wordproofData.ajaxUrl, qs.stringify({
+        const result = await axios.post(wordproofData.urls.ajax, qs.stringify({
             'action': 'wordproof_wsfy_save_post',
             'post_id': id,
             'security': wordproofData.ajaxSecurity
         }));
-        console.log(result);
 
         this.addMessage(TimestampButton.retrieveMessage(result, type));
     }
 
     renderMessages() {
         this.state.messages.map((message) => {
-            return(message);
+            console.log(message);
+            return (message);
         })
     }
 

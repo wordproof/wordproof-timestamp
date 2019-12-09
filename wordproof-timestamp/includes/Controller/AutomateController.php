@@ -80,7 +80,8 @@ class AutomateController
     }
   }
 
-  public static function retryCallback($postId) {
+  public static function retryCallback($postId)
+  {
     $options = OptionsHelper::getWSFY();
 
     if (isset($options->site_token) && isset($options->site_id)) {
@@ -94,15 +95,18 @@ class AutomateController
       $result = self::request($endpoint, $options->site_token, $body);
       $code = wp_remote_retrieve_response_code($result);
 
-      if ($code !== 201 || $code !== 200) {
+      if ($code !== 201 && $code !== 200)
         return self::returnError($result);
-      }
+
+      return ['success' => true];
+
     } else {
       return ['errors' => ['authentication' => ['Please configure your site key']]];
     }
   }
 
-  private static function request($endpoint, $token, $body) {
+  private static function request($endpoint, $token, $body)
+  {
     return $result = wp_remote_post(WORDPROOF_WSFY_API_URI . $endpoint, [
       'headers' => [
         'Accept' => 'application/json',
@@ -113,7 +117,8 @@ class AutomateController
     ]);
   }
 
-  private static function returnError($result) {
+  private static function returnError($result)
+  {
     if (isset($result)) {
       if (is_wp_error($result)) {
         return ['errors' => $result->get_error_message()];
@@ -125,8 +130,9 @@ class AutomateController
     }
   }
 
-  private static function getBody($type, $post) {
-    switch($type) {
+  private static function getBody($type, $post)
+  {
+    switch ($type) {
       case ARTICLE_TIMESTAMP:
         $fields = HashController::getFields($post);
         return [
@@ -163,7 +169,7 @@ class AutomateController
     if (in_array($_SERVER['REMOTE_ADDR'], OptionsHelper::getWSFYAllowedIps())) {
       $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
 
-      switch($action) {
+      switch ($action) {
         case 'wordproof_test_callback':
           $this->handleTestCallback();
           break;
@@ -180,13 +186,15 @@ class AutomateController
     }
   }
 
-  public function handleTestCallback() {
+  public function handleTestCallback()
+  {
     error_log('WordProof: Callback successfully tested');
     echo json_encode(['success' => true, 'response' => $this->responses['valid_endpoint']]);
     die();
   }
 
-  public function handleModifyPost() {
+  public function handleModifyPost()
+  {
     $postId = intval($_REQUEST['uid']);
     $chain = ($_REQUEST['chain']) ? sanitize_text_field($_REQUEST['chain']) : '';
     $balance = ($_REQUEST['balance']) ? intval($_REQUEST['balance']) : false;

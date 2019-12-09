@@ -63,6 +63,8 @@ class DashboardWidgetController
     ]);
     $posts = $query->get_posts();
 
+    wp_reset_postdata();
+
     if ($postsOnly)
       return $posts;
 
@@ -81,8 +83,6 @@ class DashboardWidgetController
       $result[] = ['post' => $postData, 'meta' => $meta];
     }
 
-    wp_reset_postdata();
-
     return $result;
   }
 
@@ -93,7 +93,7 @@ class DashboardWidgetController
     $attachments = self::getUnprotectedPostsCount('attachment');
     if (!self::showWarning($pages) && !self::showWarning($posts) && !self::showWarning($attachments))
       return 'Everything is protected. Congratulations!';
-    
+
     $string = '';
     $string .= (self::showWarning($pages)) ? $pages . ' pages ' : '';
     $string .= (self::showWarning($posts)) ? ',' : '';

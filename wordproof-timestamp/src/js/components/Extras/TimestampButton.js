@@ -52,7 +52,7 @@ export default class TimestampButton extends Component {
     getRetryCallbackButton() {
         if (this.props.automate && this.state.show) {
             return (
-                <button className={'button'} disabled={this.state.disabled}
+                <button className={'button block'} disabled={this.state.disabled}
                         onClick={() => this.request('wordproof_wsfy_retry_callback')}>Request new callback</button>
             );
         }

@@ -20,6 +20,7 @@ on:
       - 0.*.*
       - 1.*.*
       - 2.*.*
+      - 3.*.*
 
     # - v*.*.*  # to use filters. wildcard characters are supported.
 env:
@@ -58,7 +59,7 @@ jobs:
       run: |
         cd wordproof-timestamp
         yarn dev
-    - name: build production 
+    - name: build production
       if: startsWith(github.ref, 'refs/tags/dev_') == false
       run: |
         cd wordproof-timestamp
@@ -69,7 +70,7 @@ jobs:
         export REF=$(jq --raw-output .ref "$GITHUB_EVENT_PATH")
         export TAG=$(echo ${REF} | cut -c 11-)
         sed -i -e "s/{release version}/${TAG}/g" ${PACKAGE_NAME}.php
-        
+
     # create a zip acrive for installing to WordPress.
     # please change FILES_TO_ARCIVE to your project name.
     - name: create archive

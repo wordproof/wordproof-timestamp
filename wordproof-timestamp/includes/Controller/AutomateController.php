@@ -71,6 +71,10 @@ class AutomateController
 
       $code = wp_remote_retrieve_response_code($result);
       if ($code === 201) {
+        $balance = OptionsHelper::getBalance();
+        if ($balance === 1)
+          OptionsHelper::set('balance', 0);
+
         TimestampController::saveTimestamp($postId, '', '', true);
       } else {
         return self::returnError($result);

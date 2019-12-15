@@ -4,7 +4,7 @@
  Plugin Name: WordProof Timestamp
  Plugin URI:  https://wordproof.io/wordproof-timestamp-plugin/
  Description: Timestamp your WordPress content into the blockchain. Instant and without fees. For EOSIO, EOS &amp; Telos.
- Version:     {release version}
+ Version:     2.4.0
  Author:      WordProof
  Author URI:  https://wordproof.io
  License:     GPL2
@@ -20,7 +20,7 @@ if (!defined('WPINC')) {
 }
 
 define('WORDPROOF_DEVELOPMENT', false);
-define('WORDPROOF_VERSION', '{release version}');
+define('WORDPROOF_VERSION', '2.4.0');
 define('WORDPROOF_SLUG', 'wordproof');
 define('WORDPROOF_PREFIX', 'wordproof');
 define('WORDPROOF_ROOT_FILE', __FILE__);
@@ -57,7 +57,7 @@ define('CURRENT_TIMESTAMP_STANDARD_VERSION', '0.2.0');
 
 // Init plugin
 spl_autoload_register(__NAMESPACE__ . '\\autoload');
-add_action('activated_plugin', __NAMESPACE__ . '\\wordproofGettingStarted');
+add_action('activated_plugin', __NAMESPACE__ . '\\wordproof_plugin_activated');
 add_action('plugins_loaded', array(WordProofTimestamp::getInstance(), 'init'));
 
 /**
@@ -73,8 +73,8 @@ function autoload($class = '')
   require $result . '.php';
 }
 
-function wordproofGettingStarted($plugin) {
-  if ($plugin === 'wordproof-timestamp/wordproof-timestamp.php' && !isset($_GET['activate-multi'])) {
+function wordproof_plugin_activated($plugin) {
+  if ($plugin === WORDPROOF_BASENAME && !isset($_GET['activate-multi'])) {
     wp_redirect(admin_url('admin.php?page=wordproof-getting-started'));
     die();
   }

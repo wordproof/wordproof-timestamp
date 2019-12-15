@@ -59,7 +59,7 @@ export default class Step2 extends Component {
                        subtitle="Paste your site key to connect your site to My WordProof. Create a free account if you don’t have one yet."/>
 
                 <a className="wbtn wbtn-secondary mb-4 inline-block"
-                   href={`${wordproof.urls.signup}?source=${wordproof.urls.site}`} target="_blank"
+                   href={wordproof.urls.signup} target="_blank"
                    rel="noopener noreferrer">
                     Create My WordProof Account
                 </a>

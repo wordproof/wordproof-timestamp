@@ -116,7 +116,7 @@ class Modal extends React.Component {
         const articles = getArticles(schema);
         this.setState({articles: articles});
 
-        if (wordproof.automate.active) {
+        if (wordproof.automate.active && wordproof.automate.options.show_revisions === true) {
           fetch(wordproof.automate.api).then((response) => {
               if (response.ok) {
                   return response.json();

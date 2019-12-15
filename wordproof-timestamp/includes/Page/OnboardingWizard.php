@@ -43,7 +43,7 @@ class OnboardingWizard {
           'api' => WORDPROOF_WSFY_API_URI,
           'images' => WORDPROOF_URI_IMAGES,
           'settings' => admin_url('admin-post.php'),
-          'signup' => 'https://my.wordproof.io',
+          'signup' => 'https://my.wordproof.io/signup?plan=free&url=' . get_site_url(),
           'site' => get_site_url(),
         ],
         'wsfyValidateTokenEndpoint' => WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE,

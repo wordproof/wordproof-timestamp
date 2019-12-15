@@ -105,16 +105,41 @@ class AutomateController
     }
   }
 
-  private static function request($endpoint, $token, $body)
+  public static function getBalance()
   {
-    return $result = wp_remote_post(WORDPROOF_WSFY_API_URI . $endpoint, [
+    if (OptionsHelper::isWSFYActive()) {
+      $options = OptionsHelper::getWSFY();
+
+      if (isset($options->site_token) && isset($options->site_id)) {
+        $endpoint = 'sites/' . $options->site_id . '/balance';
+
+        $response = self::request($endpoint, $options->site_token, false, 'GET');
+        $response = json_decode($response['body']);
+
+        $balance = (isset($response->balance)) ? intval($response->balance) : 0;
+        OptionsHelper::set('balance', $balance);
+        return OptionsHelper::getBalance();
+      }
+    }
+  }
+
+  private static function request($endpoint, $token, $body, $method = 'POST')
+  {
+    $args = [
+      'method' => $method,
       'headers' => [
         'Accept' => 'application/json',
         'Content-Type' => 'application/json',
         'Authorization' => 'Bearer ' . $token
       ],
-      'body' => json_encode($body, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
-    ]);
+    ];
+
+    if ($body) {
+      $body = json_encode($body, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+      $args = array_merge($args, ['body' => $body]);
+    }
+
+    return $result = wp_remote_request(WORDPROOF_WSFY_API_URI . $endpoint, $args);
   }
 
   private static function returnError($result)

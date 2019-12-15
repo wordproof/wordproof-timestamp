@@ -79,7 +79,7 @@ export default class Dashboard extends Component {
                     {this.getTable(wordproofDashboard.recentStampedItems)}
 
                     <span className={'block mb-2'}><strong>Tip: </strong>did you timestamp your T&C yet? If not, <a
-                        href={'#'}>learn why you should!</a></span>
+                        href={'https://sebastiaans.blog/why-timestamp-content-blockchain/'} target="_blank" rel="noopener noreferrer">learn why you should!</a></span>
 
                     <strong>Unprotected content:</strong>
                     {this.getTable(wordproofDashboard.recentUnstampeditems)}

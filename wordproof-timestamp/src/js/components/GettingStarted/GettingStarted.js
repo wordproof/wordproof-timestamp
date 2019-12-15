@@ -16,7 +16,7 @@ class GettingStarted extends Component {
 
     render() {
         return (
-            <div className="wordproof-getting-started container bg-white rounded p-4 mt-6">
+            <div className="wordproof-getting-started container bg-white rounded p-4 mt-16">
 
                 <img className="wordproof-logo border-none mx-auto block relative w-32"
                      src={`${wordproof.imagesUri}/wordproof-icon-large.png`}/>

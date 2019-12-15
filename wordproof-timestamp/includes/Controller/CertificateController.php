@@ -95,8 +95,8 @@ class CertificateController
         ]
       ]);
 
-      $date = get_the_date('', $post->ID);
-      $time = get_the_time('', $post->ID);
+      $date = get_the_modified_date('', $post->ID);
+      $time = get_the_modified_time('', $post->ID);
       $user = get_user_by('id', $post->post_author);
       $author = $user->display_name;
 

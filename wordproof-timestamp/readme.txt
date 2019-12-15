@@ -83,8 +83,9 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 
 == Changelog ==
 = 2.4.0 =
-*Release date: December 11th, 2019*
-* TODO
+*Release date: December 16th, 2019*
+* We have made it way easier to see what is going on.
+* Styling enhancements
 
 = 2.3.3 =
 *Release date: November 20th, 2019*

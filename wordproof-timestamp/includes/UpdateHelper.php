@@ -2,8 +2,6 @@
 
 namespace WordProofTimestamp\includes;
 
-use WordProofTimestamp\includes\Controller\AutomateController;
-
 class UpdateHelper
 {
   private $migration_version_200 = 'wordproof_migration_200_completed';
@@ -71,6 +69,7 @@ class UpdateHelper
   private function migrate_240()
   {
     update_option($this->migration_version_240, true);
-    AutomateController::getBalance();
+    $controller = new AutomaticHelper();
+    $result = $controller->getBalance();
   }
 }

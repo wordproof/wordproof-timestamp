@@ -2,6 +2,7 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
+use WordProofTimestamp\includes\AutomaticHelper;
 use WordProofTimestamp\includes\DomainHelper;
 use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\PostMetaHelper;
@@ -41,7 +42,8 @@ class PostColumnController
   {
     check_ajax_referer('wordproof', 'security');
     $postId = intval($_REQUEST['post_id']);
-    $result = AutomateController::savePost($postId);
+    $controller = new AutomaticHelper($postId);
+    $result = $controller->createPost();
     echo json_encode($result);
     die();
   }
@@ -50,7 +52,8 @@ class PostColumnController
   {
     check_ajax_referer('wordproof', 'security');
     $postId = intval($_REQUEST['post_id']);
-    $result = AutomateController::retryCallback($postId);
+    $controller = new AutomaticHelper($postId);
+    $result = $controller->retryCallback();
     echo json_encode($result);
     die();
   }

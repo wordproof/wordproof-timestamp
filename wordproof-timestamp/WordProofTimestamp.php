@@ -4,7 +4,7 @@ namespace WordProofTimestamp;
 
 use WordProofTimestamp\includes\AnalyticsHelper;
 use WordProofTimestamp\includes\Controller\AdminController;
-use WordProofTimestamp\includes\Controller\AutomateController;
+use WordProofTimestamp\includes\Controller\AutomaticHooksController;
 use WordProofTimestamp\includes\Controller\CertificateController;
 use WordProofTimestamp\includes\Controller\TimestampController;
 
@@ -25,7 +25,7 @@ class WordProofTimestamp
     new TimestampController();
     new CertificateController();
 
-    new AutomateController();
+    new AutomaticHooksController();
 
     add_action('activated_plugin', [$this, 'gettingStarted']);
   }

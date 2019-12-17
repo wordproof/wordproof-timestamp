@@ -2,6 +2,7 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
+use WordProofTimestamp\includes\AutomaticHelper;
 use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\Page\AutoStampPage;
 use WordProofTimestamp\includes\PostMetaHelper;
@@ -23,7 +24,10 @@ class AutomaticHooksController
     add_action('admin_post_nopriv_wordproof_callback', [$this, 'processCallback']);
     add_action('admin_post_nopriv_wordproof_wsfy_edit_post', [$this, 'processCallback']);
 
-    add_action(WORDPROOF_WSFY_CRON_HOOK, [\AutomaticHelper::class, 'createPost']);
+    add_action(WORDPROOF_WSFY_CRON_HOOK, [AutomaticHelper::class, 'createPost']);
+
+    add_action('wp_ajax_wordproof_get_articles', [$this, 'getArticles']);
+    add_action('wp_ajax_nopriv_wordproof_get_articles', [$this, 'getArticles']);
 
     if (OptionsHelper::isWSFYActive()) {
       $this->setUpdateHooks();
@@ -43,6 +47,16 @@ class AutomaticHooksController
       add_action('publish_page', [$this, 'setCron']);
       add_action('publish_post', [$this, 'setCron']);
     }
+  }
+
+  function getArticles()
+  {
+    check_ajax_referer('wordproof', 'security');
+    $postId = intval($_REQUEST['post_id']);
+    $controller = new AutomaticHelper($postId);
+    $result = $controller->getArticles();
+    echo json_encode($result);
+    die();
   }
 
   public function setCron($postId)

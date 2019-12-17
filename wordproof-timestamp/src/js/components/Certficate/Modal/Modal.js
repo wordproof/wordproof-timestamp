@@ -116,12 +116,20 @@ class Modal extends React.Component {
         const articles = getArticles(schema);
         this.setState({articles: articles});
 
+        //TODO: on opening
         if (wordproof.automate.active && wordproof.automate.options.show_revisions === true) {
-          fetch(wordproof.automate.api).then((response) => {
-              if (response.ok) {
-                  return response.json();
-              }
-          }).then((schema) => {
+            fetch(wordproof.ajaxURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+                },
+                body:
+                    'action=wordproof_get_articles' +
+                    '&post_id='+ wordproof.postId +
+                    '&security='+ wordproof.ajaxSecurity,
+            }).then((schema) => {
+                console.log('here:');
+                console.log(schema);
               if (typeof schema === 'object' && !(schema instanceof Array)) {
                   const script = document.querySelector('script.wordproof-schema');
                   script.innerHTML = JSON.stringify(schema);

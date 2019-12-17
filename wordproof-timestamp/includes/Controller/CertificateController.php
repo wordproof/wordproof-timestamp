@@ -76,6 +76,9 @@ class CertificateController
       wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', [], filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
 
       wp_localize_script('wordproof.frontend.js', 'wordproof', [
+        'ajaxURL' => admin_url('admin-ajax.php'),
+        'ajaxSecurity' => wp_create_nonce('wordproof'),
+        'postId' => $post->ID,
         'link' => [
           'url' => $this->getUrl(),
           'text' => OptionsHelper::getCertificateText(),

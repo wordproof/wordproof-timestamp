@@ -70,6 +70,22 @@ class AutomaticHelper
     }
   }
 
+  public function getArticles()
+  {
+    if ($this->canRun) {
+
+      $this->action = 'get_articles';
+
+      $endpoint = str_replace('$postId', $this->post->ID, WORDPROOF_WSFY_ENDPOINT_GET_ARTICLES);
+      $this->endpoint = str_replace('$siteId', $this->options->site_id, $endpoint);
+
+      return self::request('GET');
+
+    } else {
+      return ['errors' => ['authentication' => ['Please configure your site key']]];
+    }
+  }
+
   public function getBalance()
   {
     if ($this->canRun) {
@@ -134,6 +150,7 @@ class AutomaticHelper
       case 'retry_callback':
         return ['success' => true];
       case 'get_articles':
+        return $body;
         break;
       default:
         return false;

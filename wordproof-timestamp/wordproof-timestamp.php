@@ -40,6 +40,7 @@ define('WORDPROOF_URI_IMAGES', WORDPROOF_URI_ASSETS . '/images');
 define('WORDPROOF_URI_SVG', WORDPROOF_URI_ASSETS . '/svg');
 define('WORDPROOF_WSFY_ENDPOINT_ITEM', 'sites/$siteId/items/');
 define('WORDPROOF_WSFY_ENDPOINT_RETRY_CALLBACK', 'sites/$siteId/items/$postId/callback/retry');
+define('WORDPROOF_WSFY_ENDPOINT_GET_ARTICLES', 'sites/$siteId/items/$postId');
 define('WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE', 'validate/token');
 define('WORDPROOF_WSFY_CRON_HOOK', 'wsfy_save_post_on_cron');
 

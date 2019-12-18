@@ -84,11 +84,15 @@ export default class TimestampButton extends Component {
 
     static retrieveMessage(result, postType) {
 
+
         if (typeof result === 'string')
             result = JSON.parse(result);
 
         if (result.data && typeof result.data === 'string')
             result.data = JSON.parse(result.data);
+
+        if (result.data.errors && 'is_duplicate' in result.data.errors)
+            return <span>🚚 This article already exists on the server</span>;
 
         if (result.data.errors)
             return <span>🤭 Something went wrong {JSON.stringify(result.errors)}</span>;

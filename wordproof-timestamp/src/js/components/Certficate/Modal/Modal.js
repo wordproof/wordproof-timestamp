@@ -38,7 +38,6 @@ class Modal extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevState.articles !== this.state.articles) {
-            //TODO: Check transaction on blockchain
             const local = this.state.articles[0].hash;
             const hashed = sha256(JSON.stringify(this.state.articles[0].raw));
 
@@ -57,7 +56,7 @@ class Modal extends React.Component {
     };
 
     renderView = () => {
-        switch(this.state.view) {
+        switch (this.state.view) {
             case 'overview':
                 return <Overview valid={this.state.validTimestamp} articles={this.state.articles}/>;
             case 'overview.importance':
@@ -79,7 +78,7 @@ class Modal extends React.Component {
         window.addEventListener('keydown', this.handleKey);
 
         this.navigation();
-        this.getArticles();
+        this.getArticlesFromSchema();
 
         if (window.location.hash.includes('wordproof'))
             this.open();
@@ -107,51 +106,53 @@ class Modal extends React.Component {
     };
 
     open = () => {
-        //TODO: Set focus
         this.setState({active: true});
+        this.getArticlesFromMy();
     };
 
-    getArticles = () => {
+    getArticlesFromSchema = () => {
         const schema = JSON.parse(document.querySelector('script.wordproof-schema').innerHTML);
         const articles = getArticles(schema);
         this.setState({articles: articles});
+    };
 
-        //TODO: on opening
+    getArticlesFromMy = async () => {
         if (wordproof.automate.active && wordproof.automate.options.show_revisions === true) {
-            fetch(wordproof.ajaxURL, {
+            await fetch(wordproof.ajaxURL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
                 },
                 body:
                     'action=wordproof_get_articles' +
-                    '&post_id='+ wordproof.postId +
-                    '&security='+ wordproof.ajaxSecurity,
+                    '&post_id=' + wordproof.postId +
+                    '&security=' + wordproof.ajaxSecurity,
             }).then((schema) => {
-                console.log('here:');
-                console.log(schema);
-              if (typeof schema === 'object' && !(schema instanceof Array)) {
-                  const script = document.querySelector('script.wordproof-schema');
-                  script.innerHTML = JSON.stringify(schema);
-                  const articles = getArticles(schema);
-                  this.setState({articles: articles});
-              }
-          });
-      }
+                if (typeof schema === 'object' && !(schema instanceof Array)) {
+                    const script = document.querySelector('script.wordproof-schema');
+                    script.innerHTML = JSON.stringify(schema);
+                    const articles = getArticles(schema);
+                    this.setState({articles: articles});
+                }
+            });
+        }
     };
 
     render() {
         return (
             <root.div>
-                <div className={`modal ${(!this.state.active) ? 'opacity-0 pointer-events-none' : ''} fixed w-full h-full top-0 left-0 flex items-center justify-center`}>
+                <div
+                    className={`modal ${(!this.state.active) ? 'opacity-0 pointer-events-none' : ''} fixed w-full h-full top-0 left-0 flex items-center justify-center`}>
                     <div className="modal-overlay absolute w-full h-full bg-gray-900 opacity-50" onClick={this.close}
-                        aria-hidden={true}>
+                         aria-hidden={true}>
                     </div>
 
-                    <div className="modal-container h-modal overflow-x-hidden overflow-y-auto bg-white w-11/12 md:max-w-4xl mx-auto rounded-lg shadow z-50 overflow-y-auto"
-                         aria-modal={this.state.active} role={'modal'} aria-describedby={'WordProof Timestamp Certificate'}>
+                    <div
+                        className="modal-container h-modal overflow-x-hidden overflow-y-auto bg-white w-11/12 md:max-w-4xl mx-auto rounded-lg shadow z-50 overflow-y-auto"
+                        aria-modal={this.state.active} role={'modal'}
+                        aria-describedby={'WordProof Timestamp Certificate'}>
                         <div className={'h-full'} role={'document'}>
-                            { this.renderView() }
+                            {this.renderView()}
                         </div>
                     </div>
                 </div>

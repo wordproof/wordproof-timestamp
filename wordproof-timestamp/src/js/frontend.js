@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
   if (schema) {
     initModal();
     initLink();
+
+    document.dispatchEvent(new Event('WordProofContentLoaded'));
   }
 });
 

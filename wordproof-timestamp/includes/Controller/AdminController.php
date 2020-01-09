@@ -68,7 +68,7 @@ class AdminController
           'recentUnstampedPosts' => DashboardWidgetController::getRecentPosts('post'),
           'recentUnstampedPages' => DashboardWidgetController::getRecentPosts('page'),
           'recentUnstampeditems' => DashboardWidgetController::getRecentPosts(['post', 'page']),
-          'recentStampedItems' => DashboardWidgetController::getRecentPosts('', 'EXISTS'),
+          'recentStampedItems' => DashboardWidgetController::getRecentPosts(['post', 'page'], 'EXISTS'),
         ]);
         break;
       case 'post-new.php':

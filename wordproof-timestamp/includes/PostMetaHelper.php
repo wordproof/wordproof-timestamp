@@ -9,6 +9,7 @@ class PostMetaHelper {
       do_action('wordproof_before_saving_timestamp_meta_data', $postId);
       $meta['pluginVersion'] = WORDPROOF_VERSION;
       $result = update_post_meta($postId, 'wordproof_timestamp_data', $meta);
+      update_post_meta($postId, 'wordproof_last_timestamped_on', time());
       do_action('wordproof_after_saving_timestamp_meta_data', $postId);
       return $result;
     }

@@ -32,10 +32,10 @@ class GettingStarted extends Component {
                             className="bg-blue-500 hover:bg-blue-400 text-white font-semibold text-lg py-4 px-6 mr-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
                         Launch Setup Wizard
                     </button>
-                    <a href={'http://wordproof.io/guide'}
-                       className="bg-white hover:bg-gray-100 text-gray-800 font-semibold text-lg py-4 px-6 border-b-4 border-gray-400 rounded">
-                        Read the Full Guide
-                    </a>
+                    {/*<a href={'http://wordproof.io/guide'}*/}
+                    {/*   className="bg-white hover:bg-gray-100 text-gray-800 font-semibold text-lg py-4 px-6 border-b-4 border-gray-400 rounded">*/}
+                    {/*    Read the Full Guide*/}
+                    {/*</a>*/}
                 </div>
             </div>
         )

@@ -42,7 +42,7 @@ export default class Wizard extends Component {
   }
 
   updateRequest(slug, value) {
-    axios.post(wordproof.urls.settings, qs.stringify({
+    axios.post(wordproof.urls.adminpost, qs.stringify({
       'action': 'wordproof_update_setting',
       'key': slug,
       'value': value
@@ -63,7 +63,7 @@ export default class Wizard extends Component {
         </div>
         <div className={'wizard-container'}>
           <StepWizard transitions={this.transitions} isHashEnabled={true} nav={<Nav labels={this.navLabels}/>}>
-            <Step1 hashKey={'mode'} />
+            <Step1 hashKey={'mode'} update={this.updateField.bind(this)}/>
             <Step2 hashKey={'connect'} get={this.getField.bind(this)} update={this.updateField.bind(this)} initial={wordproof.currentValues} />
             <Step3 hashKey={'customize'} get={this.getField.bind(this)} update={this.updateField.bind(this)} initial={wordproof.currentValues} />
             <Step4 hashKey={'certificate'} get={this.getField.bind(this)} update={this.updateField.bind(this)} initial={wordproof.currentValues} />

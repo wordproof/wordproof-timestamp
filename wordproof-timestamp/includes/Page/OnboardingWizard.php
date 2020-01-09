@@ -39,10 +39,10 @@ class OnboardingWizard {
       wp_localize_script('wordproof.wizard.js', 'wordproof', [
         'urls' => [
           'dashboard' => admin_url('admin.php?page=wordproof-dashboard'),
-          'manual' => admin_url('admin.php?page=wordproof-manual'),
+          'settings' => admin_url('admin.php?page=wordproof-settings'),
           'api' => WORDPROOF_WSFY_API_URI,
           'images' => WORDPROOF_URI_IMAGES,
-          'settings' => admin_url('admin-post.php'),
+          'adminpost' => admin_url('admin-post.php'),
           'signup' => 'https://my.wordproof.io/signup?plan=free&url=' . get_site_url(),
           'site' => get_site_url(),
         ],

@@ -10,7 +10,7 @@ export default class Step1 extends Component {
   render() {
     return (
       <div className="wordproof-wizard-step">
-        <Intro title="Welcome to WordProof Timestamp!" subtitle="Let&apos;s get your set up!" />
+        <Intro title="Welcome to WordProof Timestamp!" subtitle="Let&apos;s get you set up!" />
 
         <strong className={'mb-2 block'}>Which mode do you want to use?</strong>
         <div className="flex flex-row">

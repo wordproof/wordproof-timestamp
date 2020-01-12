@@ -1,9 +1,10 @@
 import React from 'react';
-
+import axios from 'axios';
+import qs from 'qs';
 import root from 'react-shadow';
 import {sha256} from 'js-sha256';
-import './Modal.scss';
 
+import './Modal.scss';
 import getArticles from "./schemaHelper";
 
 import Overview from "./Overview/Overview";
@@ -118,22 +119,31 @@ class Modal extends React.Component {
 
     getArticlesFromMy = async () => {
         if (wordproof.automate.active && wordproof.automate.options.show_revisions === true) {
-            await fetch(wordproof.ajaxURL, {
-                method: 'POST',
+
+            const config = {
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-                },
-                body:
-                    'action=wordproof_get_articles' +
-                    '&post_id=' + wordproof.postId +
-                    '&security=' + wordproof.ajaxSecurity,
-            }).then((schema) => {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            };
+
+            const body = {
+                action: 'wordproof_get_articles',
+                post_id: wordproof.postId,
+                security: wordproof.ajaxSecurity
+            };
+
+            await axios.post(wordproof.ajaxURL, qs.stringify(body), config)
+            .then((response) => {
+               const schema = response.data;
                 if (typeof schema === 'object' && !(schema instanceof Array)) {
                     const script = document.querySelector('script.wordproof-schema');
                     script.innerHTML = JSON.stringify(schema);
                     const articles = getArticles(schema);
                     this.setState({articles: articles});
                 }
+            })
+            .catch((error) => {
+                console.log(error);
             });
         }
     };

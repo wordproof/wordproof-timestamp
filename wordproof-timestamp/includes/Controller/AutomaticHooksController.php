@@ -55,7 +55,7 @@ class AutomaticHooksController
     $postId = intval($_REQUEST['post_id']);
     $controller = new AutomaticHelper($postId);
     $result = $controller->getArticles();
-    echo json_encode($result);
+    echo json_encode($result); //TODO: maybe add parameters
     die();
   }
 

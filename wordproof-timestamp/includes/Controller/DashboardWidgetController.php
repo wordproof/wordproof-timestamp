@@ -11,7 +11,7 @@ class DashboardWidgetController
 
   public function __construct()
   {
-    add_action('wp_dashboard_setup', [$this, 'hook']);
+    add_action('wp_dashboard_setup', [$this, 'hook']); //todo only for certain users and option to hide
   }
 
   public function hook()

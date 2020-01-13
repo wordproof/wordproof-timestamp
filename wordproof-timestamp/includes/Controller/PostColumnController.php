@@ -64,7 +64,6 @@ class PostColumnController
     return $defaults;
   }
 
-  //TODO: Create React component
   public function addColumnContent($column_name)
   {
     global $post;

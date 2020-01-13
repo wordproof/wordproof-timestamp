@@ -15,9 +15,9 @@ class SettingsPage
   private $settingPages = [
     'dashboard' => 'Dashboard',
     'settings' => 'Settings',
-    'support' => 'Support',
-    'upgrade' => 'Upgrade',
     'bulk' => 'Bulk',
+    'support' => 'Support',
+//    'upgrade' => 'Upgrade',
   ];
 
   public function __construct()

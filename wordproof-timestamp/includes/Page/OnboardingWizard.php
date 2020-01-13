@@ -20,10 +20,11 @@ class OnboardingWizard {
     add_submenu_page(
       'wordproof-dashboard',
       'WordProof Wizard',
-      'Setup Wizard',
+      'Wizard',
       'manage_options',
       'wordproof-wizard',
-      array($this, 'generateSettingsPage')
+      array($this, 'generateSettingsPage'),
+      3
     );
   }
 

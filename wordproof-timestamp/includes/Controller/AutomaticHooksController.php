@@ -37,7 +37,8 @@ class AutomaticHooksController
     }
   }
 
-  public function setUpdateHooks() {
+  public function setUpdateHooks()
+  {
     $options = OptionsHelper::getWSFY(['site_token']);
     if (isset($options->allowed_post_types)) {
       foreach ($options->allowed_post_types as $postType) {
@@ -102,11 +103,11 @@ class AutomaticHooksController
 
   public function handleModifyPost()
   {
-    $postId = intval($_REQUEST['uid']);
+    $postId = ($_REQUEST['uid']) ? intval($_REQUEST['uid']) : null;
     $chain = ($_REQUEST['chain']) ? sanitize_text_field($_REQUEST['chain']) : '';
     $balance = ($_REQUEST['balance']) ? intval($_REQUEST['balance']) : false;
     $transactionId = ($_REQUEST['transactionId']) ? sanitize_text_field($_REQUEST['transactionId']) : '';
-    $meta = PostMetaHelper::getPostMeta($postId);
+    $meta = ($postId !== null) ? PostMetaHelper::getPostMeta($postId) : null;
 
     if (!empty($meta)) {
       $meta->blockchain = $chain;

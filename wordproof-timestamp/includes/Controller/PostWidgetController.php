@@ -41,17 +41,17 @@ class PostWidgetController
       $meta = PostMetaHelper::getPostMeta($post->ID);
 
       if (!isset($meta->date))
-        return 'not timestamped';
+        return 'not_timestamped';
 
       if ($meta->date !== get_the_modified_date('c', $post))
-        return 'timestamped, but outdated';
+        return 'outdated';
 
       if (!isset($meta->blockchain) || empty($meta->blockchain))
-        return 'awaiting a callback';
+        return 'awaiting_callback';
 
       return 'timestamped';
     }
 
-    return 'not timestamped';
+    return 'not_timestamped';
   }
 }

@@ -37,15 +37,18 @@ export default class Post extends Component {
             case 'no_balance':
                 return (
                     <>
-                        <strong>This piece of content is at risk, like { wordproofPost.unprotectedAmount } other pieces. Upgrade your WordProof plan
-                            to protect your content.</strong>
-                        <a href={''} className={'button button-primary'}>Choose a WordProof plan</a>
+                        <strong>This content is at risk, along with { wordproofPost.unprotectedAmount }  others. Upgrade
+                            your WordProof plan to protect your content.</strong>
+                        <a href={'wordproofData.urls.upgradeExternal'} className={'button button-primary'}>Choose a WordProof plan</a>
                     </>
                 );
             case '':
                 return (<>
                     <strong className={'block mb-2'}>This post will be timestamped automatically when you publish or update.</strong>
-                    <p>Currently, this post is <i>{ wordproofPost.isTimestamped }</i>.</p>
+                    {(wordproofPost.isTimestamped === 'timestamped') && <p>✅ Timestamped (<a href={wordproofPost.permalink + '#wordproof'} target="_blank" rel="noopener noreferrer">view certificate</a>)</p>}
+                    {(wordproofPost.isTimestamped === 'not_timestamped') && <p>⛔️ This content is not timestamped yet</p>}
+                    {(wordproofPost.isTimestamped === 'awaiting_callback') && <p>⏳️ Awaiting callback</p>}
+                    {(wordproofPost.isTimestamped === 'outdated') && <p>⛔️ The latest version of this content is not timestamped yet</p>}
                 </>);
             default:
                 return false;

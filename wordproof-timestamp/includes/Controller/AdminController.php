@@ -79,6 +79,7 @@ class AdminController
           'isActive' => (AnalyticsHelper::walletIsConnected() || OptionsHelper::isWSFYActive()),
           'isWSFYActive' => OptionsHelper::isWSFYActive(),
           'postId' => (!empty($post->ID)) ? $post->ID : false,
+          'permalink' => (!empty($post->ID)) ? get_permalink($post->ID) : '',
           'balance' => OptionsHelper::getBalanceCache(),
           'unprotectedAmount' => DashboardWidgetController::getTotalUnprotectedCount(),
           'isTimestamped' => PostWidgetController::isTimestamped(),

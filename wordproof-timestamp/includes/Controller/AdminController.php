@@ -56,6 +56,8 @@ class AdminController
     wp_enqueue_style('wordproof.admin.css', WORDPROOF_URI_CSS . '/admin.css', array(), filemtime(WORDPROOF_DIR_CSS . '/admin.css'));
     wp_enqueue_script('wordproof.admin.js', WORDPROOF_URI_JS . '/admin.js', array(), filemtime(WORDPROOF_DIR_JS . '/admin.js'), true);
 
+    wp_enqueue_script('wordproof.adminbar.js', WORDPROOF_URI_JS . '/adminbar.js', array(), filemtime(WORDPROOF_DIR_JS . '/adminbar.js'), true);
+
     switch ($hookSuffix) {
       case 'index.php':
         wp_localize_script('wordproof.admin.js', 'wordproofDashboard', [
@@ -142,6 +144,11 @@ class AdminController
         'ajax' => admin_url('admin-ajax.php'),
         'upgradeExternal' => 'https://my.wordproof.io/sites/upgrade',
       ],
+    ));
+
+    wp_localize_script('wordproof.adminbar.js', 'wordproofBarData', array(
+      'ajaxURL' => admin_url('admin-ajax.php'),
+      'ajaxSecurity' => wp_create_nonce('wordproof'),
     ));
   }
 }

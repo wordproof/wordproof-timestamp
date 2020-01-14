@@ -17,19 +17,31 @@ $transition: 0.4s ease-in-out;
 @import "./Metabox/Metabox";
 @import "./ConnectionWidget/ConnectionWidget";
 
-#wp-admin-bar-wordproof-balance {
-  span.wordproof-icon {
-    display: inline-block;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 25px auto;
-    width: 21px;
-    height: 18px;
-    top: 4px;
-    margin-right: 4px;
-    position: relative;
-  }
+#wpadminbar .wordproof-icon {
+  display: inline;
+  float: left;
+  width: 26px;
+  height: 30px;
+  background-repeat: no-repeat;
+  background-position: 0 3px;
+  background-size: 26px;
+  margin-right: 5px;
 }
+
+//#wpadminbar .wordproof-status {
+//  display: inline-block;
+//  height: 100%;
+//  line-height: 0;
+//}
+//
+//#wpadminbar .wordproof-status-circle {
+//  display: inline-block;
+//  width: 12px;
+//  height: 12px;
+//  background: gray;
+//  border-radius: 100%;
+//  line-height: 0;
+//}
 
 #wordproof-dashboard-widget, #wordproof-post-widget {
   table {

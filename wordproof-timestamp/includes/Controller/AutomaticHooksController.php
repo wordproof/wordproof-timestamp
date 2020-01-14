@@ -26,8 +26,9 @@ class AutomaticHooksController
 
     add_action(WORDPROOF_WSFY_CRON_HOOK, [AutomaticHelper::class, 'createPost']);
 
-    add_action('wp_ajax_wordproof_get_articles', [$this, 'getArticles']);
     add_action('wp_ajax_nopriv_wordproof_get_articles', [$this, 'getArticles']);
+    add_action('wp_ajax_wordproof_get_articles', [$this, 'getArticles']);
+    add_action('wp_ajax_wordproof_get_refreshed_balance', [$this, 'getNewBalance']);
 
     if (OptionsHelper::isWSFYActive()) {
       $this->setUpdateHooks();
@@ -57,6 +58,15 @@ class AutomaticHooksController
     $controller = new AutomaticHelper($postId);
     $result = $controller->getArticles();
     echo json_encode($result); //TODO: maybe add parameters
+    die();
+  }
+
+  function getNewBalance()
+  {
+    check_ajax_referer('wordproof', 'security');
+    $controller = new AutomaticHelper();
+    $balance = $controller->getBalance();
+    echo json_encode(['balance' => $balance]);
     die();
   }
 

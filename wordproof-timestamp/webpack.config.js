@@ -7,6 +7,7 @@ module.exports = {
   mode: process.env.NODE_ENV,
   entry: {
     'admin': './src/js/admin.js',
+    'adminbar': './src/js/adminbar.js',
     'settings': './src/js/settings.js',
     'frontend': './src/js/frontend.js',
     'wizard': './src/js/wizard.js',

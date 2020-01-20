@@ -157,7 +157,7 @@ export default class TimestampButton extends Component {
     render() {
         return (
             <div className={'wordproof-timestamp-button-inner'}>
-                {(this.state.loopTill) ? 'Refreshing... ' : ''}
+                {(this.state.loopTill) ? <img className={`loading-spinner`} src={wordproofData.images.loading} alt={`loading`}/> : ''}
                 {(this.state.show) ? this.renderView() : ''}
                 {this.state.message}
             </div>

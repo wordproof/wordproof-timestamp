@@ -145,6 +145,9 @@ class AdminController
         'ajax' => admin_url('admin-ajax.php'),
         'upgradeExternal' => 'https://my.wordproof.io/sites/upgrade',
       ],
+      'images' => [
+        'loading' => admin_url() . 'images/spinner-2x.gif'
+      ]
     ));
 
     wp_localize_script('wordproof.adminbar.js', 'wordproofBarData', array(

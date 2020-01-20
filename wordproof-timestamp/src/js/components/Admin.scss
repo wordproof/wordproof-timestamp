@@ -27,6 +27,14 @@ $transition: 0.4s ease-in-out;
   background-size: 26px;
   margin-right: 5px;
 }
+.column-wordproof .wordproof-timestamp-button {
+  .loading-spinner {
+    display: block;
+    width: 20px;
+    height: 20px;
+    padding-bottom: 5px;
+  }
+}
 
 //#wpadminbar .wordproof-status {
 //  display: inline-block;

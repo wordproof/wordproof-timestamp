@@ -120,7 +120,10 @@ export default class TimestampButton extends Component {
                     clearInterval(interval);
                 }
 
-                this.refreshPostData();
+                this.refreshPostData().then(() => {
+                    if (this.state.status === 'timestamped')
+                        this.setState({loopTill: false});
+                });
 
             }, 2000);
 

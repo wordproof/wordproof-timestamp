@@ -76,7 +76,7 @@ class AutomaticHooksController
     check_ajax_referer('wordproof', 'security');
     $postId = intval($_REQUEST['post_id']);
     $postData = PostMetaHelper::getPostData($postId);
-    $meta = PostMetaHelper::getPostMeta($postId);
+    $meta = PostMetaHelper::getPostMeta($postId, ['date', 'blockchain']);
     echo json_encode(['post' => $postData, 'meta' => $meta]);
     die();
   }

@@ -33,8 +33,11 @@ class PostMetaHelper {
       foreach ($keys as $key) {
         $values[$key] = (isset($meta[$key])) ? $meta[$key] : '';
       }
+      $values['timestampedOn'] = self::getLastTimestampedOn($postId);
       return (object) $values;
     }
+
+    $meta['timestampedOn'] = self::getLastTimestampedOn($postId);
 
     return (object) $meta;
   }
@@ -92,5 +95,10 @@ class PostMetaHelper {
     }
 
     return (empty($meta)) ? [] : $meta;
+  }
+
+  private static function getLastTimestampedOn($postId)
+  {
+    return get_post_meta($postId, 'wordproof_last_timestamped_on', true);
   }
 }

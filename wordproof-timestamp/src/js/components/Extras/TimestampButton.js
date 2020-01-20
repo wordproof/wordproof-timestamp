@@ -76,10 +76,14 @@ export default class TimestampButton extends Component {
 
     getRetryCallbackButton() {
         if (this.props.automate && this.state.show) {
-            return (
-                <button className={'button block'} disabled={this.state.disabled}
-                        onClick={() => this.request('wordproof_wsfy_retry_callback')}>Request new callback</button>
-            );
+            let now = Math.ceil(Date.now() / 1000);
+            let lastTimestamped = parseInt(this.state.meta.timestampedOn) + 10;
+            if (!this.state.meta.timestampedOn || now > lastTimestamped) {
+                return (
+                    <button className={'button block'} disabled={this.state.disabled}
+                            onClick={() => this.request('wordproof_wsfy_retry_callback')}>Request new callback</button>
+                );
+            }
         }
     }
 
@@ -160,7 +164,8 @@ export default class TimestampButton extends Component {
     render() {
         return (
             <div className={'wordproof-timestamp-button-inner'}>
-                {(this.state.loopTill) ? <img className={`loading-spinner`} src={wordproofData.images.loading} alt={`loading`}/> : ''}
+                {(this.state.loopTill) ?
+                    <img className={`loading-spinner`} src={wordproofData.images.loading} alt={`loading`}/> : ''}
                 {(this.state.show) ? this.renderView() : ''}
                 {this.state.message}
             </div>

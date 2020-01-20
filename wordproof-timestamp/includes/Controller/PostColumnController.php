@@ -70,14 +70,7 @@ class PostColumnController
     if ($column_name == 'wordproof') {
 
       $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain']);
-
-      $postData = [
-        'id' => $post->ID,
-        'date_modified' => get_the_modified_date('c', $post->ID),
-        'status' => $post->post_status,
-        'type' => $post->post_type,
-        'permalink' => get_permalink($post),
-      ];
+      $postData = PostMetaHelper::getPostData($post);
 
       echo '<div class="wordproof-timestamp-button" data-automate="' . OptionsHelper::isWSFYActive() . '" data-post="' . urlencode(json_encode($postData)) . '" data-meta="' . urlencode(json_encode($meta)) . '"></div>';
     }

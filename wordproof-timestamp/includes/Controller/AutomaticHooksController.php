@@ -29,6 +29,7 @@ class AutomaticHooksController
     add_action('wp_ajax_nopriv_wordproof_get_articles', [$this, 'getArticles']);
     add_action('wp_ajax_wordproof_get_articles', [$this, 'getArticles']);
     add_action('wp_ajax_wordproof_get_refreshed_balance', [$this, 'getNewBalance']);
+    add_action('wp_ajax_wordproof_get_post_data', [$this, 'getPostData']);
 
     if (OptionsHelper::isWSFYActive()) {
       $this->setUpdateHooks();
@@ -57,7 +58,7 @@ class AutomaticHooksController
     $postId = intval($_REQUEST['post_id']);
     $controller = new AutomaticHelper($postId);
     $result = $controller->getArticles();
-    echo json_encode($result); //TODO: maybe add parameters
+    echo json_encode($result); //TODO: maybe add parameters JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
     die();
   }
 
@@ -67,6 +68,16 @@ class AutomaticHooksController
     $controller = new AutomaticHelper();
     $balance = $controller->getBalance();
     echo json_encode(['balance' => $balance]);
+    die();
+  }
+
+  function getPostData()
+  {
+    check_ajax_referer('wordproof', 'security');
+    $postId = intval($_REQUEST['post_id']);
+    $postData = PostMetaHelper::getPostData($postId);
+    $meta = PostMetaHelper::getPostMeta($postId);
+    echo json_encode(['post' => $postData, 'meta' => $meta]);
     die();
   }
 

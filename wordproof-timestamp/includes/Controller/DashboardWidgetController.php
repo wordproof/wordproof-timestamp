@@ -67,15 +67,7 @@ class DashboardWidgetController
 
     foreach ($posts as $post) {
       $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain']);
-
-      $postData = [
-        'id' => $post->ID,
-        'date_modified' => get_the_modified_date('c', $post->ID),
-        'title' => $post->post_title,
-        'status' => $post->post_status,
-        'type' => $post->post_type,
-        'permalink' => get_permalink($post),
-      ];
+      $postData = PostMetaHelper::getPostData($post);
 
       $result[] = ['post' => $postData, 'meta' => $meta];
     }

@@ -7,24 +7,50 @@ export default class TimestampButton extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            'status': this.getStatus(),
+            'status': null,
             'show': true,
             'message': '',
-            'hideLabels': props.onlyShowActions
+            'hideLabels': props.onlyShowActions,
+            'post': props.post,
+            'meta': props.meta,
+            'loopTill': false
         };
+
+    }
+
+    componentDidMount() {
+        this.setState({status: this.getStatus()});
+        this.startLoop();
+    }
+
+    async refreshPostData() {
+        const result = await axios.post(wordproofData.urls.ajax, qs.stringify({
+            'action': 'wordproof_get_post_data',
+            'post_id': this.state.post.id,
+            'security': wordproofData.ajaxSecurity
+        }));
+
+        console.log(result.data.post);
+        console.log(result.data.meta);
+
+        this.setState({
+                post: result.data.post,
+                meta: result.data.meta,
+            }, () => this.setState({status: this.getStatus()})
+        );
     }
 
     getStatus() {
-        if (this.props.post.status !== 'publish' && this.props.post.status !== 'inherit')
+        if (this.state.post.status !== 'publish' && this.state.post.status !== 'inherit')
             return 'not_published';
 
-        if (!this.props.meta.date)
+        if (!this.state.meta.date)
             return 'not_timestamped';
 
-        if (this.props.meta.date !== this.props.post.date_modified)
+        if (this.state.meta.date !== this.state.post.date_modified)
             return 'outdated';
 
-        if (!this.props.meta.blockchain)
+        if (!this.state.meta.blockchain)
             return 'awaiting_callback';
 
         return 'timestamped';
@@ -35,14 +61,17 @@ export default class TimestampButton extends Component {
             case 'not_published':
                 return <span>🕓 Not published yet</span>;
             case 'not_timestamped':
-                return <div><span hidden={this.state.hideLabels}>🚨 Not timestamped</span> {this.getTimestampButton()}</div>;
+                return <div><span hidden={this.state.hideLabels}>🚨 Not timestamped</span> {this.getTimestampButton()}
+                </div>;
             case 'outdated':
-                return <div><span hidden={this.state.hideLabels}>🚨 Timestamp is outdated</span> {this.getTimestampButton()}</div>;
+                return <div><span
+                    hidden={this.state.hideLabels}>🚨 Timestamp is outdated</span> {this.getTimestampButton()}</div>;
             case 'awaiting_callback':
-                return <div><span hidden={this.state.hideLabels}>🕓 Waiting for callback</span> {this.getRetryCallbackButton()}</div>;
+                return <div><span
+                    hidden={this.state.hideLabels}>🕓 Waiting for callback</span> {this.getRetryCallbackButton()}</div>;
             case 'timestamped':
-                if (this.props.post.type === 'post' || this.props.post.type === 'page')
-                    return <a href={this.props.post.permalink + '#wordproof'}>✅ Certificate</a>;
+                if (this.state.post.type === 'post' || this.state.post.type === 'page')
+                    return <a href={this.state.post.permalink + '#wordproof'}>✅ Certificate</a>;
                 return <span>✅ Timestamped</span>;
             default:
                 return false;
@@ -62,7 +91,8 @@ export default class TimestampButton extends Component {
         if (this.props.automate && this.state.show) {
             return (
                 <button className={'button block'} disabled={this.state.disabled}
-                        onClick={() => this.request('wordproof_wsfy_save_post')}>Timestamp this {this.props.post.type}</button>
+                        onClick={() => this.request('wordproof_wsfy_save_post')}>Timestamp
+                    this {this.state.post.type}</button>
             );
         }
     }
@@ -72,18 +102,33 @@ export default class TimestampButton extends Component {
 
         const result = await axios.post(wordproofData.urls.ajax, qs.stringify({
             'action': action,
-            'post_id': this.props.post.id,
+            'post_id': this.state.post.id,
             'security': wordproofData.ajaxSecurity
         }));
 
         this.setState({
             show: false,
-            message: TimestampButton.retrieveMessage(result, this.props.post.type)
+            message: TimestampButton.retrieveMessage(result, this.state.post.type)
+        });
+    }
+
+    startLoop() {
+        this.setState({loopTill: Date.now() + 11000}, () => {
+
+            const interval = setInterval(() => {
+                this.refreshPostData();
+
+                if (!this.state.loopTill || Date.now() > this.state.loopTill) {
+                    console.log('stopping');
+                    clearInterval(interval);
+                }
+
+            }, 2000);
+
         });
     }
 
     static retrieveMessage(result, postType) {
-
 
         if (typeof result === 'string')
             result = JSON.parse(result);
@@ -114,7 +159,7 @@ export default class TimestampButton extends Component {
         return (
             <div className={'wordproof-timestamp-button-inner'}>
                 {(this.state.show) ? this.renderView() : ''}
-                { this.state.message }
+                {this.state.message}
             </div>
         );
     }

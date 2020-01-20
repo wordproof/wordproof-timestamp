@@ -39,6 +39,20 @@ class PostMetaHelper {
     return (object) $meta;
   }
 
+  public static function getPostData($post) {
+
+    if (is_int($post))
+      $post = get_post($post);
+
+    return [
+      'id' => $post->ID,
+      'date_modified' => get_the_modified_date('c', $post->ID),
+      'status' => $post->post_status,
+      'type' => $post->post_type,
+      'permalink' => get_permalink($post),
+    ];
+  }
+
   /**
    * @param $postId
    * @return array

@@ -20,7 +20,6 @@ export default class TimestampButton extends Component {
 
     componentDidMount() {
         this.setState({status: this.getStatus()});
-        this.startLoop();
     }
 
     async refreshPostData() {
@@ -30,13 +29,10 @@ export default class TimestampButton extends Component {
             'security': wordproofData.ajaxSecurity
         }));
 
-        console.log(result.data.post);
-        console.log(result.data.meta);
-
         this.setState({
                 post: result.data.post,
                 meta: result.data.meta,
-            }, () => this.setState({status: this.getStatus()})
+            }, () => this.setState({status: this.getStatus(), show: true, message: ''})
         );
     }
 
@@ -110,18 +106,21 @@ export default class TimestampButton extends Component {
             show: false,
             message: TimestampButton.retrieveMessage(result, this.state.post.type)
         });
+
+        this.startLoop();
     }
 
     startLoop() {
         this.setState({loopTill: Date.now() + 11000}, () => {
 
             const interval = setInterval(() => {
-                this.refreshPostData();
 
-                if (!this.state.loopTill || Date.now() > this.state.loopTill) {
-                    console.log('stopping');
+                if (!this.state.loopTill || Date.now() > this.state.loopTill || this.state.status === 'timestamped') {
+                    this.setState({loopTill: false});
                     clearInterval(interval);
                 }
+
+                this.refreshPostData();
 
             }, 2000);
 
@@ -158,6 +157,7 @@ export default class TimestampButton extends Component {
     render() {
         return (
             <div className={'wordproof-timestamp-button-inner'}>
+                {(this.state.loopTill) ? 'Refreshing... ' : ''}
                 {(this.state.show) ? this.renderView() : ''}
                 {this.state.message}
             </div>

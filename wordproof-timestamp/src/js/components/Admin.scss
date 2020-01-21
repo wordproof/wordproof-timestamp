@@ -27,12 +27,19 @@ $transition: 0.4s ease-in-out;
   background-size: 26px;
   margin-right: 5px;
 }
-.column-wordproof .wordproof-timestamp-button {
-  .loading-spinner {
-    display: block;
-    width: 20px;
-    height: 20px;
-    padding-bottom: 5px;
+
+#wordproof-dashboard-widget, .column-wordproof {
+  .wordproof-timestamp-button-inner {
+    a {
+      text-decoration: none;
+    }
+
+    .loading-spinner {
+      display: block;
+      width: 20px;
+      height: 20px;
+      padding-bottom: 5px;
+    }
   }
 }
 
@@ -212,6 +219,7 @@ $transition: 0.4s ease-in-out;
   .vo-columns {
     display: flex;
   }
+
   .vo-col {
     margin: 0;
     padding: 0;
@@ -230,6 +238,7 @@ $transition: 0.4s ease-in-out;
 
   .bullet-list {
     list-style: disc;
+
     li {
       margin-left: 16px;
     }
@@ -275,10 +284,18 @@ $transition: 0.4s ease-in-out;
     background: #F2FFFD;
     padding: 10px 20px;
     font-size: 14px;
-    &--success {}
-    &--info {}
-    &--warning {}
-    &--danger {}
+
+    &--success {
+    }
+
+    &--info {
+    }
+
+    &--warning {
+    }
+
+    &--danger {
+    }
   }
 }
 

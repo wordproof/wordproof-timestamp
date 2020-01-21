@@ -10,7 +10,7 @@ export default class TimestampButton extends Component {
             'status': null,
             'show': true,
             'message': '',
-            'hideLabels': props.onlyShowActions,
+            'hideLabels': props.hideLabels,
             'post': props.post,
             'meta': props.meta,
             'loopTill': false
@@ -115,12 +115,12 @@ export default class TimestampButton extends Component {
     }
 
     startLoop() {
-        this.setState({loopTill: Date.now() + 11000}, () => {
+        this.setState({loopTill: Date.now() + 11000, hideLabels: false}, () => {
 
             const interval = setInterval(() => {
 
                 if (!this.state.loopTill || Date.now() > this.state.loopTill || this.state.status === 'timestamped') {
-                    this.setState({loopTill: false});
+                    this.setState({loopTill: false, disabled: false});
                     clearInterval(interval);
                 }
 

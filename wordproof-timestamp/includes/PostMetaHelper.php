@@ -49,6 +49,7 @@ class PostMetaHelper {
 
     return [
       'id' => $post->ID,
+      'title' => $post->post_title,
       'date_modified' => get_the_modified_date('c', $post->ID),
       'status' => $post->post_status,
       'type' => $post->post_type,

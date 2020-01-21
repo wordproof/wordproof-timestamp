@@ -15,6 +15,7 @@ class OptionsHelper
     'certificate_text' => ['type' => 'text'],
     'certificate_dom_selector' => ['type' => 'text'],
     'custom_domain' => ['type' => 'text'],
+    'show_info_link' => ['type' => 'html'],
     'hide_post_column' => ['type' => 'bool'],
     'wsfy' => [
       'site_token' => ['type' => 'text'],
@@ -65,6 +66,10 @@ class OptionsHelper
 
   public static function getCustomDomain($default = false) {
     return get_option(self::$prefix . 'custom_domain', $default);
+  }
+
+  public static function getShowInfoLink($default = false) {
+    return get_option(self::$prefix . 'show_info_link', $default);
   }
 
   public static function getWSFY($excludes = []) {
@@ -147,6 +152,8 @@ class OptionsHelper
     switch ($type) {
       case 'int':
         return intval($value);
+      case 'html':
+        return wp_kses_post($value);
       case 'bool':
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
       default:

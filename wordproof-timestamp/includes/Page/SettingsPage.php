@@ -121,6 +121,10 @@ class SettingsPage
           OptionsHelper::set('certificate_text', $_POST['wordproof_customize']['certificate_text']);
         }
 
+        if (isset($_POST['wordproof_customize']['show_info_link'])) {
+          OptionsHelper::set('show_info_link', $_POST['wordproof_customize']['show_info_link']);
+        }
+
         if (isset($_POST['wordproof_customize']['custom_domain'])) {
           OptionsHelper::set('custom_domain', $_POST['wordproof_customize']['custom_domain']);
         }

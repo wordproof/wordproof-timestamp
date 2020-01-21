@@ -99,6 +99,7 @@ class AdminController
           'certificateText' => OptionsHelper::getCertificateText(),
           'certificateDOMSelector' => OptionsHelper::getCertificateDomSelector(),
           'customDomain' => OptionsHelper::getCustomDomain(),
+          'showInfoLink' => OptionsHelper::getShowInfoLink(),
           'hidePostColumn' => OptionsHelper::getHidePostColumn(),
           'walletIsConnected' => AnalyticsHelper::walletIsConnected(),
           'isWSFYActive' => OptionsHelper::isWSFYActive(),

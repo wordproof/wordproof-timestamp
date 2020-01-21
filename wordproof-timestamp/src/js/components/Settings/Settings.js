@@ -10,6 +10,7 @@ export default class Settings extends Component {
             certificateText: wordproofSettings.certificateText,
             certificateDOMSelector: wordproofSettings.certificateDOMSelector,
             customDomain: wordproofSettings.customDomain,
+            showInfoLink: wordproofSettings.showInfoLink,
             hidePostColumn: wordproofSettings.hidePostColumn,
             hideAdvanced: true
         }
@@ -51,7 +52,7 @@ export default class Settings extends Component {
                            id="wordproof_customize[certificate_text]"/>
                 </div>
 
-                { this.renderAdditionalSettings()}
+                {this.renderAdditionalSettings()}
 
                 <div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>
                     <label htmlFor="wordproof_customize[certificate_dom_selector]" className="label"
@@ -74,6 +75,16 @@ export default class Settings extends Component {
                 </div>
 
                 <div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>
+                    <label htmlFor="wordproof_customize[show_info_link]" className="label" title="Show Info Link">Show
+                        Info Link</label>
+                    <input type="text" className="textinput" name="wordproof_customize[show_info_link]" placeholder=""
+                           value={this.state.showInfoLink} onChange={e => this.setState({showInfoLink: e.target.value})}
+                           id="wordproof_customize[show_info_link]"/>
+                    <p>Enter HTML which will be displayed behind the WordProof Certificate Link. In most cases, this is
+                        used to add a link to a page which explains what WordProof is. Please add your own classes and CSS. Leave empty to hide.</p>
+                </div>
+
+                <div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>
                     <label htmlFor="wordproof_customize[hide_post_column]" className="label" title="Display Revisions">Hide
                         Post Column</label>
                     <input type="checkbox" value="1" className="" name="wordproof_customize[hide_post_column]"
@@ -85,8 +96,9 @@ export default class Settings extends Component {
                 <input type="submit" name="submit" id="submit" className="wbtn wbtn-primary"
                        value={wordproofSettings.saveChanges}/>
 
-                <button className={`block underline text-blue-500 bg-transparant border-0 p-0 mt-4 cursor-pointer ${this.state.hideAdvanced ? '' : 'hidden'}`}
-                        onClick={this.handleAdvancedOptions}>Show advanced settings
+                <button
+                    className={`block underline text-blue-500 bg-transparant border-0 p-0 mt-4 cursor-pointer ${this.state.hideAdvanced ? '' : 'hidden'}`}
+                    onClick={this.handleAdvancedOptions}>Show advanced settings
                 </button>
 
             </Template>

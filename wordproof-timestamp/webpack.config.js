@@ -12,6 +12,7 @@ module.exports = {
     'frontend': './src/js/frontend.js',
     'wizard': './src/js/wizard.js',
     'getting-started': './src/js/gettingStarted.js',
+    'polyfill': './src/js/polyfill.js',
   },
   output: {
     filename: '[name].js',

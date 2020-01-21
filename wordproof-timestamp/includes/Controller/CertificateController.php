@@ -70,9 +70,11 @@ class CertificateController
       $wsfyIsActive = OptionsHelper::isWSFYActive();
       $wsfyOptions = ($wsfyIsActive) ? OptionsHelper::getWSFY(['site_token']) : [];
 
+      //TODO: if wsfy active
       $endpoint = str_replace('$siteId', $wsfyOptions->site_id, WORDPROOF_WSFY_ENDPOINT_ITEM);
       $endpoint .= $post->ID;
 
+      wp_enqueue_script('wordproof.polyfill.js', WORDPROOF_URI_JS . '/polyfill.js', [], filemtime(WORDPROOF_DIR_JS . '/polyfill.js'), false);
       wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', [], filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
 
       wp_localize_script('wordproof.frontend.js', 'wordproof', [
@@ -90,7 +92,7 @@ class CertificateController
           'locale' => get_locale(),
           'lastModified' => get_the_modified_date('c', $post->ID),
         ],
-        'automate' => [
+        'automate' => [ //TODO if active
           'dom' => OptionsHelper::getCertificateDomSelector(),
           'active' => $wsfyIsActive,
           'api' => WORDPROOF_WSFY_API_URI . $endpoint,

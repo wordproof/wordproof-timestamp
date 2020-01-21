@@ -19,6 +19,15 @@ class Link extends React.Component {
             boxShadow: 'none'
         };
 
+        this.linkStyle = {
+            padding: 0,
+            margin: 0,
+            textDecoration: 'none',
+            border: 'none',
+            lineHeight: 1,
+            boxShadow: 'none'
+        };
+
         this.logoStyle = {
 
         };
@@ -30,9 +39,11 @@ class Link extends React.Component {
 
     render() {
         return (
-        <p onClick={this.openModal} style={this.containerStyle}>
-            <Icon style={this.logoStyle}/>
-            <a style={this.linkStyle} data-post-id={ this.props.postId } href={ this.props.url }>{ this.props.text }</a>
+        <p style={this.containerStyle}>
+            <Icon onClick={this.openModal} style={this.logoStyle}/>
+            <a onClick={this.openModal} style={this.linkStyle} data-post-id={ this.props.postId } href={ this.props.url }>{ this.props.text }</a>
+            {(this.props.infoLink) && <div style={this.infoLinkStyle} dangerouslySetInnerHTML={{ __html: this.props.infoLink }} />}
+
         </p>
         )
     }

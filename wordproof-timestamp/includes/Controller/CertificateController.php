@@ -84,6 +84,7 @@ class CertificateController
         'link' => [
           'url' => $this->getUrl(),
           'text' => OptionsHelper::getCertificateText(),
+          'infoLink' => OptionsHelper::getShowInfoLink(),
           'postId' => $post->ID,
         ],
         'modal' => [

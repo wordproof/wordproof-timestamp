@@ -26,7 +26,7 @@ function initLink() {
     addLinkContainer(wordproof.automate.dom);
 
   ReactDOM.render(
-      <Link text={wordproof.link.text} url={wordproof.link.url} postId={wordproof.link.postId}/>,
+      <Link text={wordproof.link.text} url={wordproof.link.url} postId={wordproof.link.postId} infoLink={wordproof.link.infoLink}/>,
       document.querySelector('#wordproof-certificate-link'));
 }
 

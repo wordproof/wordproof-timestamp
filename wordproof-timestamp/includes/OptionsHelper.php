@@ -9,6 +9,7 @@ class OptionsHelper
 
   public static $prefix = 'wordproof_';
   public static $optionWSFY = 'wsfy';
+  public static $optionOAuth = 'oauth';
 
   public static $options = [
     'network' => ['type' => 'text'],
@@ -23,6 +24,13 @@ class OptionsHelper
       'show_revisions' => ['type' => 'bool'],
       'allowed_post_types' => ['type' => 'text'],
       'whitelisted_ips' => ['type' => 'text']
+    ],
+    'oauth' => [
+      'client_id' => ['type' => 'text'],
+      'client_secret' => ['type' => 'text'],
+      'refresh_token' => ['type' => 'text'],
+      'expiration' => ['type' => 'text'],
+      'access_token' => ['type' => 'text'],
     ],
     'wsfy_is_active' => ['type' => 'bool'],
     'accountname' => ['type' => 'text'],
@@ -117,19 +125,23 @@ class OptionsHelper
 
     return $options;
   }
+//
+//  public static function get($key, $default) {
+//    if (in_array($key, self::$options)) {
+//      if (count(self::$options[$key]) > 1 ) {
+//
+//      }
+//      return get_option(self::$prefix . $key, $default);
+//    }
+//  }
 
   public static function set($key, $value) {
-    $wsfyKeys = array_keys(self::$options['wsfy']);
+    $wsfyKeys = array_keys(self::$options[self::$optionWSFY]);
+    $oauthKeys = array_keys(self::$options[self::$optionOAuth]);
     if (in_array($key, $wsfyKeys)) {
+      return self::setValueOfArray(self::$optionOAuth, $wsfyKeys, $key, $value);
+      } else if (in_array($key, $oauthKeys)) {
 
-      $type = self::$options['wsfy'][$key]['type'];
-      $value = [$key => self::validateData($value, $type)];
-
-      $options = (array)self::getWSFY();
-      $options = array_intersect_key($options, array_flip($wsfyKeys));
-
-      $options = array_merge($options, $value);
-      return update_option(self::$prefix . 'wsfy', $options);
 
     } else if (isset(self::$options[$key])) {
       $type = self::$options[$key]['type'];
@@ -138,6 +150,17 @@ class OptionsHelper
     }
 
     return false;
+  }
+
+  private static function setValueOfArray($arrayParentKey, $arrayKeys, $key, $value) {
+    $type = self::$options[$arrayParentKey][$key]['type'];
+    $value = [$key => self::validateData($value, $type)];
+
+    $options = (array)self::getWSFY();
+    $options = array_intersect_key($options, array_flip($arrayKeys));
+
+    $options = array_merge($options, $value);
+    return update_option(self::$prefix . 'wsfy', $options);
   }
 
   private static function validateData($value, $type) {

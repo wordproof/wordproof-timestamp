@@ -82,6 +82,10 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 6. WordProof Setup Wizard - Create a free Telos blockchain account.
 
 == Changelog ==
+= 2.6.0 =
+*Release date: January 28th, 2020*
+* We now use the more secure OAuth standard for authentication
+
 = 2.5.1 =
 *Release date: January 22nd, 2020*
 * We added support for Edge and IE browsers

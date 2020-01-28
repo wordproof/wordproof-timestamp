@@ -22,7 +22,7 @@ export default class Wizard extends Component {
     this.navLabels = [
       '',
       'mode',
-      'site key',
+      'connect',
       'content settings',
       'certificate link',
       'finish'
@@ -42,10 +42,11 @@ export default class Wizard extends Component {
   }
 
   updateRequest(slug, value) {
-    axios.post(wordproof.urls.adminpost, qs.stringify({
+    axios.post(wordproof.ajax.url, qs.stringify({
       'action': 'wordproof_update_setting',
       'key': slug,
-      'value': value
+      'value': value,
+      'security': wordproof.ajax.security
     }));
   }
 

@@ -34,7 +34,8 @@ class OnboardingWizard {
 
       $currentValues = array_merge(
         ['certificate_text' => OptionsHelper::getCertificateText(), 'isWSFYActive' => OptionsHelper::isWSFYActive()],
-        (array)OptionsHelper::getWSFY()
+        (array)OptionsHelper::getWSFY(),
+        (array)OptionsHelper::getOAuth([])
       );
 
       wp_localize_script('wordproof.wizard.js', 'wordproof', [
@@ -43,9 +44,12 @@ class OnboardingWizard {
           'settings' => admin_url('admin.php?page=wordproof-settings'),
           'api' => WORDPROOF_WSFY_API_URI,
           'images' => WORDPROOF_URI_IMAGES,
-          'adminpost' => admin_url('admin-post.php'),
           'signup' => 'https://my.wordproof.io/signup?plan=free&url=' . get_site_url(),
           'site' => get_site_url(),
+        ],
+        'ajax' => [
+            'url' => admin_url('admin-post.php'),
+            'security' => wp_create_nonce('wordproof'),
         ],
         'wsfyValidateTokenEndpoint' => WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE,
         'currentValues' => $currentValues,

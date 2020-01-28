@@ -28,10 +28,11 @@ class Manual extends Component {
     }
 
     updateRequest(slug, value) {
-        axios.post(wordproofSettings.urls.updateSettings, qs.stringify({
+        axios.post(wordproofSettings.ajax.url, qs.stringify({
             'action': 'wordproof_update_setting',
             'key': slug,
-            'value': value
+            'value': value,
+            'security': wordproofSettings.ajax.security
         }));
     }
 

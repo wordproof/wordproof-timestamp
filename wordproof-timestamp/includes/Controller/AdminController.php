@@ -42,6 +42,7 @@ class AdminController
 
   public function updateSetting()
   {
+    check_ajax_referer('wordproof', 'security');
     $key = $_REQUEST['key'];
     $value = $_REQUEST['value'];
     if (!empty($key) && !empty($value)) {
@@ -116,8 +117,11 @@ class AdminController
             'upgrade' => admin_url('admin.php?page=wordproof-upgrade'),
             'upgradeExternal' => 'https://my.wordproof.io/sites/upgrade',
             'support' => admin_url('admin.php?page=wordproof-support'),
-            'updateSettings' => admin_url('admin-post.php'),
             'pluginDir' => WORDPROOF_URI,
+          ],
+          'ajax' => [
+            'url' => admin_url('admin-post.php'),
+            'security' => wp_create_nonce('wordproof'),
           ],
           'bulk' => [
             'counts' => [

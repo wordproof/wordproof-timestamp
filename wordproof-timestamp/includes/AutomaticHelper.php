@@ -45,6 +45,7 @@ class AutomaticHelper
       $this->body = ItemResource::getArray($type, $this->post);
 
       $this->endpoint = str_replace('$siteId', $this->options->site_id, WORDPROOF_WSFY_ENDPOINT_ITEM);
+//      $this->endpoint = str_replace('$siteId', $this->options->site_id, WORDPROOF_WSFY_ENDPOINT_ITEM) . 'test';
       return $result = $this->request();
     } else {
       return ['errors' => ['authentication' => ['Please configure your site key']]];
@@ -107,6 +108,7 @@ class AutomaticHelper
       'headers' => [
         'Accept' => 'application/json',
         'Content-Type' => 'application/json',
+
         'Authorization' => 'Bearer ' . $this->options->site_token
       ],
     ];
@@ -141,6 +143,7 @@ class AutomaticHelper
         return OptionsHelper::getBalance();
       case 'create_post':
 
+        return $body;
         $balance = OptionsHelper::getBalance();
         if ($balance === 1)
           OptionsHelper::set('balance', 0);

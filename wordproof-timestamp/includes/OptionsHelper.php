@@ -2,8 +2,6 @@
 
 namespace WordProofTimestamp\includes;
 
-use WordProofTimestamp\includes\Controller\CertificateController;
-
 class OptionsHelper
 {
 
@@ -19,7 +17,6 @@ class OptionsHelper
     'show_info_link' => ['type' => 'html'],
     'hide_post_column' => ['type' => 'bool'],
     'wsfy' => [
-      'site_token' => ['type' => 'text'],
       'site_id' => ['type' => 'int'],
       'show_revisions' => ['type' => 'bool'],
       'allowed_post_types' => ['type' => 'text'],
@@ -51,7 +48,6 @@ class OptionsHelper
   public static function getCertificateDomSelector() {
     return get_option(self::$prefix . 'certificate_dom_selector');
   }
-
   public static function getHidePostColumn() {
     return get_option(self::$prefix . 'hide_post_column');
   }
@@ -83,6 +79,15 @@ class OptionsHelper
   public static function getWSFY($excludes = []) {
     $options = get_option(self::$prefix . self::$optionWSFY, []);
     $options = self::prepareWSFY($options);
+
+    foreach ($excludes as $exclude) {
+      unset($options[$exclude]);
+    }
+    return (object)$options;
+  }
+
+  public static function getOAuth($excludes = ['client_secret']) {
+    $options = get_option(self::$prefix . self::$optionOAuth, []);
 
     foreach ($excludes as $exclude) {
       unset($options[$exclude]);
@@ -138,15 +143,22 @@ class OptionsHelper
   public static function set($key, $value) {
     $wsfyKeys = array_keys(self::$options[self::$optionWSFY]);
     $oauthKeys = array_keys(self::$options[self::$optionOAuth]);
-    if (in_array($key, $wsfyKeys)) {
-      return self::setValueOfArray(self::$optionOAuth, $wsfyKeys, $key, $value);
-      } else if (in_array($key, $oauthKeys)) {
 
+    error_log(json_encode($oauthKeys));
+    error_log($key);
+    error_log(in_array($key, $oauthKeys));
+
+    if (in_array($key, $wsfyKeys)) {
+      return self::setValueOfArray(self::$optionWSFY, $wsfyKeys, $key, $value);
+
+    } else if (in_array($key, $oauthKeys)) {
+      self::set('site_token', false);
+      return self::setValueOfArray(self::$optionOAuth, $oauthKeys, $key, $value);
 
     } else if (isset(self::$options[$key])) {
       $type = self::$options[$key]['type'];
       $value = self::validateData($value, $type);
-        return update_option(self::$prefix . $key, $value);
+      return update_option(self::$prefix . $key, $value);
     }
 
     return false;
@@ -156,11 +168,11 @@ class OptionsHelper
     $type = self::$options[$arrayParentKey][$key]['type'];
     $value = [$key => self::validateData($value, $type)];
 
-    $options = (array)self::getWSFY();
+    $options = ($arrayParentKey === self::$optionWSFY) ? (array)self::getWSFY() : (array)self::getOAuth([]);
     $options = array_intersect_key($options, array_flip($arrayKeys));
 
     $options = array_merge($options, $value);
-    return update_option(self::$prefix . 'wsfy', $options);
+    return update_option(self::$prefix . $arrayParentKey, $options);
   }
 
   private static function validateData($value, $type) {

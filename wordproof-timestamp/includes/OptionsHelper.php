@@ -144,10 +144,6 @@ class OptionsHelper
     $wsfyKeys = array_keys(self::$options[self::$optionWSFY]);
     $oauthKeys = array_keys(self::$options[self::$optionOAuth]);
 
-    error_log(json_encode($oauthKeys));
-    error_log($key);
-    error_log(in_array($key, $oauthKeys));
-
     if (in_array($key, $wsfyKeys)) {
       return self::setValueOfArray(self::$optionWSFY, $wsfyKeys, $key, $value);
 
@@ -159,6 +155,8 @@ class OptionsHelper
       $type = self::$options[$key]['type'];
       $value = self::validateData($value, $type);
       return update_option(self::$prefix . $key, $value);
+    } else {
+      error_log($key . ' does not exist in $options of OptionsHelper');
     }
 
     return false;

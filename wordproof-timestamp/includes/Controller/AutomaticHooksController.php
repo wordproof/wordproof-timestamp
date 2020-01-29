@@ -24,7 +24,7 @@ class AutomaticHooksController
     add_action('admin_post_nopriv_wordproof_callback', [$this, 'processCallback']);
     add_action('admin_post_nopriv_wordproof_wsfy_edit_post', [$this, 'processCallback']);
 
-    add_action(WORDPROOF_WSFY_CRON_HOOK, [AutomaticHelper::class, 'createPost']);
+    add_action(WORDPROOF_WSFY_CRON_HOOK, [$this, 'createPost']);
 
     add_action('wp_ajax_nopriv_wordproof_get_articles', [$this, 'getArticles']);
     add_action('wp_ajax_wordproof_get_articles', [$this, 'getArticles']);
@@ -37,6 +37,11 @@ class AutomaticHooksController
       if (is_admin())
         new AutoStampPage();
     }
+  }
+
+  public function createPost($postId) {
+    $helper = new AutomaticHelper($postId);
+    $helper->createPost();
   }
 
   public function setUpdateHooks()

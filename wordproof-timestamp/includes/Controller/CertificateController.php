@@ -96,7 +96,7 @@ class CertificateController
         'automate' => [ //TODO if active
           'dom' => OptionsHelper::getCertificateDomSelector(),
           'active' => $wsfyIsActive,
-          'api' => WORDPROOF_WSFY_API_URI . $endpoint,
+          'api' => WORDPROOF_API_URI . $endpoint,
           'options' => $wsfyOptions,
         ]
       ]);

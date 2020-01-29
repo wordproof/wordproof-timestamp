@@ -42,7 +42,7 @@ class OnboardingWizard {
         'urls' => [
           'dashboard' => admin_url('admin.php?page=wordproof-dashboard'),
           'settings' => admin_url('admin.php?page=wordproof-settings'),
-          'api' => WORDPROOF_WSFY_API_URI,
+          'api' => WORDPROOF_API_URI,
           'images' => WORDPROOF_URI_IMAGES,
           'signup' => 'https://my.wordproof.io/signup?plan=free&url=' . get_site_url(),
           'site' => get_site_url(),

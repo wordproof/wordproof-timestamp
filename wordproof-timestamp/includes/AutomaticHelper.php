@@ -32,7 +32,7 @@ class AutomaticHelper
     if ($postId)
       $this->post = get_post($postId);
 
-    $this->uri = WORDPROOF_WSFY_API_URI;
+    $this->uri = WORDPROOF_API_URI;
 
     if (!$skipAccessToken)
       $this->accessToken = (isset($this->oauth->access_token)) ? OAuthController::getAccessToken() : (isset($this->options->site_token) && isset($this->options->site_id)) ? $this->options->site_token : false;

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import axios from 'axios';
 import Intro from '../Intro';
 import TextField from "../../Form/TextField";
+import qs from "qs";
 
 export default class Step2 extends Component {
     constructor(props) {
@@ -19,6 +20,15 @@ export default class Step2 extends Component {
 
     hasSiteKey(val) {
         this.setState({hasKey: val})
+    }
+
+    async authorize() {
+        axios.post(wordproof.ajax.url, qs.stringify({
+            'action': 'wordproof_oauth_authorize',
+            'security': wordproof.ajax.security
+        })).then((response) => {
+            window.location = response.data.redirect;
+        });
     }
 
     async validate() {
@@ -87,14 +97,21 @@ export default class Step2 extends Component {
                 }
 
                 {(this.state.hasKey) && <TextField
-                    slug={'site_token'} question={'What is your site key?'}
-                    extra={'Your site key is visible after you have created your account.'}
+                    slug={'client_id'} question={'What is your client id?'}
+                    extra={'Your client id is visible after you have created your account.'}
+                    update={this.props.update} get={this.props.get} initial={this.props.initial}
+                    error={this.state.error}/>
+                }
+
+                {(this.state.hasKey) && <TextField
+                    slug={'client_secret'} question={'What is your client secret?'}
+                    extra={'Your client secret is visible after you have created your account.'}
                     update={this.props.update} get={this.props.get} initial={this.props.initial}
                     error={this.state.error}/>
                 }
 
                 {(this.state.hasKey) && <button
-                    className={'wbtn wbtn-primary'} onClick={() => this.validate()}>Validate & Continue</button>
+                    className={'wbtn wbtn-primary'} onClick={() => this.authorize()}>Authorize</button>
                 }
 
                 {(wordproof.currentValues.isWSFYActive) && <span

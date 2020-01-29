@@ -3,6 +3,7 @@
 namespace WordProofTimestamp\includes;
 
 use WordProofTimestamp\includes\Controller\HashController;
+use WordProofTimestamp\includes\Controller\OAuthController;
 use WordProofTimestamp\includes\Controller\TimestampController;
 use WordProofTimestamp\includes\Resource\ItemResource;
 
@@ -10,30 +11,37 @@ class AutomaticHelper
 {
 
   protected $options;
+  protected $oauth;
   protected $post;
-  protected $canRun;
+  protected $accessToken;
   protected $body;
+  protected $uri;
   protected $endpoint;
   protected $action;
 
   /**
    * AutomaticHelper constructor.
-   * @param $postId
+   * @param bool $postId
+   * @param bool $skipAccessToken
    */
-  public function __construct($postId = false)
+  public function __construct($postId = false, $skipAccessToken = false)
   {
     $this->options = OptionsHelper::getWSFY();
+    $this->oauth = OptionsHelper::getOAuth([]);
 
     if ($postId)
       $this->post = get_post($postId);
 
-    $this->canRun = ($this->options->site_token && isset($this->options->site_id));
+    $this->uri = WORDPROOF_WSFY_API_URI;
+
+    if (!$skipAccessToken)
+      $this->accessToken = (isset($this->oauth->access_token)) ? OAuthController::getAccessToken() : (isset($this->options->site_token) && isset($this->options->site_id)) ? $this->options->site_token : false;
   }
 
 
   public function createPost()
   {
-    if ($this->canRun) {
+    if ($this->accessToken) {
 
       $this->action = 'create_post';
 
@@ -53,7 +61,7 @@ class AutomaticHelper
 
   public function retryCallback()
   {
-    if ($this->canRun) {
+    if ($this->accessToken) {
 
       $this->action = 'retry_callback';
 
@@ -72,7 +80,7 @@ class AutomaticHelper
 
   public function getArticles()
   {
-    if ($this->canRun) {
+    if ($this->accessToken) {
 
       $this->action = 'get_articles';
 
@@ -88,16 +96,48 @@ class AutomaticHelper
 
   public function getBalance()
   {
-    if ($this->canRun) {
+    if ($this->accessToken) {
 
       $this->action = 'get_balance';
       $this->endpoint = 'sites/' . $this->options->site_id . '/balance';
       $this->body = false;
-      return self::request('GET');
+      return self::request();
 
     } else {
       return ['errors' => ['authentication' => ['Please configure your site key']]];
     }
+  }
+
+  public function getAccessTokenWithCode($code)
+  {
+    $this->accessToken = false;
+    $this->action = 'get_access_token';
+    $this->uri = WORDPROOF_OAUTH_URI;
+    $this->endpoint = WORDPROOF_WSFY_ENDPOINT_OAUTH_TOKEN;
+    $this->body = [
+      'grant_type' => 'authorization_code',
+      'client_id' => $this->oauth->client_id,
+      'client_secret' => $this->oauth->client_secret,
+      'redirect_uri' => get_site_url() . '?wordproof_oauth_authorize_callback',
+      'code' => $code,
+    ];
+    return self::request();
+  }
+
+  public function refreshAccessToken()
+  {
+    $this->accessToken = false;
+    $this->action = 'refresh_access_token';
+    $this->uri = WORDPROOF_OAUTH_URI;
+    $this->endpoint = WORDPROOF_WSFY_ENDPOINT_OAUTH_TOKEN;
+    $this->body = [
+      'grant_type' => 'refresh_token',
+      'client_id' => $this->oauth->client_id,
+      'client_secret' => $this->oauth->client_secret,
+      'refresh_token' => $this->oauth->refresh_token,
+      'scope' => ''
+    ];
+    return self::request();
   }
 
   private function request($method = 'POST')
@@ -107,16 +147,18 @@ class AutomaticHelper
       'headers' => [
         'Accept' => 'application/json',
         'Content-Type' => 'application/json',
-        'Authorization' => 'Bearer ' . $this->options->site_token
       ],
     ];
+
+    if ($this->accessToken)
+      $args['headers']['Authorization'] = 'Bearer ' . $this->accessToken;
 
     if ($this->body) {
       $json = json_encode($this->body, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
       $args = array_merge($args, ['body' => $json]);
     }
 
-    $response = wp_remote_request(WORDPROOF_WSFY_API_URI . $this->endpoint, $args);
+    $response = wp_remote_request($this->uri . $this->endpoint, $args);
     $code = wp_remote_retrieve_response_code($response);
 
     switch ($code) { //todo
@@ -139,19 +181,23 @@ class AutomaticHelper
         $balance = (isset($body->balance)) ? intval($body->balance) : 0;
         OptionsHelper::set('balance', $balance);
         return OptionsHelper::getBalance();
-      case 'create_post':
 
+      case 'create_post':
         $balance = OptionsHelper::getBalance();
         if ($balance === 1)
           OptionsHelper::set('balance', 0);
 
         TimestampController::saveTimestamp($this->post->ID, '', '', true);
         break;
+
       case 'retry_callback':
         return ['success' => true];
+
+      case 'refresh_access_token':
+      case 'get_access_token':
       case 'get_articles':
         return $body;
-        break;
+
       default:
         return false;
     }
@@ -164,7 +210,9 @@ class AutomaticHelper
       case 'retry_callback':
         return $this->returnError($response);
       case 'get_articles':
-//        ''
+      case 'refresh_access_token':
+      case 'get_access_token':
+        return $response;
         break;
       case 'get_balance':
       default:

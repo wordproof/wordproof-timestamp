@@ -1,5 +1,5 @@
 <?php
-namespace Firebase\JWT;
+namespace WordProofTimestamp\lib\JWT;
 
 class ExpiredException extends \UnexpectedValueException
 {

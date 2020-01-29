@@ -6,13 +6,19 @@ use WordProofTimestamp\includes\AutomaticHelper;
 use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\Page\AutoStampPage;
 use WordProofTimestamp\includes\PostMetaHelper;
+use WordProofTimestamp\lib\JWT\JWT;
+use WordProofTimestamp\lib\JWT\SignatureInvalidException;
 
 class AutomaticHooksController
 {
 
+  protected $response = null;
+
   protected $responses = [
     'unauthenticated' => 'unauthenticated',
     'origin_not_allowed' => 'origin_not_allowed',
+    'no_token_present' => 'no_token_present',
+    'token_not_valid' => 'token_not_valid',
     'valid_endpoint' => 'valid_endpoint',
     'post_modified' => 'post_modified',
     'post_not_modified' => 'post_not_modified',
@@ -98,9 +104,35 @@ class AutomaticHooksController
    * Callback stuff
    * ___________________
    */
+  private function validCallback() {
+    $oauth = OptionsHelper::getOAuth([]);
+    if (isset($oauth->client_secret)) {
+
+      if (!isset($_REQUEST['token'])) {
+        $this->response = $this->responses['origin_not_allowed'];
+        return false;
+      }
+
+      try {
+        JWT::decode($_REQUEST['token'], $oauth->client_secret, ['HS256']);
+        return true;
+      } catch (\Exception $exception) {
+        $this->response = $this->responses['token_not_valid'];
+        return false;
+      }
+
+    } else if (in_array($_SERVER['REMOTE_ADDR'], OptionsHelper::getWSFYAllowedIps())) {
+      return true;
+    } else {
+      $this->response = $this->responses['origin_not_allowed'];
+    }
+
+    return false;
+  }
+
   public function processCallback()
   {
-    if (in_array($_SERVER['REMOTE_ADDR'], OptionsHelper::getWSFYAllowedIps())) {
+    if ($this->validCallback()) {
       $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
 
       switch ($action) {
@@ -115,7 +147,7 @@ class AutomaticHooksController
     } else {
       error_log('WordProof: Update request denied');
       error_log($_SERVER['REMOTE_ADDR']);
-      echo json_encode(['success' => false, 'response' => $this->responses['origin_not_allowed'], 'remote_addr' => $_SERVER['REMOTE_ADDR']]);
+      echo json_encode(['success' => false, 'response' => $this->response, 'remote_addr' => $_SERVER['REMOTE_ADDR']]);
       die();
     }
   }

@@ -28,6 +28,7 @@ $transition: 0.4s ease-in-out;
   margin-right: 5px;
 }
 
+/* purgecss start ignore */
 #wordproof-dashboard-widget, .column-wordproof {
   .wordproof-timestamp-button-inner {
     a {
@@ -42,6 +43,7 @@ $transition: 0.4s ease-in-out;
     }
   }
 }
+/* purgecss end ignore */
 
 //#wpadminbar .wordproof-status {
 //  display: inline-block;

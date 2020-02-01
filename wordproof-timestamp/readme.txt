@@ -82,6 +82,11 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 6. WordProof Setup Wizard - Create a free Telos blockchain account.
 
 == Changelog ==
+= 2.5.2 =
+*Release date: February 1st, 2020*
+* We now include the hash in the link to wordproof.io/check
+* Small bug fix in properly returning the raw text.
+
 = 2.5.1 =
 *Release date: January 22nd, 2020*
 * We added support for Edge and IE browsers

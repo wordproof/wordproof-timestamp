@@ -4,9 +4,6 @@ export default class Automatic extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            wsfyIsActive: wordproofSettings.isWSFYActive,
-            siteToken: wordproofSettings.wsfy.site_token,
-            siteId: wordproofSettings.wsfy.site_id,
             showRevisions: wordproofSettings.wsfy.show_revisions,
             allowedPostTypes: wordproofSettings.wsfy.allowed_post_types,
             whitelistedIps: (wordproofSettings.wsfy.whitelisted_ips) ? wordproofSettings.wsfy.whitelisted_ips.toString() : '',

@@ -18,6 +18,7 @@ class OptionsHelper
     'hide_post_column' => ['type' => 'bool'],
     'wsfy' => [
       'site_id' => ['type' => 'int'],
+      'site_token' => ['type' => 'text'],
       'show_revisions' => ['type' => 'bool'],
       'allowed_post_types' => ['type' => 'text'],
       'whitelisted_ips' => ['type' => 'text']
@@ -62,7 +63,7 @@ class OptionsHelper
     return $balance;
   }
 
-  public static function getBalanceCache() {
+  public static function getBalanceCache() { //todo use transient
     if (wp_cache_get('balance', 'wordproof'))
       return wp_cache_get('balance', 'wordproof');
     return self::getBalance();

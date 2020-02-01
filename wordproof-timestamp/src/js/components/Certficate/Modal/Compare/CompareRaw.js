@@ -31,12 +31,12 @@ export default class CompareRaw extends React.Component {
 
                     <div className={'flex flex-row mx-6'}>
                         <div className={'md:w-1/2 hidden md:block'}>
-                            <div className={'m-6 mt-0'}>
+                            <div className={'m-6 mb-4 mt-0'}>
                                 <Text text={JSON.stringify(this.props.articles[this.state.index].raw)} raw={true}/>
                             </div>
                         </div>
                         <div className={'md:w-1/2 w-full'}>
-                            <div className={'m-6 mt-0'}>
+                            <div className={'m-6 mb-4 mt-0'}>
                                 <Text text={this.props.articles[this.state.index].content}/>
                             </div>
                         </div>

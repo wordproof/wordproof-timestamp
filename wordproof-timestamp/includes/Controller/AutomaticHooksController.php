@@ -29,6 +29,7 @@ class AutomaticHooksController
     add_action('admin_post_nopriv_wordproof_test_callback', [$this, 'processCallback']);
     add_action('admin_post_nopriv_wordproof_callback', [$this, 'processCallback']);
     add_action('admin_post_nopriv_wordproof_wsfy_edit_post', [$this, 'processCallback']);
+    add_action('admin_post_wordproof_validate_token', [$this, 'validateToken']);
 
     add_action(WORDPROOF_WSFY_CRON_HOOK, [$this, 'createPost']);
 
@@ -79,6 +80,15 @@ class AutomaticHooksController
     $controller = new AutomaticHelper();
     $balance = $controller->getBalance();
     echo json_encode(['balance' => $balance]);
+    die();
+  }
+
+  function validateToken()
+  {
+    check_ajax_referer('wordproof', 'security');
+    $controller = new AutomaticHelper();
+    $body = $controller->validateToken();
+    echo json_encode($body);
     die();
   }
 

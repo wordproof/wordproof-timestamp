@@ -108,6 +108,20 @@ class AutomaticHelper
     }
   }
 
+  public function validateToken()
+  {
+    if ($this->accessToken) {
+
+      $this->action = 'validate_token';
+      $this->endpoint = WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE;
+      $this->body = false;
+      return self::request('GET');
+
+    } else {
+      return ['errors' => ['authentication' => ['Please configure your site key']]];
+    }
+  }
+
   public function getAccessTokenWithCode($code)
   {
     $this->accessToken = false;
@@ -159,6 +173,7 @@ class AutomaticHelper
     }
 
     $response = wp_remote_request($this->uri . $this->endpoint, $args);
+    error_log(print_r($response, true));
     $code = wp_remote_retrieve_response_code($response);
 
     switch ($code) { //todo
@@ -193,6 +208,7 @@ class AutomaticHelper
       case 'retry_callback':
         return ['success' => true];
 
+      case 'wordproof_validate_token':
       case 'refresh_access_token':
       case 'get_access_token':
       case 'get_articles':
@@ -210,6 +226,7 @@ class AutomaticHelper
       case 'retry_callback':
         return $this->returnError($response);
       case 'get_articles':
+      case 'wordproof_validate_token':
       case 'refresh_access_token':
       case 'get_access_token':
         return $response;

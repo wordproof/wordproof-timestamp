@@ -30,42 +30,49 @@ export default class Step2 extends Component {
             window.location = response.data.redirect;
         });
     }
-
+    //todo return after authorize and check connection
     async validate() {
-        const token = this.props.get('site_token');
-        const config = {
-            headers: {'Authorization': "Bearer " + token}
-        };
-        try {
-            const response = await axios.get(wordproof.urls.api + wordproof.wsfyValidateTokenEndpoint, config);
 
-            if (response.status === 200 && response.data.success && response.data.site_id) {
-                this.props.update(null, 'site_id', response.data.site_id);
-                this.props.update(null, 'wsfy_is_active', true);
+        axios.post(wordproof.ajax.url, qs.stringify({
+            'action': 'wordproof_validate_token',
+            'security': wordproof.ajax.security
+        })).then((response) => {
+            // this.props.update(null, 'site_id', response.data.site_id);
+            // this.props.update(null, 'wsfy_is_active', false);
+            console.log(response.data);
+        });
 
-                if (response.data.balance)
-                    this.props.update(null, 'balance', response.data.balance);
 
-                if (response.data.callback_successful)
-                    this.props.nextStep();
-
-                this.setState({
-                    error: <span>The callback to this site was not successful. Please <a
-                        href={'https://wordproof.io/faq'} target="_blank"
-                        rel="noopener noreferrer">check the FAQ</a> or <a
-                        href={'https://wordproof.io/contact'} target="_blank" rel="noopener noreferrer">contact us</a>
-                        to fix this problem.</span>
-                });
-
-            } else {
-                this.setState({error: 'This should not have happened. Please contact us.'});
-            }
-
-        } catch (error) {
-            if (error.response.status === 401 && error.response.data && error.response.data.message === 'Unauthenticated.') {
-                this.setState({error: 'The key you have filled in is not correct.'});
-            }
-        }
+        // try {
+        //     const response = await axios.get(wordproof.urls.api + wordproof.wsfyValidateTokenEndpoint, config);
+        //
+        //     if (response.status === 200 && response.data.success && response.data.site_id) {
+        //         this.props.update(null, 'site_id', response.data.site_id);
+        //         this.props.update(null, 'wsfy_is_active', true);
+        //
+        //         if (response.data.balance)
+        //             this.props.update(null, 'balance', response.data.balance);
+        //
+        //         if (response.data.callback_successful)
+        //             this.props.nextStep();
+        //
+        //         this.setState({
+        //             error: <span>The callback to this site was not successful. Please <a
+        //                 href={'https://wordproof.io/faq'} target="_blank"
+        //                 rel="noopener noreferrer">check the FAQ</a> or <a
+        //                 href={'https://wordproof.io/contact'} target="_blank" rel="noopener noreferrer">contact us</a>
+        //                 to fix this problem.</span>
+        //         });
+        //
+        //     } else {
+        //         this.setState({error: 'This should not have happened. Please contact us.'});
+        //     }
+        //
+        // } catch (error) {
+        //     if (error.response.status === 401 && error.response.data && error.response.data.message === 'Unauthenticated.') {
+        //         this.setState({error: 'The key you have filled in is not correct.'});
+        //     }
+        // }
     }
 
     render() {
@@ -113,6 +120,8 @@ export default class Step2 extends Component {
                 {(this.state.hasKey) && <button
                     className={'wbtn wbtn-primary'} onClick={() => this.authorize()}>Authorize</button>
                 }
+
+                <button className={'wbtn wbtn-primary'} onClick={() => this.validate()}>Validate</button>
 
                 {(wordproof.currentValues.isWSFYActive) && <span
                     className={'block underline cursor-pointer text-xs text-gray-500 mb-3 mt-4'}

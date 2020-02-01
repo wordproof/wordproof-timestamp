@@ -19,14 +19,7 @@ class OAuthController
     $this->options = OptionsHelper::getOAuth([]);
 
     add_action('admin_post_wordproof_oauth_authorize', [$this, 'authorize']);
-    add_action('wp_loaded', [$this, 'checkOAuthCallback']);
-  }
-
-  public function checkOAuthCallback()
-  {
-    if (isset($_GET['wordproof_oauth_authorize_callback'])) {
-      $this->getAccessTokenAfterAuthorisation();
-    }
+    add_action('admin_post', [$this, 'checkOAuthCallback']); //nopriv?
   }
 
   public function authorize()
@@ -45,6 +38,13 @@ class OAuthController
 
     echo json_encode(['redirect' => 'https://staging.wordproof.io/oauth/authorize?' . $query]);
     die();
+  }
+
+  public function checkOAuthCallback()
+  {
+    if (isset($_GET['state']) && $_GET['state'] === get_transient('wordproof_oauth_state')) {
+      $this->getAccessTokenAfterAuthorisation();
+    }
   }
 
   public static function getAccessToken()
@@ -90,19 +90,22 @@ class OAuthController
 
   private function getAccessTokenAfterAuthorisation()
   {
-    if (isset($_GET['state']) && $_GET['state'] === get_transient('wordproof_oauth_state')) {
-      if (isset($_GET['code'])) {
+    if (isset($_GET['code'])) {
 
-        $my = new AutomaticHelper(false, true);
-        $response = $my->getAccessTokenWithCode($_GET['code']);
+      $my = new AutomaticHelper(false, true);
+      $response = $my->getAccessTokenWithCode($_GET['code']);
 
-        OptionsHelper::set('access_token', $response->access_token);
-        OptionsHelper::set('expiration', time() + intval($response->expires_in));
-        OptionsHelper::set('refresh_token', $response->refresh_token);
+      error_log(print_r($response, true)); //todo check if response is correct
 
-        error_log('we have everything we need');
-      }
+      OptionsHelper::set('site_token', false);
+
+      OptionsHelper::set('access_token', $response->access_token);
+      OptionsHelper::set('expiration', time() + intval($response->expires_in));
+      OptionsHelper::set('refresh_token', $response->refresh_token);
+
+      error_log('we have everything we need');
     }
-    wp_redirect('wp-admin');
+
+    wp_redirect(admin_url('admin.php?page=wordproof-wizard#connect'));
   }
 }

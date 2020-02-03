@@ -7,9 +7,7 @@ export default class Text extends React.Component {
             this.props.raw ? (
                 <textarea
                     className={'w-full max-w-full py-5 px-4 rounded-lg border-2 border-gray-300 overflow-y-scroll resize-none'}
-                    style={{'height': '280px'}}>
-                        {this.props.text}
-                    </textarea>
+                    style={{'height': '280px'}} defaultValue={this.props.text}/>
             ) : (
                 <div className={'w-full max-w-full py-5 px-4 rounded-lg border-2 border-gray-300 overflow-y-scroll'}
                      style={{'maxHeight': '280px'}}>

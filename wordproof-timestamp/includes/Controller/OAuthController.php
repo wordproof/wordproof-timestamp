@@ -60,30 +60,18 @@ class OAuthController
     return $oauth->access_token;
   }
 
-  private static function isExpired($oauth = false)
-  {
-    if (!$oauth)
-      $oauth = OptionsHelper::getOAuth();
-
-    if (!isset($oauth->expiration) || time() > intval($oauth->expiration)) {
-      error_log('isExpired true');
-      return true;
-    }
-
-    return false;
-  }
-
   private static function refreshAccessToken()
   {
-    error_log('refreshing');
     $my = new AutomaticHelper(false, true);
     $response = $my->refreshAccessToken();
 
     error_log(print_r($response, true)); //todo make function with errors
 
-    OptionsHelper::set('access_token', $response->access_token);
-    OptionsHelper::set('expiration', time() + intval($response->expires_in));
-    OptionsHelper::set('refresh_token', $response->refresh_token);
+    if (self::isValidResponse($response)) {
+      OptionsHelper::set('access_token', $response->access_token);
+      OptionsHelper::set('expiration', time() + intval($response->expires_in));
+      OptionsHelper::set('refresh_token', $response->refresh_token);
+    }
 
     return $response->access_token;
   }
@@ -97,15 +85,33 @@ class OAuthController
 
       error_log(print_r($response, true)); //todo check if response is correct
 
-      OptionsHelper::set('site_token', false);
-
-      OptionsHelper::set('access_token', $response->access_token);
-      OptionsHelper::set('expiration', time() + intval($response->expires_in));
-      OptionsHelper::set('refresh_token', $response->refresh_token);
-
-      error_log('we have everything we need');
+      if ($this->isValidResponse($response)) {
+        OptionsHelper::set('site_token', '');
+        OptionsHelper::set('access_token', $response->access_token);
+        OptionsHelper::set('expiration', time() + intval($response->expires_in));
+        OptionsHelper::set('refresh_token', $response->refresh_token);
+      }
     }
 
     wp_redirect(admin_url('admin.php?page=wordproof-wizard#connect'));
+  }
+
+  private static function isValidResponse($response)
+  {
+    return (isset($response->access_token) && isset($response->expires_in) && isset($response->refresh_token)
+      && isset($response->access_token) && $response->token_type === 'Bearer');
+  }
+
+  private static function isExpired($oauth = false)
+  {
+    if (!$oauth)
+      $oauth = OptionsHelper::getOAuth();
+
+    if (!isset($oauth->expiration) || time() > intval($oauth->expiration)) {
+      error_log('isExpired true');
+      return true;
+    }
+
+    return false;
   }
 }

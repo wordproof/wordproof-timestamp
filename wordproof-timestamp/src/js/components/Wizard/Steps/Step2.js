@@ -26,6 +26,10 @@ export default class Step2 extends Component {
         this.props.nextStep();
     }
 
+    setNewClient() {
+        this.setState({hasKey: null, connection: false});
+    }
+
     hasSiteKey(val) {
         this.setState({hasKey: val})
     }
@@ -138,6 +142,14 @@ export default class Step2 extends Component {
                 {(this.state.hasKey) && <button
                     className={'wbtn wbtn-primary'} onClick={() => this.authorize()}>Authorize</button>
                 }
+
+                {(this.state.connection) && <div>
+                    <button
+                        className={'wbtn wbtn-secondary mr-4'} onClick={() => this.setNewClient()}>Re-authorize</button>
+                    <button className={'wbtn wbtn-primary'} onClick={() => this.props.nextStep()}>Save & Continue</button>
+                </div>
+                }
+
 
                 {/* DISABLE AUTOMATIC */}
                 {/* NEW CLIENT */}

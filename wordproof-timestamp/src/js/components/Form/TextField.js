@@ -22,7 +22,7 @@ export default class TextField extends React.Component {
            {this.props.question}
           </label>
           { this.props.extra && <span>{ this.props.extra }</span> }
-          <input onClick={(e) => e.target.select()} onChange={(e) => this.change(e)} value={this.state.value} onBlur={() => this.update()}
+          <input autoComplete="off" onClick={(e) => e.target.select()} onChange={(e) => this.change(e)} value={this.state.value} onBlur={() => this.update()}
                  data-slug={this.props.slug} id={`wordproof_options[${this.props.slug}]`} type="text" />
           { this.props.error && <span className={'text-red-600 mb-2 inline-block'}>{ this.props.error }</span> }
         </div>

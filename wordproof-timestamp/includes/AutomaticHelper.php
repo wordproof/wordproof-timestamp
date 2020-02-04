@@ -35,7 +35,16 @@ class AutomaticHelper
     $this->uri = WORDPROOF_API_URI;
 
     if (!$skipAccessToken)
-      $this->accessToken = (isset($this->oauth->access_token)) ? OAuthController::getAccessToken() : (isset($this->options->site_token) && isset($this->options->site_id)) ? $this->options->site_token : false;
+      $this->accessToken = $this->getAccessToken();
+  }
+
+  public function getAccessToken() {
+    if (isset($this->oauth->access_token)) {
+      return OAuthController::getAccessToken();
+    } else if (isset($this->options->site_token) && isset($this->options->site_id)) {
+      return $this->options->site_token;
+    }
+    return false;
   }
 
 
@@ -113,7 +122,7 @@ class AutomaticHelper
     if ($this->accessToken) {
 
       $this->action = 'validate_token';
-      $this->endpoint = WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE;
+      $this->endpoint = str_replace('$siteId', $this->options->site_id, WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE);
       $this->body = false;
       return self::request('GET');
 
@@ -126,13 +135,13 @@ class AutomaticHelper
   {
     $this->accessToken = false;
     $this->action = 'get_access_token';
-    $this->uri = WORDPROOF_OAUTH_URI;
+    $this->uri = WORDPROOF_MY_URI;
     $this->endpoint = WORDPROOF_WSFY_ENDPOINT_OAUTH_TOKEN;
     $this->body = [
       'grant_type' => 'authorization_code',
       'client_id' => $this->oauth->client_id,
       'client_secret' => $this->oauth->client_secret,
-      'redirect_uri' => get_site_url() . '?wordproof_oauth_authorize_callback',
+      'redirect_uri' => admin_url('admin-post.php'),
       'code' => $code,
     ];
     return self::request();
@@ -142,7 +151,7 @@ class AutomaticHelper
   {
     $this->accessToken = false;
     $this->action = 'refresh_access_token';
-    $this->uri = WORDPROOF_OAUTH_URI;
+    $this->uri = WORDPROOF_MY_URI;
     $this->endpoint = WORDPROOF_WSFY_ENDPOINT_OAUTH_TOKEN;
     $this->body = [
       'grant_type' => 'refresh_token',
@@ -173,8 +182,10 @@ class AutomaticHelper
     }
 
     $response = wp_remote_request($this->uri . $this->endpoint, $args);
+    error_log('response');
     error_log(print_r($response, true));
     $code = wp_remote_retrieve_response_code($response);
+    error_log($code);
 
     switch ($code) { //todo
       case 200:
@@ -208,7 +219,7 @@ class AutomaticHelper
       case 'retry_callback':
         return ['success' => true];
 
-      case 'wordproof_validate_token':
+      case 'validate_token':
       case 'refresh_access_token':
       case 'get_access_token':
       case 'get_articles':
@@ -226,9 +237,11 @@ class AutomaticHelper
       case 'retry_callback':
         return $this->returnError($response);
       case 'get_articles':
-      case 'wordproof_validate_token':
+      case 'validate_token':
       case 'refresh_access_token':
       case 'get_access_token':
+        //TODO: invalid_request
+        //TODO: invalid_client
         return $response;
         break;
       case 'get_balance':

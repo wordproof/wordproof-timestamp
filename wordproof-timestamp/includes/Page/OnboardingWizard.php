@@ -51,7 +51,6 @@ class OnboardingWizard {
             'url' => admin_url('admin-post.php'),
             'security' => wp_create_nonce('wordproof'),
         ],
-        'wsfyValidateTokenEndpoint' => WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE,
         'currentValues' => $currentValues,
         'registeredPostTypes' => array_values(get_post_types(['public' => true])),
       ]);

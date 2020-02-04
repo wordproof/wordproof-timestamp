@@ -30,13 +30,13 @@ class OAuthController
 
     $query = build_query([
       'client_id' => $this->options->client_id,
-      'redirect_uri' => get_site_url() . '?wordproof_oauth_authorize_callback',
+      'redirect_uri' => admin_url('admin-post.php'),
       'response_type' => 'code',
       'scope' => '*',
       'state' => get_transient('wordproof_oauth_state'),
     ]);
 
-    echo json_encode(['redirect' => 'https://staging.wordproof.io/oauth/authorize?' . $query]);
+    echo json_encode(['redirect' => WORDPROOF_MY_URI . 'oauth/authorize?' . $query]);
     die();
   }
 
@@ -56,7 +56,6 @@ class OAuthController
       return self::refreshAccessToken();
     }
 
-    error_log($oauth->access_token);
     return $oauth->access_token;
   }
 
@@ -64,8 +63,6 @@ class OAuthController
   {
     $my = new AutomaticHelper(false, true);
     $response = $my->refreshAccessToken();
-
-    error_log(print_r($response, true)); //todo make function with errors
 
     if (self::isValidResponse($response)) {
       OptionsHelper::set('access_token', $response->access_token);
@@ -83,8 +80,6 @@ class OAuthController
       $my = new AutomaticHelper(false, true);
       $response = $my->getAccessTokenWithCode($_GET['code']);
 
-      error_log(print_r($response, true)); //todo check if response is correct
-
       if ($this->isValidResponse($response)) {
         OptionsHelper::set('site_token', '');
         OptionsHelper::set('access_token', $response->access_token);
@@ -96,7 +91,7 @@ class OAuthController
     wp_redirect(admin_url('admin.php?page=wordproof-wizard#connect'));
   }
 
-  private static function isValidResponse($response)
+  private static function isValidResponse($response) //TODO: Log
   {
     return (isset($response->access_token) && isset($response->expires_in) && isset($response->refresh_token)
       && isset($response->access_token) && $response->token_type === 'Bearer');
@@ -108,7 +103,6 @@ class OAuthController
       $oauth = OptionsHelper::getOAuth();
 
     if (!isset($oauth->expiration) || time() > intval($oauth->expiration)) {
-      error_log('isExpired true');
       return true;
     }
 

@@ -20,8 +20,10 @@ const WordproofWithLogo = props => (
 const Check = props => (
     <svg width={16} height={16} {...props}>
         <g fill="#3CCF8E" fillRule="evenodd">
-            <path d="M7.75.152C3.477.152 0 3.63 0 7.902c0 4.274 3.477 7.75 7.75 7.75s7.75-3.476 7.75-7.75c0-4.273-3.477-7.75-7.75-7.75zm0 14.25a6.508 6.508 0 0 1-6.501-6.5 6.509 6.509 0 0 1 6.5-6.501c3.585 0 6.501 2.917 6.501 6.502 0 3.584-2.916 6.5-6.5 6.5z" />
-            <path d="M9.095 6.172L6.027 9.58 4.904 8.332a.493.493 0 0 0-.748 0 .634.634 0 0 0 0 .832l1.497 1.664a.504.504 0 0 0 .374.172c.135 0 .27-.058.375-.172l3.442-3.824a.634.634 0 0 0 0-.832.494.494 0 0 0-.749 0z" />
+            <path
+                d="M7.75.152C3.477.152 0 3.63 0 7.902c0 4.274 3.477 7.75 7.75 7.75s7.75-3.476 7.75-7.75c0-4.273-3.477-7.75-7.75-7.75zm0 14.25a6.508 6.508 0 0 1-6.501-6.5 6.509 6.509 0 0 1 6.5-6.501c3.585 0 6.501 2.917 6.501 6.502 0 3.584-2.916 6.5-6.5 6.5z"/>
+            <path
+                d="M9.095 6.172L6.027 9.58 4.904 8.332a.493.493 0 0 0-.748 0 .634.634 0 0 0 0 .832l1.497 1.664a.504.504 0 0 0 .374.172c.135 0 .27-.058.375-.172l3.442-3.824a.634.634 0 0 0 0-.832.494.494 0 0 0-.749 0z"/>
         </g>
     </svg>
 );
@@ -58,5 +60,52 @@ const Cross = props => (
     </svg>
 );
 
-export {WordproofWithLogo, Check, Cross, CheckOrange};
+const Loader = props => (
+    <svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a">
+                <stop stopColor={props.color} stopOpacity="0" offset="0%"/>
+                <stop stopColor={props.color} stopOpacity=".631" offset="63.146%"/>
+                <stop stopColor={props.color} offset="100%"/>
+            </linearGradient>
+        </defs>
+        <g fill="none" fillRule="evenodd">
+            <g transform="translate(1 1)">
+                <path d="M36 18c0-9.94-8.06-18-18-18" id="Oval-2" stroke="url(#a)" strokeWidth="2">
+                    <animateTransform
+                        attributeName="transform"
+                        type="rotate"
+                        from="0 18 18"
+                        to="360 18 18"
+                        dur="0.9s"
+                        repeatCount="indefinite"/>
+                </path>
+                <circle fill="#fff" cx="36" cy="18" r="1">
+                    <animateTransform
+                        attributeName="transform"
+                        type="rotate"
+                        from="0 18 18"
+                        to="360 18 18"
+                        dur="0.9s"
+                        repeatCount="indefinite"/>
+                </circle>
+            </g>
+        </g>
+    </svg>
+);
+
+const LoaderHorizontal = props => (
+    <svg xmlns="http://www.w3.org/2000/svg"
+         version="1.0" width="128px" height="16px" viewBox="0 0 128 16"
+         xmlSpace="preserve">
+        <path fill={props.colorBg}
+              d="M6.4,4.8A3.2,3.2,0,1,1,3.2,8,3.2,3.2,0,0,1,6.4,4.8Zm12.8,0A3.2,3.2,0,1,1,16,8,3.2,3.2,0,0,1,19.2,4.8ZM32,4.8A3.2,3.2,0,1,1,28.8,8,3.2,3.2,0,0,1,32,4.8Zm12.8,0A3.2,3.2,0,1,1,41.6,8,3.2,3.2,0,0,1,44.8,4.8Zm12.8,0A3.2,3.2,0,1,1,54.4,8,3.2,3.2,0,0,1,57.6,4.8Zm12.8,0A3.2,3.2,0,1,1,67.2,8,3.2,3.2,0,0,1,70.4,4.8Zm12.8,0A3.2,3.2,0,1,1,80,8,3.2,3.2,0,0,1,83.2,4.8ZM96,4.8A3.2,3.2,0,1,1,92.8,8,3.2,3.2,0,0,1,96,4.8Zm12.8,0A3.2,3.2,0,1,1,105.6,8,3.2,3.2,0,0,1,108.8,4.8Zm12.8,0A3.2,3.2,0,1,1,118.4,8,3.2,3.2,0,0,1,121.6,4.8Z"/>
+        <g transform="translate(62 0)"><path fill={props.color} d="M-42.7,3.84A4.16,4.16,0,0,1-38.54,8a4.16,4.16,0,0,1-4.16,4.16A4.16,4.16,0,0,1-46.86,8,4.16,4.16,0,0,1-42.7,3.84Zm12.8-.64A4.8,4.8,0,0,1-25.1,8a4.8,4.8,0,0,1-4.8,4.8A4.8,4.8,0,0,1-34.7,8,4.8,4.8,0,0,1-29.9,3.2Zm12.8-.64A5.44,5.44,0,0,1-11.66,8a5.44,5.44,0,0,1-5.44,5.44A5.44,5.44,0,0,1-22.54,8,5.44,5.44,0,0,1-17.1,2.56Z"/>
+            <animateTransform attributeName="transform" type="translate"
+                              values="23 0;36 0;49 0;62 0;74.5 0;87.5 0;100 0;113 0;125.5 0;138.5 0;151.5 0;164.5 0;178 0"
+                              calcMode="discrete" dur="1s" repeatCount="indefinite"/></g>
+    </svg>
+);
+
+export {WordproofWithLogo, Check, Cross, CheckOrange, Loader, LoaderHorizontal};
 

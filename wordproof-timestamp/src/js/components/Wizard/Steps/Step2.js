@@ -77,7 +77,7 @@ export default class Step2 extends Component {
         if (value !== undefined) {
             const data = value.split('&');
             if (data.length === 3) {
-                this.props.update(null, 'wsfy_is_active', false);
+                this.props.update(null, 'wsfy_is_active', true);
                 this.props.update(null, 'client_id', data[0]);
                 this.props.update(null, 'client_secret', data[1]);
                 this.props.update(null, 'site_id', data[2]);
@@ -149,11 +149,6 @@ export default class Step2 extends Component {
                     <button className={'wbtn wbtn-primary'} onClick={() => this.props.nextStep()}>Save & Continue</button>
                 </div>
                 }
-
-
-                {/* DISABLE AUTOMATIC */}
-                {/* NEW CLIENT */}
-                {/* NEXT PAGE */}
 
                 {/*{(wordproof.currentValues.isWSFYActive) && <span*/}
                 {/*    className={'block underline cursor-pointer text-xs text-gray-500 mb-3 mt-4'}*/}

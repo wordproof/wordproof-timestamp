@@ -110,7 +110,7 @@ class AutomaticHelper
       $this->action = 'get_balance';
       $this->endpoint = 'sites/' . $this->options->site_id . '/balance';
       $this->body = false;
-      return self::request();
+      return self::request('GET');
 
     } else {
       return ['errors' => ['authentication' => ['Please configure your site key']]];

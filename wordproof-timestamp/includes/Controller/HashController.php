@@ -4,6 +4,7 @@ namespace WordProofTimestamp\includes\Controller;
 
 use WordProofTimestamp\includes\DomainHelper;
 use WordProofTimestamp\includes\PostHelper;
+use WordProofTimestamp\includes\ProductHelper;
 
 class HashController
 {
@@ -67,6 +68,13 @@ class HashController
         $array['encodingFormat'] = $post->post_mime_type;
         $array['date'] = get_the_modified_date('c', $post);
         return $array;
+      case PRODUCT_TIMESTAMP:
+        $array = [];
+        $array['type'] = PRODUCT_TIMESTAMP;
+        $array['version'] = CURRENT_TIMESTAMP_STANDARD_VERSION;
+        $array['name'] = $post->post_title;
+        $array['description'] = ProductHelper::getDescription($post);
+        return $array;
       default:
         return null;
     }
@@ -87,6 +95,13 @@ class HashController
       case MEDIA_OBJECT_TIMESTAMP:
         $array = [];
         return $array;
+      case PRODUCT_TIMESTAMP:
+        $array = [];
+        array_merge($array, ProductHelper::maybeReturnAttribute('productId', $post));
+        array_merge($array, ProductHelper::maybeReturnAttribute('image', $post));
+        array_merge($array, ProductHelper::maybeReturnAttribute('price', $post));
+        array_merge($array, ProductHelper::maybeReturnAttribute('url', $post));
+        return $array;
       default:
         return null;
     }
@@ -101,6 +116,8 @@ class HashController
         return ARTICLE_TIMESTAMP;
       case 'attachment':
         return MEDIA_OBJECT_TIMESTAMP;
+      case 'product':
+        return PRODUCT_TIMESTAMP;
       default:
         return null;
     }

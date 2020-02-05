@@ -105,7 +105,7 @@ class AutomaticHooksController
   public function setCron($postId)
   {
     if (!wp_next_scheduled(WORDPROOF_WSFY_CRON_HOOK, array($postId))) {
-      wp_schedule_single_event(time() + 7, WORDPROOF_WSFY_CRON_HOOK, array($postId));
+      wp_schedule_single_event(time() + 7, WORDPROOF_WSFY_CRON_HOOK, array($postId)); //TODO Change Cron
     }
   }
 
@@ -113,8 +113,14 @@ class AutomaticHooksController
   /**
    * Callback stuff
    * ___________________
+   * @param $action
+   * @return bool
    */
-  private function validCallback() {
+  private function validCallback($action) {
+
+    if ($action === 'wordproof_test_callback')
+      return true;
+
     $oauth = OptionsHelper::getOAuth([]);
     if (isset($oauth->client_secret)) {
 
@@ -142,8 +148,9 @@ class AutomaticHooksController
 
   public function processCallback()
   {
-    if ($this->validCallback()) {
-      $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
+    $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
+
+    if ($this->validCallback($action)) {
 
       switch ($action) {
         case 'wordproof_test_callback':

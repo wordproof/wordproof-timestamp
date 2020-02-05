@@ -27,6 +27,9 @@ class SchemaController
       case MEDIA_OBJECT_TIMESTAMP:
         $object = self::mediaObjectSchema($meta, $attributes);
         break;
+      case PRODUCT_TIMESTAMP:
+        $object = self::productSchema($meta, $attributes);
+        break;
       case 'WebArticleTimestamp':
         $object = self::webArticleSchema($meta, $attributes);
         break;
@@ -92,6 +95,32 @@ class SchemaController
         $array['contentHash'] = $meta->contentHash;
         $array['contentUrl'] = $meta->contentUrl;
         $array['encodingFormat'] = $meta->encodingFormat;
+        $array['date'] = $meta->date;
+
+        foreach ($attributes as $key => $value) {
+          $array[$key] = $value;
+        }
+        return json_encode($array, JSON_UNESCAPED_UNICODE);
+    }
+  }
+  /**
+   * @param $meta
+   * @param $attributes
+   * @return object|bool
+   * More info: https://github.com/wordproof/timestamp-standard/blob/master/ProductTimestamp.md
+   */
+  private static function productSchema($meta, $attributes)
+  {
+    switch ($meta->version) {
+      default:
+        $array = [];
+        $array['@context']['@type'] = PRODUCT_TIMESTAMP;
+        $array['@context']['@version'] = $meta->version;
+        $array['blockchain'] = $meta->blockchain;
+        $array['transactionId'] = $meta->transactionId;
+        $array['hash'] = $meta->hash;
+        $array['name'] = $meta->name;
+        $array['description'] = $meta->description;
         $array['date'] = $meta->date;
 
         foreach ($attributes as $key => $value) {

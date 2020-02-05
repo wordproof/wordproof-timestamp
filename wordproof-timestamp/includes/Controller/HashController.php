@@ -74,6 +74,7 @@ class HashController
         $array['version'] = CURRENT_TIMESTAMP_STANDARD_VERSION;
         $array['name'] = $post->post_title;
         $array['description'] = ProductHelper::getDescription($post);
+        $array['date'] = get_the_modified_date('c', $post);
         return $array;
       default:
         return null;

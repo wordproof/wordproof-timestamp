@@ -54,4 +54,10 @@ class PostWidgetController
 
     return 'not_timestamped';
   }
+
+  public static function willBeAutoStamped()
+  {
+    global $post;
+    return in_array($post->post_type, OptionsHelper::getWSFYField('allowed_post_types'));
+  }
 }

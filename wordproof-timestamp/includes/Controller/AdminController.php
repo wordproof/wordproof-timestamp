@@ -84,6 +84,7 @@ class AdminController
           'balance' => OptionsHelper::getBalanceCache(),
           'unprotectedAmount' => DashboardWidgetController::getTotalUnprotectedCount(),
           'isTimestamped' => PostWidgetController::isTimestamped(),
+          'autoStamped' => PostWidgetController::willBeAutoStamped(),
         ]);
         break;
       case 'toplevel_page_wordproof-dashboard':
@@ -144,6 +145,7 @@ class AdminController
       'urls' => [
         'dashboard' => admin_url('admin.php?page=wordproof-dashboard'),
         'bulk' => admin_url('admin.php?page=wordproof-bulk'),
+        'settings' => admin_url('admin.php?page=wordproof-settings'),
         'wizard' => admin_url('admin.php?page=wordproof-wizard'),
         'wizardConnect' => admin_url('admin.php?page=wordproof-wizard#connect'),
         'site' => get_site_url(),

@@ -20,6 +20,9 @@ export default class Post extends Component {
         if (parseInt(wordproofPost.balance) === 0)
             return 'no_balance';
 
+        if (!wordproofPost.autoStamped)
+            return 'no_auto_stamp';
+
         return '';
     }
 
@@ -42,6 +45,11 @@ export default class Post extends Component {
                         <a href={'wordproofData.urls.upgradeExternal'} className={'button button-primary'}>Choose a WordProof plan</a>
                     </>
                 );
+            case 'no_auto_stamp':
+                return (<>
+                    <strong className={'block mb-2'}>This post will not be timestamped automatically when you publish or update.</strong>
+                    <p>Please <a href={wordproofData.urls.settings} target="_blank" rel="noopener noreferrer">update your settings</a> or timestamp your content on the overview page.</p>
+                </>)
             case '':
                 return (<>
                     <strong className={'block mb-2'}>This post will be timestamped automatically when you publish or update.</strong>

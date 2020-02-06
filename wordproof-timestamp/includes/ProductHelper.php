@@ -30,15 +30,20 @@ class ProductHelper
   }
 
   private static function getAttributeValue($attribute, $product) {
-    if ($product instanceof WC_Product) {
+    if ($product instanceof \WC_Product_Simple) { //todo or something else
       switch ($attribute) {
         case 'productId':
           $productIdentifiers = ['isbn', 'gtin', 'mpn', 'ean', 'jan', 'brand'];
-          $attributes = $product->getAttributes();
+          $attributes = $product->get_attributes();
           $productId = false;
-          foreach ($attributes as $key => $value) {
+          foreach ($attributes as $key => $attribute) {
             if (in_array(strtolower($key), $productIdentifiers)) {
-              $productId = strtolower($key) . ':' . $value;
+              $data = $attribute->get_data();
+              $value = (isset($data['value'])) ? $data['value'] : false;
+
+              if ($value)
+                $productId = strtolower($key) . ':' . $value;
+
               break;
             }
           }
@@ -53,6 +58,7 @@ class ProductHelper
           return false;
       }
     }
+
     return false;
   }
 }

@@ -49,7 +49,7 @@ class ItemResource
         ];
         break;
       case PRODUCT_TIMESTAMP:
-        return array_merge([
+        $a = array_merge([
           'type' => PRODUCT_TIMESTAMP,
           'version' => CURRENT_TIMESTAMP_STANDARD_VERSION,
           'uid' => $post->ID,
@@ -58,9 +58,23 @@ class ItemResource
           'date_created' => get_the_date('c', $post),
           'date_modified' => $fields['properties']['date'],
         ], $fields['attributes']);
+
+        $a = self::renameArrayKey('productId', 'product_id', $a);
+        $a = self::renameArrayKey('image', 'image_url', $a);
+
+        return $a;
         break;
       default:
         return null;
     }
+  }
+
+  private static function renameArrayKey($old, $new, $array)
+  {
+    if (array_key_exists($old)) {
+      $array[$new] = $array[$old];
+      unset($array[$old]);
+    }
+    return $array;
   }
 }

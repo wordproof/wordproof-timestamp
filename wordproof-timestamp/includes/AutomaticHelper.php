@@ -80,6 +80,8 @@ class AutomaticHelper
       if (!empty(OptionsHelper::getCustomDomain()))
         $this->body['overwrite_callback'] = site_url('/') . 'wp-admin/admin-post.php';
 
+      $this->body['type'] = HashController::getType($this->post);
+
       return self::request();
 
     } else {
@@ -217,8 +219,6 @@ class AutomaticHelper
         break;
 
       case 'retry_callback':
-        return ['success' => true];
-
       case 'validate_token':
       case 'refresh_access_token':
       case 'get_access_token':

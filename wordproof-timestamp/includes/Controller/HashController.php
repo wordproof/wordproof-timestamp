@@ -85,7 +85,7 @@ class HashController
    * @param $post
    * @return array|mixed|void|null
    */
-  private static function getAttributes($post)
+  public static function getAttributes($post)
   {
     switch (self::getType($post)) {
       case ARTICLE_TIMESTAMP:
@@ -98,10 +98,10 @@ class HashController
         return $array;
       case PRODUCT_TIMESTAMP:
         $array = [];
-        array_merge($array, ProductHelper::maybeReturnAttribute('productId', $post));
-        array_merge($array, ProductHelper::maybeReturnAttribute('image', $post));
-        array_merge($array, ProductHelper::maybeReturnAttribute('price', $post));
-        array_merge($array, ProductHelper::maybeReturnAttribute('url', $post));
+        $array = array_merge($array, ProductHelper::maybeReturnAttribute('productId', $post));
+        $array = array_merge($array, ProductHelper::maybeReturnAttribute('image', $post));
+        $array = array_merge($array, ProductHelper::maybeReturnAttribute('price', $post));
+        $array = array_merge($array, ProductHelper::maybeReturnAttribute('url', $post));
         return $array;
       default:
         return null;

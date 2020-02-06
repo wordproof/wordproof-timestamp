@@ -5,7 +5,7 @@ import root from 'react-shadow';
 import {sha256} from 'js-sha256';
 
 import './Modal.scss';
-import getArticles from "./schemaHelper";
+import getItems from "./schemaHelper";
 
 import Overview from "./Overview/Overview";
 import Compare from "./Compare/Compare";
@@ -19,7 +19,7 @@ class Modal extends React.Component {
         super(props);
         this.state = {
             active: false,
-            articles: null,
+            items: null,
             view: 'overview',
             validTimestamp: null,
         };
@@ -38,11 +38,11 @@ class Modal extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.articles !== this.state.articles) {
-            const local = this.state.articles[0].hash;
-            const hashed = sha256(JSON.stringify(this.state.articles[0].raw));
+        if (prevState.items !== this.state.items) {
+            const local = this.state.items[0].hash;
+            const hashed = sha256(JSON.stringify(this.state.items[0].raw));
 
-            const modified = new Date(this.state.articles[0].date);
+            const modified = new Date(this.state.items[0].date);
             const lastEdited = new Date(wordproof.modal.lastModified);
 
             const valid = (local === hashed) && (modified.getTime() === lastEdited.getTime());
@@ -59,15 +59,15 @@ class Modal extends React.Component {
     renderView = () => {
         switch (this.state.view) {
             case 'overview':
-                return <Overview valid={this.state.validTimestamp} articles={this.state.articles}/>;
+                return <Overview valid={this.state.validTimestamp} items={this.state.items}/>;
             case 'overview.importance':
                 return <OverviewImportance valid={this.state.validTimestamp}/>;
             case 'compare':
-                return <Compare articles={this.state.articles} noRevisions={this.state.articles.length === 1}/>;
+                return <Compare items={this.state.items} noRevisions={this.state.items.length === 1}/>;
             case 'compare.explanation':
                 return <CompareExplanation valid={this.state.validTimestamp}/>;
             case 'compare.raw':
-                return <CompareRaw articles={this.state.articles} noRevisions={this.state.articles.length === 1}/>;
+                return <CompareRaw items={this.state.items} noRevisions={this.state.items.length === 1}/>;
             default:
                 return null;
         }
@@ -79,7 +79,7 @@ class Modal extends React.Component {
         window.addEventListener('keydown', this.handleKey);
 
         this.navigation();
-        this.getArticlesFromSchema();
+        this.getItemsFromSchema();
 
         if (window.location.hash.includes('wordproof'))
             this.open();
@@ -108,16 +108,17 @@ class Modal extends React.Component {
 
     open = () => {
         this.setState({active: true});
-        this.getArticlesFromMy();
+        this.getItemsFromMy();
     };
 
-    getArticlesFromSchema = () => {
+    getItemsFromSchema = () => {
         const schema = JSON.parse(document.querySelector('script.wordproof-schema').innerHTML);
-        const articles = getArticles(schema);
-        this.setState({articles: articles});
+        const items = getItems(schema);
+        console.log(items);
+        this.setState({items: items});
     };
 
-    getArticlesFromMy = async () => {
+    getItemsFromMy = async () => {
         if (wordproof.automate.active && wordproof.automate.options.show_revisions === true) {
 
             const config = {
@@ -127,7 +128,7 @@ class Modal extends React.Component {
             };
 
             const body = {
-                action: 'wordproof_get_articles',
+                action: 'wordproof_get_articles', //TODO
                 post_id: wordproof.postId,
                 security: wordproof.ajaxSecurity
             };
@@ -138,8 +139,8 @@ class Modal extends React.Component {
                 if (typeof schema === 'object' && !(schema instanceof Array)) {
                     const script = document.querySelector('script.wordproof-schema');
                     script.innerHTML = JSON.stringify(schema);
-                    const articles = getArticles(schema);
-                    this.setState({articles: articles});
+                    const items = getItems(schema);
+                    this.setState({items: items});
                 }
             })
             .catch((error) => {

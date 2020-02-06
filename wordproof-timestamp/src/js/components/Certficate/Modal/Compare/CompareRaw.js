@@ -1,6 +1,6 @@
 import React from 'react';
 import Nav from "../components/Nav";
-import SelectArticle from "./SelectArticle";
+import SelectItem from "./SelectItem";
 import Text from "./Text";
 import ButtonList from "./ButtonList";
 
@@ -13,7 +13,7 @@ export default class CompareRaw extends React.Component {
         }
     }
 
-    setArticle = (index) => {
+    setItem = (index) => {
         this.setState({index: index})
     };
 
@@ -25,26 +25,26 @@ export default class CompareRaw extends React.Component {
                 <div>
 
                     <div className={'flex flex-row pt-6 px-12'}>
-                        <SelectArticle articles={this.props.articles} selected={this.state.index} for={'raw'}
-                                       setArticle={this.setArticle} disabledIndexes={[]}/>
+                        <SelectItem items={this.props.items} selected={this.state.index} for={'raw'}
+                                    setItem={this.setItem} disabledIndexes={[]}/>
                     </div>
 
                     <div className={'flex flex-row mx-6'}>
                         <div className={'md:w-1/2 hidden md:block'}>
                             <div className={'m-6 mb-4 mt-0'}>
-                                <Text text={JSON.stringify(this.props.articles[this.state.index].raw)} raw={true}/>
+                                <Text text={JSON.stringify(this.props.items[this.state.index].raw)} raw={true}/>
                             </div>
                         </div>
                         <div className={'md:w-1/2 w-full'}>
                             <div className={'m-6 mb-4 mt-0'}>
-                                <Text text={this.props.articles[this.state.index].content}/>
+                                <Text text={this.props.items[this.state.index].content}/>
                             </div>
                         </div>
                     </div>
 
                     <ButtonList view={(this.props.noRevisions) ? 'hide' : 'raw'}
-                                hrefBlockchain={this.props.articles[this.state.index].transactionUrl}
-                                hash={this.props.articles[this.state.index].hash}
+                                hrefBlockchain={this.props.items[this.state.index].transactionUrl}
+                                hash={this.props.items[this.state.index].hash}
                     />
                 </div>
             </>

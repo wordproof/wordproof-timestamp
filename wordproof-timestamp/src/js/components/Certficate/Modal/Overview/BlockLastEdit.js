@@ -14,7 +14,7 @@ export default class BlockLastEdit extends React.Component {
     };
 
     render() {
-        const withRevisions = this.props.articles.length > 1;
+        const withRevisions = this.props.items.length > 1;
         return (
             <Block icon={<Clock/>}
                    title={withRevisions ? wStrings.overview.block.compare.withRevisions.title : wStrings.overview.block.compare.withoutRevisions.title}

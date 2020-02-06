@@ -21,7 +21,7 @@ export default class Overview extends React.Component {
                     </div>
                     <div className={'w-full md:w-2/3 p-2 md:py-4 md:px-6 text-left'}>
                         <BlockIntegrity valid={this.props.valid} />
-                        <BlockLastEdit articles={this.props.articles} />
+                        <BlockLastEdit items={this.props.items} />
                     </div>
                 </div>
             </>

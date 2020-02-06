@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class SelectArticle extends React.Component {
+export default class SelectItem extends React.Component {
 
     dateToLocale = (iso, index) => {
         const locale = wordproof.modal.locale.replace('_', '-');
@@ -13,7 +13,7 @@ export default class SelectArticle extends React.Component {
         if (index === 0)
             string =  wStrings.compare.recent + ' ' + string;
 
-        if (index === this.props.articles.length-1)
+        if (index === this.props.items.length-1)
             string =  wStrings.compare.first + ' ' + string;
 
         return string;
@@ -25,7 +25,7 @@ export default class SelectArticle extends React.Component {
         } else if (this.props.for === 'new') {
             this.props.setNew(event.target.value);
         } else if (this.props.for === 'raw') {
-            this.props.setArticle(event.target.value);
+            this.props.setItem(event.target.value);
         }
         this.setState({value: event.target.value});
     };
@@ -33,8 +33,8 @@ export default class SelectArticle extends React.Component {
     render() {
         return (
             <select className={'w-full bg-white border-2 border-gray-300 mb-3 py-2 px-3 h-10 max-h-full'} onChange={(e) => this.change(e)} value={this.props.selected}>
-                {this.props.articles.map((article, index) => {
-                    return (<option disabled={this.props.disabledIndexes.includes(index)} data-for={this.props.for} key={index} value={index}>{ this.dateToLocale(article.date, index) }</option>)
+                {this.props.items.map((item, index) => {
+                    return (<option disabled={this.props.disabledIndexes.includes(index)} data-for={this.props.for} key={index} value={index}>{ this.dateToLocale(item.date, index) }</option>)
                 })}
             </select>
         );

@@ -13,6 +13,12 @@ export default function getItems(schema) {
 
     const type = (items[0]['@context']) ? schema['@context']['@type'] : null;
 
+    items.forEach((item, key) => {
+        items[key].raw = getJSON(item, type);
+        items[key].transactionUrl = getTransactionUrl(item.blockchain, item.transactionId);
+        console.log(items[key].raw);
+    });
+
     switch (type) {
         case 'ProductTimestamp':
             items = prepareProducts(items);
@@ -23,11 +29,6 @@ export default function getItems(schema) {
         default:
             items =  prepareArticles(items);
     }
-
-    items.forEach((item, key) => {
-        items[key].raw = getJSON(item, type);
-        items[key].transactionUrl = getTransactionUrl(item.blockchain, item.transactionId);
-    });
 
     return items;
 }

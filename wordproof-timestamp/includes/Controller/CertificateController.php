@@ -31,7 +31,7 @@ class CertificateController
   public function showCertificate() {
     global $post;
     $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain', 'type']);
-    $allowedTypes = ['WebArticleTimestamp', ARTICLE_TIMESTAMP, PRODUCT_TIMESTAMP];
+    $allowedTypes = ['WebArticleTimestamp', ARTICLE_TIMESTAMP, PRODUCT_TIMESTAMP, MEDIA_OBJECT_TIMESTAMP];
 
     return (isset($meta->date) && !empty($meta->blockchain) && in_array($meta->type, $allowedTypes));
   }

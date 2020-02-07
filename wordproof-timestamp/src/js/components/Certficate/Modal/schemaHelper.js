@@ -17,6 +17,9 @@ export default function getItems(schema) {
         case 'ProductTimestamp':
             items = prepareProducts(items);
             break;
+        case 'MediaObjectTimestamp':
+            items = prepareMedia(items);
+            break;
         default:
             items =  prepareArticles(items);
     }
@@ -40,6 +43,14 @@ function prepareArticles(items) {
 function prepareProducts(items) {
     items.forEach((item, key) => {
         items[key].content = prepareProductContent(item);
+    });
+
+    return items;
+}
+
+function prepareMedia(items) {
+    items.forEach((item, key) => {
+        items[key].content = prepareMediaContent(item);
     });
 
     return items;
@@ -72,5 +83,21 @@ function prepareProductContent(item) {
     content += item.description;
     content += '<br/>';
     content += '<img width="200" src="' + item.image + '" />';
+    return content;
+}
+
+function prepareMediaContent(item) {
+    let content = '<strong>' + item.title + '</strong>';
+    content += '<br/><br/>';
+    content += item.encodingFormat;
+    content += '<br/>';
+
+    const imageEncodings = ['image/png', 'image/jpg', 'image/jpeg'];
+    if (imageEncodings.includes(item.encodingFormat)) {
+        content += '<img width="200" src="' + item.contentUrl + '" />';
+    } else {
+        content += '<a target="_blank" rel="noopener noreferrer" href="' + item.contentUrl + '">See attachment</a>';
+    }
+
     return content;
 }

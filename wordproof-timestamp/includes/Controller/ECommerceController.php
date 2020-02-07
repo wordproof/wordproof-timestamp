@@ -9,21 +9,58 @@ class ECommerceController
 
   public function __construct()
   {
-    add_filter('woocommerce_email_attachments', [$this, 'attachFiles'], 10, 3);
     add_action('wordproof_after_saving_timestamp_meta_data', [$this, 'onTimestamp']);
+
+    add_filter('woocommerce_email_attachments', [$this, 'attachFiles'], 10, 3);
+    add_action('woocommerce_after_order_notes', [$this, 'addCustomerForProductTimestamps']);
+    add_action('woocommerce_checkout_update_order_meta', [$this, 'saveReceiveTimestampPreference']);
+
   }
 
-  public function onTimestamp($postId) {
+  /**
+   * @param \WC_Checkout $checkout
+   */
+  public function addCustomerForProductTimestamps(\WC_Checkout $checkout)
+  {
+
+    echo '<div id="wordproof-"><h3>' . __('Do you want to receive a timestamp of the products?', 'wordproof-timestamp') . '</h3>';
+
+    woocommerce_form_field('wordproof_receive_timestamps', array(
+      'type' => 'checkbox',
+      'class' => array('input-checkbox'),
+      'label' => __('Send them along in the confirmation mail', 'wordproof-timestamp'),
+      'required' => false,
+    ), $checkout->get_value('wordproof_receive_timestamps'));
+
+    echo '</div>';
+  }
+
+  /**
+   * Update the order meta with field value
+   * @param $orderId
+   */
+
+  function saveReceiveTimestampPreference($orderId)
+  {
+    if ($_POST['wordproof_receive_timestamps'])
+      update_post_meta($orderId, 'wordproof_receive_timestamps', esc_attr($_POST['wordproof_receive_timestamps']));
+  }
+
+  public function onTimestamp($postId)
+  {
     $post = get_post($postId);
     if ($post->post_type === 'product')
       self::createTxtFile($post);
   }
 
-  public function attachFiles($attachments, $email_id, $order)
+  public function attachFiles($attachments, $email_id, \WC_Order $order)
   {
     if (!is_a($order, 'WC_Order') || !isset($email_id)) {
       return $attachments;
     }
+
+    if (!$order->get_meta('wordproof_receive_timestamps'))
+      return $attachments;
 
     foreach ($order->get_items() as $item_id => $item) {
       $product = $item->get_product();
@@ -44,7 +81,8 @@ class ECommerceController
     file_put_contents(self::getFilePath($post->post_title), $data);
   }
 
-  private static function getFilePath($postTitle) {
+  private static function getFilePath($postTitle)
+  {
     $uploadDir = wp_upload_dir();
     $wordproofDir = $uploadDir['basedir'] . '/' . 'wordproof';
 

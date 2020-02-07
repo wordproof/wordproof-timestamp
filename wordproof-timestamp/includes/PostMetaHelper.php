@@ -23,9 +23,6 @@ class PostMetaHelper {
    */
   public static function getPostMeta($postId, $keys = []) {
 
-    if (!is_int($postId))
-      return false;
-
     $meta = self::getTimestampPostMeta($postId);
 
     if (!empty($keys)) {

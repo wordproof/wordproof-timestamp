@@ -6,6 +6,7 @@ use WordProofTimestamp\includes\AnalyticsHelper;
 use WordProofTimestamp\includes\Controller\AdminController;
 use WordProofTimestamp\includes\Controller\AutomaticHooksController;
 use WordProofTimestamp\includes\Controller\CertificateController;
+use WordProofTimestamp\includes\Controller\ECommerceController;
 use WordProofTimestamp\includes\Controller\OAuthController;
 use WordProofTimestamp\includes\Controller\TimestampController;
 
@@ -27,6 +28,7 @@ class WordProofTimestamp
     new CertificateController();
 
     new AutomaticHooksController();
+    new ECommerceController();
     new OAuthController();
 
     add_action('activated_plugin', [$this, 'gettingStarted']);

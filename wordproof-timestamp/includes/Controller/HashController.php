@@ -4,6 +4,7 @@ namespace WordProofTimestamp\includes\Controller;
 
 use WordProofTimestamp\includes\DomainHelper;
 use WordProofTimestamp\includes\PostHelper;
+use WordProofTimestamp\includes\PostMetaHelper;
 use WordProofTimestamp\includes\ProductHelper;
 
 class HashController
@@ -106,6 +107,25 @@ class HashController
       default:
         return null;
     }
+  }
+
+  public static function getBlockchainLink($postId) {
+    $meta = PostMetaHelper::getPostMeta($postId, ['blockchain', 'transactionId']);
+
+    if (isset($meta->blockchain) && isset($meta->transactionId)) {
+      switch ($meta->blockchain) {
+        case 'telos_main':
+        case 'telos':
+          return 'https://telos.bloks.io/transaction/' . $meta->transactionId;
+        case 'eosJungle':
+        case 'eos_jungle':
+          return 'https://jungle.bloks.io/transaction/' . $meta->transactionId;
+        default:
+          return 'https://bloks.io/transaction/' . $meta->transactionId;
+      }
+    }
+
+    return '';
   }
 
   public static function getType($post)

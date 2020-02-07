@@ -31,19 +31,9 @@ class CertificateController
   public function showCertificate() {
     global $post;
     $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain', 'type']);
+    $allowedTypes = ['WebArticleTimestamp', ARTICLE_TIMESTAMP, PRODUCT_TIMESTAMP];
 
-    switch($meta->type) {
-      case 'WebArticleTimestamp':
-      case ARTICLE_TIMESTAMP:
-        $allowed = true;
-        break;
-      default:
-        $allowed = false;
-    }
-
-    if (isset($meta->date) && !empty($meta->blockchain) && $allowed) {
-      return true;
-    }
+    return (isset($meta->date) && !empty($meta->blockchain) && in_array($meta->type, $allowedTypes));
   }
 
   public function addLink($content)

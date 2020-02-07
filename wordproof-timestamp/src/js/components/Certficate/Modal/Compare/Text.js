@@ -2,7 +2,6 @@ import React from 'react';
 
 export default class Text extends React.Component {
     render() {
-        console.log(this.props.text);
         return (
             this.props.raw ? (
                 <textarea

@@ -66,7 +66,7 @@ export default class TimestampButton extends Component {
                 return <div><span
                     hidden={this.state.hideLabels}>🕓 Waiting for callback</span> {this.getRetryCallbackButton()}</div>;
             case 'timestamped':
-                if (this.state.post.type === 'post' || this.state.post.type === 'page')
+                if (this.state.post.type === 'post' || this.state.post.type === 'page' || this.state.post.type === 'product')
                     return <a href={this.state.post.permalink + '#wordproof'}>✅ Certificate</a>;
                 return <span>✅ Timestamped</span>;
             default:

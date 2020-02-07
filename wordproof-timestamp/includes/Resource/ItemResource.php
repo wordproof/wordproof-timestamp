@@ -71,7 +71,7 @@ class ItemResource
 
   private static function renameArrayKey($old, $new, $array)
   {
-    if (array_key_exists($old)) {
+    if (array_key_exists($old, $array)) {
       $array[$new] = $array[$old];
       unset($array[$old]);
     }

@@ -31,13 +31,17 @@ export default function getItems(schema) {
 
 function prepareArticles(items) {
     items.forEach((item, key) => {
-        items[key].content = prepareContent(item.content);
+        items[key].content = prepareArticleContent(item.content);
     });
 
     return items;
 }
 
 function prepareProducts(items) {
+    items.forEach((item, key) => {
+        items[key].content = prepareProductContent(item);
+    });
+
     return items;
 }
 
@@ -54,10 +58,19 @@ function getTransactionUrl(network, transactionId) {
     }
 }
 
-function prepareContent(content) {
+function prepareArticleContent(content) {
     content = content.replace(/<\/p>/g, 'WORDPROOF_PARAGRAPH_END');
     content = content.replace(/(\r\n|\n|\r)/gm, "");
     content = striptags(content);
     content = content.replace(/WORDPROOF_PARAGRAPH_END/g, '\n\n');
+    return content;
+}
+
+function prepareProductContent(item) {
+    let content = '<strong>' + item.name + '</strong>';
+    content += '<br/><br/>';
+    content += item.description;
+    content += '<br/>';
+    content += '<img width="200" src="' + item.image + '" />';
     return content;
 }

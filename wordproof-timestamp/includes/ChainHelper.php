@@ -91,7 +91,7 @@ class ChainHelper
         ),
       'telos_main' =>
         array(
-          'host' => 'telosapi.eosawake.io',
+          'host' => 'api.telosgermany.io',
           'port' => 443,
           'protocol' => 'https',
           'chainId' => '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',

@@ -52,8 +52,10 @@ export default class Step2 extends Component {
         })).then((response) => {
             this.setState({loading: false});
 
-            if (response.data.success)
+            if (response.data.success) {
                 this.setState({connection: true});
+                this.props.update(null, 'wsfy_is_active', true);
+            }
 
             if (response.data.balance)
                 this.props.update(null, 'balance', response.data.balance);
@@ -150,10 +152,10 @@ export default class Step2 extends Component {
                 </div>
                 }
 
-                {/*{(wordproof.currentValues.isWSFYActive) && <span*/}
-                {/*    className={'block underline cursor-pointer text-xs text-gray-500 mb-3 mt-4'}*/}
-                {/*    onClick={() => this.deactivate()}>Click here to deactivate automatic timestamping</span>*/}
-                {/*}*/}
+                {(wordproof.currentValues.isWSFYActive) && <span
+                    className={'block underline cursor-pointer text-xs text-gray-500 mb-3 mt-4'}
+                    onClick={() => this.deactivate()}>Click here to deactivate automatic timestamping</span>
+                }
             </div>
         );
     }

@@ -23,12 +23,12 @@ class ECommerceController
   public function addCustomerForProductTimestamps(\WC_Checkout $checkout)
   {
 
-    echo '<div id="wordproof-"><h3>' . __('Do you want to receive a timestamp of the products?', 'wordproof-timestamp') . '</h3>';
+    echo '<div id="wordproof-"><h3>' . __('Do you want proof of this order?', 'wordproof-timestamp') . '</h3>';
 
     woocommerce_form_field('wordproof_receive_timestamps', array(
       'type' => 'checkbox',
       'class' => array('input-checkbox'),
-      'label' => __('Send them along in the confirmation mail', 'wordproof-timestamp'),
+      'label' => __('Send me indisputable proof (via email) of the current Terms & Conditions and the products in this order.', 'wordproof-timestamp'),
       'required' => false,
     ), $checkout->get_value('wordproof_receive_timestamps'));
 
@@ -49,6 +49,11 @@ class ECommerceController
   public function onTimestamp($postId)
   {
     $post = get_post($postId);
+    $termsPostId = wc_get_page_id('terms');
+
+    if ($termsPostId && $termsPostId === $termsPostId)
+      self::createTxtFile($post);
+
     if ($post->post_type === 'product')
       self::createTxtFile($post);
   }
@@ -65,6 +70,15 @@ class ECommerceController
     foreach ($order->get_items() as $item_id => $item) {
       $product = $item->get_product();
       $file = $this->getFilePath($product->get_title());
+
+      if (file_exists($file))
+        $attachments[] = $file;
+    }
+
+    $termsPostId = wc_get_page_id('terms');
+    if ($termsPostId) {
+      $post = get_post($termsPostId);
+      $file = $this->getFilePath($post->post_title);
 
       if (file_exists($file))
         $attachments[] = $file;

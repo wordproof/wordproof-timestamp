@@ -13,7 +13,6 @@ export default class Step2 extends Component {
             hasKey: null,
             loading: false,
             connection: null,
-            callback: null,
         }
     }
 
@@ -55,23 +54,14 @@ export default class Step2 extends Component {
             if (response.data.success) {
                 this.setState({connection: true});
                 this.props.update(null, 'wsfy_is_active', true);
+            } else {
+                this.setState({connection: false});
+                this.props.update(null, 'wsfy_is_active', false);
             }
 
             if (response.data.balance)
                 this.props.update(null, 'balance', response.data.balance);
 
-            if (response.data.callback_successful) {
-                this.setState({callback: true});
-            } else {
-                this.setState({
-                    error: <span>The callback to this site was not successful. Please <a
-                        href={'https://wordproof.io/faq'} target="_blank"
-                        rel="noopener noreferrer">check the FAQ</a> or <a
-                        href={'https://wordproof.io/contact'} target="_blank" rel="noopener noreferrer">contact us</a> to
-                        fix this problem.</span>,
-                    callback: false
-                });
-            }
         });
     }
 
@@ -107,8 +97,8 @@ export default class Step2 extends Component {
                 </div>
                 }
 
-                {(this.state.callback === false) && <div className={'flex items-center justify-center my-6'}>
-                    <span className={`pl-3 text-center block`}><strong>The callback failed.</strong> {this.state.error}</span>
+                {(this.state.connection === false) && <div className={'flex items-center justify-center my-6'}>
+                    <span className={`pl-3 text-center block`}><strong>Something went wrong.</strong></span>
                 </div>
                 }
 

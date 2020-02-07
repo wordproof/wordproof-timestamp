@@ -169,6 +169,7 @@ class AutomaticHelper
   {
     $args = [
       'method' => $method,
+      'timeout' => 10,
       'headers' => [
         'Accept' => 'application/json',
         'Content-Type' => 'application/json',
@@ -178,16 +179,14 @@ class AutomaticHelper
     if ($this->accessToken)
       $args['headers']['Authorization'] = 'Bearer ' . $this->accessToken;
 
+
     if ($this->body) {
       $json = json_encode($this->body, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
       $args = array_merge($args, ['body' => $json]);
     }
 
     $response = wp_remote_request($this->uri . $this->endpoint, $args);
-    error_log('response');
-    error_log(print_r($response, true));
     $code = wp_remote_retrieve_response_code($response);
-    error_log($code);
 
     switch ($code) { //todo
       case 200:

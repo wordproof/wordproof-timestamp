@@ -2,7 +2,7 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
-use WordProofTimestamp\includes\PostMetaHelper;
+use WordProofTimestamp\includes\OptionsHelper;
 
 class ECommerceController
 {
@@ -19,7 +19,7 @@ class ECommerceController
     add_action('woocommerce_checkout_update_order_meta', [$this, 'saveReceiveTimestampPreference']);
   }
 
-  function isWooCommerceActivated() {
+  private function isWooCommerceActivated() {
     return class_exists('woocommerce');
   }
 
@@ -28,6 +28,12 @@ class ECommerceController
    */
   public function addCustomerForProductTimestamps(\WC_Checkout $checkout)
   {
+    $option = OptionsHelper::getSendTimestampsWithOrder();
+
+    if (in_array($option, ['never', 'always']))
+      return;
+
+    $checked = ($option === 'ask_user_to_disable');
 
     echo '<div id="wordproof-"><h3>' . __('Do you want proof of this order?', 'wordproof-timestamp') . '</h3>';
 
@@ -36,7 +42,7 @@ class ECommerceController
       'class' => array('input-checkbox'),
       'label' => __('Send me indisputable proof (via email) of the current Terms & Conditions and the products in this order.', 'wordproof-timestamp'),
       'required' => false,
-    ), $checkout->get_value('wordproof_receive_timestamps'));
+    ), $checked);
 
     echo '</div>';
   }
@@ -70,7 +76,7 @@ class ECommerceController
       return $attachments;
     }
 
-    if (!$order->get_meta('wordproof_receive_timestamps'))
+    if (!$order->get_meta('wordproof_receive_timestamps') && OptionsHelper::getSendTimestampsWithOrder() !== 'always')
       return $attachments;
 
     foreach ($order->get_items() as $item_id => $item) {

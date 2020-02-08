@@ -100,11 +100,6 @@ export default class Step2 extends Component {
                 </div>
                 }
 
-                {(this.state.connection === false) && <div className={'flex items-center justify-center my-6'}>
-                    <span className={`pl-3 text-center block`}><strong>Something went wrong.</strong></span>
-                </div>
-                }
-
                 {(this.state.hasKey === null && !this.state.loading && !this.state.connection) && <div>
                     <h3>Do you have a WordProof Site Key yet?</h3>
                     <div className={'flex flex-row'}>

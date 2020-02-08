@@ -14,6 +14,8 @@ class OptionsHelper
     'certificate_text' => ['type' => 'text'],
     'certificate_dom_selector' => ['type' => 'text'],
     'custom_domain' => ['type' => 'text'],
+    'send_timestamps_with_order' => ['type' => 'text'],
+    'timestamps_order_text' => ['type' => 'text'],
     'show_info_link' => ['type' => 'html'],
     'hide_post_column' => ['type' => 'bool'],
     'wsfy' => [
@@ -116,6 +118,14 @@ class OptionsHelper
     return boolval(get_option(self::$prefix . 'wsfy_is_active'));
   }
 
+  public static function getSendTimestampsWithOrder() {
+    return get_option(self::$prefix . 'send_timestamps_with_order', 'never');
+  }
+
+  public static function getTimestampOrderText() {
+    return get_option(self::$prefix . 'timestamps_order_text');
+  }
+
   private static function prepareWSFY($options) {
     if (isset($options['allowed_post_types']) && is_array($options['allowed_post_types'])) {
       $options['allowed_post_types'] = array_values($options['allowed_post_types']);
@@ -131,15 +141,6 @@ class OptionsHelper
 
     return $options;
   }
-//
-//  public static function get($key, $default) {
-//    if (in_array($key, self::$options)) {
-//      if (count(self::$options[$key]) > 1 ) {
-//
-//      }
-//      return get_option(self::$prefix . $key, $default);
-//    }
-//  }
 
   public static function set($key, $value) {
     $wsfyKeys = array_keys(self::$options[self::$optionWSFY]);

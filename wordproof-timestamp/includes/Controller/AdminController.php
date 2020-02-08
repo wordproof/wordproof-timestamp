@@ -105,6 +105,8 @@ class AdminController
           'hidePostColumn' => OptionsHelper::getHidePostColumn(),
           'walletIsConnected' => AnalyticsHelper::walletIsConnected(),
           'isWSFYActive' => OptionsHelper::isWSFYActive(),
+          'sendTimestampsWithOrder' => OptionsHelper::getSendTimestampsWithOrder(),
+          'timestampsOrderText' => OptionsHelper::getTimestampOrderText(),
           'wsfy' => $wsfy,
           'registeredPostTypes' => get_post_types(['public' => true]),
           'saveChanges' => 'Save Changes',

@@ -128,6 +128,14 @@ class SettingsPage
         if (isset($_POST['wordproof_customize']['custom_domain'])) {
           OptionsHelper::set('custom_domain', $_POST['wordproof_customize']['custom_domain']);
         }
+
+        if (isset($_POST['wordproof_customize']['timestamps_order_text'])) {
+          OptionsHelper::set('timestamps_order_text', $_POST['wordproof_customize']['timestamps_order_text']);
+        }
+
+        if (isset($_POST['wordproof_customize']['send_timestamps_with_order'])) {
+          OptionsHelper::set('send_timestamps_with_order', $_POST['wordproof_customize']['send_timestamps_with_order']);
+        }
       }
 
       /**

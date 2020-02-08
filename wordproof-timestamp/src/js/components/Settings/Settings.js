@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Template from "./Partials/Template";
 import Automatic from "./Partials/Automatic";
 import Manual from "./Partials/Manual";
+import SettingsRadioButtons from "./Partials/SettingsRadioButtons";
 
 export default class Settings extends Component {
     constructor(props) {
@@ -12,9 +13,15 @@ export default class Settings extends Component {
             customDomain: wordproofSettings.customDomain,
             showInfoLink: wordproofSettings.showInfoLink,
             hidePostColumn: wordproofSettings.hidePostColumn,
+            sendTimestampsWithOrder: wordproofSettings.sendTimestampsWithOrder,
+            timestampsOrderText: wordproofSettings.timestampsOrderText,
             hideAdvanced: true
         }
     }
+
+    updateState = (key, value) => {
+        this.setState({key: value});
+    };
 
     handleAdvancedOptions = (e) => {
         e.preventDefault();
@@ -91,6 +98,26 @@ export default class Settings extends Component {
                            onChange={e => this.setState({hidePostColumn: e.target.value})}
                            defaultChecked={this.state.hidePostColumn}
                            id="wordproof_customize[hide_post_column]"/>
+                </div>
+
+                <h3>E-Commerce Settings</h3>
+                <SettingsRadioButtons
+                    update={this.updateState}
+                    initialValue={this.state.sendTimestampsWithOrder}
+                    label={'Send timestamps of products and Terms & Conditions with the order confirmation email'}
+                    slug={'send_timestamps_with_order'}
+                    description={''}
+                    options={{'never': 'Disable', 'always': 'Always', 'ask_user_to_disable': 'Ask the user, enabled by default', 'ask_user_to_enable': 'Ask the user, disabled by default'}}
+                />
+
+                <div className={`form-group`}>
+                    <label htmlFor="wordproof_customize[timestamps_order_text]" className="label"
+                           title="TEXT">TEXT</label>
+                    <input type="text" className="textinput" name="wordproof_customize[timestamps_order_text]"
+                           placeholder=""
+                           value={this.state.timestampsOrderText}
+                           onChange={e => this.setState({timestampsOrderText: e.target.value})}
+                           id="wordproof_customize[timestamps_order_text]"/>
                 </div>
 
                 <input type="submit" name="submit" id="submit" className="wbtn wbtn-primary"

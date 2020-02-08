@@ -55,7 +55,6 @@ export default class Step2 extends Component {
                 this.setState({connection: true});
                 this.props.update(null, 'wsfy_is_active', true);
             } else {
-                this.setState({connection: false});
                 this.props.update(null, 'wsfy_is_active', false);
             }
 

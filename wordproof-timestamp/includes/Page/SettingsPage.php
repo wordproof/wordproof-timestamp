@@ -144,7 +144,7 @@ class SettingsPage
       if (isset($_POST['wsfy_settings'])) {
         $post = $_POST['wsfy_settings'];
 
-        $allowedPostTypes = array_keys($post['allowed_post_types']);
+        $allowedPostTypes = (isset($post['allowed_post_types']) && is_array($post['allowed_post_types'])) ? array_keys($post['allowed_post_types']) : [];
         OptionsHelper::set('allowed_post_types', $allowedPostTypes);
 
         $showRevisions = isset($post['show_revisions']) ? true : false;

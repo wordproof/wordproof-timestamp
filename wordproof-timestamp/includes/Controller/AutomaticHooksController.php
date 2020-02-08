@@ -59,9 +59,6 @@ class AutomaticHooksController
       foreach ($options->allowed_post_types as $postType) {
         add_action('publish_' . $postType, [$this, 'setCron']);
       }
-    } else {
-      add_action('publish_page', [$this, 'setCron']);
-      add_action('publish_post', [$this, 'setCron']);
     }
   }
 
@@ -106,7 +103,7 @@ class AutomaticHooksController
   public function setCron($postId)
   {
     if (!wp_next_scheduled(WORDPROOF_WSFY_CRON_HOOK, array($postId))) {
-      wp_schedule_single_event(time() + 7, WORDPROOF_WSFY_CRON_HOOK, [$postId]); //TODO Change Cron
+      wp_schedule_single_event(time() + 7, WORDPROOF_WSFY_CRON_HOOK, [$postId]);
     }
   }
 

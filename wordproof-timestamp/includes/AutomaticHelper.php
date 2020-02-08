@@ -55,8 +55,8 @@ class AutomaticHelper
 
       $this->action = 'create_post';
 
-      if (wp_next_scheduled(WORDPROOF_WSFY_CRON_HOOK, array($this->post->ID)))
-        return ['errors' => ['cron_scheduled' => ['This post is already scheduled to be timestamped']]];
+      if (wp_next_scheduled(WORDPROOF_WSFY_CRON_HOOK, [$this->post->ID]))
+        wp_clear_scheduled_hook(WORDPROOF_WSFY_CRON_HOOK, [$this->post->ID]);
 
       if ($this->post->post_status !== 'publish' && $this->post->post_status !== 'inherit') {
         return ['errors' => ['post_status' => ['Post needs to be published']]];

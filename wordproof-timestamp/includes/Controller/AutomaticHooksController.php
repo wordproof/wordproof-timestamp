@@ -102,7 +102,7 @@ class AutomaticHooksController
 
   public function setCron($postId)
   {
-    if (!wp_next_scheduled(WORDPROOF_WSFY_CRON_HOOK, array($postId))) {
+    if (!wp_next_scheduled(WORDPROOF_WSFY_CRON_HOOK, [$postId])) {
       wp_schedule_single_event(time() + 7, WORDPROOF_WSFY_CRON_HOOK, [$postId]);
     }
   }

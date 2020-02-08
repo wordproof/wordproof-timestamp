@@ -83,9 +83,13 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 
 == Changelog ==
 = 2.6.0 =
-*Release date: February 4th, 2020*
+*Release date: February 8th, 2020*
 * We are now using a new authentication method for a more secure connection
-* Callbacks are now retrieved successfully for most server setups
+* We now support timestamping WooCommerce products
+* Added options to sent timestamps to customers when ordering
+* MediaObjectTimestamps are now shown on Attachment pages
+* Callbacks are now retrieved successfully out-of-the-box for even more server setups
+* Fixed small bugs and made various enhancements
 
 = 2.5.3 =
 *Release date: February 1st, 2020*

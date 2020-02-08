@@ -43,7 +43,7 @@ export default class Step2 extends Component {
             })).then((response) => {
                 window.location = response.data.redirect;
             });
-        }, 1500);
+        }, 2000);
     }
 
     async getSiteData() {

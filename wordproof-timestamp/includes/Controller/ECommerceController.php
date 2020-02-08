@@ -79,9 +79,12 @@ class ECommerceController
     if (!$order->get_meta('wordproof_receive_timestamps') && OptionsHelper::getSendTimestampsWithOrder() !== 'always')
       return $attachments;
 
+    if (!in_array($email_id, ['customer_completed_order', 'customer_processing_order']))
+      return $attachments;
+
     foreach ($order->get_items() as $item_id => $item) {
       $product = $item->get_product();
-      $file = $this->getFilePath($product->get_title());
+      $file = $this->getFilePath($product->get_title(), $product->get_id());
 
       if (file_exists($file))
         $attachments[] = $file;
@@ -90,7 +93,7 @@ class ECommerceController
     $termsPostId = wc_get_page_id('terms');
     if ($termsPostId) {
       $post = get_post($termsPostId);
-      $file = $this->getFilePath($post->post_title);
+      $file = $this->getFilePath($post->post_title, $post->ID);
 
       if (file_exists($file))
         $attachments[] = $file;
@@ -110,10 +113,10 @@ class ECommerceController
     if ($note)
       $data .= PHP_EOL . PHP_EOL . 'Note: ' . $note;
 
-    file_put_contents(self::getFilePath($post->post_title), $data);
+    file_put_contents(self::getFilePath($post->post_title, $post->ID), $data);
   }
 
-  private static function getFilePath($postTitle)
+  private static function getFilePath($title, $id)
   {
     $uploadDir = wp_upload_dir();
     $wordproofDir = $uploadDir['basedir'] . '/' . 'wordproof';
@@ -121,13 +124,13 @@ class ECommerceController
     if (!file_exists($wordproofDir))
       wp_mkdir_p($wordproofDir);
 
-    $fileName = self::getFileName($postTitle, 'txt');
+    $fileName = self::getFileName($title, $id, 'txt');
 
     return $wordproofDir . '/' . $fileName;
   }
 
-  private static function getFileName($string, $extension)
+  private static function getFileName($title, $id, $extension)
   {
-    return preg_replace('/[^a-zA-Z0-9_-]+/', '-', strtolower($string)) . '.' . $extension;
+    return preg_replace('/[^a-zA-Z0-9_-]+/', '-', strtolower($title)) . '-' . $id . $extension;
   }
 }

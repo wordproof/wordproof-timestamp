@@ -46,7 +46,8 @@ class AutomaticHooksController
     }
   }
 
-  public function createPost($postId) {
+  public function createPost($postId)
+  {
     $helper = new AutomaticHelper($postId);
     $helper->createPost();
   }
@@ -105,7 +106,7 @@ class AutomaticHooksController
   public function setCron($postId)
   {
     if (!wp_next_scheduled(WORDPROOF_WSFY_CRON_HOOK, array($postId))) {
-      wp_schedule_single_event(time() + 7, WORDPROOF_WSFY_CRON_HOOK, array($postId)); //TODO Change Cron
+      wp_schedule_single_event(time() + 7, WORDPROOF_WSFY_CRON_HOOK, [$postId]); //TODO Change Cron
     }
   }
 
@@ -116,7 +117,13 @@ class AutomaticHooksController
    * @param $action
    * @return bool
    */
-  private function validCallback($action) {
+  private function validCallback($action)
+  {
+
+    if ($action === null) {
+      echo json_encode(['success' => false, 'message' => 'Please send an action along']);
+      die();
+    }
 
     if ($action === 'wordproof_test_callback')
       return true;
@@ -125,7 +132,7 @@ class AutomaticHooksController
     if (isset($oauth->client_secret)) {
 
       if (!isset($_REQUEST['token'])) {
-        $this->response = $this->responses['origin_not_allowed'];
+        $this->response = $this->responses['no_token_present'];
         return false;
       }
 
@@ -162,9 +169,10 @@ class AutomaticHooksController
           break;
       }
     } else {
+      $response = ['success' => false, 'response' => $this->response, 'remote_addr' => $_SERVER['REMOTE_ADDR'], 'action' => isset($_REQUEST['action']) ? $_REQUEST['action'] : 'none'];
       error_log('WordProof: Update request denied');
-      error_log($_SERVER['REMOTE_ADDR']);
-      echo json_encode(['success' => false, 'response' => $this->response, 'remote_addr' => $_SERVER['REMOTE_ADDR']]);
+      error_log(print_r($response, true));
+      echo json_encode($response);
       die();
     }
   }

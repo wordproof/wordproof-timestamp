@@ -38,7 +38,8 @@ class AutomaticHelper
       $this->accessToken = $this->getAccessToken();
   }
 
-  public function getAccessToken() {
+  public function getAccessToken()
+  {
     if (isset($this->oauth->access_token)) {
       return OAuthController::getAccessToken();
     } else if (isset($this->options->site_token) && isset($this->options->site_id)) {
@@ -53,6 +54,9 @@ class AutomaticHelper
     if ($this->accessToken) {
 
       $this->action = 'create_post';
+
+      if (wp_next_scheduled(WORDPROOF_WSFY_CRON_HOOK, array($this->post->ID)))
+        return ['errors' => ['cron_scheduled' => ['This post is already scheduled to be timestamped']]];
 
       if ($this->post->post_status !== 'publish' && $this->post->post_status !== 'inherit') {
         return ['errors' => ['post_status' => ['Post needs to be published']]];
@@ -195,7 +199,6 @@ class AutomaticHelper
         return $this->handleSuccessResponse($response);
       default:
         return $this->handleFailedResponse($response);
-
     }
   }
 
@@ -216,7 +219,6 @@ class AutomaticHelper
 
         TimestampController::saveTimestamp($this->post->ID, '', '', true);
         break;
-
       case 'retry_callback':
       case 'validate_token':
       case 'refresh_access_token':

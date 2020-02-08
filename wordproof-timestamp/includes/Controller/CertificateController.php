@@ -28,7 +28,8 @@ class CertificateController
     }
   }
 
-  public function showCertificate() {
+  public function showCertificate()
+  {
     global $post;
     $meta = PostMetaHelper::getPostMeta($post->ID, ['date', 'blockchain', 'type']);
     $allowedTypes = ['WebArticleTimestamp', ARTICLE_TIMESTAMP, PRODUCT_TIMESTAMP, MEDIA_OBJECT_TIMESTAMP];
@@ -60,19 +61,16 @@ class CertificateController
       $wsfyIsActive = OptionsHelper::isWSFYActive();
       $wsfyOptions = ($wsfyIsActive) ? OptionsHelper::getWSFY(['site_token']) : [];
 
-      //TODO: if wsfy active
-      $endpoint = str_replace('$siteId', $wsfyOptions->site_id, WORDPROOF_WSFY_ENDPOINT_ITEM);
-      $endpoint .= $post->ID;
-
       wp_enqueue_script('wordproof.polyfill.js', WORDPROOF_URI_JS . '/polyfill.js', [], filemtime(WORDPROOF_DIR_JS . '/polyfill.js'), false);
       wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', [], filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
 
-      wp_localize_script('wordproof.frontend.js', 'wordproof', [
+      $data = [
         'ajaxURL' => admin_url('admin-ajax.php'),
         'ajaxSecurity' => wp_create_nonce('wordproof'),
         'postId' => $post->ID,
         'link' => [
           'url' => $this->getUrl(),
+          'dom' => OptionsHelper::getCertificateDomSelector(),
           'text' => OptionsHelper::getCertificateText(),
           'infoLink' => OptionsHelper::getShowInfoLink(),
           'postId' => $post->ID,
@@ -83,13 +81,22 @@ class CertificateController
           'locale' => get_locale(),
           'lastModified' => get_the_modified_date('c', $post->ID),
         ],
-        'automate' => [ //TODO if active
-          'dom' => OptionsHelper::getCertificateDomSelector(),
+      ];
+
+      if ($wsfyIsActive) {
+        $endpoint = str_replace('$siteId', $wsfyOptions->site_id, WORDPROOF_WSFY_ENDPOINT_ITEM);
+        $endpoint .= $post->ID;
+
+        $automatic = ['automate' => [
           'active' => $wsfyIsActive,
           'api' => WORDPROOF_API_URI . $endpoint,
           'options' => $wsfyOptions,
-        ]
-      ]);
+        ]];
+
+        $data = array_merge($data, $automatic);
+      }
+
+      wp_localize_script('wordproof.frontend.js', 'wordproof', $data);
 
       $date = get_the_modified_date('', $post->ID);
       $time = get_the_modified_time('', $post->ID);

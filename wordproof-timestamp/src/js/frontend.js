@@ -22,8 +22,8 @@ function initModal() {
 }
 
 function initLink() {
-  if (wordproof.automate.dom)
-    addLinkContainer(wordproof.automate.dom);
+  if (wordproof.link.dom)
+    addLinkContainer(wordproof.link.dom);
 
   ReactDOM.render(
       <Link text={wordproof.link.text} url={wordproof.link.url} postId={wordproof.link.postId} infoLink={wordproof.link.infoLink}/>,

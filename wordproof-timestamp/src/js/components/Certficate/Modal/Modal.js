@@ -119,7 +119,7 @@ class Modal extends React.Component {
     };
 
     getItemsFromMy = async () => {
-        if (wordproof.automate.active && wordproof.automate.options.show_revisions === true) {
+        if (wordproof.automate && wordproof.automate.active && wordproof.automate.options.show_revisions === true) {
 
             const config = {
                 headers: {

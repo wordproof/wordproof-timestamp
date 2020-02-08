@@ -58,6 +58,7 @@ if (WORDPROOF_DEVELOPMENT) {
 //Web Standards
 define('ARTICLE_TIMESTAMP', 'ArticleTimestamp');
 define('MEDIA_OBJECT_TIMESTAMP', 'MediaObjectTimestamp');
+define('PRODUCT_TIMESTAMP', 'ProductTimestamp');
 define('CURRENT_TIMESTAMP_STANDARD_VERSION', '0.2.0');
 
 // Init plugin

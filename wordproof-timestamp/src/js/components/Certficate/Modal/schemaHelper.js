@@ -16,7 +16,6 @@ export default function getItems(schema) {
     items.forEach((item, key) => {
         items[key].raw = getJSON(item, type);
         items[key].transactionUrl = getTransactionUrl(item.blockchain, item.transactionId);
-        console.log(items[key].raw);
     });
 
     switch (type) {

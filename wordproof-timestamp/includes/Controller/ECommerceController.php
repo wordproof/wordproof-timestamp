@@ -104,6 +104,12 @@ class ECommerceController
     $data = HashController::getHash($post, true);
     $data .= PHP_EOL . PHP_EOL . 'Blockchain Transaction: ';
     $data .= HashController::getBlockchainLink($post->ID);
+
+    $note = OptionsHelper::getTimestampOrderText();
+
+    if ($note)
+      $data .= PHP_EOL . PHP_EOL . 'Note: ' . $note;
+
     file_put_contents(self::getFilePath($post->post_title), $data);
   }
 

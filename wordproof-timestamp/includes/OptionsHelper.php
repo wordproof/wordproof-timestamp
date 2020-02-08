@@ -123,7 +123,7 @@ class OptionsHelper
   }
 
   public static function getTimestampOrderText() {
-    return get_option(self::$prefix . 'timestamps_order_text');
+    return get_option(self::$prefix . 'timestamps_order_text', false);
   }
 
   private static function prepareWSFY($options) {

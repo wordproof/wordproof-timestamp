@@ -129,8 +129,11 @@ class AutomaticHelper
 
       $this->action = 'validate_token';
       $this->endpoint = str_replace('$siteId', $this->options->site_id, WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE);
-      $this->body = false;
-      return self::request('GET');
+      $this->body = [
+        'callback' => admin_url('admin-post.php'),
+      ];
+
+      return self::request();
 
     } else {
       return ['errors' => ['authentication' => ['Please configure your site key']]];

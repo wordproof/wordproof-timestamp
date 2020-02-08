@@ -12,6 +12,7 @@ export default class Step2 extends Component {
             error: null,
             hasKey: null,
             loading: false,
+            disabled: false,
             connection: null,
         }
     }
@@ -34,12 +35,15 @@ export default class Step2 extends Component {
     }
 
     async authorize() {
-        axios.post(wordproof.ajax.url, qs.stringify({
-            'action': 'wordproof_oauth_authorize',
-            'security': wordproof.ajax.security
-        })).then((response) => {
-            window.location = response.data.redirect;
-        });
+        this.setState({disabled: true});
+        setTimeout(() => {
+            axios.post(wordproof.ajax.url, qs.stringify({
+                'action': 'wordproof_oauth_authorize',
+                'security': wordproof.ajax.security
+            })).then((response) => {
+                window.location = response.data.redirect;
+            });
+        }, 1500);
     }
 
     async getSiteData() {
@@ -131,7 +135,7 @@ export default class Step2 extends Component {
                 }
 
                 {(this.state.hasKey) && <button
-                    className={'wbtn wbtn-primary'} onClick={() => this.authorize()}>Authorize</button>
+                    className={'wbtn wbtn-primary'} onClick={() => this.authorize()} disabled={this.state.disabled}>Authorize</button>
                 }
 
                 {(this.state.connection) && <div>

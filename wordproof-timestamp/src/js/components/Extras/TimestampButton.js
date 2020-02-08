@@ -77,7 +77,7 @@ export default class TimestampButton extends Component {
     getRetryCallbackButton() {
         if (this.props.automate && this.state.show) {
             let now = Math.ceil(Date.now() / 1000);
-            let lastTimestamped = parseInt(this.state.meta.timestampedOn) + 10;
+            let lastTimestamped = parseInt(this.state.meta.timestampedOn) + 20;
             if (!this.state.meta.timestampedOn || now > lastTimestamped) {
                 return (
                     <button className={'button block'} disabled={this.state.disabled}
@@ -115,7 +115,7 @@ export default class TimestampButton extends Component {
     }
 
     startLoop() {
-        this.setState({loopTill: Date.now() + 11000, hideLabels: false}, () => {
+        this.setState({loopTill: Date.now() + 16000, hideLabels: false}, () => {
 
             const interval = setInterval(() => {
 
@@ -129,7 +129,7 @@ export default class TimestampButton extends Component {
                         this.setState({loopTill: false});
                 });
 
-            }, 2000);
+            }, 3000);
 
         });
     }
@@ -144,6 +144,9 @@ export default class TimestampButton extends Component {
 
         if (result.data.errors && 'is_duplicate' in result.data.errors)
             return <span>🚚 This article already exists on the server</span>;
+
+        if (result.data.errors && 'cron_scheduled' in result.data.errors)
+            return <span>⏰ This article is already scheduled to be timestamped</span>;
 
         if (result.data.errors)
             return <span>🤭 Something went wrong {JSON.stringify(result.errors)}</span>;

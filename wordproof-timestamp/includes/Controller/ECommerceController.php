@@ -9,12 +9,18 @@ class ECommerceController
 
   public function __construct()
   {
-    add_action('wordproof_after_saving_timestamp_meta_data', [$this, 'onTimestamp']);
 
+    if (!$this->isWooCommerceActivated())
+      return;
+
+    add_action('wordproof_after_saving_timestamp_meta_data', [$this, 'onTimestamp']);
     add_filter('woocommerce_email_attachments', [$this, 'attachFiles'], 10, 3);
     add_action('woocommerce_after_order_notes', [$this, 'addCustomerForProductTimestamps']);
     add_action('woocommerce_checkout_update_order_meta', [$this, 'saveReceiveTimestampPreference']);
+  }
 
+  function isWooCommerceActivated() {
+    return class_exists('woocommerce');
   }
 
   /**

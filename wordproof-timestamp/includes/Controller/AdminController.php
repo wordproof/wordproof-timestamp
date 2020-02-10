@@ -118,7 +118,7 @@ class AdminController
             'dashboard' => admin_url('admin.php?page=wordproof-dashboard'),
             'bulk' => admin_url('admin.php?page=wordproof-bulk'),
             'upgrade' => admin_url('admin.php?page=wordproof-upgrade'),
-            'upgradeExternal' => 'https://my.wordproof.io/sites/upgrade',
+            'upgradeExternal' => WORDPROOF_MY_URI . 'sites/upgrade',
             'support' => admin_url('admin.php?page=wordproof-support'),
             'pluginDir' => WORDPROOF_URI,
           ],
@@ -152,7 +152,7 @@ class AdminController
         'wizardConnect' => admin_url('admin.php?page=wordproof-wizard#connect'),
         'site' => get_site_url(),
         'ajax' => admin_url('admin-ajax.php'),
-        'upgradeExternal' => 'https://my.wordproof.io/sites/upgrade',
+        'upgradeExternal' => WORDPROOF_MY_URI . 'sites/upgrade',
       ],
       'images' => [
         'loading' => admin_url() . 'images/spinner-2x.gif'

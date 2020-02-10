@@ -79,7 +79,7 @@ class ECommerceController
     if (!$order->get_meta('wordproof_receive_timestamps') && OptionsHelper::getSendTimestampsWithOrder() !== 'always')
       return $attachments;
 
-    if (!in_array($email_id, ['customer_completed_order', 'customer_processing_order']))
+    if (!in_array($email_id, ['customer_completed_order', 'customer_processing_order', 'customer_on_hold_order']))
       return $attachments;
 
     foreach ($order->get_items() as $item_id => $item) {
@@ -131,6 +131,6 @@ class ECommerceController
 
   private static function getFileName($title, $id, $extension)
   {
-    return preg_replace('/[^a-zA-Z0-9_-]+/', '-', strtolower($title)) . '-' . $id . $extension;
+    return preg_replace('/[^a-zA-Z0-9_-]+/', '-', strtolower($title)) . '-' . $id . '.' . $extension;
   }
 }

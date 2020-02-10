@@ -35,15 +35,19 @@ export default class Step2 extends Component {
     }
 
     async authorize() {
-        this.setState({disabled: true});
+        this.setState({disabled: true, loading: true});
         setTimeout(() => {
             axios.post(wordproof.ajax.url, qs.stringify({
                 'action': 'wordproof_oauth_authorize',
                 'security': wordproof.ajax.security
             })).then((response) => {
-                window.location = response.data.redirect;
+                if (response.data.success) {
+                    window.location = response.data.redirect;
+                } else {
+                    this.setState({error: response.data.message});
+                }
             });
-        }, 2000);
+        }, 3000);
     }
 
     async getSiteData() {

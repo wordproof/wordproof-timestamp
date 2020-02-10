@@ -70,7 +70,7 @@ class ECommerceController
       self::createTxtFile($post);
   }
 
-  public function attachFiles($attachments, $email_id, \WC_Order $order)
+  public function attachFiles($attachments, $email_id, $order)
   {
     if (!is_a($order, 'WC_Order') || !isset($email_id)) {
       return $attachments;

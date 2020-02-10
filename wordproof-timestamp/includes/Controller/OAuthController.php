@@ -36,7 +36,7 @@ class OAuthController
       'state' => get_transient('wordproof_oauth_state'),
     ]);
 
-    echo json_encode(['redirect' => WORDPROOF_MY_URI . 'oauth/authorize?' . $query]);
+    echo json_encode(['success' => true, 'redirect' => WORDPROOF_MY_URI . 'oauth/authorize?' . $query, 'message' => 'Something went wrong.']);
     die();
   }
 

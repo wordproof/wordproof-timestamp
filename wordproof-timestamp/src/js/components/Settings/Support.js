@@ -27,6 +27,13 @@ export default class Support extends Component {
                 </ul>
                 <p>For other inquiries, <a href="mailto:info@wordproof.io" target="_blank"
                                            rel="noopener noreferrer">Send an email</a>.</p>
+                <h3>What to send along</h3>
+                <p>To help you, we need some information about your system. Please copy your <a
+                    href={wordproofSettings.urls.siteHealth} target="_blank" rel="noopener noreferrer">relevant site info</a>.
+                </p>
+
+                    <textarea rows={`10`} cols={`100`} defaultValue={wordproofSettings.log}></textarea>
+
                 <h3>Credits</h3>
                 <p><a href="https://wordproof.io/wordpress-plugin-wordproof/credits/" target="_blank"
                       rel="noopener noreferrer">WordProof Timestamp plugin Credits</a></p>

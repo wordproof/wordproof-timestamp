@@ -4,6 +4,7 @@ namespace WordProofTimestamp\includes\Controller;
 
 use WordProofTimestamp\includes\AnalyticsHelper;
 use WordProofTimestamp\includes\ChainHelper;
+use WordProofTimestamp\includes\DebugLogHelper;
 use WordProofTimestamp\includes\DomainHelper;
 use WordProofTimestamp\includes\NotificationHelper;
 use WordProofTimestamp\includes\OptionsHelper;
@@ -120,6 +121,7 @@ class AdminController
             'upgrade' => admin_url('admin.php?page=wordproof-upgrade'),
             'upgradeExternal' => WORDPROOF_MY_URI . 'sites/upgrade',
             'support' => admin_url('admin.php?page=wordproof-support'),
+            'siteHealth' => admin_url('site-health.php?tab=debug'),
             'pluginDir' => WORDPROOF_URI,
           ],
           'ajax' => [
@@ -132,7 +134,8 @@ class AdminController
               'page' => wp_list_pluck(DashboardWidgetController::getRecentPosts('page', 'NOT EXISTS', 1000, true), 'ID'),
               'attachment' => wp_list_pluck(DashboardWidgetController::getRecentPosts('attachment', 'NOT EXISTS', 1000, true), 'ID'),
             ]
-          ]
+          ],
+          'log' => DebugLogHelper::getContents()
         ]);
         break;
       default:

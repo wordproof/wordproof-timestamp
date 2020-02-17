@@ -3,8 +3,14 @@ import Template from "./Partials/Template";
 
 export default class Support extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {}
+        this.textRef = React.createRef();
+        this.selectTextarea = this.selectText.bind(this);
+    }
+
+    selectText() {
+        this.textRef.current.select();
     }
 
     render() {
@@ -41,7 +47,7 @@ export default class Support extends Component {
                     </span>}
                 </p>
 
-                <textarea rows={`10`} cols={`100`} defaultValue={wordproofSettings.debugging.log}></textarea>
+                <textarea ref={this.textRef} readOnly={true} onClick={() => this.selectText()} rows={`10`} cols={`100`} defaultValue={wordproofSettings.debugging.log}></textarea>
 
                 <h3>Credits</h3>
                 <p><a href="https://wordproof.io/wordpress-plugin-wordproof/credits/" target="_blank"

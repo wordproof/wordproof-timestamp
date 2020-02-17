@@ -37,7 +37,7 @@ class DebugLogHelper
     if (!is_array($file))
       return '';
 
-    return implode('', array_reverse($file));
+    return trim(implode('', array_reverse($file)));
   }
 
   private static function log($level, $message)

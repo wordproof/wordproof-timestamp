@@ -118,7 +118,7 @@ class ECommerceController
 
   private static function getFilePath($title, $id)
   {
-    $uploadDir = wp_upload_dir();
+    $uploadDir = wp_upload_dir(null, false);
     $wordproofDir = $uploadDir['basedir'] . '/' . 'wordproof';
 
     if (!file_exists($wordproofDir))

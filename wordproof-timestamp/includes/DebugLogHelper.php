@@ -45,6 +45,12 @@ class DebugLogHelper
     if ($level < self::getLogLevel())
       return;
 
+    if (is_null($message))
+      $message = 'null';
+
+    if (is_bool($message))
+      $message = ($message) ? 'true' : 'false';
+
     if (!is_string($message))
       $message = print_r($message, true);
 
@@ -53,7 +59,7 @@ class DebugLogHelper
     $message = sprintf( '[%s] %s: %s', $datetime, $level, $message ) . PHP_EOL;
 
     //TODO archive log if too large, start a fresh one with a message
-    file_put_contents(self::getLogFilename(), $message, FILE_PREPEND);
+    file_put_contents(self::getLogFilename(), $message, FILE_APPEND);
   }
 
   private static function getLogFilename() {

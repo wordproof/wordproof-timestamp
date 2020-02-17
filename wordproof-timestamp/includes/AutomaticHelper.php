@@ -236,6 +236,8 @@ class AutomaticHelper
 
   private function handleFailedResponse($response)
   {
+    DebugLogHelper::error($this->getErrorMessage($response));
+
     switch ($this->action) {
       case 'create_post':
       case 'retry_callback':
@@ -264,6 +266,17 @@ class AutomaticHelper
       } else {
         return $result;
       }
+    }
+  }
+
+  private function getErrorMessage($response) //todo
+  {
+    if (is_wp_error($response)) {
+      return $response->get_error_message();
+    } else if (is_array($response) && isset($response['body'])) {
+      return print_r($response['body'], true);
+    } else {
+      return print_r($response, true);
     }
   }
 }

@@ -98,6 +98,8 @@ class AdminController
         wp_enqueue_script('wordproof.settings.admin.js', WORDPROOF_URI_JS . '/settings.js', array(), filemtime(WORDPROOF_DIR_JS . '/settings.js'), true);
         wp_enqueue_style('wordproof.settings.admin.css', WORDPROOF_URI_CSS . '/settings.css', array(), filemtime(WORDPROOF_DIR_CSS . '/settings.css'));
 
+        $hasSiteHealthInstalled = version_compare(get_bloginfo( 'version' ), '5.2', '>=');
+
         wp_localize_script('wordproof.settings.admin.js', 'wordproofSettings', [
           'certificateText' => OptionsHelper::getCertificateText(),
           'certificateDOMSelector' => OptionsHelper::getCertificateDomSelector(),
@@ -121,7 +123,6 @@ class AdminController
             'upgrade' => admin_url('admin.php?page=wordproof-upgrade'),
             'upgradeExternal' => WORDPROOF_MY_URI . 'sites/upgrade',
             'support' => admin_url('admin.php?page=wordproof-support'),
-            'siteHealth' => admin_url('site-health.php?tab=debug'),
             'pluginDir' => WORDPROOF_URI,
           ],
           'ajax' => [
@@ -135,7 +136,13 @@ class AdminController
               'attachment' => wp_list_pluck(DashboardWidgetController::getRecentPosts('attachment', 'NOT EXISTS', 1000, true), 'ID'),
             ]
           ],
-          'log' => DebugLogHelper::getContents()
+          'debugging' => [
+            'log' => DebugLogHelper::getContents(),
+            'hasSiteHealthInstalled' => $hasSiteHealthInstalled,
+              'siteHealthUrl' => ($hasSiteHealthInstalled)
+                ? admin_url('site-health.php?tab=debug')
+                : admin_url('plugin-install.php?s=health+check&tab=search&type=term')
+          ]
         ]);
         break;
       default:

@@ -60,7 +60,8 @@ class DebugInformationController
     }
 
     if (is_string($value) && !$debug && strlen($value) > 60)
-      return substr($value, 0, 60) . '.....';
+      return substr($value, 0, 60) . '...';
+
     return $value;
   }
 

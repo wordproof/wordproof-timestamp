@@ -28,11 +28,20 @@ export default class Support extends Component {
                 <p>For other inquiries, <a href="mailto:info@wordproof.io" target="_blank"
                                            rel="noopener noreferrer">Send an email</a>.</p>
                 <h3>What to send along</h3>
-                <p>To help you, we need some information about your system. Please copy your <a
-                    href={wordproofSettings.urls.siteHealth} target="_blank" rel="noopener noreferrer">relevant site info</a>.
+
+                <p>To help you, we need some information about your system.
+                    {(wordproofSettings.debugging.hasSiteHealthInstalled) && <span>
+                        Please copy your <a
+                        href={wordproofSettings.debugging.siteHealthUrl} target="_blank" rel="noopener noreferrer">relevant site info</a>.
+                    </span>}
+                    {(!wordproofSettings.debugging.hasSiteHealthInstalled) && <span>
+                        Please install the official WordPress Health Check plugin <a
+                        href={wordproofSettings.debugging.siteHealthUrl} target="_blank" rel="noopener noreferrer">using this link</a>,
+                        navigate to &apos;Tools &gt; Site Health&apos; and copy the information underneath &apos;Info&apos;.
+                    </span>}
                 </p>
 
-                    <textarea rows={`10`} cols={`100`} defaultValue={wordproofSettings.log}></textarea>
+                <textarea rows={`10`} cols={`100`} defaultValue={wordproofSettings.debugging.log}></textarea>
 
                 <h3>Credits</h3>
                 <p><a href="https://wordproof.io/wordpress-plugin-wordproof/credits/" target="_blank"

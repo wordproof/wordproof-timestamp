@@ -38,7 +38,8 @@ export default class Support extends Component {
                 <p>To help you, we need some information about your system.
                     {(wordproofSettings.debugging.hasSiteHealthInstalled) && <span>
                         Please copy your <a
-                        href={wordproofSettings.debugging.siteHealthUrl} target="_blank" rel="noopener noreferrer">relevant site info</a>.
+                        href={wordproofSettings.debugging.siteHealthUrl} target="_blank" rel="noopener noreferrer">relevant site info</a>
+                        and include the log below.
                     </span>}
                     {(!wordproofSettings.debugging.hasSiteHealthInstalled) && <span>
                         Please install the official WordPress Health Check plugin <a
@@ -47,7 +48,8 @@ export default class Support extends Component {
                     </span>}
                 </p>
 
-                <textarea ref={this.textRef} readOnly={true} onClick={() => this.selectText()} rows={`10`} cols={`100`} defaultValue={wordproofSettings.debugging.log}></textarea>
+                <textarea ref={this.textRef} readOnly={true} onClick={() => this.selectText()} rows={`10`} cols={`100`}
+                          defaultValue={wordproofSettings.debugging.log}></textarea>
 
                 <h3>Credits</h3>
                 <p><a href="https://wordproof.io/wordpress-plugin-wordproof/credits/" target="_blank"

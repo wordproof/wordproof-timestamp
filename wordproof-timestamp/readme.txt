@@ -86,6 +86,7 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 *Release date: February 18th, 2020*
 * Added a logger for errors
 * Added information to Site Health
+* Updated license to GPL 3.0
 
 = 2.6.1 =
 *Release date: February 10th, 2020*

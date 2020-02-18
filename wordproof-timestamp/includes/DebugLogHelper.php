@@ -35,7 +35,7 @@ class DebugLogHelper
   public static function getContents() {
     $file = file(self::getLogFilename());
     if (!is_array($file))
-      return '';
+      return 'Nothing logged yet.';
 
     return trim(implode('', array_reverse($file)));
   }
@@ -69,13 +69,13 @@ class DebugLogHelper
   }
 
   private static function getLogLevel() {
-    $level = self::WARNING;
+    $level = self::INFO;
     return apply_filters( 'wordproof_debug_log_level', $level);
   }
 
   private static function getLevelName( $level ) {
     if (!isset( self::$levels[$level])) {
-      return $level[self::DEBUG];
+      return $level[self::INFO];
     }
 
     return self::$levels[$level];

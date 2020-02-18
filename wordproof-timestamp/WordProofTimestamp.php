@@ -6,6 +6,7 @@ use WordProofTimestamp\includes\AnalyticsHelper;
 use WordProofTimestamp\includes\Controller\AdminController;
 use WordProofTimestamp\includes\Controller\AutomaticHooksController;
 use WordProofTimestamp\includes\Controller\CertificateController;
+use WordProofTimestamp\includes\Controller\DebugInformationController;
 use WordProofTimestamp\includes\Controller\ECommerceController;
 use WordProofTimestamp\includes\Controller\OAuthController;
 use WordProofTimestamp\includes\Controller\TimestampController;
@@ -22,6 +23,7 @@ class WordProofTimestamp
 
   public function init()
   {
+    new DebugInformationController();
     new AdminController();
     new AnalyticsHelper();
     new TimestampController();
@@ -30,12 +32,10 @@ class WordProofTimestamp
     new AutomaticHooksController();
     new ECommerceController();
     new OAuthController();
-
-    add_action('activated_plugin', [$this, 'gettingStarted']);
   }
 
   /**
-   * @return null|WordProof
+   * @return WordProofTimestamp
    */
   public static function getInstance()
   {
@@ -44,15 +44,4 @@ class WordProofTimestamp
     }
     return self::$instance;
   }
-
-
-  public function gettingStarted($plugin) {
-    error_log('here');
-    if ($plugin === 'wordproof-timestamp/wordproof-timestamp.php' && !isset($_GET['activate-multi'])) {
-      wp_redirect(admin_url('admin.php?page=wordproof-getting-started'));
-      die();
-    }
-  }
-
-
 }

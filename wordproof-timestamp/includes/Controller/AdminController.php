@@ -4,6 +4,7 @@ namespace WordProofTimestamp\includes\Controller;
 
 use WordProofTimestamp\includes\AnalyticsHelper;
 use WordProofTimestamp\includes\ChainHelper;
+use WordProofTimestamp\includes\DebugLogHelper;
 use WordProofTimestamp\includes\DomainHelper;
 use WordProofTimestamp\includes\NotificationHelper;
 use WordProofTimestamp\includes\OptionsHelper;
@@ -97,6 +98,8 @@ class AdminController
         wp_enqueue_script('wordproof.settings.admin.js', WORDPROOF_URI_JS . '/settings.js', array(), filemtime(WORDPROOF_DIR_JS . '/settings.js'), true);
         wp_enqueue_style('wordproof.settings.admin.css', WORDPROOF_URI_CSS . '/settings.css', array(), filemtime(WORDPROOF_DIR_CSS . '/settings.css'));
 
+        $hasSiteHealthInstalled = version_compare(get_bloginfo( 'version' ), '5.2', '>=');
+
         wp_localize_script('wordproof.settings.admin.js', 'wordproofSettings', [
           'certificateText' => OptionsHelper::getCertificateText(),
           'certificateDOMSelector' => OptionsHelper::getCertificateDomSelector(),
@@ -132,6 +135,13 @@ class AdminController
               'page' => wp_list_pluck(DashboardWidgetController::getRecentPosts('page', 'NOT EXISTS', 1000, true), 'ID'),
               'attachment' => wp_list_pluck(DashboardWidgetController::getRecentPosts('attachment', 'NOT EXISTS', 1000, true), 'ID'),
             ]
+          ],
+          'debugging' => [
+            'log' => DebugLogHelper::getContents(),
+            'hasSiteHealthInstalled' => $hasSiteHealthInstalled,
+              'siteHealthUrl' => ($hasSiteHealthInstalled)
+                ? admin_url('site-health.php?tab=debug')
+                : admin_url('plugin-install.php?s=health+check&tab=search&type=term')
           ]
         ]);
         break;

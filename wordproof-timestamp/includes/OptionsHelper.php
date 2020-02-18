@@ -39,6 +39,13 @@ class OptionsHelper
 
   private static $defaultCertificateText = "View this content's WordProof Timestamp certificate";
 
+  public static function get($key) {
+    if (!in_array($key, array_keys(self::$options)))
+      return new \Exception('Option not found');
+
+    return get_option(self::$prefix . $key);
+  }
+
   public static function getNetwork() {
     return get_option(self::$prefix . 'network');
   }

@@ -3,8 +3,14 @@ import Template from "./Partials/Template";
 
 export default class Support extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {}
+        this.textRef = React.createRef();
+        this.selectTextarea = this.selectText.bind(this);
+    }
+
+    selectText() {
+        this.textRef.current.select();
     }
 
     render() {
@@ -27,6 +33,24 @@ export default class Support extends Component {
                 </ul>
                 <p>For other inquiries, <a href="mailto:info@wordproof.io" target="_blank"
                                            rel="noopener noreferrer">Send an email</a>.</p>
+                <h3>What to send along</h3>
+
+                <p>To help you, we need some information about your system.
+                    {(wordproofSettings.debugging.hasSiteHealthInstalled) && <span>
+                        Please copy your <a
+                        href={wordproofSettings.debugging.siteHealthUrl} target="_blank" rel="noopener noreferrer">relevant site info</a>
+                        and include the log below.
+                    </span>}
+                    {(!wordproofSettings.debugging.hasSiteHealthInstalled) && <span>
+                        Please install the official WordPress Health Check plugin <a
+                        href={wordproofSettings.debugging.siteHealthUrl} target="_blank" rel="noopener noreferrer">using this link</a>,
+                        navigate to &apos;Tools &gt; Site Health&apos; and copy the information underneath &apos;Info&apos;.
+                    </span>}
+                </p>
+
+                <textarea ref={this.textRef} readOnly={true} onClick={() => this.selectText()} rows={`10`} cols={`100`}
+                          defaultValue={wordproofSettings.debugging.log}></textarea>
+
                 <h3>Credits</h3>
                 <p><a href="https://wordproof.io/wordpress-plugin-wordproof/credits/" target="_blank"
                       rel="noopener noreferrer">WordProof Timestamp plugin Credits</a></p>

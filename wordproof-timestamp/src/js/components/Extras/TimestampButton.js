@@ -64,7 +64,7 @@ export default class TimestampButton extends Component {
                     hidden={this.state.hideLabels}>🚨 Timestamp is outdated</span> {this.getTimestampButton()}</div>;
             case 'awaiting_callback':
                 return <div><span
-                    hidden={this.state.hideLabels}>🕓 Waiting for callback</span> {this.getRetryCallbackButton()}</div>;
+                    hidden={this.state.hideLabels}>🕓 Waiting for callback...</span> {this.getRetryCallbackButton()}</div>;
             case 'timestamped':
                 if (this.state.post.type === 'post' || this.state.post.type === 'page' || this.state.post.type === 'product')
                     return <a href={this.state.post.permalink + '#wordproof'}>✅ Certificate</a>;
@@ -144,6 +144,9 @@ export default class TimestampButton extends Component {
 
         if (result.data.errors && 'is_duplicate' in result.data.errors)
             return <span>🚚 This article already exists on the server</span>;
+
+        if (result.data.errors && 'content' in result.data.errors)
+            return <span>✍️ Add some content first!</span>;
 
         if (result.data.errors && 'cron_scheduled' in result.data.errors)
             return <span>⏰ This article is already scheduled to be timestamped</span>;

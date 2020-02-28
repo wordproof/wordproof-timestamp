@@ -24,6 +24,7 @@ class AdminController
       new UpdateHelper();
 
       add_action('admin_post_wordproof_update_setting', [$this, 'updateSetting']);
+      add_action('admin_post_wordproof_update_settings', [$this, 'updateSettings']);
       add_action('admin_enqueue_scripts', [$this, 'loadAdminAssets']);
 
       //Admin Pages
@@ -47,6 +48,15 @@ class AdminController
     $key = $_REQUEST['key'];
     $value = $_REQUEST['value'];
     if (!empty($key) && !empty($value)) {
+      OptionsHelper::set($key, $value);
+    }
+  }
+
+  public function updateSettings()
+  {
+    check_ajax_referer('wordproof', 'security');
+    $options = $_REQUEST['options'];
+    foreach ($options as $key => $value) {
       OptionsHelper::set($key, $value);
     }
   }

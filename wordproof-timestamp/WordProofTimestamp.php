@@ -8,7 +8,6 @@ use WordProofTimestamp\includes\Controller\AutomaticHooksController;
 use WordProofTimestamp\includes\Controller\CertificateController;
 use WordProofTimestamp\includes\Controller\DebugInformationController;
 use WordProofTimestamp\includes\Controller\ECommerceController;
-use WordProofTimestamp\includes\Controller\OAuthController;
 use WordProofTimestamp\includes\Controller\TimestampController;
 
 /**
@@ -31,7 +30,6 @@ class WordProofTimestamp
 
     new AutomaticHooksController();
     new ECommerceController();
-    new OAuthController();
   }
 
   /**

@@ -18,7 +18,7 @@ export default class Step2 extends Component {
     }
 
     componentDidMount() {
-        this.validate();
+        this.validate(false);
     }
 
     deactivate() {
@@ -34,7 +34,7 @@ export default class Step2 extends Component {
         this.setState({hasKey: val})
     }
 
-    async validate() {
+    async validate(showError = true) {
         this.setState({disabled: true, loading: true});
         axios.post(wordproof.ajax.url, qs.stringify({
             'action': 'wordproof_validate_token',
@@ -47,6 +47,9 @@ export default class Step2 extends Component {
                 this.props.update(null, 'balance', response.data.balance);
             } else {
                 this.props.update(null, 'wsfy_is_active', false);
+                if (showError) {
+                    this.setState({error: 'No connection could be established. Please re-check your Site Key.'})
+                }
             }
         });
     }
@@ -55,10 +58,21 @@ export default class Step2 extends Component {
         if (value !== undefined) {
             const data = value.split('&');
             if (data.length === 3) {
-                this.props.update(null, 'wsfy_is_active', true);
-                this.props.update(null, 'site_id', data[0]);
-                this.props.update(null, 'access_token', data[1]);
-                this.props.update(null, 'token_id', data[2]);
+
+                axios.post(wordproof.ajax.url, qs.stringify({
+                    'action': 'wordproof_update_settings',
+                    'options': {
+                        'client_id': '',
+                        'client_secret': '',
+                        'expiration': '',
+                        'refresh_token': '',
+                        'site_token': '',
+                        'site_id': data[0],
+                        'access_token': data[1],
+                        'token_id': data[2],
+                    },
+                    'security': wordproof.ajax.security
+                }));
                 this.setState({error: null});
             } else {
                 this.setState({error: 'This Site Key seems invalid. Please fetch a new one.'});
@@ -112,7 +126,7 @@ export default class Step2 extends Component {
                     error={this.state.error}/>
                 }
 
-                {(this.state.hasKey) && <button
+                {(this.state.hasKey && !this.state.connection) && <button
                     className={'wbtn wbtn-primary'} onClick={() => this.validate()} disabled={this.state.disabled}>Validate</button>
                 }
 

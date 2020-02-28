@@ -36,22 +36,27 @@ export default class Step2 extends Component {
 
     async validate(showError = true) {
         this.setState({disabled: true, loading: true});
-        axios.post(wordproof.ajax.url, qs.stringify({
-            'action': 'wordproof_validate_token',
-            'security': wordproof.ajax.security
-        })).then((response) => {
-            this.setState({disabled: false, loading: false});
-            if (response.data.success) {
-                this.setState({connection: true});
-                this.props.update(null, 'wsfy_is_active', true);
-                this.props.update(null, 'balance', response.data.balance);
-            } else {
-                this.props.update(null, 'wsfy_is_active', false);
-                if (showError) {
-                    this.setState({error: 'No connection could be established. Please re-check your Site Key.'})
+
+        window.setTimeout(() => {
+
+            axios.post(wordproof.ajax.url, qs.stringify({
+                'action': 'wordproof_validate_token',
+                'security': wordproof.ajax.security
+            })).then((response) => {
+                this.setState({disabled: false, loading: false});
+                if (response.data.success) {
+                    this.setState({connection: true});
+                    this.props.update(null, 'wsfy_is_active', true);
+                    this.props.update(null, 'balance', response.data.balance);
+                } else {
+                    this.props.update(null, 'wsfy_is_active', false);
+                    if (showError) {
+                        this.setState({error: 'No connection could be established. Please re-check your Site Key.'})
+                    }
                 }
-            }
-        });
+            });
+
+        }, 2000);
     }
 
     saveSiteKey(a, b, value) {

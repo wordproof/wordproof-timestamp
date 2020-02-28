@@ -3,6 +3,7 @@
 namespace WordProofTimestamp\includes\Controller;
 
 use WordProofTimestamp\includes\AutomaticHelper;
+use WordProofTimestamp\includes\DebugLogHelper;
 use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\Page\AutoStampPage;
 use WordProofTimestamp\includes\PostMetaHelper;
@@ -126,7 +127,8 @@ class AutomaticHooksController
       return true;
 
     $oauth = OptionsHelper::getOAuth([]);
-    if (isset($oauth->client_secret)) {
+
+    if (isset($oauth->access_token)) {
 
       if (!isset($_REQUEST['token'])) {
         $this->response = $this->responses['no_token_present'];
@@ -134,7 +136,11 @@ class AutomaticHooksController
       }
 
       try {
-        JWT::decode($_REQUEST['token'], $oauth->client_secret, ['HS256']);
+        if (!empty($oauth->client_secret)) {
+          JWT::decode($_REQUEST['token'], $oauth->client_secret, ['HS256']);
+        } else if (!empty($oauth->token_id)) {
+          JWT::decode($_REQUEST['token'], $oauth->token_id, ['HS256']);
+        }
         return true;
       } catch (\Exception $exception) {
         $this->response = $this->responses['token_not_valid'];
@@ -167,6 +173,7 @@ class AutomaticHooksController
       }
     } else {
       $response = ['success' => false, 'response' => $this->response, 'remote_addr' => $_SERVER['REMOTE_ADDR'], 'action' => isset($_REQUEST['action']) ? $_REQUEST['action'] : 'none'];
+      DebugLogHelper::error('Callback failed. ' . print_r($response, true));
       error_log('WordProof: Update request denied');
       error_log(print_r($response, true));
       echo json_encode($response);

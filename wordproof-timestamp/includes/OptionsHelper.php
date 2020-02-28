@@ -31,6 +31,7 @@ class OptionsHelper
       'refresh_token' => ['type' => 'text'],
       'expiration' => ['type' => 'text'],
       'access_token' => ['type' => 'text'],
+      'token_id' => ['type' => 'text'],
     ],
     'wsfy_is_active' => ['type' => 'bool'],
     'accountname' => ['type' => 'text'],
@@ -157,6 +158,11 @@ class OptionsHelper
       return self::setValueOfArray(self::$optionWSFY, $wsfyKeys, $key, $value);
 
     } else if (in_array($key, $oauthKeys)) {
+      //TODO: Remove
+      self::set('client_id', false);
+      self::set('client_secret', false);
+      self::set('expiration', false);
+      self::set('refresh_token', false);
       self::set('site_token', false);
       return self::setValueOfArray(self::$optionOAuth, $oauthKeys, $key, $value);
 

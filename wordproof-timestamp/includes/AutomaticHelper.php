@@ -41,7 +41,7 @@ class AutomaticHelper
   public function getAccessToken()
   {
     if (isset($this->oauth->access_token)) {
-      return OAuthController::getAccessToken();
+      return $this->oauth->access_token;
     } else if (isset($this->options->site_token) && isset($this->options->site_id)) {
       return $this->options->site_token;
     }
@@ -126,11 +126,10 @@ class AutomaticHelper
   public function validateToken()
   {
     if ($this->accessToken) {
-
       $this->action = 'validate_token';
       $this->endpoint = str_replace('$siteId', $this->options->site_id, WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE);
       $this->body = [
-        'callback' => admin_url('admin-post.php'),
+        'token_id' => $this->oauth->token_id,
       ];
 
       return self::request();
@@ -138,38 +137,6 @@ class AutomaticHelper
     } else {
       return ['errors' => ['authentication' => ['Please configure your site key']]];
     }
-  }
-
-  public function getAccessTokenWithCode($code)
-  {
-    $this->accessToken = false;
-    $this->action = 'get_access_token';
-    $this->uri = WORDPROOF_MY_URI;
-    $this->endpoint = WORDPROOF_WSFY_ENDPOINT_OAUTH_TOKEN;
-    $this->body = [
-      'grant_type' => 'authorization_code',
-      'client_id' => $this->oauth->client_id,
-      'client_secret' => $this->oauth->client_secret,
-      'redirect_uri' => admin_url('admin-post.php'),
-      'code' => $code,
-    ];
-    return self::request();
-  }
-
-  public function refreshAccessToken()
-  {
-    $this->accessToken = false;
-    $this->action = 'refresh_access_token';
-    $this->uri = WORDPROOF_MY_URI;
-    $this->endpoint = WORDPROOF_WSFY_ENDPOINT_OAUTH_TOKEN;
-    $this->body = [
-      'grant_type' => 'refresh_token',
-      'client_id' => $this->oauth->client_id,
-      'client_secret' => $this->oauth->client_secret,
-      'refresh_token' => $this->oauth->refresh_token,
-      'scope' => ''
-    ];
-    return self::request();
   }
 
   private function request($method = 'POST')
@@ -224,11 +191,14 @@ class AutomaticHelper
         break;
       case 'retry_callback':
       case 'validate_token':
-      case 'refresh_access_token':
-      case 'get_access_token':
       case 'get_articles':
         return $body;
 
+      case 'validate_token':
+        if (!$body->success)
+          DebugLogHelper::warning('validate_token not successful');
+
+        return $body;
       default:
         return false;
     }
@@ -244,10 +214,6 @@ class AutomaticHelper
         return $this->returnError($response);
       case 'get_articles':
       case 'validate_token':
-      case 'refresh_access_token':
-      case 'get_access_token':
-        //TODO: invalid_request
-        //TODO: invalid_client
         return $response;
         break;
       case 'get_balance':

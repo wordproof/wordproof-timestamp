@@ -18,7 +18,7 @@ export default class Step2 extends Component {
     }
 
     componentDidMount() {
-        this.getSiteData();
+        this.validate();
     }
 
     deactivate() {
@@ -34,41 +34,20 @@ export default class Step2 extends Component {
         this.setState({hasKey: val})
     }
 
-    async authorize() {
+    async validate() {
         this.setState({disabled: true, loading: true});
-        setTimeout(() => {
-            axios.post(wordproof.ajax.url, qs.stringify({
-                'action': 'wordproof_oauth_authorize',
-                'security': wordproof.ajax.security
-            })).then((response) => {
-                if (response.data.success) {
-                    window.location = response.data.redirect;
-                } else {
-                    this.setState({error: response.data.message});
-                }
-            });
-        }, 3000);
-    }
-
-    async getSiteData() {
-        this.setState({loading: true});
-
         axios.post(wordproof.ajax.url, qs.stringify({
             'action': 'wordproof_validate_token',
             'security': wordproof.ajax.security
         })).then((response) => {
-            this.setState({loading: false});
-
+            this.setState({disabled: false, loading: false});
             if (response.data.success) {
                 this.setState({connection: true});
                 this.props.update(null, 'wsfy_is_active', true);
+                this.props.update(null, 'balance', response.data.balance);
             } else {
                 this.props.update(null, 'wsfy_is_active', false);
             }
-
-            if (response.data.balance)
-                this.props.update(null, 'balance', response.data.balance);
-
         });
     }
 
@@ -77,9 +56,9 @@ export default class Step2 extends Component {
             const data = value.split('&');
             if (data.length === 3) {
                 this.props.update(null, 'wsfy_is_active', true);
-                this.props.update(null, 'client_id', data[0]);
-                this.props.update(null, 'client_secret', data[1]);
-                this.props.update(null, 'site_id', data[2]);
+                this.props.update(null, 'site_id', data[0]);
+                this.props.update(null, 'access_token', data[1]);
+                this.props.update(null, 'token_id', data[2]);
                 this.setState({error: null});
             } else {
                 this.setState({error: 'This Site Key seems invalid. Please fetch a new one.'});
@@ -134,12 +113,12 @@ export default class Step2 extends Component {
                 }
 
                 {(this.state.hasKey) && <button
-                    className={'wbtn wbtn-primary'} onClick={() => this.authorize()} disabled={this.state.disabled}>Authorize</button>
+                    className={'wbtn wbtn-primary'} onClick={() => this.validate()} disabled={this.state.disabled}>Validate</button>
                 }
 
                 {(this.state.connection) && <div>
                     <button
-                        className={'wbtn wbtn-secondary mr-4'} onClick={() => this.setNewClient()}>Re-authorize</button>
+                        className={'wbtn wbtn-secondary mr-4'} onClick={() => this.setNewClient()}>Replace Site Key</button>
                     <button className={'wbtn wbtn-primary'} onClick={() => this.props.nextStep()}>Save & Continue</button>
                 </div>
                 }

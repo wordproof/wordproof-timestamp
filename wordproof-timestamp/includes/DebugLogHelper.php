@@ -37,7 +37,7 @@ class DebugLogHelper
     if (!is_array($file))
       return 'Nothing logged yet.';
 
-    return trim(implode('', array_reverse($file)));
+    return trim(implode('', $file));
   }
 
   private static function log($level, $message)

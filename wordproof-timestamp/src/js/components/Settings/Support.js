@@ -4,9 +4,13 @@ import Template from "./Partials/Template";
 export default class Support extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {};
         this.textRef = React.createRef();
         this.selectTextarea = this.selectText.bind(this);
+    }
+
+    componentDidMount() {
+        this.textRef.current.scrollTop = this.textRef.current.scrollHeight;
     }
 
     selectText() {

@@ -165,6 +165,7 @@ class OptionsHelper
       $value = self::validateData($value, $type);
       return update_option(self::$prefix . $key, $value);
     } else {
+      DebugLogHelper::warning($key . ' does not exist in $options of OptionsHelper');
       error_log($key . ' does not exist in $options of OptionsHelper');
     }
 

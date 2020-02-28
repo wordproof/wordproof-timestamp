@@ -41,13 +41,13 @@ class DashboardWidgetController
     $wp_meta_boxes['dashboard']['normal']['core'] = $sortedDashboard;
   }
 
-  public static function getRecentPosts($postType, $compare = 'NOT EXISTS', $amount = 3, $postsOnly = false)
+  public static function getRecentPosts($postType, $compare = 'NOT EXISTS', $amount = 3, $postsOnly = false, $stamped = false)
   {
     $status = ($postType === 'attachment') ? 'inherit' : 'publish';
 
     $result = [];
 
-    $query = new \WP_Query([
+    $query = [
       'post_type' => $postType,
       'posts_per_page' => $amount,
       'post_status' => $status,
@@ -56,8 +56,17 @@ class DashboardWidgetController
           'key' => 'wordproof_timestamp_data',
           'compare' => $compare
         ]
-      ]
-    ]);
+      ],
+    ];
+
+    if ($stamped) {
+      $query = array_merge($query, [
+        'meta_key' => 'wordproof_last_timestamped_on',
+        'orderby' => 'meta_value'
+      ]);
+    }
+
+    $query = new \WP_Query($query);
     $posts = $query->get_posts();
 
     wp_reset_postdata();

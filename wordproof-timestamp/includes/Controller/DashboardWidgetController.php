@@ -43,7 +43,15 @@ class DashboardWidgetController
 
   public static function getRecentlyStampedItems() {
     $posts = self::getRecentPosts(['post', 'attachment', 'product'], 'EXISTS', 20, true, true);
-    return wp_list_pluck($posts, 'post_title');
+
+    $items = [];
+    foreach ($posts as $post) {
+      $item['title'] = $post->post_title;
+      $item['date'] = get_the_date('', $post);
+      $item['url'] = get_permalink($post);
+      $items[] = $item;
+    }
+    return $items;
   }
 
   public static function getRecentPosts($postType, $compare = 'NOT EXISTS', $amount = 3, $postsOnly = false, $stamped = false)

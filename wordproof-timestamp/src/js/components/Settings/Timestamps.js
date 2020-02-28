@@ -31,7 +31,7 @@ export default class Timestamps extends Component {
                             <tbody>
                             {wordproofSettings.recentlyStampedItems.map((post, i) => {
                                 return (
-                                    <tr className="hover:bg-grey-lighter">
+                                    <tr key={i} className="hover:bg-grey-lighter">
                                         <td className="py-4 px-6 border-b border-grey-light">{post.date}</td>
                                         <td className="py-4 px-6 border-b border-grey-light"><strong>{post.title}</strong></td>
                                         <td className="py-4 px-6 border-b border-grey-light"><a href={post.url} target="_blank" rel="noopener noreferrer">{post.url}</a></td>

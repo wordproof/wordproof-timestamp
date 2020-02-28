@@ -103,6 +103,7 @@ class AdminController
       case 'wordproof_page_wordproof-upgrade':
       case 'wordproof_page_wordproof-support':
       case 'wordproof_page_wordproof-bulk':
+      case 'wordproof_page_wordproof-timestamps':
         $wsfy = OptionsHelper::getWSFY();
 
         wp_enqueue_script('wordproof.settings.admin.js', WORDPROOF_URI_JS . '/settings.js', array(), filemtime(WORDPROOF_DIR_JS . '/settings.js'), true);
@@ -130,6 +131,7 @@ class AdminController
             'settings' => admin_url('admin.php?page=wordproof-settings'),
             'dashboard' => admin_url('admin.php?page=wordproof-dashboard'),
             'bulk' => admin_url('admin.php?page=wordproof-bulk'),
+            'timestamps' => admin_url('admin.php?page=wordproof-timestamps'),
             'upgrade' => admin_url('admin.php?page=wordproof-upgrade'),
             'upgradeExternal' => WORDPROOF_MY_URI . 'sites/upgrade',
             'support' => admin_url('admin.php?page=wordproof-support'),

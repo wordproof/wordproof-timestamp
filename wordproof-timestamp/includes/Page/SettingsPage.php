@@ -17,6 +17,7 @@ class SettingsPage
     'settings' => 'Settings',
     'bulk' => 'Bulk',
     'support' => 'Support',
+    'timestamps' => 'Timestamps',
 //    'upgrade' => 'Upgrade',
   ];
 
@@ -72,6 +73,11 @@ class SettingsPage
   public function generateSettingsPage_upgrade()
   {
     $this->renderSettingPage('upgrade');
+  }
+
+  public function generateSettingsPage_timestamps()
+  {
+    $this->renderSettingPage('timestamps');
   }
 
   public function renderSettingPage($slug)

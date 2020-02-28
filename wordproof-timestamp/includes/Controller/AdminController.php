@@ -122,6 +122,7 @@ class AdminController
           'sendTimestampsWithOrder' => OptionsHelper::getSendTimestampsWithOrder(),
           'timestampsOrderText' => OptionsHelper::getTimestampOrderText(),
           'wsfy' => $wsfy,
+          'recentlyStampedItems' => DashboardWidgetController::getRecentlyStampedItems(),
           'registeredPostTypes' => get_post_types(['public' => true]),
           'saveChanges' => 'Save Changes',
           'balance' => OptionsHelper::getBalanceCache(),

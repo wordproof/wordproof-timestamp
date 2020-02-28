@@ -16,6 +16,12 @@ export default class Timestamps extends Component {
                     to help you out. The WordProof community is active in our Telegram groups, where we talk about
                     new features and help each other. Please join these groups for any support requests:</p>
 
+                <strong>Recently placed timestamps:</strong>
+                <ul>
+                    {wordproofSettings.recentlyStampedItems.map((post, i) => {
+                        return (<li key={i}>{post}</li>)
+                    })}
+                </ul>
             </Template>
         )
     }

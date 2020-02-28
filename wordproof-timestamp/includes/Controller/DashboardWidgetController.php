@@ -41,16 +41,21 @@ class DashboardWidgetController
     $wp_meta_boxes['dashboard']['normal']['core'] = $sortedDashboard;
   }
 
+  public static function getRecentlyStampedItems() {
+    $posts = self::getRecentPosts(['post', 'attachment', 'product'], 'EXISTS', 20, true, true);
+    return wp_list_pluck($posts, 'post_title');
+  }
+
   public static function getRecentPosts($postType, $compare = 'NOT EXISTS', $amount = 3, $postsOnly = false, $stamped = false)
   {
-    $status = ($postType === 'attachment') ? 'inherit' : 'publish';
+    $status = (is_string($postType) && $postType === 'attachment') ? 'inherit' : 'publish';
 
     $result = [];
 
     $query = [
       'post_type' => $postType,
       'posts_per_page' => $amount,
-      'post_status' => $status,
+      'post_status' => ['publish', 'inherit'],
       'meta_query' => [
         [
           'key' => 'wordproof_timestamp_data',

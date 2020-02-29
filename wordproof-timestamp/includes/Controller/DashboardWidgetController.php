@@ -43,11 +43,14 @@ class DashboardWidgetController
 
   public static function getRecentlyStampedItems() {
     $posts = self::getRecentPosts(['post', 'attachment', 'product'], 'EXISTS', 20, true, true);
+    $format = get_option('date_format') . ' ' . get_option('time_format');
 
     $items = [];
     foreach ($posts as $post) {
+      $timestamp = get_post_meta($post->ID, 'wordproof_last_timestamped_on', true);
+
       $item['title'] = $post->post_title;
-      $item['date'] = get_the_date('', $post);
+      $item['date'] = date($format, $timestamp);
       $item['url'] = get_permalink($post);
       $items[] = $item;
     }

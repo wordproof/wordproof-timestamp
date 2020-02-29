@@ -31,7 +31,7 @@ export default class Timestamps extends Component {
                                         <td className="py-4 px-6 border-b border-grey-light">{post.date}</td>
                                         <td className="py-4 px-6 border-b border-grey-light"><strong>{post.title}</strong></td>
                                         <td className="py-4 px-6 border-b border-grey-light"><a href={post.url} target="_blank" rel="noopener noreferrer">{post.url}</a></td>
-                                        <td className="py-4 px-6 border-b border-grey-light">{ parseInt(wordproofSettings.balance) - i }</td>
+                                        <td className="py-4 px-6 border-b border-grey-light">{ parseInt(wordproofSettings.balance) + i }</td>
                                     </tr>
                                 )
                             })}

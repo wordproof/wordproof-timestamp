@@ -16,28 +16,37 @@ class DebugLogHelper
     self::ERROR => 'ERROR',
   ];
 
-  public static function debug($message) {
+  public static function debug($message)
+  {
     self::log(self::DEBUG, $message);
   }
 
-  public static function info($message) {
+  public static function info($message)
+  {
     self::log(self::INFO, $message);
   }
 
-  public static function warning($message) {
+  public static function warning($message)
+  {
     self::log(self::WARNING, $message);
   }
 
-  public static function error($message) {
+  public static function error($message)
+  {
     self::log(self::ERROR, $message);
   }
 
-  public static function getContents() {
-    $file = file(self::getLogFilename());
-    if (!is_array($file))
-      return 'Nothing logged yet.';
+  public static function getContents()
+  {
+    $file = file_exists(self::getLogFilename());
+    if ($file) {
+      $file = file_get_contents(self::getLogFilename());
+      if (!empty($file)) {
+        return trim($file);
+      }
+    }
 
-    return trim(implode('', $file));
+    return 'Nothing logged yet.';
   }
 
   private static function log($level, $message)
@@ -56,25 +65,28 @@ class DebugLogHelper
 
     $level = self::getLevelName($level);
     $datetime = gmdate('Y-m-d H:i:s', time() + (get_option('gmt_offset', 0) * HOUR_IN_SECONDS));
-    $message = sprintf( '[%s] %s: %s', $datetime, $level, $message ) . PHP_EOL;
+    $message = sprintf('[%s] %s: %s', $datetime, $level, $message) . PHP_EOL;
 
     //TODO archive log if too large, start a fresh one with a message
     file_put_contents(self::getLogFilename(), $message, FILE_APPEND);
   }
 
-  private static function getLogFilename() {
+  private static function getLogFilename()
+  {
     $uploadDir = wp_upload_dir(null, false);
     $file = trailingslashit($uploadDir['basedir']) . 'wordproof-debug.log';
     return apply_filters('wordproof_debug_log_file', $file);
   }
 
-  private static function getLogLevel() {
+  private static function getLogLevel()
+  {
     $level = self::INFO;
-    return apply_filters( 'wordproof_debug_log_level', $level);
+    return apply_filters('wordproof_debug_log_level', $level);
   }
 
-  private static function getLevelName( $level ) {
-    if (!isset( self::$levels[$level])) {
+  private static function getLevelName($level)
+  {
+    if (!isset(self::$levels[$level])) {
       return $level[self::INFO];
     }
 

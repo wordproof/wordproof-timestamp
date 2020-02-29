@@ -112,7 +112,7 @@ export default class Settings extends Component {
 
                 <div className={`form-group`}>
                     <label htmlFor="wordproof_customize[timestamps_order_text]" className="label"
-                           title="TEXT">TEXT</label>
+                           title="Add message to the timestamps">Add message to the timestamps</label>
                     <input type="text" className="textinput" name="wordproof_customize[timestamps_order_text]"
                            placeholder=""
                            value={this.state.timestampsOrderText}

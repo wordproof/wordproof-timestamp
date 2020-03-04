@@ -114,7 +114,6 @@ class Modal extends React.Component {
     getItemsFromSchema = () => {
         const schema = JSON.parse(document.querySelector('script.wordproof-schema').innerHTML);
         const items = getItems(schema);
-        console.log(items);
         this.setState({items: items});
     };
 

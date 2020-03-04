@@ -1,5 +1,4 @@
 import getJSON from "../../../lib/TimestampStandard";
-import striptags from "striptags";
 
 export default function getItems(schema) {
     let items;
@@ -26,7 +25,7 @@ export default function getItems(schema) {
             items = prepareMedia(items);
             break;
         default:
-            items =  prepareArticles(items);
+            items = prepareArticles(items);
     }
 
     return items;
@@ -72,7 +71,6 @@ function getTransactionUrl(network, transactionId) {
 function prepareArticleContent(content) {
     content = content.replace(/<\/p>/g, 'WORDPROOF_PARAGRAPH_END');
     content = content.replace(/(\r\n|\n|\r)/gm, "");
-    content = striptags(content);
     content = content.replace(/WORDPROOF_PARAGRAPH_END/g, '\n\n');
     return content;
 }

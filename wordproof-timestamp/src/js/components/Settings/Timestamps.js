@@ -11,6 +11,7 @@ export default class Timestamps extends Component {
         return (
             <Template current={'timestamps'}>
                 <h3>Timestamps</h3>
+                <p>Some posts may have been timestamped more than once.</p>
 
                 <div className="">
                     <div className="bg-white shadow-md rounded my-6">
@@ -18,7 +19,7 @@ export default class Timestamps extends Component {
                             className="text-left w-full border-collapse">
                             <thead>
                             <tr>
-                                <th className="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Date</th>
+                                <th className="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Last Timestamped</th>
                                 <th className="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Title</th>
                                 <th className="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Url</th>
                                 <th className="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">New Balance</th>

@@ -22,7 +22,8 @@ class SchemaController
 
     switch ($type) {
       case ARTICLE_TIMESTAMP:
-        $object = self::articleSchema($meta, $attributes);
+        $post = get_post($postId);
+        $object = self::articleSchema($post, $meta, $attributes);
         break;
       case MEDIA_OBJECT_TIMESTAMP:
         $object = self::mediaObjectSchema($meta, $attributes);
@@ -54,7 +55,7 @@ class SchemaController
    * @return object|bool
    * More info: https://github.com/wordproof/timestamp-standard/blob/master/ArticleTimestamp.md
    */
-  private static function articleSchema($meta, $attributes)
+  private static function articleSchema($post, $meta, $attributes)
   {
     switch ($meta->version) {
       default:
@@ -65,7 +66,7 @@ class SchemaController
         $array['transactionId'] = $meta->transactionId;
         $array['hash'] = $meta->hash;
         $array['title'] = $meta->title;
-        $array['content'] = $meta->content;
+        $array['content'] = $post->post_content;
         $array['date'] = $meta->date;
 
         foreach ($attributes as $key => $value) {

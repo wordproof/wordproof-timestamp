@@ -30,6 +30,8 @@ class WordProofTimestamp
 
     new AutomaticHooksController();
     new ECommerceController();
+
+
   }
 
   /**

@@ -33,6 +33,7 @@ class AdminController
       new GettingStarted();
 
       new PostColumnController();
+      new PostFilterController();
       new DashboardWidgetController();
       new PostWidgetController();
       new AdminBarController();

@@ -21,7 +21,8 @@ export default class Timestamps extends Component {
                             <tr>
                                 <th className="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Last Timestamped</th>
                                 <th className="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Title</th>
-                                <th className="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Url</th>
+                                <th className="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">URL</th>
+                                <th className="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">Post Type</th>
                                 <th className="py-4 px-6 bg-grey-lightest font-bold text-sm text-grey-dark border-b border-grey-light">New Balance</th>
                             </tr>
                             </thead>
@@ -32,6 +33,7 @@ export default class Timestamps extends Component {
                                         <td className="py-4 px-6 border-b border-grey-light">{post.date}</td>
                                         <td className="py-4 px-6 border-b border-grey-light"><strong>{post.title}</strong></td>
                                         <td className="py-4 px-6 border-b border-grey-light"><a href={post.url} target="_blank" rel="noopener noreferrer">{post.url}</a></td>
+                                        <td className="py-4 px-6 border-b border-grey-light">{ post.type }</td>
                                         <td className="py-4 px-6 border-b border-grey-light">{ parseInt(wordproofSettings.balance) + i }</td>
                                     </tr>
                                 )

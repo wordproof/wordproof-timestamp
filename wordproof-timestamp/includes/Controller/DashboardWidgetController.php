@@ -52,6 +52,7 @@ class DashboardWidgetController
       $item['title'] = $post->post_title;
       $item['date'] = date($format, $timestamp);
       $item['url'] = get_permalink($post);
+      $item['type'] = get_post_type($post);
       $items[] = $item;
     }
     return $items;

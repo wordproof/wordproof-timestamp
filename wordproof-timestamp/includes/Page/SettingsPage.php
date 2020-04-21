@@ -13,12 +13,12 @@ class SettingsPage
 {
 
   private $settingPages = [
-    'dashboard' => 'Dashboard',
-    'settings' => 'Settings',
-    'bulk' => 'Bulk',
-    'support' => 'Support',
+    'dashboard' => 'Overview',
     'timestamps' => 'Timestamps',
-//    'upgrade' => 'Upgrade',
+    'bulk' => 'Bulk',
+    'settings' => 'Settings',
+    //setup
+    'support' => 'Support',
   ];
 
   public function __construct()

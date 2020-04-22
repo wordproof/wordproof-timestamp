@@ -23,7 +23,7 @@ class GettingStarted extends Component {
 
                 <h1 className="text-lg text-center">Welcome to WordProof Timestamp!</h1>
                 <p className="text-lg text-center">WordProof makes it easy to timestamp content on the blockchain. You
-                    are about to protect your copyright and increase the trust your visitor has in your website.</p>
+                    are about to protect your copyright and increase the trust your visitors and other platforms have in your website.</p>
 
                 <p className="text-lg text-center pt-4">Launch the setup wizard to get started!</p>
 

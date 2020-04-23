@@ -18,6 +18,11 @@ class AnalyticsHelper
     add_action('wp_ajax_wordproof_wallet_connection', array($this, 'onWalletConnected'));
 
     add_action('wordproof_after_saving_timestamp_meta_data', array($this, 'onNewTimestamp'));
+    add_action('wordproof_after_saving_timestamp_meta_data', array($this, 'removeUnprotectedPostTransientCount'));
+  }
+
+  public function removeUnprotectedPostTransientCount() {
+    delete_transient('wordproof_unprotected_post_count');
   }
 
   public function onNewTimestamp()

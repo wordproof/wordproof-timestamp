@@ -38,7 +38,7 @@ class AdminController
       new PostWidgetController();
       new AdminBarController();
 
-      new NotificationHelper();
+      new NoticeController();
       new ChainHelper();
     }
   }

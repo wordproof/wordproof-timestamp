@@ -2,7 +2,7 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
-use WordProofTimestamp\includes\Notice\Notice;
+use WordProofTimestamp\includes\Notice\NotSetupNotice;
 use WordProofTimestamp\includes\Notice\UnprotectedPostsNotice;
 
 class NoticeController
@@ -22,6 +22,7 @@ class NoticeController
   public function initializeNotices()
   {
     $this->notices[] = new UnprotectedPostsNotice();
+//    $this->notices[] = new NotSetupNotice();
   }
 
   public function getKeys()

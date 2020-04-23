@@ -6,7 +6,6 @@ use WordProofTimestamp\includes\AnalyticsHelper;
 use WordProofTimestamp\includes\ChainHelper;
 use WordProofTimestamp\includes\DebugLogHelper;
 use WordProofTimestamp\includes\DomainHelper;
-use WordProofTimestamp\includes\NotificationHelper;
 use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\Page\GettingStarted;
 use WordProofTimestamp\includes\Page\OnboardingWizard;

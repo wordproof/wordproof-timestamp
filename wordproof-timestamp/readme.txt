@@ -2,9 +2,9 @@
 Contributors: wordproof
 Tags: blockchain, timestamp, eosio, eos, telos, web30, copyright, scatter, decentralisation, proof
 Requires at least: 4.6
-Tested up to: 5.4
+Tested up to: 5.4.1
 Requires PHP: 5.3
-Stable tag: 2.7.1
+Stable tag: 2.7.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -82,6 +82,10 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 6. WordProof Setup Wizard - Create a free Telos blockchain account.
 
 == Changelog ==
+= 2.7.2 =
+*Release date: May 4th, 2020*
+* Fix: In some cases, selecting to use WordProof manually did not save properly. Thanks for reporting Francesco!
+
 = 2.7.1 =
 *Release date: April 21st, 2020*
 * Various small improvements to the user interface

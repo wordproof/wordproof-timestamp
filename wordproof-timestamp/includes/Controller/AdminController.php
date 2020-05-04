@@ -178,6 +178,7 @@ class AdminController
         'upgradeExternal' => WORDPROOF_MY_URI . 'sites/upgrade',
       ],
       'images' => [
+        'wordpress' => WORDPROOF_URI_IMAGES . '/wordpress-logo.png',
         'loading' => admin_url() . 'images/spinner-2x.gif'
       ]
     ));

@@ -5,8 +5,7 @@ import axios from 'axios';
 import qs from 'qs';
 
 import DashboardWidget from './components/Widgets/Dashboard'
-import PostWidget from './components/Widgets/Post'
-import TimestampButton from "./components/Extras/TimestampButton";
+import Timestamp from "./components/Timestamp/Timestamp";
 
 /**
  * Settings
@@ -20,7 +19,10 @@ if (document.querySelectorAll('#wordproof-dashboard-widget')) {
 
 if (document.querySelectorAll('#wordproof-post-widget')) {
   document.querySelectorAll('#wordproof-post-widget').forEach((element) => {
-    ReactDOM.render(<PostWidget/>, element);
+    ReactDOM.render(<Timestamp
+        automatic={element.dataset.automate}
+        view={'widget'}
+    />, element);
   })
 }
 
@@ -29,7 +31,12 @@ if (document.querySelectorAll('#wordproof-post-widget')) {
  */
 if (document.querySelectorAll('.wordproof-timestamp-button')) {
   document.querySelectorAll('.wordproof-timestamp-button').forEach((element) => {
-    ReactDOM.render(<TimestampButton automate={element.dataset.automate} post={JSON.parse(decodeURIComponent(element.dataset.post))} meta={JSON.parse(decodeURIComponent(element.dataset.meta))}/>, element);
+    ReactDOM.render(<Timestamp
+        automatic={element.dataset.automate}
+        post={JSON.parse(decodeURIComponent(element.dataset.post))}
+        meta={JSON.parse(decodeURIComponent(element.dataset.meta))}
+        view={'text'}
+    />, element);
   })
 }
 

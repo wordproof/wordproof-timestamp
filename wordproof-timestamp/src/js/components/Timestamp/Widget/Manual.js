@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {instanceOf} from 'prop-types';
 import {withCookies, Cookies} from 'react-cookie';
-import ConnectionWidget from '../ConnectionWidget/ConnectionWidget';
-import initWallet from '../../lib/wallet';
-import timestamp from '../../lib/timestamp';
-import getBonus from '../../lib/bonus';
+import ConnectionWidget from '../../ConnectionWidget/ConnectionWidget';
+import initWallet from '../../../lib/wallet';
+import timestamp from '../../../lib/timestamp';
+import getBonus from '../../../lib/bonus';
 
-class Metabox extends Component {
+class Manual extends Component {
 
   static propTypes = {
     cookies: instanceOf(Cookies).isRequired
@@ -179,7 +179,7 @@ class Metabox extends Component {
       <div className="wordproof-metabox">
 
         <ConnectionWidget status={this.state.widgetStatus} balance={this.state.balance}
-                          accountName={this.state.accountName}/>
+                          accountName={this.state.accountName} provider={'scatter'}/>
 
         {this.state.timestampStatus !== 'success' ?
           <div className="buttons">
@@ -207,4 +207,4 @@ class Metabox extends Component {
   }
 }
 
-export default withCookies(Metabox);
+export default withCookies(Manual);

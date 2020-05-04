@@ -5,14 +5,18 @@ export default class Step1 extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      loading: false,
+    }
   }
 
   setManual() {
     this.props.update(null, 'wordproof_wallet_connected', true);
     this.props.update(null, 'wsfy_is_active', false);
+    this.setState({loading: true});
     setTimeout(function () {
       window.location.href = wordproof.urls.settings;
-    }, 1000);
+    }, 1500);
   }
 
   render() {
@@ -30,14 +34,18 @@ export default class Step1 extends Component {
               Set-up in 5 minutes
             </p>
 
-            <button className="wbtn inline-block mt-3" onClick={this.props.nextStep}>
+            <button disabled={this.state.loading} className="wbtn inline-block mt-3" onClick={this.props.nextStep}>
               Start the set-up
             </button>
           </div>
         </div>
 
-        Advanced: <a onClick={() => this.setManual()} className="inline-block mt-6 cursor-pointer">I want to timestamp manually with my own blockchain account and Scatter</a>
-
+        <div className={`mt-6`}>
+          {(this.state.loading)
+              ? <span>Redirecting to manual setup...</span>
+              : <span>Advanced: <a onClick={() => this.setManual()} className="inline-block cursor-pointer">I want to timestamp manually with my own blockchain account and Scatter</a></span>
+          }
+        </div>
       </div>
     );
   }

@@ -63,7 +63,7 @@ export default class Wizard extends Component {
           <img className={`border-none h-10`} src={wordproof.urls.images + '/wordproof-logo.png'} />
         </div>
         <div className={'wizard-container'}>
-          <StepWizard transitions={this.transitions} isHashEnabled={true} nav={<Nav labels={this.navLabels}/>}>
+          <StepWizard isLazyMount={true} transitions={this.transitions} isHashEnabled={true} nav={<Nav labels={this.navLabels}/>}>
             <Step1 hashKey={'mode'} update={this.updateField.bind(this)}/>
             <Step2 hashKey={'connect'} get={this.getField.bind(this)} update={this.updateField.bind(this)} initial={wordproof.currentValues} />
             <Step3 hashKey={'customize'} get={this.getField.bind(this)} update={this.updateField.bind(this)} initial={wordproof.currentValues} />

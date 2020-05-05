@@ -21,7 +21,8 @@ class Metabox extends Component {
       buttonsDisabled: true,
       widgetStatus: 'connecting',
       timestampStatus: null,
-      timestampCertificateLink: null
+      timestampCertificateLink: null,
+      errorMessage: null
     }
   }
 
@@ -39,7 +40,7 @@ class Metabox extends Component {
   timestamp = async () => {
     this.setState({timestampStatus: 'connecting', buttonsDisabled: true});
     const wallet = await this.getWallet();
-    await this.checkBonus(wallet.auth.accountName, wordproofData.network);
+    // await this.checkBonus(wallet.auth.accountName, wordproofData.network);
 
     if (!wallet.connected) {
       await wallet.connect()
@@ -48,18 +49,31 @@ class Metabox extends Component {
       await wallet.login()
     }
 
-    timestamp(wallet).then(response => response.json())
-    .then((result) => {
-      if (result.success) {
+    timestamp(wallet).then(response => {
+      try {
+        console.log(response);
+        let object = response.json;
+        console.log(object);
+
+        if (object.error) {
+          console.log(object.error)
+          console.log(object.error.what)
+          throw object.error.what;
+        }
+
+          this.setState({
+            timestampStatus: 'success',
+            timestampCertificateLink: response.data.url
+          });
+
+      } catch (e) {
         this.setState({
-          timestampStatus: 'success',
-          timestampCertificateLink: result.data.url
-        });        // result.data
+          buttonsDisabled: false,
+          widgetStatus: 'success',
+          timestampStatus: null,
+          errorMessage: e
+        });
       }
-    })
-    .catch(error => {
-      this.setState({timestampStatus: 'failed'});
-      console.error(error);
     });
   }
 
@@ -202,7 +216,14 @@ class Metabox extends Component {
             <p>Your post is timestamped! <a rel="noopener noreferrer" target="_blank" href={this.state.timestampCertificateLink}>View your certificate</a>.</p>
           </div>
         }
-      </div>
+
+        {this.state.errorMessage ?
+            <div className="mt-2">
+              <p><strong>Something went wrong:</strong> {this.state.errorMessage}</p>
+            </div>
+            : ''}
+
+          </div>
     )
   }
 }

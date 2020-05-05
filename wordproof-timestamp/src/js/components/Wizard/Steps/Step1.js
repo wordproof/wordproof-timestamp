@@ -11,7 +11,7 @@ export default class Step1 extends Component {
   }
 
   setManual() {
-    this.props.update(null, 'wordproof_wallet_connected', true);
+    this.props.update(null, 'wallet_connected', true);
     this.props.update(null, 'wsfy_is_active', false);
     this.setState({loading: true});
     setTimeout(function () {

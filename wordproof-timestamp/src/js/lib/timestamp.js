@@ -39,7 +39,7 @@ export default async function timestamp(wallet) {
     /**
      * Something went wrong
      */
-    console.log('Fail', error);
+    return error;
   }
 }
 

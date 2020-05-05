@@ -34,6 +34,7 @@ class OptionsHelper
       'token_id' => ['type' => 'text'],
     ],
     'wsfy_is_active' => ['type' => 'bool'],
+    'wallet_connected' => ['type' => 'bool'],
     'accountname' => ['type' => 'text'],
     'balance' => ['type' => 'text'],
   ];

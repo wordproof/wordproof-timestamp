@@ -2643,19 +2643,19 @@ entities@^2.0.0:
   resolved "https://registry.yarnpkg.com/entities/-/entities-2.0.0.tgz#68d6084cab1b079767540d80e56a39b423e4abf4"
   integrity sha512-D9f7V0JSRwIxlRI2mjMqufDrRDnx8p+eEOz7aUM9SuvF8gsBzra0/6tbjl1m8eQHrZlYj6PxqE00hZ1SAIKPLw==
 
-eos-transit-scatter-provider@^3.0.1:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/eos-transit-scatter-provider/-/eos-transit-scatter-provider-3.2.2.tgz#21e80352b97b557e7d4be20857d976a2a1459b7c"
-  integrity sha512-lbIbltA3iYGQGV5YlAocw15Vdq+fbfWtWyg/AwUTvKWC+S+6IswkDVffErrvVgmQSTUzyAgFsYht7a8z57WiSQ==
+eos-transit-scatter-provider@^4.0.5:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/eos-transit-scatter-provider/-/eos-transit-scatter-provider-4.0.5.tgz#1a81202ff724b77aebd54e4c80df2007164932a0"
+  integrity sha512-yU1XHXSqJBQaTE8jMH0qJBmfDH7TnRUr5QMvbqzkw6IRGt+KFeQ6f7q5BIGKgjDPfDgfAJelx7vpMnJ41gLHZQ==
   dependencies:
-    eos-transit "^3.1.2"
+    eos-transit "^4.0.5"
     scatterjs-core "2.7.18"
     scatterjs-plugin-eosjs2 "1.5.0"
 
-eos-transit@^3.0.1, eos-transit@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/eos-transit/-/eos-transit-3.1.2.tgz#04dfa1d23df906122d8f99485776de3a15a57701"
-  integrity sha512-DVY1ryYHtEslMAuXDOTlMT4Nyy1fELeHeUvPCzn6bSfAE3NFmQmWZqdXsk4yzRBHS9ulz3Y3CiWx5Z4gz3oM7Q==
+eos-transit@^4.0.5:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/eos-transit/-/eos-transit-4.0.5.tgz#68f578077a54451145d32702d40f5625be6d1a55"
+  integrity sha512-NRNvBv9ENeDZAwzV2jaVLALqiI3JrfXJPPDf7uZIIVzfru9VImjTMCLYLXMourgzeWOkexzOVnUE4/klq0CIFQ==
   dependencies:
     eosjs "^20.0.0"
     uuid "^3.3.2"

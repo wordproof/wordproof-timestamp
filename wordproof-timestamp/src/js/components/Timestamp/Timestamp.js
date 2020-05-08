@@ -133,14 +133,13 @@ export default class Timestamp extends Component {
 
                 if (!this.state.loading || Date.now() > loopTill || this.state.status === 'timestamped') {
                     this.setState({loading: false, stampedRequest: false});
-                    this.addSnackbarMessage();
+                    this.addEditorNotice('Post successfully timestamped.');
                     clearInterval(interval);
                 }
 
                 this.refreshPostData().then(() => {
-                    if (this.state.status === 'timestamped') {
+                    if (this.state.status === 'timestamped')
                         this.setState({loading: false, stampedRequest: false});
-                    }
                 });
 
             }, 3000);
@@ -148,18 +147,13 @@ export default class Timestamp extends Component {
         });
     }
 
-    addSnackbarMessage() {
+    addEditorNotice(message, status = 'success') {
         wp.data.dispatch( 'core/notices' ).createNotice(
-            'success',
-            'Post successfully timestamped.',
+            status,
+            message,
             {
                 isDismissible: true,
-                // actions: [
-                //     {
-                //         url: '#',
-                //         label: 'View post',
-                //     },
-                // ],
+                // actions: [{ url: '#', label: 'View post'}]
             }
         );
     }
@@ -198,7 +192,7 @@ export default class Timestamp extends Component {
                     {(this.state.loading) ?
                         <img className={`loading-spinner`} src={wordproofData.images.loading} alt={`loading`}/> : ''}
                     { this.getTextViewContents() }
-                    {(this.state.loading) ? this.state.message : ''}
+                    {this.state.message}
                 </div>
             )
         } else if (this.state.view === 'widget') {

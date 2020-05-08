@@ -173,6 +173,8 @@ class AdminController
         'settings' => admin_url('admin.php?page=wordproof-settings'),
         'wizard' => admin_url('admin.php?page=wordproof-wizard'),
         'wizardConnect' => admin_url('admin.php?page=wordproof-wizard#connect'),
+        'postOverview' => admin_url('edit.php'),
+        'pagesOverview' => admin_url('edit.php?post_type=page'),
         'site' => get_site_url(),
         'ajax' => admin_url('admin-ajax.php'),
         'upgradeExternal' => WORDPROOF_MY_URI . 'sites/upgrade',

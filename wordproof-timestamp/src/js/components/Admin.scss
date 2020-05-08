@@ -280,27 +280,6 @@ $transition: 0.4s ease-in-out;
   }
 }
 
-.wp-admin {
-  .wordproof-notice {
-    border: 2px #00D5B1 solid;
-    background: #F2FFFD;
-    padding: 10px 20px;
-    font-size: 14px;
-
-    &--success {
-    }
-
-    &--info {
-    }
-
-    &--warning {
-    }
-
-    &--danger {
-    }
-  }
-}
-
 .wordproof-connecting {
   display: flex;
   align-items: center;

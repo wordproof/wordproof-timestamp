@@ -26,7 +26,7 @@ a {
  */
 
 hr {
-  @apply my-5
+  @apply my-5;
 }
 
 /**
@@ -38,7 +38,7 @@ input {
 }
 
 input:focus {
-  @apply outline-none shadow-outline
+  @apply outline-none shadow-outline;
 }
 
 /**

@@ -45,9 +45,6 @@ export default class Timestamp extends Component {
         if (this.state.loading === true) {
             this.startLoop();
         }
-
-        console.log(this.state);
-
     }
 
     async refreshPostData() {
@@ -73,10 +70,6 @@ export default class Timestamp extends Component {
      * @returns {string}
      */
     getStatus() {
-        console.log('getStatus');
-        // if (this.state.loading)
-        //     return 'connecting';
-
         if (this.state.post.status !== 'publish' && this.state.post.status !== 'inherit')
             return 'not_published';
 

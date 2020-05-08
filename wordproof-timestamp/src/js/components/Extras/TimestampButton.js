@@ -11,21 +11,27 @@ export default class TimestampButton extends Component {
             'show': true,
             'message': '',
             'hideLabels': props.hideLabels,
-            'post': props.post,
-            'meta': props.meta,
+            'post': (props.post) ? props.post : null,
+            'meta': (props.meta) ? props.meta : null,
+            'loading': (props.loading) ? props.loading : false,
             'loopTill': false
         };
-
     }
 
     componentDidMount() {
-        this.setState({status: this.getStatus()});
+
+        if (this.state.post === null || this.state.meta === null) {
+            this.refreshPostData();
+        } else {
+            this.setState({status: this.getStatus()});
+        }
+
     }
 
     async refreshPostData() {
         const result = await axios.post(wordproofData.urls.ajax, qs.stringify({
             'action': 'wordproof_get_post_data',
-            'post_id': this.state.post.id,
+            'post_id': (this.state.post.id) ? this.state.post.id : wordproofPost.postId,
             'security': wordproofData.ajaxSecurity
         }));
 

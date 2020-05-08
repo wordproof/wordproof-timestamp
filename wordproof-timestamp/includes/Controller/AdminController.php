@@ -6,7 +6,6 @@ use WordProofTimestamp\includes\AnalyticsHelper;
 use WordProofTimestamp\includes\ChainHelper;
 use WordProofTimestamp\includes\DebugLogHelper;
 use WordProofTimestamp\includes\DomainHelper;
-use WordProofTimestamp\includes\NotificationHelper;
 use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\Page\GettingStarted;
 use WordProofTimestamp\includes\Page\OnboardingWizard;
@@ -33,11 +32,12 @@ class AdminController
       new GettingStarted();
 
       new PostColumnController();
+      new PostFilterController();
       new DashboardWidgetController();
       new PostWidgetController();
       new AdminBarController();
 
-      new NotificationHelper();
+      new NoticeController();
       new ChainHelper();
     }
   }
@@ -178,6 +178,7 @@ class AdminController
         'upgradeExternal' => WORDPROOF_MY_URI . 'sites/upgrade',
       ],
       'images' => [
+        'wordpress' => WORDPROOF_URI_IMAGES . '/wordpress-logo.png',
         'loading' => admin_url() . 'images/spinner-2x.gif'
       ]
     ));

@@ -32,7 +32,7 @@ export default class SelectItem extends React.Component {
 
     render() {
         return (
-            <select className={'w-full bg-white border-2 border-gray-300 mb-3 py-2 px-3 h-10 max-h-full'} onChange={(e) => this.change(e)} value={this.props.selected}>
+            <select className={'w-full bg-white border-2 border-gray-300 mb-3 py-2 px-3 h-10 max-h-full text-gray-800'} onChange={(e) => this.change(e)} value={this.props.selected}>
                 {this.props.items.map((item, index) => {
                     return (<option disabled={this.props.disabledIndexes.includes(index)} data-for={this.props.for} key={index} value={index}>{ this.dateToLocale(item.date, index) }</option>)
                 })}

@@ -18,7 +18,7 @@ export default class Step2 extends Component {
     }
 
     componentDidMount() {
-        this.validate(false);
+        this.validate(false, false);
     }
 
     deactivate() {
@@ -34,7 +34,7 @@ export default class Step2 extends Component {
         this.setState({hasKey: val})
     }
 
-    async validate(showError = true) {
+    async validate(showError = true, nextPageOnSuccess = true) {
         this.setState({disabled: true, loading: true});
 
         window.setTimeout(() => {
@@ -48,6 +48,10 @@ export default class Step2 extends Component {
                     this.setState({connection: true});
                     this.props.update(null, 'wsfy_is_active', true);
                     this.props.update(null, 'balance', response.data.balance);
+
+                    if (nextPageOnSuccess)
+                        this.props.nextStep();
+
                 } else {
                     this.props.update(null, 'wsfy_is_active', false);
                     if (showError) {
@@ -105,22 +109,13 @@ export default class Step2 extends Component {
                 {(this.state.hasKey === null && !this.state.loading && !this.state.connection) && <div>
                     <h3>Do you have a WordProof Site Key yet?</h3>
                     <div className={'flex flex-row'}>
-                        <button onClick={() => this.hasSiteKey(true)} className={`wbtn wbtn-darkgreen px-16 mr-3`}>Yes
+                        <button onClick={() => this.hasSiteKey(true)} className={`wbtn wbtn-darkgreen px-16 mr-3`}>Yes!
                         </button>
-                        <button onClick={() => this.hasSiteKey(false)} className={`wbtn wbtn-darkgray px-16`}>No
-                        </button>
+                        <a onClick={() => this.hasSiteKey(true)}
+                           className="wbtn wbtn-darkgray px-10 inline-block"
+                           href={wordproof.urls.signup} target="_blank"
+                           rel="noopener noreferrer">No, create my key</a>
                     </div>
-                </div>
-                }
-
-                {(this.state.hasKey === false) && <div>
-                    <h3>You need a WordProof account to set-up the automated version of WordProof Timestamp</h3>
-                    <p className={'my-2'}>Set-up takes minutes and is free.</p>
-                    <a onClick={() => this.hasSiteKey(true)}
-                       className="wbtn wbtn-secondary mb-4 inline-block"
-                       href={wordproof.urls.signup} target="_blank"
-                       rel="noopener noreferrer">
-                        Create My WordProof Account</a>
                 </div>
                 }
 
@@ -131,14 +126,18 @@ export default class Step2 extends Component {
                     error={this.state.error}/>
                 }
 
-                {(this.state.hasKey && !this.state.connection) && <button
+                {(this.state.hasKey && !this.state.connection) && <div>
+                    <button
                     className={'wbtn wbtn-primary'} onClick={() => this.validate()} disabled={this.state.disabled}>Validate</button>
+                    <a className="inline-block ml-4"
+                    href={wordproof.urls.signup} target="_blank"
+                       rel="noopener noreferrer">I don&apos;t have a Site Key, create one now</a>
+                </div>
                 }
 
                 {(this.state.connection) && <div>
-                    <button
-                        className={'wbtn wbtn-secondary mr-4'} onClick={() => this.setNewClient()}>Replace Site Key</button>
-                    <button className={'wbtn wbtn-primary'} onClick={() => this.props.nextStep()}>Save & Continue</button>
+                    <button className={'wbtn wbtn-primary'} onClick={() => this.props.nextStep()}>Save & Continue</button><a
+                    className={'inline-block ml-4 cursor-pointer'} onClick={() => this.setNewClient()}>or use another Site Key</a>
                 </div>
                 }
 

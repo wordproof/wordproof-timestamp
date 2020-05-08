@@ -38,7 +38,7 @@ class PostColumnController
     add_action('wp_ajax_wordproof_wsfy_retry_callback', [$this, 'retryCallback']);
   }
 
-  function savePost()
+  public function savePost()
   {
     check_ajax_referer('wordproof', 'security');
     $postId = intval($_REQUEST['post_id']);
@@ -48,7 +48,7 @@ class PostColumnController
     die();
   }
 
-  function retryCallback()
+  public function retryCallback()
   {
     check_ajax_referer('wordproof', 'security');
     $postId = intval($_REQUEST['post_id']);

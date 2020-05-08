@@ -66,7 +66,7 @@ export default class Wizard extends Component {
                         <img className={`border-none h-10`} src={wordproof.urls.images + '/wordproof-logo.png'}/>
                     </div>
                     <div className={`flex flew-row justify-center`}>
-                        <div className={'wizard-container overflow-hidden'}>
+                        <div className={'wizard-container overflow-y-hidden overflow-x-visible'}>
                             <StepWizard transitions={this.transitions} isHashEnabled={true}
                                         nav={<Nav labels={this.navLabels}/>}>
                                 <Step1 hashKey={'mode'} update={this.updateField.bind(this)}/>

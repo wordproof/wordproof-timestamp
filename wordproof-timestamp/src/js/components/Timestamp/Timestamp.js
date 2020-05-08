@@ -133,17 +133,35 @@ export default class Timestamp extends Component {
 
                 if (!this.state.loading || Date.now() > loopTill || this.state.status === 'timestamped') {
                     this.setState({loading: false, stampedRequest: false});
+                    this.addSnackbarMessage();
                     clearInterval(interval);
                 }
 
                 this.refreshPostData().then(() => {
-                    if (this.state.status === 'timestamped')
+                    if (this.state.status === 'timestamped') {
                         this.setState({loading: false, stampedRequest: false});
+                    }
                 });
 
             }, 3000);
 
         });
+    }
+
+    addSnackbarMessage() {
+        wp.data.dispatch( 'core/notices' ).createNotice(
+            'success',
+            'Post successfully timestamped.',
+            {
+                isDismissible: true,
+                // actions: [
+                //     {
+                //         url: '#',
+                //         label: 'View post',
+                //     },
+                // ],
+            }
+        );
     }
 
     getTextViewContents() {

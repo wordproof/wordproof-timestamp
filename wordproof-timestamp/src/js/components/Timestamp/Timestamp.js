@@ -19,6 +19,7 @@ export default class Timestamp extends Component {
             automatic: (props.automatic) ? props.automatic : true,
             status: null,
             message: '',
+            stampedRequest: false,
         };
     }
 
@@ -45,6 +46,35 @@ export default class Timestamp extends Component {
         if (this.state.loading === true) {
             this.startLoop();
         }
+
+        if ("wordproofPost" in window) {
+            wp.data.subscribe(() => {
+                let select = wp.data.select('core/editor');
+                let isSavingPost = select.isSavingPost();
+                let isAutosavingPost = select.isAutosavingPost();
+                let didPostSaveRequestSucceed = select.didPostSaveRequestSucceed();
+                if (isSavingPost && !isAutosavingPost && didPostSaveRequestSucceed) {
+                    this.setState({status: 'awaiting_callback'});
+                    setTimeout(() => {
+                        this.stamp().then(() => {
+                            this.startLoop();
+                        })
+                    }, 2000)
+                }
+            });
+        }
+    }
+
+    async stamp() {
+        if (wordproofPost.autoStamped && !this.state.stampedRequest) {
+            this.setState({stampedRequest: true}, async () => {
+                await axios.post(wordproofData.urls.ajax, qs.stringify({
+                    'action': 'wordproof_wsfy_save_post',
+                    'post_id': wordproofPost.postId,
+                    'security': wordproofData.ajaxSecurity
+                }));
+            });
+        }
     }
 
     async refreshPostData() {
@@ -61,7 +91,7 @@ export default class Timestamp extends Component {
                 post: result.data.post,
                 meta: result.data.meta,
                 message: '',
-            }, () => this.setState({status: this.getStatus()}, ()=>console.log(this.state.status))
+            }, () => this.setState({status: this.getStatus()})
         );
     }
 
@@ -93,19 +123,22 @@ export default class Timestamp extends Component {
     }
 
     startLoop() {
+        if (this.state.loading === true)
+            return;
+
         const loopTill = Date.now() + 16000;
         this.setState({loading: true}, () => {
 
             const interval = setInterval(() => {
 
                 if (!this.state.loading || Date.now() > loopTill || this.state.status === 'timestamped') {
-                    this.setState({loading: false});
+                    this.setState({loading: false, stampedRequest: false});
                     clearInterval(interval);
                 }
 
                 this.refreshPostData().then(() => {
                     if (this.state.status === 'timestamped')
-                        this.setState({loading: false});
+                        this.setState({loading: false, stampedRequest: false});
                 });
 
             }, 3000);

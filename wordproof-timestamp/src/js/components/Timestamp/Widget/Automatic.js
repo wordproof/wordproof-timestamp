@@ -40,7 +40,6 @@ export default class Automatic extends Component {
     setTextAndStatusState = () => {
         const widgetStatus = this.getWidgetStatus();
         const text = this.getText();
-        console.log(widgetStatus, text);
         this.setState({
             text: {message: text.message, messageStrong: text.messageStrong},
             widgetStatus: widgetStatus
@@ -48,6 +47,9 @@ export default class Automatic extends Component {
     }
 
     getWidgetStatus = () => {
+        if (this.state.status === 'timestamped')
+            return 'success';
+
         if (this.state.loading)
             return 'connecting';
 
@@ -68,7 +70,6 @@ export default class Automatic extends Component {
     }
 
     getText = () => {
-        console.log('getText', this.state.status);
         switch (this.state.status) {
             case 'not_configured':
                 return {

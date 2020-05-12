@@ -50,6 +50,9 @@ export default class Timestamp extends Component {
         if ("wordproofPost" in window) {
             wp.data.subscribe(() => {
                 let select = wp.data.select('core/editor');
+                if (!select)
+                    return;
+                
                 let isSavingPost = select.isSavingPost();
                 let isAutosavingPost = select.isAutosavingPost();
                 let didPostSaveRequestSucceed = select.didPostSaveRequestSucceed();

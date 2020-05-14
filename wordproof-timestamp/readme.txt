@@ -14,7 +14,7 @@ Timestamp your WordPress content on the blockchain for protection and trust. No 
 
 ### WordProof: Timestamp your WordPress Content on the Blockchain
 
-With WordProof Timestamp, you can timestamp your WordPress content on any EOSIO blockchain from the comfort of your WordPress site. No prior blockchain experience necessary: either manually timestamp your content or activate automatic timestamps.
+With WordProof Timestamp, you can timestamp your WordPress content on any EOSIO blockchain from the comfort of your WordPress site. No prior blockchain experience necessary. After the set-up, everything is taken care of automatically!
 
 ### Why do I need to timestamp my content?
 
@@ -23,7 +23,7 @@ WordProof Timestamp does everything in its power to bring the benefits of blockc
 - Copyright protection
 - Transparency: increase trust and claim authenticity
 - Next-generation SEO benefits
-- Proof of existance at certain moments in time
+- Proof of existence at certain moments in time
 - Prepare for upcoming EU regulations
 - Be your own notary
 
@@ -31,15 +31,15 @@ WordProof Timestamp does everything in its power to bring the benefits of blockc
 
 - Automatically timestamp your content on the blockchain
 - Show the blockchain certificate pop-up on your website
+- Let your visitors verify when and how your content changed
 - Downloadable blockchain certificate as proof of existence
 - Copyright Infringement Claim Tools
-- Revision Management
 
 ### How does WordProof Timestamp work?
 
-Timestamping creates a unique and universal fingerprint (called the hash) for every piece of content. If the input changes even the slightest, the hash becomes totally different.
+Timestamping creates a unique and universal fingerprint (the 'hash') for all your posts, pages and media files. If the input changes, the hash becomes totally different.
 
-This hash is added to the blockchain with a date and time. Because you have the input that results in this specific hash, you can prove that you had the content at that point in time.
+This hash is added to the blockchain with a date and time. Because you (the website owner) have the input that results in this specific hash, you can prove that you published the content at that point in time.
 
 ### Further Reading on WordProof, WordPress, and Blockchain
 
@@ -74,12 +74,10 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 
 == Screenshots ==
 
-1. Timestamp any Post or Page from the sidebar of your editor.
-2. Log in with your blockchain account.
-3. A link to the certificate will be added to the end of your post.
-4. The Blockchain Certificate pop-up, fully responsive.
-5. Plugin Options - Select blockchain and launch the WordProof Setup Wizard.
-6. WordProof Setup Wizard - Create a free Telos blockchain account.
+1. Timestamp your content automatically, verify the status in the bottom right corner.
+2. The pop-up your visitors can use to verify your content.
+3. Your visitors can compare different versions, and verify the authenticity.
+4. Change the settings in the WordProof Timestamp plugin options panel.
 
 == Changelog ==
 = 2.8.1 =
@@ -88,7 +86,7 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 
 = 2.8.0 =
 *Release date: May 8th, 2020*
-* Added performance optimisations
+* Added performance optimizations
 * Display background tasks more prominently
 * Various small improvements to the user interface
 * Fixed minor bugs
@@ -137,7 +135,7 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 = 2.5.2 =
 *Release date: February 1st, 2020*
 * We now include the hash in the link to wordproof.io/check
-* Small bug fix in properly returning the raw text.
+* Small bugfix in properly returning the raw text.
 
 = 2.5.1 =
 *Release date: January 22nd, 2020*
@@ -209,11 +207,11 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 = 1.2.14 =
 *Release date: August 22nd, 2019*
 * Allow timestamps to be removed.
-* Remove Post Column notice for posts which are not published yet.
+* Remove Post Column notice for posts that are not published yet.
 
 = 1.2.13 =
 *Release date: August 22nd, 2019*
-* Select the post types which are be auto-stamped.
+* Select the post types that are auto-stamped.
 
 = 1.2.12 =
 *Release date: August 21st, 2019*

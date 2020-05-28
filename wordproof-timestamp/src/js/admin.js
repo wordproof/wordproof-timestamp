@@ -20,7 +20,7 @@ if (document.querySelectorAll('#wordproof-dashboard-widget')) {
 if (document.querySelectorAll('#wordproof-post-widget')) {
   document.querySelectorAll('#wordproof-post-widget').forEach((element) => {
     ReactDOM.render(<Timestamp
-        automatic={element.dataset.automate}
+        automatic={JSON.parse(element.dataset.automate)}
         view={'widget'}
     />, element);
   })
@@ -32,7 +32,7 @@ if (document.querySelectorAll('#wordproof-post-widget')) {
 if (document.querySelectorAll('.wordproof-timestamp-button')) {
   document.querySelectorAll('.wordproof-timestamp-button').forEach((element) => {
     ReactDOM.render(<Timestamp
-        automatic={element.dataset.automate}
+        automatic={JSON.parse(element.dataset.automate)}
         post={JSON.parse(decodeURIComponent(element.dataset.post))}
         meta={JSON.parse(decodeURIComponent(element.dataset.meta))}
         view={'text'}

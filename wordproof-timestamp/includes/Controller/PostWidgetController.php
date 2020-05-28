@@ -31,7 +31,7 @@ class PostWidgetController
 
   public function render()
   {
-    echo '<div id="wordproof-post-widget"></div>';
+    echo '<div id="wordproof-post-widget" data-automate="' . json_encode(OptionsHelper::isWSFYActive()) . '"></div>';
   }
 
   public static function isTimestamped()

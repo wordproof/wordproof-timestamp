@@ -67,8 +67,8 @@ export default class Wizard extends Component {
                     </div>
                     <div className={`flex flew-row justify-center`}>
                         <div className={'wizard-container overflow-y-hidden overflow-x-visible'}>
-                            <StepWizard transitions={this.transitions} isHashEnabled={true}
-                                        nav={<Nav labels={this.navLabels}/>}>
+                            <StepWizard transitions={this.transitions} isHashEnabled={true} isLazyMount={true}
+                                        nav={<Nav labels={this.navLabels}/>} la>
                                 <Step1 hashKey={'mode'} update={this.updateField.bind(this)}/>
                                 <Step2 hashKey={'connect'} get={this.getField.bind(this)}
                                        update={this.updateField.bind(this)} initial={wordproof.currentValues}/>

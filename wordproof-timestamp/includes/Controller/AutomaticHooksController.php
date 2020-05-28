@@ -63,7 +63,7 @@ class AutomaticHooksController
     }
   }
 
-  function getArticles()
+  public function getArticles()
   {
     check_ajax_referer('wordproof', 'security');
     $postId = intval($_REQUEST['post_id']);
@@ -73,7 +73,7 @@ class AutomaticHooksController
     die();
   }
 
-  function getNewBalance()
+  public function getNewBalance()
   {
     check_ajax_referer('wordproof', 'security');
     $controller = new AutomaticHelper();
@@ -82,7 +82,7 @@ class AutomaticHooksController
     die();
   }
 
-  function validateToken()
+  public function validateToken()
   {
     check_ajax_referer('wordproof', 'security');
     $controller = new AutomaticHelper();
@@ -91,7 +91,7 @@ class AutomaticHooksController
     die();
   }
 
-  function getPostData()
+  public function getPostData()
   {
     check_ajax_referer('wordproof', 'security');
     $postId = intval($_REQUEST['post_id']);

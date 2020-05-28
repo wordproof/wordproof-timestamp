@@ -4,7 +4,7 @@ Tags: blockchain, timestamp, eosio, eos, telos, web30, copyright, scatter, decen
 Requires at least: 4.6
 Tested up to: 5.4.1
 Requires PHP: 5.3
-Stable tag: 2.8.2
+Stable tag: 2.8.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -80,6 +80,10 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 4. Change the settings in the WordProof Timestamp plugin options panel.
 
 == Changelog ==
+= 2.8.3 =
+*Release date: May 28th, 2020*
+* Fix for using WordProof Timestamp with Scatter
+
 = 2.8.2 =
 *Release date: May 14th, 2020*
 * Updated readme and plugin repository assets

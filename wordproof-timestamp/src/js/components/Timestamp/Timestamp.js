@@ -15,8 +15,7 @@ export default class Timestamp extends Component {
             meta: (props.meta) ? props.meta : null,
             loading: (props.loading) ? props.loading : null,
             view: (props.view) ? props.view : 'widget',
-            interact: (props.interact) ? props.interact : true,
-            automatic: (props.automatic) ? props.automatic : true,
+            automatic: (props.automatic) ? props.automatic : false,
             status: null,
             message: '',
             stampedRequest: false,
@@ -162,22 +161,24 @@ export default class Timestamp extends Component {
     }
 
     getTextViewContents() {
+        const withButton = this.state.automatic;
+
         switch (this.state.status) {
             case 'not_published':
                 return <span>🕓 Not published yet</span>;
             case 'not_timestamped':
                 return <div>
                     <span hidden={this.state.message}>🚨 Not timestamped</span>
-                    <Button loading={this.state.loading} callback={this.callback} post={this.state.post} action={'timestamp'}/>
+                    {(withButton) ? <Button loading={this.state.loading} callback={this.callback} post={this.state.post} action={'timestamp'}/> : ''}
                 </div>;
             case 'outdated':
                 return <div><span hidden={this.state.message}>🚨 Timestamp is outdated</span>
-                    <Button loading={this.state.loading} callback={this.callback} post={this.state.post} action={'timestamp'}/>
+                    {(withButton) ? <Button loading={this.state.loading} callback={this.callback} post={this.state.post} action={'timestamp'}/> : ''}
 
                 </div>;
             case 'awaiting_callback':
                 return <div><span hidden={this.state.message}>🕓 Waiting for callback...</span>
-                    <Button loading={this.state.loading} callback={this.callback} post={this.state.post} action={'retry'}/>
+                    {(withButton) ? <Button loading={this.state.loading} callback={this.callback} post={this.state.post} action={'retry'}/> : ''}
                 </div>;
             case 'timestamped':
                 if (this.state.post.type === 'post' || this.state.post.type === 'page' || this.state.post.type === 'product')

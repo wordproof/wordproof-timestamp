@@ -33,7 +33,8 @@ export default function getItems(schema) {
 
 function prepareArticles(items) {
     items.forEach((item, key) => {
-        items[key].content = prepareArticleContent(item.content);
+        if (item.content)
+            items[key].content = prepareArticleContent(item.content);
     });
 
     return items;

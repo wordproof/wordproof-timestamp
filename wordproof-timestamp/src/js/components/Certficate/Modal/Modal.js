@@ -166,7 +166,8 @@ class Modal extends React.Component {
                         </div>
                     </div>
                 </div>
-                <link rel="stylesheet" type="text/css" href={wordproof.modal.css}/>
+                <link rel="preload" href={wordproof.modal.css} as="style" />
+                <link rel="stylesheet" href={wordproof.modal.css} as="style" />
             </root.div>
         )
     }

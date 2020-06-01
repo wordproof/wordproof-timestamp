@@ -61,7 +61,8 @@ class CertificateController
       $wsfyIsActive = OptionsHelper::isWSFYActive();
       $wsfyOptions = ($wsfyIsActive) ? OptionsHelper::getWSFY(['site_token']) : [];
 
-      wp_enqueue_script('wordproof.polyfill.js', WORDPROOF_URI_JS . '/polyfill.js', [], filemtime(WORDPROOF_DIR_JS . '/polyfill.js'), false);
+      //TODO: Reintroduce polyfill
+      //wp_enqueue_script('wordproof.polyfill.js', WORDPROOF_URI_JS . '/polyfill.js', [], filemtime(WORDPROOF_DIR_JS . '/polyfill.js'), false);
       wp_enqueue_script('wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', [], filemtime(WORDPROOF_DIR_JS . '/frontend.js'), true);
 
       $data = [

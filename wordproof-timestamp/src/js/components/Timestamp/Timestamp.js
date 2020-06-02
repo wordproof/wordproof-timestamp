@@ -46,8 +46,35 @@ export default class Timestamp extends Component {
             this.startLoop();
         }
 
+        this.addEventsOnPostActions();
+    }
+
+    addEventsOnPostActions() {
         if ("wordproofPost" in window) {
-            wp.data.subscribe(() => {
+
+            let editButton = document.querySelector('.editor-post-publish-button');
+            if (editButton)
+                this.addEventListener(editButton);
+
+            let prePublishButton = document.querySelector('.editor-post-publish-panel__toggle.editor-post-publish-button__button');
+            if (prePublishButton) {
+                prePublishButton.addEventListener('click', () => {
+
+                    // :(
+                    setTimeout(() => {
+                        let publishButton = document.querySelector('.editor-post-publish-button');
+                        if (publishButton)
+                            this.addEventListener(publishButton);
+                    }, 200);
+
+                });
+            }
+        }
+    }
+
+    addEventListener(item) {
+        item.addEventListener('click', () => {
+            const unsubscribe = wp.data.subscribe(() => {
                 let select = wp.data.select('core/editor');
                 if (!select)
                     return;
@@ -55,16 +82,22 @@ export default class Timestamp extends Component {
                 let isSavingPost = select.isSavingPost();
                 let isAutosavingPost = select.isAutosavingPost();
                 let didPostSaveRequestSucceed = select.didPostSaveRequestSucceed();
+
                 if (isSavingPost && !isAutosavingPost && didPostSaveRequestSucceed) {
+                    unsubscribe();
                     this.setState({status: 'awaiting_callback'});
+
                     setTimeout(() => {
+                        this.addEventsOnPostActions();
+
                         this.stamp().then(() => {
                             this.startLoop();
                         })
-                    }, 2000)
+                    }, 2000);
+
                 }
             });
-        }
+        });
     }
 
     async stamp() {

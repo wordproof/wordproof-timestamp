@@ -7,40 +7,50 @@ import qs from 'qs';
 import DashboardWidget from './components/Widgets/Dashboard'
 import Timestamp from "./components/Timestamp/Timestamp";
 
-/**
- * Settings
- */
+document.addEventListener('DOMContentLoaded', init);
 
-if (document.querySelectorAll('#wordproof-dashboard-widget')) {
-  document.querySelectorAll('#wordproof-dashboard-widget').forEach((element) => {
-    ReactDOM.render(<DashboardWidget/>, element);
-  })
+function init() {
+  checkNotices();
+  initReact();
 }
 
-if (document.querySelectorAll('#wordproof-post-widget')) {
-  document.querySelectorAll('#wordproof-post-widget').forEach((element) => {
-    ReactDOM.render(<Timestamp
-        automatic={JSON.parse(element.dataset.automate)}
-        view={'widget'}
-    />, element);
-  })
-}
+function initReact() {
 
-/**
- * Timestamp Button
- */
-if (document.querySelectorAll('.wordproof-timestamp-button')) {
-  document.querySelectorAll('.wordproof-timestamp-button').forEach((element) => {
-    ReactDOM.render(<Timestamp
-        automatic={JSON.parse(element.dataset.automate)}
-        post={JSON.parse(decodeURIComponent(element.dataset.post))}
-        meta={JSON.parse(decodeURIComponent(element.dataset.meta))}
-        view={'text'}
-    />, element);
-  })
-}
+  /**
+   * Add Dashboard widget
+   */
+  if (document.querySelectorAll('#wordproof-dashboard-widget')) {
+    document.querySelectorAll('#wordproof-dashboard-widget').forEach((element) => {
+      ReactDOM.render(<DashboardWidget/>, element);
+    })
+  }
 
-document.addEventListener('DOMContentLoaded', checkNotices);
+  /**
+   * Add timestamp button to posts overview page
+   */
+  if (document.querySelectorAll('.wordproof-timestamp-button')) {
+    document.querySelectorAll('.wordproof-timestamp-button').forEach((element) => {
+      ReactDOM.render(<Timestamp
+          automatic={JSON.parse(element.dataset.automate)}
+          post={JSON.parse(decodeURIComponent(element.dataset.post))}
+          meta={JSON.parse(decodeURIComponent(element.dataset.meta))}
+          view={'text'}
+      />, element);
+    })
+  }
+
+  /**
+   * Add Timestamp to post widget
+   */
+  if (document.querySelectorAll('#wordproof-post-widget')) {
+    document.querySelectorAll('#wordproof-post-widget').forEach((element) => {
+      ReactDOM.render(<Timestamp
+          automatic={JSON.parse(element.dataset.automate)}
+          view={'widget'}
+      />, element);
+    })
+  }
+}
 
 function checkNotices() {
   let notices = document.querySelectorAll('.wordproof-notice .notice-dismiss');

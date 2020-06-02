@@ -45,9 +45,6 @@ export default class Settings extends Component {
         return (
             <Template current={'settings'}>
                 <h3>General Settings</h3>
-                <p>The settings below apply to both the automatic and manual modes. Mode-specific settings can be found
-                    on the <a href={wordproofSettings.urls.automatic}>Automatic</a> & <a
-                        href={wordproofSettings.urls.manual}>Manual</a> pages.</p>
 
                 <div className="form-group">
                     <label htmlFor="wordproof_customize[certificate_text]" className="label" title="Certificate Text">How
@@ -78,7 +75,7 @@ export default class Settings extends Component {
                            value={this.state.customDomain} onChange={e => this.setState({customDomain: e.target.value})}
                            id="wordproof_customize[custom_domain]"/>
                     <p>For some setups (eg. GetShifter.io), a custom URL should be supplied to correctly show the link
-                        in the certificate. Do not add a &#39;/&#39; at the end of your custom URL.</p>
+                        in the certificate.</p>
                 </div>
 
                 <div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>

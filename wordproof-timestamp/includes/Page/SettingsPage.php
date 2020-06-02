@@ -132,7 +132,7 @@ class SettingsPage
         }
 
         if (isset($_POST['wordproof_customize']['custom_domain'])) {
-          OptionsHelper::set('custom_domain', $_POST['wordproof_customize']['custom_domain']);
+          OptionsHelper::set('custom_domain', trim($_POST['wordproof_customize']['custom_domain']));
         }
 
         if (isset($_POST['wordproof_customize']['timestamps_order_text'])) {
@@ -161,11 +161,6 @@ class SettingsPage
         }
       }
 
-    }
-
-    $pages = array_flip($this->settingPages);
-    if (in_array($_POST['slug'], $pages)) {
-      wp_redirect(admin_url('admin.php?page=wordproof-' . $_POST['slug']));
     }
     die();
   }

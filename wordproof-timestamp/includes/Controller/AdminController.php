@@ -167,6 +167,7 @@ class AdminController
       'ajaxSecurity' => wp_create_nonce('wordproof'),
       'permalink' => (!empty($post->ID)) ? DomainHelper::getPermalink($post->ID) : false,
       'network' => OptionsHelper::getNetwork(),
+      'balance' => OptionsHelper::getBalanceCache(),
       'urls' => [
         'dashboard' => admin_url('admin.php?page=wordproof-dashboard'),
         'bulk' => admin_url('admin.php?page=wordproof-bulk'),

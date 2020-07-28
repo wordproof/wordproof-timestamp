@@ -100,7 +100,14 @@ export default class Timestamp extends Component {
         });
     }
 
+    hasBalance() {
+        return wordproofData.balance < 1;
+    }
+
     async stamp() {
+        if (!this.hasBalance())
+            return this.setState({status: 'no_balance'});
+
         if (wordproofPost.autoStamped && !this.state.stampedRequest) {
             this.setState({stampedRequest: true}, async () => {
                 await axios.post(wordproofData.urls.ajax, qs.stringify({
@@ -168,13 +175,14 @@ export default class Timestamp extends Component {
 
                 if (!this.state.loading || Date.now() > loopTill || this.state.status === 'timestamped') {
                     this.setState({loading: false, stampedRequest: false});
-                    this.addEditorNotice('Post successfully timestamped.');
                     clearInterval(interval);
                 }
 
                 this.refreshPostData().then(() => {
-                    if (this.state.status === 'timestamped')
+                    if (this.state.status === 'timestamped') {
                         this.setState({loading: false, stampedRequest: false});
+                        this.addEditorNotice('Post successfully timestamped.');
+                    }
                 });
 
             }, 3000);

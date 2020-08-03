@@ -51,7 +51,7 @@ class OnboardingWizard {
 				'site'      => get_site_url(),
 			],
 			'ajax'                => [
-				'url' => admin_url( 'admin-post.php' ),
+				'url'      => admin_url( 'admin-post.php' ),
 				'security' => wp_create_nonce( 'wordproof' ),
 			],
 			'currentValues'       => $currentValues,
@@ -59,7 +59,7 @@ class OnboardingWizard {
 		] );
 
 		?>
-        <div id="wordproof-onboarding-wizard"></div>
+		<div id="wordproof-onboarding-wizard"></div>
 
 		<?php
 	}

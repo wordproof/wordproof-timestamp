@@ -36,10 +36,10 @@ class GettingStarted {
 		] );
 
 		?>
-        <div class="wrap">
-            <h1 class="mb-4" style="display: none">Getting rid of notices</h1>
-            <div id="wordproof-getting-started"></div>
-        </div>
+		<div class="wrap">
+			<h1 class="mb-4" style="display: none">Getting rid of notices</h1>
+			<div id="wordproof-getting-started"></div>
+		</div>
 		<?php
 	}
 }

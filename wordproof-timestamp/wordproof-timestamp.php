@@ -1,16 +1,15 @@
 <?php
-
-/*
- Plugin Name: WordProof Timestamp
- Plugin URI:  https://wordproof.io/wordproof-timestamp-plugin/
- Description: Timestamp your WordPress content into the blockchain. Instant and without fees. For EOSIO, EOS &amp; Telos.
- Version:     2.8.4
- Author:      WordProof
- Author URI:  https://wordproof.io
- License:     GPL2
- License URI: https://www.gnu.org/licenses/gpl-2.0.html
- Domain Path: /languages
-*/
+/**
+ * Plugin Name: WordProof Timestamp
+ * Plugin URI:  https://wordproof.io/wordproof-timestamp-plugin/
+ * Description: Timestamp your WordPress content into the blockchain. Instant and without fees. For EOSIO, EOS &amp; Telos.
+ * Version:     2.8.4
+ * Author:      WordProof
+ * Author URI:  https://wordproof.io
+ * License:     GPL2
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Domain Path: /languages
+ **/
 
 namespace WordProofTimestamp;
 
@@ -55,7 +54,7 @@ if ( WORDPROOF_DEVELOPMENT ) {
 	define( 'WORDPROOF_API_URI', 'https://my.wordproof.io/api/' );
 }
 
-//Web Standards
+// Web Standards
 define( 'ARTICLE_TIMESTAMP', 'ArticleTimestamp' );
 define( 'MEDIA_OBJECT_TIMESTAMP', 'MediaObjectTimestamp' );
 define( 'PRODUCT_TIMESTAMP', 'ProductTimestamp' );
@@ -67,7 +66,9 @@ add_action( 'activated_plugin', __NAMESPACE__ . '\\wordproof_plugin_activated' )
 add_action( 'plugins_loaded', array( WordProofTimestamp::getInstance(), 'init' ) );
 
 /**
- * @param  string  $class
+ * Autoloads PHP file
+ * @param string $class
+ *
  */
 function autoload( $class = '' ) {
 	if ( ! strstr( $class, 'WordProofTimestamp' ) ) {
@@ -78,6 +79,11 @@ function autoload( $class = '' ) {
 	require $result . '.php';
 }
 
+/**
+ * Redirects to Getting Started page if plugin is activated
+ * @param string $plugin
+ *
+ */
 function wordproof_plugin_activated( $plugin ) {
 	if ( $plugin === WORDPROOF_BASENAME && ! isset( $_GET['activate-multi'] ) ) {
 		wp_redirect( admin_url( 'admin.php?page=wordproof-getting-started' ) );

@@ -30,22 +30,21 @@ class AutoStampPage {
 		self::localizeScript( $posts );
 
 		?>
-        <div class="wrap">
-            <h1>WordProof Settings</h1>
-            <p>Start auto-stamping <?php echo sizeof( $posts ); ?> posts which are not timestamped yet. We will skip
-                posts
-                that are stamped already. <strong>Please make sure your setup works beforehand.</strong></p>
-            <p>Timestamp all of your posts cost <?php echo sizeof( $posts ); ?> timestamps. If you don't have enough
-                timestamps, you <a href="https://my.wordproof.io/sites/upgrade" target="_blank"
-                                   rel="noopener noreferrer">can
-                    upgrade your plan</a>. If you pay for a yearly plan, you'll get a big timestamp bonus</p>
-            <button class="wordproof-auto-stamp-submit button button-primary">Start Auto-Stamping</button>
-            <div class="wordproof-status"></div>
-            <p class="wordproof-status-left"></p>
-            <ul class="wordproof-status-list">
+		<div class="wrap">
+			<h1>WordProof Settings</h1>
+			<p>Start auto-stamping <?php echo sizeof( $posts ); ?> posts which are not timestamped yet. We will skip
+				posts
+				that are stamped already. <strong>Please make sure your setup works beforehand.</strong></p>
+			<p>Timestamp all of your posts cost <?php echo sizeof( $posts ); ?> timestamps. If you don't have enough
+				timestamps, you <a href="https://my.wordproof.io/sites/upgrade" target="_blank" rel="noopener noreferrer">can
+					upgrade your plan</a>. If you pay for a yearly plan, you'll get a big timestamp bonus</p>
+			<button class="wordproof-auto-stamp-submit button button-primary">Start Auto-Stamping</button>
+			<div class="wordproof-status"></div>
+			<p class="wordproof-status-left"></p>
+			<ul class="wordproof-status-list">
 
-            </ul>
-        </div>
+			</ul>
+		</div>
 		<?php
 	}
 

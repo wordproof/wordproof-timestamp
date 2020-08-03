@@ -73,20 +73,18 @@ class SettingsPage {
 
 	public function renderSettingPage( $slug ) {
 		?>
-        <div class="wrap">
-            <h1></h1>
+		<div class="wrap">
+			<h1></h1>
 
-            <div class='wordproof-admin-app'>
-                <form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post"
-                      id="wordproof_admin_form">
-                    <input type="hidden" name="action" value="wordproof_form_action">
-                    <input type="hidden" name="slug" value="<?php echo $slug; ?>">
-                    <input type="hidden" name="wordproof_admin_form_nonce"
-                           value="<?php echo wp_create_nonce( 'wordproof_admin_form_nonce' ); ?>"/>
-                    <div id="wordproof-admin-app-<?php echo $slug; ?>"></div>
-                </form>
-            </div>
-        </div>
+			<div class='wordproof-admin-app'>
+				<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" id="wordproof_admin_form">
+					<input type="hidden" name="action" value="wordproof_form_action">
+					<input type="hidden" name="slug" value="<?php echo $slug; ?>">
+					<input type="hidden" name="wordproof_admin_form_nonce" value="<?php echo wp_create_nonce( 'wordproof_admin_form_nonce' ); ?>"/>
+					<div id="wordproof-admin-app-<?php echo $slug; ?>"></div>
+				</form>
+			</div>
+		</div>
 		<?php
 	}
 

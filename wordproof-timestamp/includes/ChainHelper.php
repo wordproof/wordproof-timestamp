@@ -5,7 +5,6 @@ namespace WordProofTimestamp\includes;
 class ChainHelper {
 	public function __construct() {
 		add_action( 'wp_ajax_wordproof_get_balance', array( $this, 'returnWordBalance' ) );
-//    add_action('current_screen', array($this, 'getWordBalance'));
 	}
 
 	public function getWordBalance() {

@@ -168,10 +168,11 @@ class AutomaticHooksController {
 					break;
 			}
 		} else {
-			$response = [ 'success'     => false,
-			              'response'    => $this->response,
-			              'remote_addr' => $_SERVER['REMOTE_ADDR'],
-			              'action'      => isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : 'none'
+			$response = [
+				'success'     => false,
+				'response'    => $this->response,
+				'remote_addr' => $_SERVER['REMOTE_ADDR'],
+				'action'      => isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : 'none'
 			];
 			DebugLogHelper::error( 'Callback failed. ' . print_r( $response, true ) );
 			error_log( 'WordProof: Update request denied' );

@@ -19,7 +19,7 @@ class NoticeController {
 
 	public function initializeNotices() {
 		$this->notices[] = new UnprotectedPostsNotice();
-//    $this->notices[] = new NotSetupNotice();
+		//$this->notices[] = new NotSetupNotice();
 	}
 
 	public function getKeys() {

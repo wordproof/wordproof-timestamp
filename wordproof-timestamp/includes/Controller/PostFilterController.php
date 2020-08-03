@@ -41,9 +41,10 @@ class PostFilterController {
 	}
 
 	private function getUnprotectedCount( $postType ) {
-		$query = new \WP_Query( [ 'post_type'    => $postType,
-		                          'meta_key'     => $this->metaKey,
-		                          'meta_compare' => 'NOT EXISTS'
+		$query = new \WP_Query( [
+			'post_type'    => $postType,
+			'meta_key'     => $this->metaKey,
+			'meta_compare' => 'NOT EXISTS'
 		] );
 
 		return $query->found_posts;

@@ -1,7 +1,7 @@
 <?php
+
 namespace WordProofTimestamp\lib\JWT;
 
-class BeforeValidException extends \UnexpectedValueException
-{
+class BeforeValidException extends \UnexpectedValueException {
 
 }

@@ -14,34 +14,32 @@ use WordProofTimestamp\includes\Controller\TimestampController;
  * Class WordProofTimestamp
  * @package WordProofTimestamp
  */
-class WordProofTimestamp
-{
+class WordProofTimestamp {
 
-  /** @var null */
-  private static $instance = null;
+	/** @var null */
+	private static $instance = null;
 
-  public function init()
-  {
-    new DebugInformationController();
-    new AdminController();
-    new AnalyticsHelper();
-    new TimestampController();
-    new CertificateController();
+	public function init() {
+		new DebugInformationController();
+		new AdminController();
+		new AnalyticsHelper();
+		new TimestampController();
+		new CertificateController();
 
-    new AutomaticHooksController();
-    new ECommerceController();
+		new AutomaticHooksController();
+		new ECommerceController();
 
 
-  }
+	}
 
-  /**
-   * @return WordProofTimestamp
-   */
-  public static function getInstance()
-  {
-    if (!isset(self::$instance)) {
-      self::$instance = new self();
-    }
-    return self::$instance;
-  }
+	/**
+	 * @return WordProofTimestamp
+	 */
+	public static function getInstance() {
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
 }

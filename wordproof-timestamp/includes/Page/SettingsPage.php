@@ -153,6 +153,8 @@ class SettingsPage {
 			}
 
 		}
+
+		wp_redirect('admin.php?page=wordproof-settings');
 		die();
 	}
 }

@@ -58,7 +58,6 @@ class AdminController {
 			$value = sanitize_text_field( wp_unslash( $_REQUEST['value'] ?? '' ) );
 		}
 
-		error_log( print_r( $value, true) );
 		if ( ! empty( $key ) && ! empty( $value ) ) {
 			OptionsHelper::set( $key, $value );
 		}

@@ -12,7 +12,6 @@ export default class Checkbox extends React.Component {
     }
 
     this.props.update(null, this.props.slug, values);
-    this.save();
   }
 
   render() {

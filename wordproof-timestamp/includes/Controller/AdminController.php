@@ -48,7 +48,17 @@ class AdminController {
 		}
 
 		$key   = sanitize_key( wp_unslash( $_REQUEST['key'] ?? '' ) );
-		$value = sanitize_text_field( wp_unslash( $_REQUEST['value'] ?? '' ) );
+
+		if ( is_array( $_REQUEST['value'] ) ) {
+			$value = [];
+			foreach ( $_REQUEST['value'] as $v ) {
+				$value[] = sanitize_text_field( wp_unslash( $v ) );
+			}
+		} else {
+			$value = sanitize_text_field( wp_unslash( $_REQUEST['value'] ?? '' ) );
+		}
+
+		error_log( print_r( $value, true) );
 		if ( ! empty( $key ) && ! empty( $value ) ) {
 			OptionsHelper::set( $key, $value );
 		}

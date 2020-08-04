@@ -3,9 +3,8 @@
 namespace WordProofTimestamp\includes;
 
 use WordProofTimestamp\includes\Controller\HashController;
-use WordProofTimestamp\includes\Controller\OAuthController;
 use WordProofTimestamp\includes\Controller\TimestampController;
-use WordProofTimestamp\includes\Resource\ItemResource;
+use WordProofTimestamp\includes\Resources\ItemResource;
 
 class AutomaticHelper {
 

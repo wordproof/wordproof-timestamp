@@ -3,7 +3,6 @@
 namespace WordProofTimestamp\includes\Controller;
 
 use WordProofTimestamp\includes\AutomaticHelper;
-use WordProofTimestamp\includes\DomainHelper;
 use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\PostMetaHelper;
 
@@ -38,7 +37,12 @@ class PostColumnController {
 
 	public function savePost() {
 		check_ajax_referer( 'wordproof', 'security' );
-		$postId     = intval( $_REQUEST['post_id'] );
+
+		if ( !isset( $_REQUEST ) ) {
+			return;
+		}
+
+		$postId     = intval( sanitize_text_field( wp_unslash( $_REQUEST['post_id'] ) ) );
 		$controller = new AutomaticHelper( $postId );
 		$result     = $controller->createPost();
 		echo json_encode( $result );
@@ -47,7 +51,7 @@ class PostColumnController {
 
 	public function retryCallback() {
 		check_ajax_referer( 'wordproof', 'security' );
-		$postId     = intval( $_REQUEST['post_id'] );
+		$postId     = intval( sanitize_text_field( $_REQUEST['post_id'] ) );
 		$controller = new AutomaticHelper( $postId );
 		$result     = $controller->retryCallback();
 		echo json_encode( $result );

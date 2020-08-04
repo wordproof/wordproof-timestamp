@@ -187,6 +187,7 @@ class CertificateController {
 	public function addSchema() {
 		if ( is_singular() ) {
 			global $post;
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo SchemaController::getSchema( $post->ID );
 		}
 	}

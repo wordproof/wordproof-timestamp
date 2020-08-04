@@ -43,9 +43,9 @@ class SchemaController {
 			return '';
 		}
 
-		$schema = '<script type="application/ld+json" class="wordproof-schema">';
+		$schema = "\n" . '<script type="application/ld+json" class="' . esc_attr('wordproof-schema') . '">';
 		$schema .= $object;
-		$schema .= "</script>";
+		$schema .= "</script>" . "\n";
 
 		return $schema;
 	}
@@ -74,7 +74,7 @@ class SchemaController {
 					$array[ $key ] = $value;
 				}
 
-				return json_encode( $array, JSON_UNESCAPED_UNICODE );
+				return wp_json_encode( $array, JSON_UNESCAPED_UNICODE );
 		}
 	}
 
@@ -104,7 +104,7 @@ class SchemaController {
 					$array[ $key ] = $value;
 				}
 
-				return json_encode( $array, JSON_UNESCAPED_UNICODE );
+				return wp_json_encode( $array, JSON_UNESCAPED_UNICODE );
 		}
 	}
 
@@ -132,7 +132,7 @@ class SchemaController {
 					$array[ $key ] = $value;
 				}
 
-				return json_encode( $array, JSON_UNESCAPED_UNICODE );
+				return wp_json_encode( $array, JSON_UNESCAPED_UNICODE );
 		}
 	}
 
@@ -160,14 +160,14 @@ class SchemaController {
 					$array[ $key ] = $value;
 				}
 
-				return json_encode( $array, JSON_UNESCAPED_UNICODE );
+				return wp_json_encode( $array, JSON_UNESCAPED_UNICODE );
 		}
 	}
 
 	/**
 	 * @param $meta
 	 *
-	 * @return object
+	 * @return object|bool
 	 */
 	private static function legacySchema( $meta ) {
 		$array                  = [];
@@ -179,6 +179,6 @@ class SchemaController {
 		$array['date']          = get_the_modified_date( 'c', $meta->date );
 		$array['url']           = $meta->url;
 
-		return json_encode( $array );
+		return wp_json_encode( $array );
 	}
 }

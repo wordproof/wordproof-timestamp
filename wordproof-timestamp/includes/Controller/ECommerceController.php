@@ -34,7 +34,7 @@ class ECommerceController {
 
 		$checked = ( $option === 'ask_user_to_disable' );
 
-		echo '<div id="wordproof-"><h3>' . __( 'Do you want proof of this order?', 'wordproof-timestamp' ) . '</h3>';
+		echo esc_html('<div id="wordproof-"><h3>' . __( 'Do you want proof of this order?', 'wordproof-timestamp' ) . '</h3>');
 
 		woocommerce_form_field( 'wordproof_receive_timestamps', array(
 			'type'     => 'checkbox',
@@ -54,9 +54,13 @@ class ECommerceController {
 	 */
 
 	function saveReceiveTimestampPreference( $orderId ) {
+		if ( ! $_POST ) {
+			return;
+		}
+
 		if ( $_POST['wordproof_receive_timestamps'] ) {
 			update_post_meta( $orderId, 'wordproof_receive_timestamps',
-				esc_attr( $_POST['wordproof_receive_timestamps'] ) );
+				sanitize_text_field( wp_unslash( $_POST['wordproof_receive_timestamps'] ) ) );
 		}
 	}
 

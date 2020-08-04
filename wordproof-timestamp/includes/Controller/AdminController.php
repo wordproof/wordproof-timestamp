@@ -42,8 +42,13 @@ class AdminController {
 
 	public function updateSetting() {
 		check_ajax_referer( 'wordproof', 'security' );
-		$key   = $_REQUEST['key'];
-		$value = $_REQUEST['value'];
+
+		if ( ! isset( $_REQUEST ) ) {
+			return;
+		}
+
+		$key   = sanitize_key( wp_unslash( $_REQUEST['key'] ?? '' ) );
+		$value = sanitize_text_field( wp_unslash( $_REQUEST['value'] ?? '' ) );
 		if ( ! empty( $key ) && ! empty( $value ) ) {
 			OptionsHelper::set( $key, $value );
 		}
@@ -51,9 +56,15 @@ class AdminController {
 
 	public function updateSettings() {
 		check_ajax_referer( 'wordproof', 'security' );
-		$options = $_REQUEST['options'];
-		foreach ( $options as $key => $value ) {
-			OptionsHelper::set( $key, $value );
+
+		$options = $_REQUEST['options'] ?? null;
+		if ( is_array( $options ) ) {
+			foreach ( $options as $key => $value ) {
+				OptionsHelper::set(
+					sanitize_key( wp_unslash( $key ) ),
+					sanitize_text_field( wp_unslash( $value ) )
+				);
+			}
 		}
 	}
 
@@ -195,4 +206,6 @@ class AdminController {
 			'ajaxSecurity' => wp_create_nonce( 'wordproof' ),
 		) );
 	}
+
+
 }

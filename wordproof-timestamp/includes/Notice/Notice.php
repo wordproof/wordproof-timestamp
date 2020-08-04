@@ -28,11 +28,11 @@ abstract class Notice {
 
 	protected function getNoticeHtml() {
 		ob_start(); ?>
-		<div data-notice-key="<?php echo $this->key; ?>"
-			 class="wordproof-notice notice notice-<?php echo $this->notice['type']; ?> <?php echo ( $this->isDismissible ) ? 'is-dismissible' : ''; ?>">
-			<p><?php _e( $this->notice['message'], WORDPROOF_SLUG ); ?></p>
+		<div data-notice-key="<?php echo esc_attr( $this->key ); ?>"
+			 class="wordproof-notice notice notice-<?php echo esc_attr( $this->notice['type'] ); ?> <?php echo ( $this->isDismissible ) ? 'is-dismissible' : ''; ?>">
+			<p><?php esc_html_e( $this->notice['message'], WORDPROOF_SLUG ); ?></p>
 			<?php $button = $this->getNoticeButtonHtml();
-			echo ( $button ) ? $button : '';
+			echo ( $button ) ? esc_html( $button ) : '';
 			?>
 		</div>
 		<?php
@@ -45,7 +45,7 @@ abstract class Notice {
 		}
 
 		ob_start(); ?>
-		<p><a class="button button-primary" href="<?php echo $this->button['link']; ?>"><?php _e( $this->button['text'],
+		<p><a class="button button-primary" href="<?php echo esc_url( $this->button['link'] ); ?>"><?php esc_html_e( $this->button['text'],
 					WORDPROOF_SLUG ); ?></a></p>
 		<?php
 		return ob_get_clean();

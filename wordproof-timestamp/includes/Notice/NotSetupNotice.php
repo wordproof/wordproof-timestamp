@@ -38,6 +38,6 @@ class NotSetupNotice extends Notice {
 	}
 
 	public function handle() {
-		echo $this->getNoticeHtml();
+		echo esc_html( $this->getNoticeHtml() );
 	}
 }

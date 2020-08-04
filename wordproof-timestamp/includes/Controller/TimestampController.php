@@ -37,9 +37,14 @@ class TimestampController {
 
 	public function saveTimestampAjax() {
 		check_ajax_referer( 'wordproof', 'security' );
-		$postId        = intval( $_REQUEST['post_id'] );
+
+		if ( !isset( $_REQUEST ) ) {
+			return;
+		}
+
+		$postId        = intval( sanitize_text_field( wp_unslash( $_REQUEST['post_id'] ?? 0 ) ) );
 		$chain         = OptionsHelper::getNetwork();
-		$transactionId = sanitize_text_field( $_REQUEST['transaction_id'] );
+		$transactionId = sanitize_text_field( wp_unslash( $_REQUEST['transaction_id'] ?? '' ) );
 
 		self::saveTimestamp( $postId, $chain, $transactionId );
 

@@ -62,7 +62,12 @@ class AutomaticHooksController {
 
 	public function getArticles() {
 		check_ajax_referer( 'wordproof', 'security' );
-		$postId     = intval( $_REQUEST['post_id'] );
+
+		if ( !isset( $_REQUEST ) ) {
+			return;
+		}
+
+		$postId     = intval( sanitize_text_field( wp_unslash( $_REQUEST['post_id'] ) ) );
 		$controller = new AutomaticHelper( $postId );
 		$result     = $controller->getArticles();
 		echo json_encode( $result, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
@@ -87,7 +92,7 @@ class AutomaticHooksController {
 
 	public function getPostData() {
 		check_ajax_referer( 'wordproof', 'security' );
-		$postId   = intval( $_REQUEST['post_id'] );
+		$postId     = intval( sanitize_text_field( $_REQUEST['post_id'] ) );
 		$postData = PostMetaHelper::getPostData( $postId );
 		$meta     = PostMetaHelper::getPostMeta( $postId, [ 'date', 'blockchain' ] );
 		echo json_encode( [ 'post' => $postData, 'meta' => $meta ] );

@@ -1,6 +1,6 @@
 <?php
 
-namespace WordProofTimestamp\includes\Resource;
+namespace WordProofTimestamp\includes\Resources;
 
 use WordProofTimestamp\includes\Controller\HashController;
 use WordProofTimestamp\includes\OptionsHelper;

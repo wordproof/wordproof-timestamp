@@ -2,7 +2,7 @@
 Contributors: wordproof
 Tags: blockchain, timestamp, eosio, eos, telos, web30, copyright, scatter, decentralisation, proof
 Requires at least: 4.6
-Tested up to: 5.4.2
+Tested up to: 5.5
 Requires PHP: 5.3
 Stable tag: 2.8.5
 License: GPLv3 or later

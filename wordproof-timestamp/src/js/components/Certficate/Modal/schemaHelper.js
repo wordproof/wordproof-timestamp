@@ -64,6 +64,10 @@ function getTransactionUrl(network, transactionId) {
         case 'eosJungle':
         case 'eos_jungle':
             return 'https://jungle.bloks.io/transaction/' + transactionId;
+        case 'eth_ropsten':
+            return 'https://ropsten.etherscan.io/tx/' + transactionId;
+        case 'eth_main':
+            return 'https://etherscan.io/tx/' + transactionId;
         default:
             return 'https://bloks.io/transaction/' + transactionId;
     }

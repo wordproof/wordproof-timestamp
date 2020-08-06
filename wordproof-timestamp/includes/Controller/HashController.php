@@ -126,6 +126,10 @@ class HashController {
 				case 'eosJungle':
 				case 'eos_jungle':
 					return 'https://jungle.bloks.io/transaction/' . $meta->transactionId;
+				case 'eth_ropsten':
+					return 'https://ropsten.etherscan.io/tx/' . $meta->transactionId;
+				case 'eth_main':
+					return 'https://etherscan.io/tx/' . $meta->transactionId;
 				default:
 					return 'https://bloks.io/transaction/' . $meta->transactionId;
 			}

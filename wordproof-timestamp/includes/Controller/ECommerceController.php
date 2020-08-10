@@ -34,7 +34,7 @@ class ECommerceController {
 
 		$checked = ( $option === 'ask_user_to_disable' );
 
-		echo esc_html('<div id="wordproof-"><h3>' . __( 'Do you want proof of this order?', 'wordproof-timestamp' ) . '</h3>');
+		echo '<div id="wordproof-ecommerce-ask-user-title"><h3>' . __( 'Do you want proof of this order?', 'wordproof-timestamp' ) . '</h3>';
 
 		woocommerce_form_field( 'wordproof_receive_timestamps', array(
 			'type'     => 'checkbox',

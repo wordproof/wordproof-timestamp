@@ -32,7 +32,7 @@ abstract class Notice {
 			 class="wordproof-notice notice notice-<?php echo esc_attr( $this->notice['type'] ); ?> <?php echo ( $this->isDismissible ) ? 'is-dismissible' : ''; ?>">
 			<p><?php esc_html_e( $this->notice['message'], WORDPROOF_SLUG ); ?></p>
 			<?php $button = $this->getNoticeButtonHtml();
-			echo ( $button ) ? esc_html( $button ) : '';
+			echo ( $button ) ? $button : '';
 			?>
 		</div>
 		<?php

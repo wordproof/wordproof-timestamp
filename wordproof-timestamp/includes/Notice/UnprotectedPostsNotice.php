@@ -47,6 +47,6 @@ class UnprotectedPostsNotice extends Notice {
 	}
 
 	public function handle() {
-		echo esc_html( $this->getNoticeHtml() );
+		echo $this->getNoticeHtml();
 	}
 }

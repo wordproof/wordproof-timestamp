@@ -30,7 +30,7 @@ abstract class Notice {
 		ob_start(); ?>
 		<div data-notice-key="<?php echo esc_attr( $this->key ); ?>"
 			 class="wordproof-notice notice notice-<?php echo esc_attr( $this->notice['type'] ); ?> <?php echo ( $this->isDismissible ) ? 'is-dismissible' : ''; ?>">
-			<p><?php esc_html_e( $this->notice['message'], WORDPROOF_SLUG ); ?></p>
+			<p><?php echo wp_kses_post( $this->notice['message'] ); ?></p>
 			<?php $button = $this->getNoticeButtonHtml();
 			echo ( $button ) ? $button : '';
 			?>

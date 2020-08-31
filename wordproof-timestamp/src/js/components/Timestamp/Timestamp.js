@@ -101,7 +101,7 @@ export default class Timestamp extends Component {
     }
 
     hasBalance() {
-        return wordproofData.balance < 1;
+        return parseInt(wordproofData.balance) > 0;
     }
 
     async stamp() {
@@ -180,8 +180,11 @@ export default class Timestamp extends Component {
 
                 this.refreshPostData().then(() => {
                     if (this.state.status === 'timestamped') {
+
+                        if (this.state.loading)
+                            this.addEditorNotice('Post successfully timestamped.');
+
                         this.setState({loading: false, stampedRequest: false});
-                        this.addEditorNotice('Post successfully timestamped.');
                     }
                 });
 

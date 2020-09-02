@@ -47,11 +47,11 @@ define( 'WORDPROOF_WSFY_CRON_HOOK', 'wsfy_save_post_on_cron' );
 
 define( 'WORDPROOF_WSFY_API_IP', [ '167.71.143.38' ] );
 if ( WORDPROOF_DEVELOPMENT ) {
-	define( 'WORDPROOF_MY_URI', 'https://staging.wordproof.io/' );
-	define( 'WORDPROOF_API_URI', 'https://staging.wordproof.io/api/' );
+	define( 'WORDPROOF_MY_URI', 'https://staging.wordproof.io' );
+	define( 'WORDPROOF_API_URI', WORDPROOF_MY_URI . '/api/' );
 } else {
-	define( 'WORDPROOF_MY_URI', 'https://my.wordproof.io/' );
-	define( 'WORDPROOF_API_URI', 'https://my.wordproof.io/api/' );
+	define( 'WORDPROOF_MY_URI', 'https://my.wordproof.io' );
+	define( 'WORDPROOF_API_URI', WORDPROOF_MY_URI . '/api/' );
 }
 
 // Web Standards

@@ -47,7 +47,7 @@ class AdminController {
 			return;
 		}
 
-		$key   = sanitize_key( wp_unslash( $_REQUEST['key'] ?? '' ) );
+		$key   = sanitize_key( wp_unslash( ($_REQUEST['key']) ? $_REQUEST['key'] : '' ) );
 
 		if ( is_array( $_REQUEST['value'] ) ) {
 			$value = [];
@@ -55,7 +55,7 @@ class AdminController {
 				$value[] = sanitize_text_field( wp_unslash( $v ) );
 			}
 		} else {
-			$value = sanitize_text_field( wp_unslash( $_REQUEST['value'] ?? '' ) );
+			$value = sanitize_text_field( wp_unslash( ($_REQUEST['value']) ? $_REQUEST['value'] : '' ) );
 		}
 
 		if ( ! empty( $key ) && ! empty( $value ) ) {
@@ -66,7 +66,7 @@ class AdminController {
 	public function updateSettings() {
 		check_ajax_referer( 'wordproof', 'security' );
 
-		$options = $_REQUEST['options'] ?? null;
+		$options = ($_REQUEST['options']) ? $_REQUEST['options'] : null;
 		if ( is_array( $options ) ) {
 			foreach ( $options as $key => $value ) {
 				OptionsHelper::set(

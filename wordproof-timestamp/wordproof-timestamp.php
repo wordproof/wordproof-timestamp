@@ -3,7 +3,7 @@
  * Plugin Name: WordProof Timestamp
  * Plugin URI:  https://wordproof.io/wordproof-timestamp-plugin/
  * Description: Timestamp your WordPress content into the blockchain. Instant and without fees. For EOSIO, EOS &amp; Telos.
- * Version:     2.8.7
+ * Version:     2.8.8
  * Author:      WordProof
  * Author URI:  https://wordproof.io
  * License:     GPL2
@@ -19,7 +19,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 define( 'WORDPROOF_DEVELOPMENT', false );
-define( 'WORDPROOF_VERSION', '2.8.7' );
+define( 'WORDPROOF_VERSION', '2.8.8' );
 define( 'WORDPROOF_SLUG', 'wordproof' );
 define( 'WORDPROOF_PREFIX', 'wordproof' );
 define( 'WORDPROOF_ROOT_FILE', __FILE__ );
@@ -47,11 +47,11 @@ define( 'WORDPROOF_WSFY_CRON_HOOK', 'wsfy_save_post_on_cron' );
 
 define( 'WORDPROOF_WSFY_API_IP', [ '167.71.143.38' ] );
 if ( WORDPROOF_DEVELOPMENT ) {
-	define( 'WORDPROOF_MY_URI', 'https://staging.wordproof.io' );
-	define( 'WORDPROOF_API_URI', WORDPROOF_MY_URI . '/api/' );
+	define( 'WORDPROOF_MY_URI', 'https://staging.wordproof.io/' );
+	define( 'WORDPROOF_API_URI', WORDPROOF_MY_URI . 'api/' );
 } else {
-	define( 'WORDPROOF_MY_URI', 'https://my.wordproof.io' );
-	define( 'WORDPROOF_API_URI', WORDPROOF_MY_URI . '/api/' );
+	define( 'WORDPROOF_MY_URI', 'https://my.wordproof.io/' );
+	define( 'WORDPROOF_API_URI', WORDPROOF_MY_URI . 'api/' );
 }
 
 // Web Standards

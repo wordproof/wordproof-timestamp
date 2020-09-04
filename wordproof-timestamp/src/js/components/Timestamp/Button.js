@@ -26,14 +26,14 @@ export default class Button extends Component {
         // if (!this.state.meta.timestampedOn || now > lastTimestamped) {
         return (
             <button className={'button block'} disabled={this.state.disabled}
-                    onClick={() => this.request('wordproof_wsfy_retry_callback')}>Request new callback</button>
+                    onClick={(e) => this.request(e, 'wordproof_wsfy_retry_callback')}>Request new callback</button>
         );
     }
 
     getTimestampButton() {
         return (
             <button className={'button block'} disabled={this.state.disabled}
-                    onClick={() => this.request('wordproof_wsfy_save_post')}>Timestamp
+                    onClick={(e) => this.request(e, 'wordproof_wsfy_save_post')}>Timestamp
                 this {this.state.post.type}</button>
         );
     }
@@ -49,7 +49,8 @@ export default class Button extends Component {
         }
     }
 
-    async request(action) {
+    async request(event, action) {
+        event.preventDefault();
         this.setState({disabled: true});
 
         const response = await axios.post(wordproofData.urls.ajax, qs.stringify({

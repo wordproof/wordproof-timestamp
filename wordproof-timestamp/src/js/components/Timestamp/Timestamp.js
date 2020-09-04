@@ -225,9 +225,9 @@ export default class Timestamp extends Component {
                     {(withButton) ? <Button loading={this.state.loading} callback={this.callback} post={this.state.post} action={'retry'}/> : ''}
                 </div>;
             case 'timestamped':
-                if (this.state.post.type === 'post' || this.state.post.type === 'page' || this.state.post.type === 'product')
-                    return <a href={this.state.post.permalink + '#wordproof'}>✅ Certificate</a>;
-                return <span>✅ Timestamped</span>;
+                if (this.state.post.type === 'attachment' || !this.state.post.permalink)
+                    return <span>✅ Timestamped</span>;
+                return <a href={this.state.post.permalink + '#wordproof'}>✅ Certificate</a>;
             default:
                 return false;
         }

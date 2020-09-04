@@ -141,15 +141,14 @@ class HashController {
 	public static function getType( $post ) {
 		$postType = get_post_type( $post );
 		switch ( $postType ) {
-			case 'page':
-			case 'post':
-				return ARTICLE_TIMESTAMP;
 			case 'attachment':
 				return MEDIA_OBJECT_TIMESTAMP;
 			case 'product':
 				return PRODUCT_TIMESTAMP;
+			case 'page':
+			case 'post':
 			default:
-				return null;
+				return ARTICLE_TIMESTAMP;
 		}
 	}
 }

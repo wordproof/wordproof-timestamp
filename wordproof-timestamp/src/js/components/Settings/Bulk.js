@@ -13,6 +13,7 @@ export default class Bulk extends Component {
             count: 0,
             running: false,
             done: false,
+            registeredPostTypes: Object.values(wordproofSettings.registeredPostTypes),
         }
     }
 
@@ -90,24 +91,16 @@ export default class Bulk extends Component {
                 <h3>Bulk</h3>
                 <table>
                     <tbody>
-                    <tr>
-                        <td><input id={'wordproof-bulk-posts'} onChange={(e) => this.setPostType(e)} value={'post'}
-                                   type={'checkbox'}/></td>
-                        <td><label htmlFor="wordproof-bulk-posts">Posts</label></td>
-                        <td>{wordproofSettings.bulk.counts.post.length}</td>
-                    </tr>
-                    <tr>
-                        <td><input id={'wordproof-bulk-pages'} onChange={(e) => this.setPostType(e)} value={'page'}
-                                   type={'checkbox'}/></td>
-                        <td><label htmlFor="wordproof-bulk-pages">Pages</label></td>
-                        <td>{wordproofSettings.bulk.counts.page.length}</td>
-                    </tr>
-                    <tr>
-                        <td><input id={'wordproof-bulk-attachments'} onChange={(e) => this.setPostType(e)}
-                                   value={'attachment'} type={'checkbox'}/></td>
-                        <td><label htmlFor="wordproof-bulk-attachments">Attachments</label></td>
-                        <td>{wordproofSettings.bulk.counts.attachment.length}</td>
-                    </tr>
+
+                    {this.state.registeredPostTypes.map((postType) => (
+                        <tr key={postType}>
+                            <td><input id={'wordproof-bulk-' + postType} onChange={(e) => this.setPostType(e)} value={postType}
+                                       type={'checkbox'}/></td>
+                            <td><label htmlFor={'wordproof-bulk-' + postType}>{postType}</label></td>
+                            <td>{wordproofSettings.bulk.counts[postType].length}</td>
+                        </tr>
+                    ))}
+
                     </tbody>
                 </table>
 

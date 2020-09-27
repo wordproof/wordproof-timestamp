@@ -132,6 +132,12 @@ class AdminController {
 
 				$hasSiteHealthInstalled = version_compare( get_bloginfo( 'version' ), '5.2', '>=' );
 
+				$counts = [];
+				foreach ( get_post_types( [ 'public' => true ] ) as $postType ) {
+					$counts[$postType] = wp_list_pluck( DashboardWidgetController::getRecentPosts( $postType,
+						'NOT EXISTS', 1000, true ), 'ID' );
+				}
+
 				wp_localize_script( 'wordproof.settings.admin.js', 'wordproofSettings', [
 					'certificateText'         => OptionsHelper::getCertificateText(),
 					'certificateDOMSelector'  => OptionsHelper::getCertificateDomSelector(),
@@ -164,14 +170,8 @@ class AdminController {
 						'security' => wp_create_nonce( 'wordproof' ),
 					],
 					'bulk'                    => [
-						'counts' => [
-							'post'       => wp_list_pluck( DashboardWidgetController::getRecentPosts( 'post',
-								'NOT EXISTS', 1000, true ), 'ID' ),
-							'page'       => wp_list_pluck( DashboardWidgetController::getRecentPosts( 'page',
-								'NOT EXISTS', 1000, true ), 'ID' ),
-							'attachment' => wp_list_pluck( DashboardWidgetController::getRecentPosts( 'attachment',
-								'NOT EXISTS', 1000, true ), 'ID' ),
-						]
+						'counts' => $counts
+
 					],
 					'debugging'               => [
 						'log'                    => DebugLogHelper::getContents(),

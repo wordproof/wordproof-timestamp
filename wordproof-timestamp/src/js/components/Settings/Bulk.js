@@ -104,7 +104,7 @@ export default class Bulk extends Component {
                     </tbody>
                 </table>
 
-                {(this.state.running) ? <span className={'block mt-4'}>Timestamped {this.state.count } / { this.getAmountOfPosts()} items</span> : ''}
+                {(this.state.running) ? <span className={'block mt-4'}>Timestamped {this.state.count } / { this.getAmountOfPosts()} items. Please don&apos;t close this page.</span> : ''}
 
                 <button disabled={this.state.running || this.state.done || this.getAmountOfPosts() > wordproofSettings.balance} onClick={(e) => this.startTimestamping(e)}
                         className={'wbtn wbtn-primary my-4'}>Start Timestamping

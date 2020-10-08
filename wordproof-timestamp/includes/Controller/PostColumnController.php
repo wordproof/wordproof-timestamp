@@ -33,12 +33,34 @@ class PostColumnController {
 
 		add_action( 'wp_ajax_wordproof_wsfy_save_post', [ $this, 'savePost' ] );
 		add_action( 'wp_ajax_wordproof_wsfy_retry_callback', [ $this, 'retryCallback' ] );
+		add_filter( 'default_hidden_columns', [ $this, 'defaultHiddenColumns' ], 10, 2 );
+	}
+
+	public function defaultHiddenColumns( $hidden, $screen ) {
+		if ( $screen->base !== 'edit' ) {
+			return $hidden;
+		}
+
+		$defaultShow = ['post', 'page', 'attachment'];
+		if ( in_array( $screen->post_type, $defaultShow ) ) {
+			return $hidden;
+		}
+
+		$show = array_merge(OptionsHelper::getWSFYField( 'allowed_post_types' ), $defaultShow);
+		$registered = array_values( get_post_types( [ 'public' => true ] ) );
+		$defaultHidden = array_diff($registered, $show);
+
+		if ( in_array( $screen->post_type, $defaultHidden ) ) {
+			$hidden[] = 'wordproof';
+		}
+
+		return $hidden;
 	}
 
 	public function savePost() {
 		check_ajax_referer( 'wordproof', 'security' );
 
-		if ( !isset( $_REQUEST ) ) {
+		if ( ! isset( $_REQUEST ) ) {
 			return;
 		}
 

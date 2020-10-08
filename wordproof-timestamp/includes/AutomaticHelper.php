@@ -129,6 +129,7 @@ class AutomaticHelper {
 			$this->endpoint = str_replace( '$siteId', $this->options->site_id, WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE );
 			$this->body     = [
 				'token_id' => $this->oauth->token_id,
+				'overwrite_callback' => admin_url( 'admin-post.php' )
 			];
 
 			return self::request();

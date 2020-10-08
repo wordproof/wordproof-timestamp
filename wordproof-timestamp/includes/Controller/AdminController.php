@@ -135,7 +135,7 @@ class AdminController {
 				$counts = [];
 				foreach ( get_post_types( [ 'public' => true ] ) as $postType ) {
 					$counts[$postType] = wp_list_pluck( DashboardWidgetController::getRecentPosts( $postType,
-						'NOT EXISTS', 1000, true ), 'ID' );
+						'NOT EXISTS', 5000, true, false, true ), 'ID' );
 				}
 
 				wp_localize_script( 'wordproof.settings.admin.js', 'wordproofSettings', [

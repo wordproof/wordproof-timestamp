@@ -59,7 +59,8 @@ class DashboardWidgetController {
 		$compare = 'NOT EXISTS',
 		$amount = 3,
 		$postsOnly = false,
-		$stamped = false
+		$stamped = false,
+		$hideEmptyContent = false
 	) {
 		$status = ( is_string( $postType ) && $postType === 'attachment' ) ? 'inherit' : 'publish';
 
@@ -82,6 +83,12 @@ class DashboardWidgetController {
 				'meta_key' => 'wordproof_last_timestamped_on',
 				'orderby'  => 'meta_value'
 			] );
+		}
+
+		if ( $hideEmptyContent ) {
+			add_filter('posts_where', function( $where = '' ) {
+				return $where .= "AND trim(coalesce(post_content, '')) <>''";
+			} );
 		}
 
 		$query = new \WP_Query( $query );

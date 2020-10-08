@@ -9,7 +9,9 @@ class AdminBarController {
 	public $options;
 
 	public function __construct() {
-		add_action( 'admin_bar_menu', [ $this, 'render' ], 100 );
+		if ( current_user_can( 'manage_options' ) ) {
+			add_action( 'admin_bar_menu', [ $this, 'render' ], 100 );
+		}
 	}
 
 	public function render( \WP_Admin_Bar $bar ) {

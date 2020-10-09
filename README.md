@@ -25,7 +25,7 @@ Before opening a new issue, please:
 ## I want to create a patch
 Community made patches, localizations, bug reports and contributions are very welcome and help WordProof remain the #1 blockchain timestamp plugin for WordPress.
 
-## Documentation on using Telos
+## Chains we support
 
 | Host                    | Chain Id                                                         |
 |-------------------------|------------------------------------------------------------------|

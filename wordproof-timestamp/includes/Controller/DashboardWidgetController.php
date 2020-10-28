@@ -85,11 +85,13 @@ class DashboardWidgetController {
 			] );
 		}
 
-		if ( $hideEmptyContent ) {
-			add_filter('posts_where', function( $where = '' ) {
-				return $where .= "AND trim(coalesce(post_content, '')) <>''";
-			} );
-		}
+		if ( $postType === 'post' || $postType === 'page' ) {
+            if ($hideEmptyContent) {
+                add_filter('posts_where', function ($where = '') {
+                    return $where .= "AND trim(coalesce(post_content, '')) <>''";
+                });
+            }
+        }
 
 		$query = new \WP_Query( $query );
 		$posts = $query->get_posts();

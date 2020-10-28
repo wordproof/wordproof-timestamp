@@ -86,10 +86,10 @@ class DashboardWidgetController {
 		}
 
 		if ( $postType === 'post' || $postType === 'page' ) {
-            if ($hideEmptyContent) {
-                add_filter('posts_where', function ($where = '') {
+            if ( $hideEmptyContent ) {
+                add_filter( 'posts_where', function ( $where = '' ) {
                     return $where .= "AND trim(coalesce(post_content, '')) <>''";
-                });
+                } );
             }
         }
 

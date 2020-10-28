@@ -25,6 +25,20 @@ Before opening a new issue, please:
 ## I want to create a patch
 Community made patches, localizations, bug reports and contributions are very welcome and help WordProof remain the #1 blockchain timestamp plugin for WordPress.
 
+## Chains we support
+
+| Host                    | Chain Id                                                         |
+|-------------------------|------------------------------------------------------------------|
+| eos.greymass.com        | aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906 |
+| api.telosgermany.io     | 4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11 |
+| api.jungle.alohaeos.com | e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473 |
+
+The three networks listed above are all different blockchains, running the EOS.IO software. The first entry is the EOS mainnet, Telos is an independent mainnet (https://www.telosfoundation.io/) and Alohaeos Jungle is an EOS testnet.
+
+Right now, there is no good way of knowing which host is the most reliable. We are using Greymass as it performed good consistently these past months, but there are many more. For Telos we are using the foundation's endpoint and the Jungle endpoint is from it's founder.
+
+Currently, we are not supporting blockchains apart from these three. While supporting other EOS.IO chains is a relative minor task, adding other blockchains running different software will require a lot more work to be done. Nevertheless, we are exploring the possibilities.
+
 ## Get in touch with the WordProof community
 
 * [WordProof Telegram Community](https://t.me/WordProof)

@@ -15,6 +15,16 @@ export default class Bulk extends Component {
             done: false,
             registeredPostTypes: Object.values(wordproofSettings.registeredPostTypes),
         }
+
+        this.dismissNotice();
+    }
+
+    dismissNotice() {
+        axios.post(wordproofSettings.ajax.url, qs.stringify({
+            'action': 'wordproof_dismiss_notice',
+            'notice_key': 'wordproof_unprotected_posts_notice',
+            'security': wordproofSettings.ajax.security
+        }));
     }
 
     setPostType(e) {

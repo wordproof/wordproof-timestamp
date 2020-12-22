@@ -2,13 +2,12 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
+use Firebase\JWT\JWT;
 use WordProofTimestamp\includes\AutomaticHelper;
 use WordProofTimestamp\includes\DebugLogHelper;
 use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\Page\AutoStampPage;
 use WordProofTimestamp\includes\PostMetaHelper;
-use WordProofTimestamp\lib\JWT\JWT;
-use WordProofTimestamp\lib\JWT\SignatureInvalidException;
 
 class AutomaticHooksController {
 

@@ -2,10 +2,10 @@
 /**
  * Plugin Name: WordProof Timestamp
  * Plugin URI:  https://wordproof.io/wordproof-timestamp-plugin/
- * Description: Timestamp your WordPress content into the blockchain. Instant and without fees. For EOSIO, EOS &amp; Telos.
+ * Description: Timestamp your WordPress content into the blockchain. Instant and without fees. For EOSIO, EOS, Ethereum &amp; Telos.
  * Version:     2.8.14
  * Author:      WordProof
- * Author URI:  https://wordproof.io
+ * Author URI:  https://wordproof.com
  * License:     GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Domain Path: /languages
@@ -18,7 +18,11 @@ if ( ! defined( 'WPINC' ) ) {
 	die();
 }
 
-define( 'WORDPROOF_DEVELOPMENT', true );
+// Load Composer
+if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
+    require __DIR__ . '/vendor/autoload.php';
+}
+
 define( 'WORDPROOF_VERSION', '2.8.14' );
 define( 'WORDPROOF_SLUG', 'wordproof' );
 define( 'WORDPROOF_PREFIX', 'wordproof' );
@@ -46,13 +50,8 @@ define( 'WORDPROOF_WSFY_ENDPOINT_OAUTH_TOKEN', 'oauth/token' );
 define( 'WORDPROOF_WSFY_CRON_HOOK', 'wsfy_save_post_on_cron' );
 
 define( 'WORDPROOF_WSFY_API_IP', [ '167.71.143.38' ] );
-if ( WORDPROOF_DEVELOPMENT ) {
-	define( 'WORDPROOF_MY_URI', 'https://myv2.test/' );
-	define( 'WORDPROOF_API_URI', WORDPROOF_MY_URI . 'api/' );
-} else {
-	define( 'WORDPROOF_MY_URI', 'https://my.wordproof.com/' );
-	define( 'WORDPROOF_API_URI', WORDPROOF_MY_URI . 'api/' );
-}
+define( 'WORDPROOF_MY_URI', wordproof_get_env('WORDPROOF_ENDPOINT', 'https://my.wordproof.com/') );
+define( 'WORDPROOF_API_URI', WORDPROOF_MY_URI . 'api/' );
 
 // Web Standards
 define( 'ARTICLE_TIMESTAMP', 'ArticleTimestamp' );
@@ -60,10 +59,7 @@ define( 'MEDIA_OBJECT_TIMESTAMP', 'MediaObjectTimestamp' );
 define( 'PRODUCT_TIMESTAMP', 'ProductTimestamp' );
 define( 'CURRENT_TIMESTAMP_STANDARD_VERSION', '0.2.0' );
 
-// Load Composer
-if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
-    require __DIR__ . '/vendor/autoload.php';
-}
+
 
 // Load plugin
 spl_autoload_register( __NAMESPACE__ . '\\autoload' );
@@ -95,4 +91,8 @@ function wordproof_plugin_activated( $plugin ) {
 		wp_redirect( admin_url( 'admin.php?page=wordproof-getting-started' ) );
 		die();
 	}
+}
+
+function wordproof_get_env($key, $default) {
+    return ($e = getenv($key)) ? $e : $default;
 }

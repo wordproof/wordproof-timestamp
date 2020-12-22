@@ -18,7 +18,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die();
 }
 
-define( 'WORDPROOF_DEVELOPMENT', false );
+define( 'WORDPROOF_DEVELOPMENT', true );
 define( 'WORDPROOF_VERSION', '2.8.14' );
 define( 'WORDPROOF_SLUG', 'wordproof' );
 define( 'WORDPROOF_PREFIX', 'wordproof' );
@@ -47,10 +47,10 @@ define( 'WORDPROOF_WSFY_CRON_HOOK', 'wsfy_save_post_on_cron' );
 
 define( 'WORDPROOF_WSFY_API_IP', [ '167.71.143.38' ] );
 if ( WORDPROOF_DEVELOPMENT ) {
-	define( 'WORDPROOF_MY_URI', 'https://staging.wordproof.io/' );
+	define( 'WORDPROOF_MY_URI', 'https://myv2.test/' );
 	define( 'WORDPROOF_API_URI', WORDPROOF_MY_URI . 'api/' );
 } else {
-	define( 'WORDPROOF_MY_URI', 'https://my.wordproof.io/' );
+	define( 'WORDPROOF_MY_URI', 'https://my.wordproof.com/' );
 	define( 'WORDPROOF_API_URI', WORDPROOF_MY_URI . 'api/' );
 }
 
@@ -60,10 +60,16 @@ define( 'MEDIA_OBJECT_TIMESTAMP', 'MediaObjectTimestamp' );
 define( 'PRODUCT_TIMESTAMP', 'ProductTimestamp' );
 define( 'CURRENT_TIMESTAMP_STANDARD_VERSION', '0.2.0' );
 
-// Init plugin
+// Load Composer
+if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
+    require __DIR__ . '/vendor/autoload.php';
+}
+
+// Load plugin
 spl_autoload_register( __NAMESPACE__ . '\\autoload' );
 add_action( 'activated_plugin', __NAMESPACE__ . '\\wordproof_plugin_activated' );
 add_action( 'plugins_loaded', array( WordProofTimestamp::getInstance(), 'init' ) );
+
 
 /**
  * Autoloads PHP file

@@ -1,0 +1,17 @@
+{
+    "name": "wordproof/wordproof-timestamp",
+    "description": "Timestamp your content onto the blockchain",
+    "type": "wordpress-plugin",
+    "require": {
+        "firebase/php-jwt": "^5.2",
+        "composer/installers": "~1.0"
+    },
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "Marijn Bent",
+            "email": "marijn@wordproof.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}

@@ -8,6 +8,7 @@ use WordProofTimestamp\includes\Controller\AutomaticHooksController;
 use WordProofTimestamp\includes\Controller\CertificateController;
 use WordProofTimestamp\includes\Controller\DebugInformationController;
 use WordProofTimestamp\includes\Controller\ECommerceController;
+use WordProofTimestamp\includes\Controller\RestApiController;
 use WordProofTimestamp\includes\Controller\TimestampController;
 
 /**
@@ -20,16 +21,16 @@ class WordProofTimestamp {
 	private static $instance = null;
 
 	public function init() {
-		new DebugInformationController();
-		new AdminController();
+        new DebugInformationController();
+        new RestApiController();
+
+        new AdminController();
 		new AnalyticsHelper();
 		new TimestampController();
 		new CertificateController();
 
 		new AutomaticHooksController();
 		new ECommerceController();
-
-
 	}
 
 	/**

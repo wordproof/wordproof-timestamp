@@ -42,8 +42,8 @@ export default class Support extends Component {
                 <p>To help you, we need some information about your system.
                     {(wordproofSettings.debugging.hasSiteHealthInstalled) && <span>
                         Please copy your <a
-                        href={wordproofSettings.debugging.siteHealthUrl} target="_blank" rel="noopener noreferrer">relevant site info</a>
-                         and include the log below.
+                        href={wordproofSettings.debugging.siteHealthUrl} target="_blank" rel="noopener noreferrer">relevant site info
+                    </a> and include the log below.
                     </span>}
                     {(!wordproofSettings.debugging.hasSiteHealthInstalled) && <span>
                         Please install the official WordPress Health Check plugin <a

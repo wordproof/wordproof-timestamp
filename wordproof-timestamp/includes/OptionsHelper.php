@@ -19,16 +19,11 @@ class OptionsHelper {
 		'hide_post_column'           => [ 'type' => 'bool' ],
 		'wsfy'                       => [
 			'site_id'            => [ 'type' => 'int' ],
-			'site_token'         => [ 'type' => 'text' ],
 			'show_revisions'     => [ 'type' => 'bool' ],
 			'allowed_post_types' => [ 'type' => 'text' ],
 			'whitelisted_ips'    => [ 'type' => 'text' ]
 		],
 		'oauth'                      => [
-			'client_id'     => [ 'type' => 'text' ],
-			'client_secret' => [ 'type' => 'text' ],
-			'refresh_token' => [ 'type' => 'text' ],
-			'expiration'    => [ 'type' => 'text' ],
 			'access_token'  => [ 'type' => 'text' ],
 			'token_id'      => [ 'type' => 'text' ],
 		],
@@ -104,7 +99,7 @@ class OptionsHelper {
 		return (object) $options;
 	}
 
-	public static function getOAuth( $excludes = [ 'client_secret' ] ) {
+	public static function getOAuth( $excludes = [] ) {
 		$options = get_option( self::$prefix . self::$optionOAuth, [] );
 
 		foreach ( $excludes as $exclude ) {

@@ -46,9 +46,8 @@ class DebugInformationController {
 		return [
 			'label'   => $this->getLabel( $label ),
 			'value'   => $this->getValue( $value ),
-			'debug'   => $this->getValue( $value, true ),
-			'private' => in_array( $label, [ 'access_token', 'client_secret', 'refresh_token' ] ),
-		];
+			'debug'   => $this->getValue( $value, true )
+        ];
 	}
 
 	private function getValue( $value, $debug = false ) {

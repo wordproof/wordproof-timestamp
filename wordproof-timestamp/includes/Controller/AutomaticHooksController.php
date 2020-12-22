@@ -51,7 +51,7 @@ class AutomaticHooksController {
 	}
 
 	public function setUpdateHooks() {
-		$options = OptionsHelper::getWSFY( [ 'site_token' ] );
+		$options = OptionsHelper::getWSFY( [] );
 		if ( isset( $options->allowed_post_types ) ) {
 			foreach ( $options->allowed_post_types as $postType ) {
 				add_action( 'publish_' . $postType, [ $this, 'setCron' ] );
@@ -135,12 +135,7 @@ class AutomaticHooksController {
 			}
 
 			try {
-				if ( ! empty( $oauth->client_secret ) ) {
-					JWT::decode( $_REQUEST['token'], $oauth->client_secret, [ 'HS256' ] );
-				} elseif ( ! empty( $oauth->token_id ) ) {
-					JWT::decode( $_REQUEST['token'], $oauth->token_id, [ 'HS256' ] );
-				}
-
+			    JWT::decode( $_REQUEST['token'], $oauth->token_id, [ 'HS256' ] );
 				return true;
 			} catch ( \Exception $exception ) {
 				$this->response = $this->responses['token_not_valid'];

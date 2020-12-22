@@ -53,7 +53,7 @@ class CertificateController {
 			global $post;
 
 			$wsfyIsActive = OptionsHelper::isWSFYActive();
-			$wsfyOptions  = ( $wsfyIsActive ) ? OptionsHelper::getWSFY( [ 'site_token' ] ) : [];
+			$wsfyOptions  = ( $wsfyIsActive ) ? OptionsHelper::getWSFY( [] ) : [];
 
 			//TODO: Reintroduce polyfill
 			//wp_enqueue_script('wordproof.polyfill.js', WORDPROOF_URI_JS . '/polyfill.js', [], filemtime(WORDPROOF_DIR_JS . '/polyfill.js'), false);

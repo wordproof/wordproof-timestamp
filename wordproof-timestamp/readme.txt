@@ -83,10 +83,9 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 = 2.9.0 =
 *Release date: December 22th, 2020*
 * Added REST endpoint as alternative to the default method of receiving webhooks
-* Fixed a bug with the certificate
-* Fixed a bug with the bulk timestamper
 * Bumped dependencies
 * Added composer for including libraries
+* Fixed various bugs
 
 = 2.8.14 =
 *Release date: October 28th, 2020*

@@ -70,8 +70,8 @@ spl_autoload_register(function ($class = '') {
 
 add_action('activated_plugin', function ($plugin) {
     if ($plugin === WORDPROOF_BASENAME && !isset($_GET['activate-multi'])) {
-        wp_redirect(admin_url('admin.php?page=wordproof-getting-started'));
-        die();
+        wp_safe_redirect(admin_url('admin.php?page=wordproof-getting-started'));
+        exit();
     }
 });
 

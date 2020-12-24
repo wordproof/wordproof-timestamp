@@ -85,7 +85,7 @@ export default class Timestamp extends Component {
 
                 if (isSavingPost && !isAutosavingPost && didPostSaveRequestSucceed) {
                     unsubscribe();
-                    this.setState({status: 'awaiting_callback'});
+                    this.setState({status: 'awaiting_webhook'});
 
                     setTimeout(() => {
                         this.addEventsOnPostActions();
@@ -152,7 +152,7 @@ export default class Timestamp extends Component {
             return 'outdated';
 
         if (!this.state.meta.blockchain)
-            return 'awaiting_callback';
+            return 'awaiting_webhook';
 
         return 'timestamped';
     }
@@ -220,8 +220,8 @@ export default class Timestamp extends Component {
                     {(withButton) ? <Button loading={this.state.loading} callback={this.callback} post={this.state.post} action={'timestamp'}/> : ''}
 
                 </div>;
-            case 'awaiting_callback':
-                return <div><span hidden={this.state.message}>🕓 Waiting for callback...</span>
+            case 'awaiting_webhook':
+                return <div><span hidden={this.state.message}>🕓 Waiting for webhook...</span>
                     {(withButton) ? <Button loading={this.state.loading} callback={this.callback} post={this.state.post} action={'retry'}/> : ''}
                 </div>;
             case 'timestamped':

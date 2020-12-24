@@ -44,7 +44,7 @@ class PostWidgetController {
 			}
 
 			if ( ! isset( $meta->blockchain ) || empty( $meta->blockchain ) ) {
-				return 'awaiting_callback';
+				return 'awaiting_webhook';
 			}
 
 			return 'timestamped';

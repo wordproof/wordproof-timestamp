@@ -11,7 +11,7 @@ class ItemResource {
 		$body = self::getValues( $type, $post );
 
 		if ( ! empty( OptionsHelper::getCustomDomain() ) ) {
-			$body['overwrite_callback'] = site_url( '/' ) . 'wp-admin/admin-post.php';
+			$body['overwrite_webhook'] = site_url( '/' ) . 'wp-admin/admin-post.php';
 		}
 
 		return $body;

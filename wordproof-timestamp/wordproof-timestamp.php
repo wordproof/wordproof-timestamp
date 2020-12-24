@@ -39,7 +39,7 @@ define('WORDPROOF_URI_JS', WORDPROOF_URI_ASSETS . '/js');
 define('WORDPROOF_URI_CSS', WORDPROOF_URI_ASSETS . '/css');
 define('WORDPROOF_URI_IMAGES', WORDPROOF_URI_ASSETS . '/images');
 define('WORDPROOF_WSFY_ENDPOINT_ITEM', 'sites/$siteId/items/');
-define('WORDPROOF_WSFY_ENDPOINT_RETRY_CALLBACK', 'sites/$siteId/items/$postId/callback/retry');
+define('WORDPROOF_WSFY_ENDPOINT_RETRY_WEBHOOK', 'sites/$siteId/items/$postId/callback/retry');
 define('WORDPROOF_WSFY_ENDPOINT_GET_ARTICLES', 'sites/$siteId/items/$postId');
 define('WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE', 'sites/$siteId/validate/token');
 

@@ -30,7 +30,7 @@ class WebhookController {
 
 	private function isValidWebhook( $action ) {
 
-		if ( $action === null ) {
+		if ( $action === null || ! in_array($action, [ 'wordproof_callback', 'wordproof_test_callback' ] ) ) {
             $this->response = 'no_action_present';
             return false;
 		}
@@ -65,7 +65,7 @@ class WebhookController {
                 'response'    => $this->response,
                 'action'      => isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : 'none'
             ];
-            DebugLogHelper::error( 'Callback failed. ' . print_r( $response, true ) );
+            DebugLogHelper::error( 'Webhook failed. ' . print_r( $response, true ) );
             error_log( 'WordProof: Update request denied' );
             error_log( print_r( $response, true ) );
             echo json_encode( $response );
@@ -74,17 +74,17 @@ class WebhookController {
 
         switch ( $action ) {
             case 'wordproof_test_callback':
-                $this->handleTestCallback();
+                $this->handleTestWebhook();
                 break;
             case 'wordproof_callback':
             default:
-                $this->handleModifyPost();
+            $this->handleModifyPost();
                 break;
         }
 	}
 
-	public function handleTestCallback() {
-		error_log( 'WordProof: Callback successfully tested' );
+	public function handleTestWebhook() {
+		error_log( 'WordProof: Webhook successfully tested' );
 		echo json_encode( [ 'success' => true, 'response' => 'valid_endpoint'] );
 		die();
 	}
@@ -107,11 +107,11 @@ class WebhookController {
 				OptionsHelper::set( 'balance', $balance );
 			}
 
-			echo json_encode( [ 'success' => true, 'response' => $this->responses['post_modified'] ] );
+			echo json_encode( [ 'success' => true, 'response' => 'post_modified' ] );
 			die();
 		} else {
 			error_log( 'Post ' . $postId . ' not updated. ' );
-			echo json_encode( [ 'success' => false, 'response' => $this->responses['post_not_modified'] ] );
+			echo json_encode( [ 'success' => false, 'response' => 'post_not_modified' ] );
 			die();
 		}
 	}

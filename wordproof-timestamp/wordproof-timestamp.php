@@ -49,6 +49,9 @@ define('WORDPROOF_WSFY_API_IP', ['167.71.143.38']);
 define('WORDPROOF_MY_URI', wordproof_get_env('WORDPROOF_ENDPOINT', 'https://my.wordproof.com/'));
 define('WORDPROOF_API_URI', WORDPROOF_MY_URI . 'api/');
 
+define('WORDPROOF_REST_NAMESPACE', 'wordproof-timestamp/v1');
+define('WORDPROOF_REST_TIMESTAMP_ENDPOINT', 'posts');
+
 // Web Standards
 define('ARTICLE_TIMESTAMP', 'ArticleTimestamp');
 define('MEDIA_OBJECT_TIMESTAMP', 'MediaObjectTimestamp');

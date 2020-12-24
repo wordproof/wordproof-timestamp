@@ -30,14 +30,6 @@ class AutomaticHooksController {
 		}
 	}
 
-    public function registerRoute()
-    {
-        register_rest_route('wordproof-timestamp/v1', 'posts', [
-            'methods' => 'POST',
-            'callback' => [$this, 'processCallback'],
-        ]);
-    }
-
 	public function createPost( $postId ) {
 		$helper = new AutomaticHelper( $postId );
 		$helper->createPost();

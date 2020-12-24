@@ -27,7 +27,7 @@ class AutomaticHelper
     public function __construct($postId = false, $skipAccessToken = false)
     {
         $this->options = OptionsHelper::getWSFY();
-        $this->oauth = OptionsHelper::getOAuth([]);
+        $this->oauth = OptionsHelper::getOAuth( [] );
 
         if ($postId) {
             $this->post = get_post($postId);
@@ -40,7 +40,7 @@ class AutomaticHelper
         }
 
         if ($_ENV['APP_ENV'] === 'local')
-            add_filter( 'https_ssl_verify', '__return_false' );
+            add_filter('https_ssl_verify', '__return_false');
     }
 
     public function getAccessToken()
@@ -55,7 +55,7 @@ class AutomaticHelper
 
     public function createPost()
     {
-        if (!$this->accessToken) {
+        if ( ! $this->accessToken ) {
             return ['errors' => ['authentication' => ['Please configure your site key']]];
         }
 
@@ -75,19 +75,19 @@ class AutomaticHelper
         return $result = $this->request();
     }
 
-    public function retryCallback()
+    public function retryWebhook()
     {
-        if ($this->accessToken) {
+        if ( ! $this->accessToken ) {
             return ['errors' => ['authentication' => ['Please configure your site key']]];
         }
 
-        $this->action = 'retry_callback';
+        $this->action = 'retry_webhook';
 
-        $endpoint = str_replace('$postId', $this->post->ID, WORDPROOF_WSFY_ENDPOINT_RETRY_CALLBACK);
+        $endpoint = str_replace('$postId', $this->post->ID, WORDPROOF_WSFY_ENDPOINT_RETRY_WEBHOOK);
         $this->endpoint = str_replace('$siteId', $this->options->site_id, $endpoint);
 
         if (!empty(OptionsHelper::getCustomDomain())) {
-            $this->body['overwrite_callback'] = site_url('/') . 'wp-admin/admin-post.php';
+            $this->body['overwrite_webhook'] = site_url('/') . 'wp-admin/admin-post.php';
         }
 
         $this->body['type'] = HashController::getType($this->post);
@@ -132,13 +132,13 @@ class AutomaticHelper
         }
 
         $this->action = 'validate_token';
-            $this->endpoint = str_replace('$siteId', $this->options->site_id, WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE);
-            $this->body = [
-                'token_id' => $this->oauth->token_id,
-                'overwrite_callback' => admin_url( 'admin-post.php' )
-            ];
+        $this->endpoint = str_replace('$siteId', $this->options->site_id, WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE);
+        $this->body = [
+            'token_id' => $this->oauth->token_id,
+            'overwrite_webhook' => admin_url('admin-post.php')
+        ];
 
-            return self::request();
+        return self::request();
     }
 
     private function request($method = 'POST')
@@ -152,9 +152,7 @@ class AutomaticHelper
             ],
         ];
 
-        if ($this->accessToken) {
-            $args['headers']['Authorization'] = 'Bearer ' . $this->accessToken;
-        }
+        $args['headers']['Authorization'] = 'Bearer ' . $this->accessToken;
 
 
         if ($this->body) {
@@ -194,7 +192,7 @@ class AutomaticHelper
 
                 TimestampController::saveTimestamp($this->post->ID, '', '', true);
                 break;
-            case 'retry_callback':
+            case 'retry_webhook':
             case 'validate_token':
             case 'get_articles':
                 return $body;
@@ -216,7 +214,7 @@ class AutomaticHelper
 
         switch ($this->action) {
             case 'create_post':
-            case 'retry_callback':
+            case 'retry_webhook':
                 return $this->returnError($response);
             case 'get_articles':
             case 'validate_token':

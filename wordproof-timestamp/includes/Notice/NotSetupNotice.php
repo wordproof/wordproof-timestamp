@@ -38,6 +38,6 @@ class NotSetupNotice extends Notice {
 	}
 
 	public function handle() {
-		echo esc_html($this->getNoticeHtml());
+		echo wp_kses($this->getNoticeHtml(), wp_kses_allowed_html('post'));
 	}
 }

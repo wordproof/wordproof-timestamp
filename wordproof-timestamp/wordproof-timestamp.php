@@ -21,8 +21,11 @@ if (!defined('WPINC')) {
 if (is_readable(__DIR__ . '/vendor/autoload.php')) {
     require __DIR__ . '/vendor/autoload.php';
 
-    $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
-    $dotenv->load();
+    try {
+        $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
+        $dotenv->load();
+    } catch(\Exception $e) {}
+
 }
 
 define('WORDPROOF_VERSION', '2.9.0');

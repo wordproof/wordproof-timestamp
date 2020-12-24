@@ -39,6 +39,9 @@ class DebugInformationController {
 			}
 		}
 
+        $fields['webhook_admin_post'] = $this->getField( 'webhook_admin_post', admin_url( 'admin-post.php' ) );
+        $fields['webhook_rest_url'] = $this->getField( 'webhook_rest_url', get_rest_url( null, WORDPROOF_REST_NAMESPACE . '/' . WORDPROOF_REST_TIMESTAMP_ENDPOINT ) );
+
 		return $fields;
 	}
 

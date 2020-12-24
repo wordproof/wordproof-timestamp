@@ -11,6 +11,7 @@ use WordProofTimestamp\includes\Page\GettingStarted;
 use WordProofTimestamp\includes\Page\OnboardingWizard;
 use WordProofTimestamp\includes\Page\SettingsPage;
 use WordProofTimestamp\includes\UpdateHelper;
+use WordProofTimestamp\includes\Controller\DebugInformationController;
 
 
 class AdminController {
@@ -28,8 +29,9 @@ class AdminController {
 			new SettingsPage();
 			new OnboardingWizard();
 			new GettingStarted();
+            new DebugInformationController();
 
-			new PostColumnController();
+            new PostColumnController();
 			new PostFilterController();
 			new DashboardWidgetController();
 			new PostWidgetController();

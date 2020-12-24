@@ -71,11 +71,6 @@ export default class Step2 extends Component {
                 axios.post(wordproof.ajax.url, qs.stringify({
                     'action': 'wordproof_update_settings',
                     'options': {
-                        'client_id': '',
-                        'client_secret': '',
-                        'expiration': '',
-                        'refresh_token': '',
-                        'site_token': '',
                         'site_id': data[0],
                         'access_token': data[1],
                         'token_id': data[2],

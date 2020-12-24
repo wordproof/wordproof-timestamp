@@ -53,7 +53,7 @@ export default class TimestampButton extends Component {
             return 'outdated';
 
         if (!this.state.meta.blockchain)
-            return 'awaiting_callback';
+            return 'awaiting_webhook';
 
         return 'timestamped';
     }
@@ -68,9 +68,9 @@ export default class TimestampButton extends Component {
             case 'outdated':
                 return <div><span
                     hidden={this.state.hideLabels}>🚨 Timestamp is outdated</span> {this.getTimestampButton()}</div>;
-            case 'awaiting_callback':
+            case 'awaiting_webhook':
                 return <div><span
-                    hidden={this.state.hideLabels}>🕓 Waiting for callback...</span> {this.getRetryCallbackButton()}</div>;
+                    hidden={this.state.hideLabels}>🕓 Waiting for webhook...</span> {this.getRetryWebhookButton()}</div>;
             case 'timestamped':
                 if (this.state.post.type === 'post' || this.state.post.type === 'page' || this.state.post.type === 'product')
                     return <a href={this.state.post.permalink + '#wordproof'}>✅ Certificate</a>;
@@ -80,14 +80,14 @@ export default class TimestampButton extends Component {
         }
     }
 
-    getRetryCallbackButton() {
+    getRetryWebhookButton() {
         if (this.props.automate && this.state.show) {
             let now = Math.ceil(Date.now() / 1000);
             let lastTimestamped = parseInt(this.state.meta.timestampedOn) + 20;
             if (!this.state.meta.timestampedOn || now > lastTimestamped) {
                 return (
                     <button className={'button block'} disabled={this.state.disabled}
-                            onClick={() => this.request('wordproof_wsfy_retry_callback')}>Request new callback</button>
+                            onClick={() => this.request('wordproof_wsfy_retry_webhook')}>Request new webhook</button>
                 );
             }
         }

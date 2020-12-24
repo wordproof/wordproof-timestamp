@@ -39,6 +39,9 @@ class DebugInformationController {
 			}
 		}
 
+        $fields['webhook_admin_post'] = $this->getField( 'webhook_admin_post', admin_url( 'admin-post.php' ) );
+        $fields['webhook_rest_url'] = $this->getField( 'webhook_rest_url', get_rest_url( null, WORDPROOF_REST_NAMESPACE . '/' . WORDPROOF_REST_TIMESTAMP_ENDPOINT ) );
+
 		return $fields;
 	}
 
@@ -46,9 +49,8 @@ class DebugInformationController {
 		return [
 			'label'   => $this->getLabel( $label ),
 			'value'   => $this->getValue( $value ),
-			'debug'   => $this->getValue( $value, true ),
-			'private' => in_array( $label, [ 'access_token', 'client_secret', 'refresh_token' ] ),
-		];
+			'debug'   => $this->getValue( $value, true )
+        ];
 	}
 
 	private function getValue( $value, $debug = false ) {

@@ -22,7 +22,7 @@ class PostColumnController {
 			}
 		}
 
-		if ( $showColumn ) { //TODO also on CPT's
+		if ( $showColumn ) {
 			add_filter( 'manage_posts_columns', array( $this, 'addColumn' ) );
 			add_action( 'manage_posts_custom_column', array( $this, 'addColumnContent' ), 10, 2 );
 			add_filter( 'manage_pages_columns', array( $this, 'addColumn' ) );
@@ -32,7 +32,7 @@ class PostColumnController {
 		}
 
 		add_action( 'wp_ajax_wordproof_wsfy_save_post', [ $this, 'savePost' ] );
-		add_action( 'wp_ajax_wordproof_wsfy_retry_callback', [ $this, 'retryCallback' ] );
+		add_action( 'wp_ajax_wordproof_wsfy_retry_webhook', [ $this, 'retryWebhook' ] );
 		add_filter( 'default_hidden_columns', [ $this, 'defaultHiddenColumns' ], 10, 2 );
 	}
 
@@ -71,11 +71,11 @@ class PostColumnController {
 		die();
 	}
 
-	public function retryCallback() {
+	public function retryWebhook() {
 		check_ajax_referer( 'wordproof', 'security' );
 		$postId     = intval( sanitize_text_field( $_REQUEST['post_id'] ) );
 		$controller = new AutomaticHelper( $postId );
-		$result     = $controller->retryCallback();
+		$result     = $controller->retryWebhook();
 		echo json_encode( $result );
 		die();
 	}

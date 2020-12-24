@@ -19,16 +19,11 @@ class OptionsHelper {
 		'hide_post_column'           => [ 'type' => 'bool' ],
 		'wsfy'                       => [
 			'site_id'            => [ 'type' => 'int' ],
-			'site_token'         => [ 'type' => 'text' ],
 			'show_revisions'     => [ 'type' => 'bool' ],
 			'allowed_post_types' => [ 'type' => 'text' ],
 			'whitelisted_ips'    => [ 'type' => 'text' ]
 		],
 		'oauth'                      => [
-			'client_id'     => [ 'type' => 'text' ],
-			'client_secret' => [ 'type' => 'text' ],
-			'refresh_token' => [ 'type' => 'text' ],
-			'expiration'    => [ 'type' => 'text' ],
 			'access_token'  => [ 'type' => 'text' ],
 			'token_id'      => [ 'type' => 'text' ],
 		],
@@ -104,7 +99,7 @@ class OptionsHelper {
 		return (object) $options;
 	}
 
-	public static function getOAuth( $excludes = [ 'client_secret' ] ) {
+	public static function getOAuth( $excludes = [] ) {
 		$options = get_option( self::$prefix . self::$optionOAuth, [] );
 
 		foreach ( $excludes as $exclude ) {
@@ -164,6 +159,8 @@ class OptionsHelper {
 		$wsfyKeys  = array_keys( self::$options[ self::$optionWSFY ] );
 		$oauthKeys = array_keys( self::$options[ self::$optionOAuth ] );
 
+		$value = wp_unslash($value);
+
 		if ( in_array( $key, $wsfyKeys ) ) {
 			return self::setValueOfArray( self::$optionWSFY, $wsfyKeys, $key, $value );
 
@@ -172,7 +169,7 @@ class OptionsHelper {
 
 		} elseif ( isset( self::$options[ $key ] ) ) {
 			$type  = self::$options[ $key ]['type'];
-			$value = self::validateData( $value, $type );
+			$value = self::sanitizeData( $value, $type );
 
 			return update_option( self::$prefix . $key, $value );
 		} else {
@@ -185,7 +182,7 @@ class OptionsHelper {
 
 	private static function setValueOfArray( $arrayParentKey, $arrayKeys, $key, $value ) {
 		$type  = self::$options[ $arrayParentKey ][ $key ]['type'];
-		$value = [ $key => self::validateData( $value, $type ) ];
+		$value = [ $key => self::sanitizeData( $value, $type ) ];
 
 		$options = ( $arrayParentKey === self::$optionWSFY ) ? (array) self::getWSFY() : (array) self::getOAuth( [] );
 		$options = array_intersect_key( $options, array_flip( $arrayKeys ) );
@@ -195,15 +192,15 @@ class OptionsHelper {
 		return update_option( self::$prefix . $arrayParentKey, $options );
 	}
 
-	private static function validateData( $value, $type ) {
+	private static function sanitizeData( $value, $type ) {
 		if ( is_array( $value ) ) {
-			return array_map( [ 'self', 'validate' ], $value );
+			return array_map( [ 'self', 'sanitize' ], $value );
 		} else {
-			return self::validate( $value, $type );
+			return self::sanitize( $value, $type );
 		}
 	}
 
-	private static function validate( $value, $type = '' ) {
+	private static function sanitize( $value, $type = '' ) {
 		switch ( $type ) {
 			case 'int':
 				return intval( $value );

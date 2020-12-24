@@ -54,7 +54,7 @@ export default class Automatic extends Component {
             return 'connecting';
 
         switch (this.state.status) {
-            case 'awaiting_callback':
+            case 'awaiting_webhook':
             case 'not_published':
                 return 'connecting'
             case 'timestamped':
@@ -97,9 +97,9 @@ export default class Automatic extends Component {
                     messageStrong: ''
                 };
 
-            case 'awaiting_callback':
+            case 'awaiting_webhook':
                 return {
-                    message: <span>🕓 Waiting for callback...</span>,
+                    message: <span>🕓 Waiting for webhook...</span>,
                     messageStrong: ''
                 };
             case 'timestamped':

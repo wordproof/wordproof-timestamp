@@ -38,9 +38,8 @@ class TimestampController {
 	public function saveTimestampAjax() {
 		check_ajax_referer( 'wordproof', 'security' );
 
-		if ( !isset( $_REQUEST ) ) {
-			return;
-		}
+        if (!isset($_REQUEST['post_id']) || !isset($_REQUEST['transaction_id']))
+            return;
 
 		$postId        = intval( sanitize_text_field( wp_unslash( ($_REQUEST['post_id']) ? $_REQUEST['post_id'] : 0 ) ) );
 		$chain         = OptionsHelper::getNetwork();
@@ -59,6 +58,10 @@ class TimestampController {
 
 	public function getHashById() {
 		check_ajax_referer( 'wordproof', 'security' );
+
+        if (!isset($_REQUEST['post_id']))
+            return;
+
 		$postId = intval( $_REQUEST['post_id'] );
 		$hash   = HashController::getHash( $postId, false );
 		echo json_encode( $hash );
@@ -67,6 +70,10 @@ class TimestampController {
 
 	public function getRawById() {
 		check_ajax_referer( 'wordproof', 'security' );
+
+		if (!isset($_REQUEST['post_id']))
+		    return;
+
 		$postId = intval( $_REQUEST['post_id'] );
 		$json   = HashController::getHash( $postId, true );
 		echo $json;

@@ -20,13 +20,13 @@ export default class Button extends Component {
             this.setState({loading: this.props.loading});
     }
 
-    getRetryCallbackButton() {
+    getRetryWebhookButton() {
         // let now = Math.ceil(Date.now() / 1000);
         // let lastTimestamped = parseInt(this.state.meta.timestampedOn) + 20;
         // if (!this.state.meta.timestampedOn || now > lastTimestamped) {
         return (
             <button className={'button block'} disabled={this.state.disabled}
-                    onClick={(e) => this.request(e, 'wordproof_wsfy_retry_callback')}>Request new callback</button>
+                    onClick={(e) => this.request(e, 'wordproof_wsfy_retry_webhook')}>Request new webhook</button>
         );
     }
 
@@ -43,7 +43,7 @@ export default class Button extends Component {
             return '';
         }
         if (this.state.action === 'retry') {
-            return this.getRetryCallbackButton();
+            return this.getRetryWebhookButton();
         } else {
             return this.getTimestampButton();
         }
@@ -75,8 +75,8 @@ export default class Button extends Component {
             if ('is_duplicate' in result.data.errors)
                 return { reply: <span>🚚 This article already exists on the server</span>};
 
-            if ('callback_failed' in result.data.errors)
-                return { reply: <span>🤭 The callback failed</span> };
+            if ('webhook_failed' in result.data.errors)
+                return { reply: <span>🤭 The webhook failed</span> };
 
             if ('content' in result.data.errors)
                 return { reply: <span>✍️ Add some content first!</span> };

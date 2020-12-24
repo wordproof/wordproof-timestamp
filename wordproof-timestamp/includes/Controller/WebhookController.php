@@ -15,34 +15,30 @@ class WebhookController {
         add_action('rest_api_init', [$this, 'registerRoute']);
 
         // Add fallback actions
-		add_action( 'admin_post_nopriv_wordproof_test_callback', [ $this, 'processCallback' ] );
-		add_action( 'admin_post_nopriv_wordproof_callback', [ $this, 'processCallback' ] );
-		add_action( 'admin_post_nopriv_wordproof_wsfy_edit_post', [ $this, 'processCallback' ] );
+		add_action( 'admin_post_nopriv_wordproof_test_callback', [ $this, 'processWebhook' ] );
+		add_action( 'admin_post_nopriv_wordproof_callback', [ $this, 'processWebhook' ] );
+		add_action( 'admin_post_nopriv_wordproof_wsfy_edit_post', [ $this, 'processWebhook' ] );
 	}
 
     public function registerRoute()
     {
         register_rest_route(WORDPROOF_REST_NAMESPACE, WORDPROOF_REST_TIMESTAMP_ENDPOINT, [
             'methods' => 'POST',
-            'callback' => [$this, 'processCallback'],
+            'callback' => [$this, 'processWebhook'],
         ]);
     }
 
 	private function isValidWebhook( $action ) {
 
 		if ( $action === null ) {
-			echo json_encode( [ 'success' => false, 'message' => 'Please send an action along' ] );
-			die();
+            $this->response = 'no_action_present';
+            return false;
 		}
 
         if ( ! isset( $_REQUEST['token'] ) ) {
             $this->response = 'no_request_token_present';
             return false;
         }
-
-		if ( $action === 'wordproof_test_callback' ) {
-			return true;
-		}
 
 		$oauth = OptionsHelper::getOAuth( [] );
 
@@ -58,8 +54,6 @@ class WebhookController {
             $this->response = 'token_not_valid';
             return false;
         }
-
-		return false;
 	}
 
 	public function processWebhook() {
@@ -69,7 +63,6 @@ class WebhookController {
             $response = [
                 'success'     => false,
                 'response'    => $this->response,
-                'remote_addr' => $_SERVER['REMOTE_ADDR'],
                 'action'      => isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : 'none'
             ];
             DebugLogHelper::error( 'Callback failed. ' . print_r( $response, true ) );
@@ -97,6 +90,7 @@ class WebhookController {
 	}
 
 	public function handleModifyPost() {
+	    //TODO Refactor to DTO
 		$postId        = ( $_REQUEST['uid'] ) ? intval( $_REQUEST['uid'] ) : null;
 		$chain         = ( $_REQUEST['chain'] ) ? sanitize_text_field( $_REQUEST['chain'] ) : '';
 		$balance       = ( $_REQUEST['balance'] ) ? intval( $_REQUEST['balance'] ) : false;
@@ -121,7 +115,4 @@ class WebhookController {
 			die();
 		}
 	}
-	/**
-	 * /__________
-	 */
 }

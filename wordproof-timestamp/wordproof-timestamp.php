@@ -88,5 +88,5 @@ add_action('plugins_loaded', array(WordProofTimestamp::getInstance(), 'init'));
  */
 function wordproof_get_env($key, $default)
 {
-    return ($value = $_ENV[$key]) ? $value : $default;
+    return ( isset($_ENV[$key]) ) ? $_ENV[$key] : $default;
 }

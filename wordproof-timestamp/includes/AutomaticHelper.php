@@ -135,7 +135,8 @@ class AutomaticHelper
         $this->endpoint = str_replace('$siteId', $this->options->site_id, WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE);
         $this->body = [
             'token_id' => $this->oauth->token_id,
-            'overwrite_webhook' => admin_url('admin-post.php')
+            'rest_webhook' => get_rest_url( null, WORDPROOF_REST_NAMESPACE . '/' . WORDPROOF_REST_TIMESTAMP_ENDPOINT ),
+            'admin_post_webhook' => admin_url('admin-post.php')
         ];
 
         return self::request();

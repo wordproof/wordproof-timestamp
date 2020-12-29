@@ -57,13 +57,13 @@ class WebhookController {
 	}
 
 	public function processWebhook() {
-		$action = isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : null;
+        $action = isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : null;
 
 		if ( ! $this->isValidWebhook( $action ) ) {
             $response = [
                 'success'     => false,
                 'response'    => $this->response,
-                'action'      => isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : 'none'
+                'action'      => $action
             ];
             DebugLogHelper::error( 'Webhook failed. ' . print_r( $response, true ) );
             error_log( 'WordProof: Update request denied' );

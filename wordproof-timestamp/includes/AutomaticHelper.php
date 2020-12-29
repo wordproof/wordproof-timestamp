@@ -131,12 +131,16 @@ class AutomaticHelper
             return ['errors' => ['authentication' => ['Please configure your site key']]];
         }
 
+        $webhookUrls = apply_filters( 'wordproof_webhook_urls', [
+            get_rest_url( null, WORDPROOF_REST_NAMESPACE . '/' . WORDPROOF_REST_TIMESTAMP_ENDPOINT ),
+            admin_url('admin-post.php')
+        ]);
+
         $this->action = 'validate_token';
         $this->endpoint = str_replace('$siteId', $this->options->site_id, WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE);
         $this->body = [
             'token_id' => $this->oauth->token_id,
-            'rest_webhook' => get_rest_url( null, WORDPROOF_REST_NAMESPACE . '/' . WORDPROOF_REST_TIMESTAMP_ENDPOINT ),
-            'admin_post_webhook' => admin_url('admin-post.php')
+            'webhook_urls' => $webhookUrls
         ];
 
         return self::request();

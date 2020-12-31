@@ -114,7 +114,7 @@ class ECommerceController {
 	}
 
 	public static function createTxtFile( $post ) {
-		$data = HashController::getHash( $post, true );
+		$data = HashController::getPostsJSON( $post );
 		$data .= PHP_EOL . PHP_EOL . 'Blockchain Transaction: ';
 		$data .= HashController::getBlockchainLink( $post->ID );
 

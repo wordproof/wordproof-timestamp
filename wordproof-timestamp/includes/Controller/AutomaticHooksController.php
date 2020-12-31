@@ -50,6 +50,10 @@ class AutomaticHooksController {
 		if ( !isset( $_REQUEST ) ) {
 			return;
 		}
+		
+		if (!isset($_REQUEST['post_id'])) {
+            return;
+        }
 
 		$postId     = intval( sanitize_text_field( wp_unslash( $_REQUEST['post_id'] ) ) );
 		$controller = new AutomaticHelper( $postId );
@@ -76,7 +80,16 @@ class AutomaticHooksController {
 
 	public function getPostData() {
 		check_ajax_referer( 'wordproof', 'security' );
-		$postId     = intval( sanitize_text_field( $_REQUEST['post_id'] ) );
+        
+        if ( !isset( $_REQUEST ) ) {
+            return;
+        }
+        
+        if (!isset($_REQUEST['post_id'])) {
+            return;
+        }
+		
+		$postId     = intval( sanitize_text_field( wp_unslash( $_REQUEST['post_id'] ) ) );
 		$postData = PostMetaHelper::getPostData( $postId );
 		$meta     = PostMetaHelper::getPostMeta( $postId, [ 'date', 'blockchain' ] );
 		echo json_encode( [ 'post' => $postData, 'meta' => $meta ] );

@@ -40,7 +40,7 @@ class NoticeController {
 		}
 		
         if ( in_array( wp_unslash($_REQUEST['notice_key']), $this->keys ) ) {
-			set_transient( $_REQUEST['notice_key'], 'hidden' );
+			set_transient( filter_var(wp_unslash($_REQUEST['notice_key']), FILTER_SANITIZE_STRING), 'hidden' );
 		}
 
 	}

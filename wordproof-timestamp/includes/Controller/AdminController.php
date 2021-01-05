@@ -56,10 +56,7 @@ class AdminController {
         
         if (isset($_REQUEST['value']))
             if ( is_array( $_REQUEST['value'] ) ) {
-                $value = [];
-                foreach ( wp_unslash( $_REQUEST['value'] ) as $v ) {
-                    $value[] = sanitize_text_field( $v );
-                }
+                $value = map_deep( wp_unslash( $_REQUEST['value'] ), 'sanitize_text_field' );
             } else {
                 $value = sanitize_text_field( wp_unslash( $_REQUEST['value'] ) );
             }
@@ -74,13 +71,15 @@ class AdminController {
 	public function updateSettings() {
 		check_ajax_referer( 'wordproof', 'security' );
 
-		$options = isset($_REQUEST['options']) ? wp_unslash($_REQUEST['options']) : null;
+		if ( !isset( $_REQUEST['options'] ) ) {
+			return;
+		}
+
+		$options = map_deep( wp_unslash( $_REQUEST['options'] ), 'sanitize_text_field' );
+
 		if ( is_array( $options ) ) {
 			foreach ( $options as $key => $value ) {
-				OptionsHelper::set(
-					sanitize_key( wp_unslash( $key ) ),
-					sanitize_text_field( wp_unslash( $value ) )
-				);
+				OptionsHelper::set($key, $value);
 			}
 		}
 	}

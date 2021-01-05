@@ -72,10 +72,18 @@ spl_autoload_register(function ($class = '') {
 });
 
 add_action('activated_plugin', function ($plugin) {
-    if ($plugin === WORDPROOF_BASENAME && !isset($_GET['activate-multi'])) {
-        wp_safe_redirect(admin_url('admin.php?page=wordproof-getting-started'));
-        exit();
+
+    if ( isset($_REQUEST['_wpnonce']) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'activate-plugin_' . WORDPROOF_BASENAME ) ) {
+
+        if ($plugin === WORDPROOF_BASENAME && !isset($_GET['activate-multi'])) {
+            wp_safe_redirect(admin_url('admin.php?page=wordproof-getting-started'));
+            exit();
+        }
+    
     }
+
+    return;
+
 });
 
 add_action('plugins_loaded', array(WordProofTimestamp::getInstance(), 'init'));
@@ -86,7 +94,9 @@ add_action('plugins_loaded', array(WordProofTimestamp::getInstance(), 'init'));
  * @param $default
  * @return mixed
  */
+
 function wordproof_get_env($key, $default)
 {
     return ( isset($_ENV[$key]) ) ? $_ENV[$key] : $default;
 }
+

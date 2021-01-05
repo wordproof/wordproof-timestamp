@@ -70,7 +70,7 @@ export default class TimestampButton extends Component {
                     hidden={this.state.hideLabels}>🚨 Timestamp is outdated</span> {this.getTimestampButton()}</div>;
             case 'awaiting_webhook':
                 return <div><span
-                    hidden={this.state.hideLabels}>🕓 Waiting for webhook...</span> {this.getRetryWebhookButton()}</div>;
+                    hidden={this.state.hideLabels}>🕓 Waiting for callback...</span> {this.getRetryWebhookButton()}</div>;
             case 'timestamped':
                 if (this.state.post.type === 'post' || this.state.post.type === 'page' || this.state.post.type === 'product')
                     return <a href={this.state.post.permalink + '#wordproof'}>✅ Certificate</a>;
@@ -87,7 +87,7 @@ export default class TimestampButton extends Component {
             if (!this.state.meta.timestampedOn || now > lastTimestamped) {
                 return (
                     <button className={'button block'} disabled={this.state.disabled}
-                            onClick={() => this.request('wordproof_wsfy_retry_webhook')}>Request new webhook</button>
+                            onClick={() => this.request('wordproof_wsfy_retry_webhook')}>Request new callback</button>
                 );
             }
         }

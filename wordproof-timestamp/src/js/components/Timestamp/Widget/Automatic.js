@@ -99,7 +99,7 @@ export default class Automatic extends Component {
 
             case 'awaiting_webhook':
                 return {
-                    message: <span>🕓 Waiting for webhook...</span>,
+                    message: <span>🕓 Waiting for callback...</span>,
                     messageStrong: ''
                 };
             case 'timestamped':

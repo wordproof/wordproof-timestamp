@@ -11,13 +11,16 @@ class WebhookController {
 
 	protected $response = null;
 
-	public function __construct() {
-        add_action('rest_api_init', [$this, 'registerRoute']);
+	public function __construct($init = true) {
 
-        // Add fallback actions
-		add_action( 'admin_post_nopriv_wordproof_test_callback', [ $this, 'processWebhook' ] );
-		add_action( 'admin_post_nopriv_wordproof_callback', [ $this, 'processWebhook' ] );
-		add_action( 'admin_post_nopriv_wordproof_wsfy_edit_post', [ $this, 'processWebhook' ] );
+        if ($init) {
+            add_action('rest_api_init', [$this, 'registerRoute']);
+
+            // Add fallback actions
+            add_action( 'admin_post_nopriv_wordproof_test_callback', [ $this, 'processWebhook' ] );
+            add_action( 'admin_post_nopriv_wordproof_callback', [ $this, 'processWebhook' ] );
+            add_action( 'admin_post_nopriv_wordproof_wsfy_edit_post', [ $this, 'processWebhook' ] );
+        }
 	}
 
     public function registerRoute()
@@ -25,6 +28,7 @@ class WebhookController {
         register_rest_route(WORDPROOF_REST_NAMESPACE, WORDPROOF_REST_TIMESTAMP_ENDPOINT, [
             'methods' => 'POST',
             'callback' => [$this, 'processWebhook'],
+            'permission_callback' => '__return_true',
         ]);
     }
 
@@ -57,7 +61,6 @@ class WebhookController {
 	}
 
 	public function processWebhook() {
-        check_ajax_referer( 'wordproof', 'security' );
 		$action = isset( $_REQUEST['action'] ) ? sanitize_key( wp_unslash( $_REQUEST['action'] ) ) : null;
 
 		if ( ! $this->isValidWebhook( $action ) ) {

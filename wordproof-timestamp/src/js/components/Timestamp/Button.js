@@ -26,7 +26,7 @@ export default class Button extends Component {
         // if (!this.state.meta.timestampedOn || now > lastTimestamped) {
         return (
             <button className={'button block'} disabled={this.state.disabled}
-                    onClick={(e) => this.request(e, 'wordproof_wsfy_retry_webhook')}>Request new webhook</button>
+                    onClick={(e) => this.request(e, 'wordproof_wsfy_retry_webhook')}>Request new callback</button>
         );
     }
 

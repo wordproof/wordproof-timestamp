@@ -33,7 +33,7 @@ class WebhookController {
     }
 
 	private function isValidWebhook( $action ) {
-
+        check_ajax_referer( 'wordproof', 'security' );
 		if ( $action === null || ! in_array($action, [ 'wordproof_callback', 'wordproof_test_callback' ] ) ) {
             $this->response = 'no_action_present';
             return false;
@@ -52,7 +52,7 @@ class WebhookController {
         }
 
         try {
-            JWT::decode( $_REQUEST['token'], $oauth->token_id, [ 'HS256' ] );
+            JWT::decode( sanitize_key( wp_unslash( $_REQUEST['token'] ) ), $oauth->token_id, [ 'HS256' ] );
             return true;
         } catch ( \Exception $exception ) {
             $this->response = 'token_not_valid';
@@ -61,13 +61,13 @@ class WebhookController {
 	}
 
 	public function processWebhook() {
-        $action = isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : null;
+		$action = isset( $_REQUEST['action'] ) ? sanitize_key( wp_unslash( $_REQUEST['action'] ) ) : null;
 
 		if ( ! $this->isValidWebhook( $action ) ) {
             $response = [
                 'success'     => false,
                 'response'    => $this->response,
-                'action'      => $action
+                'action'      => isset( $_REQUEST['action'] ) ? sanitize_key( wp_unslash( $_REQUEST['action'] ) ) : 'none'
             ];
             DebugLogHelper::error( 'Webhook failed. ' . print_r( $response, true ) );
             error_log( 'WordProof: Update request denied' );
@@ -95,10 +95,10 @@ class WebhookController {
 
 	public function handleModifyPost() {
 	    //TODO Refactor to DTO
-		$postId        = ( $_REQUEST['uid'] ) ? intval( $_REQUEST['uid'] ) : null;
-		$chain         = ( $_REQUEST['chain'] ) ? sanitize_text_field( $_REQUEST['chain'] ) : '';
-		$balance       = ( $_REQUEST['balance'] ) ? intval( $_REQUEST['balance'] ) : false;
-		$transactionId = ( $_REQUEST['transactionId'] ) ? sanitize_text_field( $_REQUEST['transactionId'] ) : '';
+		$postId        = isset( $_REQUEST['uid'] ) ? intval( $_REQUEST['uid'] ) : null;
+		$chain         = isset( $_REQUEST['chain'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['chain'] ) ) : '';
+		$balance       = isset( $_REQUEST['balance'] ) ? intval( $_REQUEST['balance'] ) : false;
+		$transactionId = isset( $_REQUEST['transactionId'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['transactionId'] ) ) : '';
 		$meta          = ( $postId !== null ) ? PostMetaHelper::getPostMeta( $postId ) : null;
 
 		if ( ! empty( $meta ) ) {

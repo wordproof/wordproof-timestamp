@@ -61,7 +61,7 @@ class AutoStampPage {
 		$force  = false;
 
 		if ( isset( $_GET['cpt'] ) && ! empty( $_GET['cpt'] ) ) {
-			$cpt = sanitize_text_field( $_GET['cpt'] );
+			$cpt = sanitize_text_field( wp_unslash( $_GET['cpt'] ) );
 		}
 
 		if ( isset( $_GET['force'] ) && isset( $_GET['offset'] ) ) {

@@ -63,7 +63,7 @@ class TimestampController {
             return;
 
 		$postId = intval( $_REQUEST['post_id'] );
-		$hash   = HashController::getHash( $postId, false );
+		$hash   = HashController::getHash( $postId );
 		echo json_encode( $hash );
 		exit;
 	}
@@ -75,8 +75,8 @@ class TimestampController {
 		    return;
 
 		$postId = intval( $_REQUEST['post_id'] );
-		$json   = HashController::getHash( $postId, true );
-		echo $json;
+		$json   = HashController::getRawPosts( $postId );
+		echo json_encode($json, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 		exit;
 	}
 }

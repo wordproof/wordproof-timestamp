@@ -102,10 +102,10 @@ class SettingsPage
 
     public function saveSettings()
     {
-        if (isset($_POST['wordproof_admin_form_nonce']) && wp_verify_nonce(wp_unslash($_POST['wordproof_admin_form_nonce']), 'wordproof_admin_form_nonce')) {
+        if (isset($_POST['wordproof_admin_form_nonce']) && wp_verify_nonce(sanitize_key(wp_unslash($_POST['wordproof_admin_form_nonce'])), 'wordproof_admin_form_nonce')) {
 
             if (isset($_POST['wordproof_network'])) {
-                OptionsHelper::set('network', $_POST['wordproof_network']);
+                OptionsHelper::set('network', sanitize_text_field(wp_unslash($_POST['wordproof_network'])));
             }
 
             /**
@@ -121,29 +121,29 @@ class SettingsPage
 
                 if (isset($_POST['wordproof_customize']['certificate_dom_selector'])) {
                     OptionsHelper::set('certificate_dom_selector',
-                        $_POST['wordproof_customize']['certificate_dom_selector']);
+                        sanitize_text_field(wp_unslash($_POST['wordproof_customize']['certificate_dom_selector'])));
                 }
 
                 if (isset($_POST['wordproof_customize']['certificate_text'])) {
-                    OptionsHelper::set('certificate_text', $_POST['wordproof_customize']['certificate_text']);
+                    OptionsHelper::set('certificate_text', sanitize_text_field(wp_unslash($_POST['wordproof_customize']['certificate_text'])));
                 }
 
                 if (isset($_POST['wordproof_customize']['show_info_link'])) {
-                    OptionsHelper::set('show_info_link', $_POST['wordproof_customize']['show_info_link']);
+                    OptionsHelper::set('show_info_link', sanitize_text_field(wp_unslash($_POST['wordproof_customize']['show_info_link'])));
                 }
 
                 if (isset($_POST['wordproof_customize']['custom_domain'])) {
-                    OptionsHelper::set('custom_domain', trim($_POST['wordproof_customize']['custom_domain']));
+                    OptionsHelper::set('custom_domain', trim(sanitize_text_field(wp_unslash($_POST['wordproof_customize']['custom_domain']))));
                 }
 
                 if (isset($_POST['wordproof_customize']['timestamps_order_text'])) {
                     OptionsHelper::set('timestamps_order_text',
-                        $_POST['wordproof_customize']['timestamps_order_text']);
+                        sanitize_text_field(wp_unslash($_POST['wordproof_customize']['timestamps_order_text'])));
                 }
 
                 if (isset($_POST['wordproof_customize']['send_timestamps_with_order'])) {
                     OptionsHelper::set('send_timestamps_with_order',
-                        $_POST['wordproof_customize']['send_timestamps_with_order']);
+                        sanitize_text_field(wp_unslash($_POST['wordproof_customize']['send_timestamps_with_order'])));
                 }
             }
 
@@ -151,7 +151,7 @@ class SettingsPage
              * WSFY settings
              */
             if (isset($_POST['wsfy_settings'])) {
-                $post = $_POST['wsfy_settings'];
+                $post = sanitize_text_field(wp_unslash($_POST['wsfy_settings']));
 
                 $allowedPostTypes = (isset($post['allowed_post_types']) && is_array($post['allowed_post_types'])) ? array_keys($post['allowed_post_types']) : [];
                 OptionsHelper::set('allowed_post_types', $allowedPostTypes);

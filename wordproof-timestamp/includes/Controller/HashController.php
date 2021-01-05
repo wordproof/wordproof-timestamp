@@ -17,21 +17,32 @@ class HashController {
 	 *
 	 * @return bool|object|string
 	 */
-	public static function getHash( $post, $raw = false ) {
-		if ( is_int( $post ) ) {
-			$post = get_post( $post );
-		}
-
-		$fields = self::getFields( $post );
-		$fields = array_merge( $fields['properties'], $fields['attributes'] );
-		$object = json_encode( $fields, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
-
-		if ( $raw ) {
-			return $object;
-		}
-
-		return hash( 'sha256', $object );
+	public static function getHash( $post ) {
+		return hash( 'sha256', self::getPostsJSON($post));
 	}
+    
+    /**
+     * Get posts as JSON
+     *
+     * @param $post
+     * @param  bool  $raw
+     *
+     * @return bool|object|string
+     */
+    public static function getPostsJSON( $post ) {
+        return json_encode( self::getRawPosts($post), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
+    }
+    
+    public static function getRawPosts( $post ) {
+        if ( is_int( $post ) ) {
+            $post = get_post( $post );
+        }
+        
+        $fields = self::getFields( $post );
+        $fields = array_merge( $fields['properties'], $fields['attributes'] );
+        
+        return $fields;
+    }
 
 	public static function getFields( $post ) {
 		if ( is_int( $post ) ) {

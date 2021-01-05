@@ -63,6 +63,10 @@ class PostColumnController {
 		if ( ! isset( $_REQUEST ) ) {
 			return;
 		}
+        
+        if ( ! isset( $_REQUEST['post_id'] ) ) {
+            return;
+        }
 
 		$postId     = intval( sanitize_text_field( wp_unslash( $_REQUEST['post_id'] ) ) );
 		$controller = new AutomaticHelper( $postId );
@@ -73,7 +77,12 @@ class PostColumnController {
 
 	public function retryWebhook() {
 		check_ajax_referer( 'wordproof', 'security' );
-		$postId     = intval( sanitize_text_field( $_REQUEST['post_id'] ) );
+        
+        if ( ! isset( $_REQUEST['post_id'] ) ) {
+            return;
+        }
+		
+		$postId     = intval( sanitize_text_field( wp_unslash($_REQUEST['post_id'] )) );
 		$controller = new AutomaticHelper( $postId );
 		$result     = $controller->retryWebhook();
 		echo json_encode( $result );

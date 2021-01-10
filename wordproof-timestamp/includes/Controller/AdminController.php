@@ -42,22 +42,21 @@ class AdminController {
 		}
 	}
 
+	// These keys and values get properly sanitized in the OptionsHelper::set function.
+	// phpcs:disable
 	public function updateSetting() {
 		check_ajax_referer( 'wordproof', 'security' );
-
+		
 		if ( ! isset( $_REQUEST ) ) {
 			return;
 		}
-
-		$key   = sanitize_key( wp_unslash( ($_REQUEST['key']) ? $_REQUEST['key'] : '' ) );
-
-		if ( is_array( $_REQUEST['value'] ) ) {
-			$value = [];
-			foreach ( $_REQUEST['value'] as $v ) {
-				$value[] = sanitize_text_field( wp_unslash( $v ) );
-			}
-		} else {
-			$value = sanitize_text_field( wp_unslash( ($_REQUEST['value']) ? $_REQUEST['value'] : '' ) );
+  
+        if ( isset( $_REQUEST['key']) )  {
+            $key = sanitize_key( $_REQUEST['key'] );
+        }
+        
+        if (isset($_REQUEST['value'])) {
+			$value = $_REQUEST['value'];
 		}
 
 		if ( ! empty( $key ) && ! empty( $value ) ) {
@@ -68,16 +67,17 @@ class AdminController {
 	public function updateSettings() {
 		check_ajax_referer( 'wordproof', 'security' );
 
-		$options = ($_REQUEST['options']) ? $_REQUEST['options'] : null;
-		if ( is_array( $options ) ) {
+		if ( !isset( $_REQUEST['options'] ) ) {
+			$options = $_REQUEST['options'];
+		}
+
+		if ( ! empty($options) && is_array( $options ) ) {
 			foreach ( $options as $key => $value ) {
-				OptionsHelper::set(
-					sanitize_key( wp_unslash( $key ) ),
-					sanitize_text_field( wp_unslash( $value ) )
-				);
+				OptionsHelper::set($key, $value);
 			}
 		}
 	}
+	// phpcs:enable
 
 	public function loadAdminAssets( $hookSuffix ) {
 		global $post;

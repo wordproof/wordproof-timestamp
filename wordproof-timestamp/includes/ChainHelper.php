@@ -28,7 +28,7 @@ class ChainHelper {
 		$chain = OptionsHelper::getNetwork();
 
 		if ( isset( $_REQUEST['accountName'] ) ) {
-			$accountName = sanitize_text_field( $_REQUEST['accountName'] );
+			$accountName = sanitize_text_field( wp_unslash( $_REQUEST['accountName'] ) );
 			$result      = self::sendRequest( $accountName, $chain );
 			echo json_encode( [ 'success' => true, 'balance' => $result ] );
 			exit;

@@ -102,6 +102,8 @@ class SettingsPage
 
     public function saveSettings()
     {
+        // These keys and values get properly sanitized in the OptionsHelper::set function.
+        // phpcs:disable
         if (isset($_POST['wordproof_admin_form_nonce']) && wp_verify_nonce(wp_unslash($_POST['wordproof_admin_form_nonce']), 'wordproof_admin_form_nonce')) {
 
             if (isset($_POST['wordproof_network'])) {
@@ -165,6 +167,7 @@ class SettingsPage
             }
 
         }
+        // phpcs:enable
 
         wp_safe_redirect('admin.php?page=wordproof-settings');
         exit();

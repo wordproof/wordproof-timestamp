@@ -221,7 +221,7 @@ export default class Timestamp extends Component {
 
                 </div>;
             case 'awaiting_webhook':
-                return <div><span hidden={this.state.message}>🕓 Waiting for webhook...</span>
+                return <div><span hidden={this.state.message}>🕓 Waiting for callback...</span>
                     {(withButton) ? <Button loading={this.state.loading} callback={this.callback} post={this.state.post} action={'retry'}/> : ''}
                 </div>;
             case 'timestamped':

@@ -25,6 +25,9 @@ Before opening a new issue, please:
 ## I want to create a patch
 Community made patches, localizations, bug reports and contributions are very welcome and help WordProof remain the #1 blockchain timestamp plugin for WordPress.
 
+## Codesniffer
+We make use of the [adapted WordPress Coding Standard by WPEngine](https://github.com/wpengine/wpengine-coding-standards). Please run `./vendor/bin/phpcs --standard=WP-Engine ./includes` before submitting your pull request.  
+
 ## Chains we support
 
 | Host                    | Chain Id                                                         |

@@ -31,7 +31,7 @@ abstract class Notice {
 		<div data-notice-key="<?php echo esc_attr( $this->key ); ?>"
 			 class="wordproof-notice notice notice-<?php echo esc_attr( $this->notice['type'] ); ?> <?php echo ( $this->isDismissible ) ? 'is-dismissible' : ''; ?>">
 			<p><?php echo wp_kses_post( $this->notice['message'] ); ?></p>
-			<?php echo ( $b =  $this->getNoticeButtonHtml()) ? wp_kses($b, wp_kses_allowed_html('post')) : ''; ?>
+			<?php echo ( $b =  $this->getNoticeButtonHtml()) ? wp_kses_post($b) : ''; ?>
 		</div>
 		<?php
 		return ob_get_clean();

@@ -2,11 +2,8 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
-use Firebase\JWT\JWT;
 use WordProofTimestamp\includes\AutomaticHelper;
-use WordProofTimestamp\includes\DebugLogHelper;
 use WordProofTimestamp\includes\OptionsHelper;
-use WordProofTimestamp\includes\Page\AutoStampPage;
 use WordProofTimestamp\includes\PostMetaHelper;
 
 class AutomaticHooksController {
@@ -23,10 +20,6 @@ class AutomaticHooksController {
 
         if ( OptionsHelper::isWSFYActive() ) {
 			$this->setUpdateHooks();
-
-			if ( is_admin() ) {
-				new AutoStampPage();
-			}
 		}
 	}
 
@@ -50,6 +43,10 @@ class AutomaticHooksController {
 		if ( !isset( $_REQUEST ) ) {
 			return;
 		}
+		
+		if (!isset($_REQUEST['post_id'])) {
+            return;
+        }
 
 		$postId     = intval( sanitize_text_field( wp_unslash( $_REQUEST['post_id'] ) ) );
 		$controller = new AutomaticHelper( $postId );
@@ -76,7 +73,16 @@ class AutomaticHooksController {
 
 	public function getPostData() {
 		check_ajax_referer( 'wordproof', 'security' );
-		$postId     = intval( sanitize_text_field( $_REQUEST['post_id'] ) );
+        
+        if ( !isset( $_REQUEST ) ) {
+            return;
+        }
+        
+        if (!isset($_REQUEST['post_id'])) {
+            return;
+        }
+		
+		$postId     = intval( sanitize_text_field( wp_unslash( $_REQUEST['post_id'] ) ) );
 		$postData = PostMetaHelper::getPostData( $postId );
 		$meta     = PostMetaHelper::getPostMeta( $postId, [ 'date', 'blockchain' ] );
 		echo json_encode( [ 'post' => $postData, 'meta' => $meta ] );

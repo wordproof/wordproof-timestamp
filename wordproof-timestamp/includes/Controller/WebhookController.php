@@ -33,17 +33,21 @@ class WebhookController {
     }
 
 	private function isValidWebhook( $action ) {
-        check_ajax_referer( 'wordproof', 'security' );
 		if ( $action === null || ! in_array($action, [ 'wordproof_callback', 'wordproof_test_callback' ] ) ) {
             $this->response = 'no_action_present';
             return false;
 		}
 
+        // Disable warning for nonce on webhook
+        // phpcs:disable
         if ( ! isset( $_REQUEST['token'] ) ) {
             $this->response = 'no_request_token_present';
             return false;
         }
-
+        
+        $token = sanitize_text_field( wp_unslash( $_REQUEST['token'] ) );
+        // phpcs:enable
+        
 		$oauth = OptionsHelper::getOAuth( [] );
 
 		if ( ! isset( $oauth->access_token ) ) {
@@ -52,7 +56,7 @@ class WebhookController {
         }
 
         try {
-            JWT::decode( sanitize_key( wp_unslash( $_REQUEST['token'] ) ), $oauth->token_id, [ 'HS256' ] );
+            JWT::decode($token , $oauth->token_id, [ 'HS256' ] );
             return true;
         } catch ( \Exception $exception ) {
             $this->response = 'token_not_valid';

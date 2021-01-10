@@ -2,11 +2,8 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
-use Firebase\JWT\JWT;
 use WordProofTimestamp\includes\AutomaticHelper;
-use WordProofTimestamp\includes\DebugLogHelper;
 use WordProofTimestamp\includes\OptionsHelper;
-use WordProofTimestamp\includes\Page\AutoStampPage;
 use WordProofTimestamp\includes\PostMetaHelper;
 
 class AutomaticHooksController {
@@ -23,10 +20,6 @@ class AutomaticHooksController {
 
         if ( OptionsHelper::isWSFYActive() ) {
 			$this->setUpdateHooks();
-
-			if ( is_admin() ) {
-				new AutoStampPage();
-			}
 		}
 	}
 

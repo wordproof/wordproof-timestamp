@@ -33,17 +33,21 @@ class WebhookController {
     }
 
 	private function isValidWebhook( $action ) {
-        check_ajax_referer( 'wordproof', 'security' );
 		if ( $action === null || ! in_array($action, [ 'wordproof_callback', 'wordproof_test_callback' ] ) ) {
             $this->response = 'no_action_present';
             return false;
 		}
 
+        // Disable warning for nonce on webhook
+        // phpcs:disable
         if ( ! isset( $_REQUEST['token'] ) ) {
             $this->response = 'no_request_token_present';
             return false;
         }
-
+        
+        $token = sanitize_text_field( wp_unslash( $_REQUEST['token'] ) );
+        // phpcs:enable
+        
 		$oauth = OptionsHelper::getOAuth( [] );
 
 		if ( ! isset( $oauth->access_token ) ) {
@@ -52,7 +56,7 @@ class WebhookController {
         }
 
         try {
-            JWT::decode( sanitize_key( wp_unslash( $_REQUEST['token'] ) ), $oauth->token_id, [ 'HS256' ] );
+            JWT::decode($token , $oauth->token_id, [ 'HS256' ] );
             return true;
         } catch ( \Exception $exception ) {
             $this->response = 'token_not_valid';
@@ -61,13 +65,14 @@ class WebhookController {
 	}
 
 	public function processWebhook() {
-		$action = isset( $_REQUEST['action'] ) ? sanitize_key( wp_unslash( $_REQUEST['action'] ) ) : null;
+        // phpcs:ignore
+		$action = isset( $_REQUEST['action'] ) ? sanitize_key( $_REQUEST['action'] ) : null;
 
 		if ( ! $this->isValidWebhook( $action ) ) {
             $response = [
                 'success'     => false,
                 'response'    => $this->response,
-                'action'      => isset( $_REQUEST['action'] ) ? sanitize_key( wp_unslash( $_REQUEST['action'] ) ) : 'none'
+                'action'      => ($action) ? $action : 'none',
             ];
             DebugLogHelper::error( 'Webhook failed. ' . print_r( $response, true ) );
             error_log( 'WordProof: Update request denied' );
@@ -94,12 +99,17 @@ class WebhookController {
 	}
 
 	public function handleModifyPost() {
+
 	    //TODO Refactor to DTO
+
+        // Turning off warnings for missing nonce on webhooks
+        // phpcs:disable
 		$postId        = isset( $_REQUEST['uid'] ) ? intval( $_REQUEST['uid'] ) : null;
 		$chain         = isset( $_REQUEST['chain'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['chain'] ) ) : '';
 		$balance       = isset( $_REQUEST['balance'] ) ? intval( $_REQUEST['balance'] ) : false;
 		$transactionId = isset( $_REQUEST['transactionId'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['transactionId'] ) ) : '';
-		$meta          = ( $postId !== null ) ? PostMetaHelper::getPostMeta( $postId ) : null;
+        $meta          = ( $postId !== null ) ? PostMetaHelper::getPostMeta( $postId ) : null;
+        // phpcs:enable
 
 		if ( ! empty( $meta ) ) {
 			$meta->blockchain    = $chain;

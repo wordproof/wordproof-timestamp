@@ -13,27 +13,14 @@ class HashController {
 	 * Create the hash for new posts
 	 *
 	 * @param $post
-	 * @param  bool  $raw
 	 *
 	 * @return bool|object|string
 	 */
 	public static function getHash( $post ) {
-		return hash( 'sha256', self::getPostsJSON($post));
+		return hash( 'sha256', self::getHashInput($post));
 	}
     
-    /**
-     * Get posts as JSON
-     *
-     * @param $post
-     * @param  bool  $raw
-     *
-     * @return bool|object|string
-     */
-    public static function getPostsJSON( $post ) {
-        return json_encode( self::getRawPosts($post), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
-    }
-    
-    public static function getRawPosts( $post ) {
+    public static function getHashInput( $post ) {
         if ( is_int( $post ) ) {
             $post = get_post( $post );
         }
@@ -41,7 +28,7 @@ class HashController {
         $fields = self::getFields( $post );
         $fields = array_merge( $fields['properties'], $fields['attributes'] );
         
-        return $fields;
+        return json_encode( $fields, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
     }
 
 	public static function getFields( $post ) {

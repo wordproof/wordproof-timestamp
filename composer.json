@@ -8,7 +8,8 @@
     "require": {
         "firebase/php-jwt": "^5.2",
         "composer/installers": "~1.0",
-        "vlucas/phpdotenv": "^5.2"
+        "vlucas/phpdotenv": "^5.2",
+        "typisttech/imposter-plugin": "^0.6.2"
     },
     "license": "GPLv3",
     "authors": [
@@ -23,5 +24,11 @@
             "type": "git",
             "url": "https://github.com/wpengine/wpengine-coding-standards.git"
         }
-    ]
+    ],
+    "extra": {
+        "imposter": {
+            "namespace": "WordProofTimestamp\\Vendor",
+            "excludes": []
+        }
+    }
 }

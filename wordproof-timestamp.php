@@ -22,7 +22,7 @@ if (is_readable(__DIR__ . '/vendor/autoload.php')) {
     require __DIR__ . '/vendor/autoload.php';
 
     try {
-        $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
+        $dotenv = \WordProofTimestamp\Vendor\Dotenv\Dotenv::createImmutable(__DIR__);
         $dotenv->load();
     } catch(\Exception $e) {}
 
@@ -33,6 +33,7 @@ define('WORDPROOF_SLUG', 'wordproof');
 define('WORDPROOF_ROOT_FILE', __FILE__);
 define('WORDPROOF_BASENAME', plugin_basename(WORDPROOF_ROOT_FILE));
 define('WORDPROOF_DIR', plugin_dir_path(WORDPROOF_ROOT_FILE));
+define('WORDPROOF_DIR_INC', WORDPROOF_DIR . 'includes');
 define('WORDPROOF_DIR_ASSETS', WORDPROOF_DIR . 'assets');
 define('WORDPROOF_DIR_JS', WORDPROOF_DIR_ASSETS . '/js');
 define('WORDPROOF_DIR_CSS', WORDPROOF_DIR_ASSETS . '/css');
@@ -71,19 +72,9 @@ spl_autoload_register(function ($class = '') {
     require $result . '.php';
 });
 
-add_action('activated_plugin', function ($plugin) {
-
-    if ( isset($_REQUEST['_wpnonce']) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'activate-plugin_' . WORDPROOF_BASENAME ) ) {
-        if ($plugin === WORDPROOF_BASENAME && !isset($_GET['activate-multi'])) {
-            wp_safe_redirect(admin_url('admin.php?page=wordproof-getting-started'));
-            exit();
-        }
-    }
-
-    return;
-});
-
-add_action('plugins_loaded', [WordProofTimestamp::getInstance(), 'init']);
+//Setup Plugin
+require_once WORDPROOF_DIR_INC . '/core.php';
+\WordProofTimestamp\Core\init();
 
 /**
  * Return environment value, or default if false

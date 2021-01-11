@@ -12,3 +12,7 @@ postcss.config.js
 tailwind.config.js
 webpack.config.js
 yarn.lock
+
+composer.lock
+composer.json
+scoper.inc.php

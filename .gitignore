@@ -1,7 +1,11 @@
-.DS_Store
-package-lock.json
-node_modules
-vendor/
 .idea/
+.DS_Store
 
 .env
+
+/vendor
+/vendor_prefixed
+/node_modules
+
+/assets/css/*
+/assets/js/*

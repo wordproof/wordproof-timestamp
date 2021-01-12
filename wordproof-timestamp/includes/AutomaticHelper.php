@@ -39,7 +39,7 @@ class AutomaticHelper
             $this->accessToken = $this->getAccessToken();
         }
 
-        if ($_ENV['APP_ENV'] === 'local')
+        if ( isset($_ENV['APP_ENV']) && $_ENV['APP_ENV'] === 'local')
             add_filter('https_ssl_verify', '__return_false');
     }
 

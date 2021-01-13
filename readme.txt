@@ -86,6 +86,10 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 * Properly prefixes composer packages
 * Fixed a bug which did not let users dismiss a notice
 
+= 2.9.3 =
+*Release date: January 12th, 2021*
+* Fix a bug for saving the site key on new installs
+
 = 2.9.2 =
 *Release date: January 10th, 2021*
 * Happy new year!

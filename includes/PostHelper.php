@@ -16,7 +16,7 @@ class PostHelper {
 
 	public static function getUnprotectedPostCount() {
 		$transientKey = 'wordproof_unprotected_post_count';
-		$transient    = get_transient( $transientKey );
+		$transient = get_transient( $transientKey );
 
 		if ( $transient !== false ) {
 			return $transient;

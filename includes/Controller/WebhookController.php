@@ -2,7 +2,7 @@
 
 namespace WordProofTimestamp\includes\Controller;
 
-use Firebase\JWT\JWT;
+use WordProofTimestamp\Vendor\Firebase\JWT\JWT;
 use WordProofTimestamp\includes\DebugLogHelper;
 use WordProofTimestamp\includes\OptionsHelper;
 use WordProofTimestamp\includes\PostMetaHelper;

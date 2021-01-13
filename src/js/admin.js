@@ -7,7 +7,9 @@ import qs from 'qs';
 import DashboardWidget from './components/Widgets/Dashboard'
 import Timestamp from "./components/Timestamp/Timestamp";
 
-document.addEventListener('DOMContentLoaded', init);
+window.addEventListener('load', () => {
+    init();
+});
 
 function init() {
   checkNotices();

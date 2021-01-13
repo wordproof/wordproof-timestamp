@@ -26,6 +26,7 @@ class UnprotectedPostsNotice extends Notice {
 	 *
 	 */
 	public function init() {
+
 		$this->isDismissible  = true;
 		$this->notice['type'] = 'warning';
 		$this->button['text'] = 'Timestamp your posts';
@@ -35,6 +36,7 @@ class UnprotectedPostsNotice extends Notice {
 	}
 
 	public function check() {
+
 		if ( $this->isHidden() ) {
 			return;
 		}

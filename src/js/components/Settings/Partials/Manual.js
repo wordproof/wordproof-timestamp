@@ -129,27 +129,16 @@ class Manual extends Component {
                                         to &apos;Timestamp&apos; to test your connection.</p>;
                                 case 'telos_main':
                                     return <p>Telos is the innovation district of the EOS.IO ecosystem. If you want to
-                                        know more about
-                                        Telos,
-                                        read <a
+                                        know more about Telos, read <a
                                             href="https://medium.com/goodblock-io/welcome-to-telos-wordproof-user-fd719b171341"
                                             target="_blank" rel="noopener noreferrer">this introduction article by Telos
-                                            founder
-                                            Douglas
-                                            Horn</a>.</p>
+                                            founder Douglas Horn</a>.</p>
                                 default:
                             }
                         })()}
 
                         <p>After making your choice, you are ready to set up WordProof! Click the button below to open
-                            our wizard,
-                            which
-                            will guide you through the rest of our process.</p>
-
-                        <button className="wbtn mr-4"
-                                onClick={(e) => this.handleWindowPopup(e, 'https://wordproof.io/setup', this.state.network)}>
-                            Launch the Manual Setup Wizard
-                        </button>
+                            our wizard, which will guide you through the rest of our process.</p>
 
                         <button className="wbtn wbtn-primary" onClick={this.handleSave}>
                             Save and check connection

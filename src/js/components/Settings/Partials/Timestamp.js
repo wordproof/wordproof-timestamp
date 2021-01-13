@@ -122,12 +122,6 @@ class Timestamp extends Component {
             <li>Run the Setup Wizard again and follow each step very carefully. Make sure to save your keys!</li>
             <li>Join the <a href="https://wordproof.io/telegram" target="_blank" rel="noopener noreferrer">WordProof Telegram</a> to ask fellow WordProof users for help.</li>
           </ol>
-
-        <h3>Claim 100 WORD for free</h3>
-        <p>Both as an anti-SPAM measurement and to make sure every timestamp is valuable, WordProof uses &apos;WORD&apos; stamps. Think of 1 WORD as 1 (digital) postage stamp. For every timestamp you place, you need 1 WORD stamp.</p>
-        <p>You can timestamp 5 pieces of content per day without &apos;paying&apos; any WORD stamps. As soon as you timestamp your first content, your blockchain account will automatically reiceive 10 WORD stamps. Use the button below to claim 90 additional WORD stamps.</p>
-        <a href="https://stamps.wordproof.io" target="_blank" rel="noopener noreferrer" className="wbtn mb-4">Claim 100 WORD for free</a>
-
       </div>
     )
   }

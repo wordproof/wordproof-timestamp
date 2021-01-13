@@ -63,8 +63,6 @@ function activate($plugin) {
 /**
  * Deactivate the plugin
  *
- * Uninstall routines should be in uninstall.php
- *
  * @return void
  */
 function deactivate() {

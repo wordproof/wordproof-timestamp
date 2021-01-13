@@ -55,7 +55,7 @@ class AdminController {
             $key = sanitize_key( $_REQUEST['key'] );
         }
         
-        if (isset($_REQUEST['value'])) {
+        if ( isset($_REQUEST['value'] ) ) {
 			$value = $_REQUEST['value'];
 		}
 
@@ -67,7 +67,7 @@ class AdminController {
 	public function updateSettings() {
 		check_ajax_referer( 'wordproof', 'security' );
 
-		if ( !isset( $_REQUEST['options'] ) ) {
+		if ( isset( $_REQUEST['options'] ) ) {
 			$options = $_REQUEST['options'];
 		}
 

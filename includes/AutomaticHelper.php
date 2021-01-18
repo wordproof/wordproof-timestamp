@@ -59,13 +59,13 @@ class AutomaticHelper
             return ['errors' => ['authentication' => ['Please configure your site key']]];
         }
 
-        $this->action = 'create_post';
-
-        $this->clearCron($this->post->ID);
-
         if ($this->post->post_status !== 'publish' && $this->post->post_status !== 'inherit') {
             return ['errors' => ['post_status' => ['Post needs to be published']]];
         }
+
+        $this->clearCron($this->post->ID);
+
+        $this->action = 'create_post';
 
         $type = HashController::getType($this->post);
         $this->body = ItemResource::getArray($type, $this->post);
@@ -83,14 +83,11 @@ class AutomaticHelper
 
         $this->action = 'retry_webhook';
 
-        $endpoint = str_replace('$postId', $this->post->ID, WORDPROOF_WSFY_ENDPOINT_RETRY_WEBHOOK);
-        $this->endpoint = str_replace('$siteId', $this->options->site_id, $endpoint);
+        $type = HashController::getType($this->post);
+        $this->body = ItemResource::getArray($type, $this->post);
 
-        if (!empty(OptionsHelper::getCustomDomain())) {
-            $this->body['overwrite_webhook'] = site_url('/') . 'wp-admin/admin-post.php';
-        }
-
-        $this->body['type'] = HashController::getType($this->post);
+        $this->endpoint = str_replace('$postId', $this->post->ID, WORDPROOF_WSFY_ENDPOINT_RETRY_WEBHOOK);
+        $this->endpoint = str_replace('$siteId', $this->options->site_id, $this->endpoint);
 
         return self::request();
 

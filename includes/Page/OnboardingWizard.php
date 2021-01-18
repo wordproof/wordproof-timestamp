@@ -27,10 +27,10 @@ class OnboardingWizard {
 	}
 
 	public function generateSettingsPage() {
-		wp_enqueue_style( 'wordproof.wizard.css', WORDPROOF_URI_CSS . '/wizard.css', array(),
-			filemtime( WORDPROOF_DIR_CSS . '/wizard.css' ) );
-		wp_enqueue_script( 'wordproof.wizard.js', WORDPROOF_URI_JS . '/wizard.js', array(),
-			filemtime( WORDPROOF_DIR_JS . '/wizard.js' ), true );
+        $assetVersion = (isset($_ENV['app_env']) && $_ENV['app_env'] === 'local') ? null : WORDPROOF_VERSION;
+
+		wp_enqueue_style( 'wordproof.wizard.css', WORDPROOF_URI_CSS . '/wizard.css', array(), $assetVersion );
+		wp_enqueue_script( 'wordproof.wizard.js', WORDPROOF_URI_JS . '/wizard.js', array(), $assetVersion, true );
 
 		$currentValues = array_merge(
 			[

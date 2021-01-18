@@ -55,10 +55,10 @@ class CertificateController {
 			$wsfyIsActive = OptionsHelper::isWSFYActive();
 			$wsfyOptions  = ( $wsfyIsActive ) ? OptionsHelper::getWSFY( [] ) : [];
 
-			//TODO: Reintroduce polyfill
-			//wp_enqueue_script('wordproof.polyfill.js', WORDPROOF_URI_JS . '/polyfill.js', [], filemtime(WORDPROOF_DIR_JS . '/polyfill.js'), false);
-			wp_enqueue_script( 'wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', [],
-				filemtime( WORDPROOF_DIR_JS . '/frontend.js' ), true );
+            $assetVersion = (isset($_ENV['app_env']) && $_ENV['app_env'] === 'local') ? null : WORDPROOF_VERSION;
+
+            wp_enqueue_script( 'wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', [],
+                $assetVersion, true );
 
 			$data = [
 				'ajaxURL'      => admin_url( 'admin-ajax.php' ),

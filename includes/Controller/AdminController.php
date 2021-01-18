@@ -46,15 +46,15 @@ class AdminController {
 	// phpcs:disable
 	public function updateSetting() {
 		check_ajax_referer( 'wordproof', 'security' );
-		
+
 		if ( ! isset( $_REQUEST ) ) {
 			return;
 		}
-  
+
         if ( isset( $_REQUEST['key']) )  {
             $key = sanitize_key( $_REQUEST['key'] );
         }
-        
+
         if ( isset($_REQUEST['value'] ) ) {
 			$value = $_REQUEST['value'];
 		}
@@ -82,13 +82,11 @@ class AdminController {
 	public function loadAdminAssets( $hookSuffix ) {
 		global $post;
 
-		wp_enqueue_style( 'wordproof.admin.css', WORDPROOF_URI_CSS . '/admin.css', array(),
-			filemtime( WORDPROOF_DIR_CSS . '/admin.css' ) );
-		wp_enqueue_script( 'wordproof.admin.js', WORDPROOF_URI_JS . '/admin.js', array(),
-			filemtime( WORDPROOF_DIR_JS . '/admin.js' ), true );
+		$assetVersion = (isset($_ENV['app_env']) && $_ENV['app_env'] === 'local') ? null : WORDPROOF_VERSION;
 
-		wp_enqueue_script( 'wordproof.adminbar.js', WORDPROOF_URI_JS . '/adminbar.js', array(),
-			filemtime( WORDPROOF_DIR_JS . '/adminbar.js' ), true );
+		wp_enqueue_style( 'wordproof.admin.css', WORDPROOF_URI_CSS . '/admin.css', array(), $assetVersion );
+		wp_enqueue_script( 'wordproof.admin.js', WORDPROOF_URI_JS . '/admin.js', array(), $assetVersion, true );
+		wp_enqueue_script( 'wordproof.adminbar.js', WORDPROOF_URI_JS . '/adminbar.js', array(), $assetVersion, true );
 
 		switch ( $hookSuffix ) {
 			case 'index.php':
@@ -128,9 +126,9 @@ class AdminController {
 				$wsfy = OptionsHelper::getWSFY();
 
 				wp_enqueue_script( 'wordproof.settings.admin.js', WORDPROOF_URI_JS . '/settings.js', array(),
-					filemtime( WORDPROOF_DIR_JS . '/settings.js' ), true );
+                    $assetVersion, true );
 				wp_enqueue_style( 'wordproof.settings.admin.css', WORDPROOF_URI_CSS . '/settings.css', array(),
-					filemtime( WORDPROOF_DIR_CSS . '/settings.css' ) );
+                    $assetVersion );
 
 				$hasSiteHealthInstalled = version_compare( get_bloginfo( 'version' ), '5.2', '>=' );
 
@@ -173,7 +171,6 @@ class AdminController {
 					],
 					'bulk'                    => [
 						'counts' => $counts
-
 					],
 					'debugging'               => [
 						'log'                    => DebugLogHelper::getContents(),

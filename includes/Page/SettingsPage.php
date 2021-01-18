@@ -17,7 +17,6 @@ class SettingsPage
         'timestamps' => 'Timestamps',
         'bulk' => 'Bulk',
         'settings' => 'Settings',
-        //setup
         'support' => 'Support',
     ];
 
@@ -104,65 +103,19 @@ class SettingsPage
     {
         // These keys and values get properly sanitized in the OptionsHelper::set function.
         // phpcs:disable
+
+        $options = OptionsHelper::$options;
+
         if (isset($_POST['wordproof_admin_form_nonce']) && wp_verify_nonce(wp_unslash($_POST['wordproof_admin_form_nonce']), 'wordproof_admin_form_nonce')) {
 
-            if (isset($_POST['wordproof_network'])) {
-                OptionsHelper::set('network', $_POST['wordproof_network']);
-            }
+            if (isset($_POST['wordproof_settings']) && is_array($_POST['wordproof_settings'])) {
 
-            /**
-             * Customize settings
-             */
-            if (isset($_POST['wordproof_customize'])) {
+                foreach($_POST['wordproof_settings'] as $key => $value) {
 
-                if (isset($_POST['wordproof_customize']['hide_post_column'])) {
-                    OptionsHelper::set('hide_post_column', true);
-                } else {
-                    OptionsHelper::set('hide_post_column', false);
-                }
+                    if ($value !== null) {
+	                    OptionsHelper::set($key, $value);
+                    }
 
-                if (isset($_POST['wordproof_customize']['certificate_dom_selector'])) {
-                    OptionsHelper::set('certificate_dom_selector',
-                        $_POST['wordproof_customize']['certificate_dom_selector']);
-                }
-
-                if (isset($_POST['wordproof_customize']['certificate_text'])) {
-                    OptionsHelper::set('certificate_text', $_POST['wordproof_customize']['certificate_text']);
-                }
-
-                if (isset($_POST['wordproof_customize']['show_info_link'])) {
-                    OptionsHelper::set('show_info_link', $_POST['wordproof_customize']['show_info_link']);
-                }
-
-                if (isset($_POST['wordproof_customize']['custom_domain'])) {
-                    OptionsHelper::set('custom_domain', trim($_POST['wordproof_customize']['custom_domain']));
-                }
-
-                if (isset($_POST['wordproof_customize']['timestamps_order_text'])) {
-                    OptionsHelper::set('timestamps_order_text',
-                        $_POST['wordproof_customize']['timestamps_order_text']);
-                }
-
-                if (isset($_POST['wordproof_customize']['send_timestamps_with_order'])) {
-                    OptionsHelper::set('send_timestamps_with_order',
-                        $_POST['wordproof_customize']['send_timestamps_with_order']);
-                }
-            }
-
-            /**
-             * WSFY settings
-             */
-            if (isset($_POST['wsfy_settings'])) {
-                $post = $_POST['wsfy_settings'];
-
-                $allowedPostTypes = (isset($post['allowed_post_types']) && is_array($post['allowed_post_types'])) ? array_keys($post['allowed_post_types']) : [];
-                OptionsHelper::set('allowed_post_types', $allowedPostTypes);
-
-                $showRevisions = isset($post['show_revisions']) ? true : false;
-                OptionsHelper::set('show_revisions', $showRevisions);
-
-                if (isset($post['whitelisted_ips']) && !empty($post['whitelisted_ips'])) {
-                    OptionsHelper::set('whitelisted_ips', explode(',', $post['whitelisted_ips']));
                 }
             }
 

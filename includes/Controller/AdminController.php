@@ -29,9 +29,9 @@ class AdminController {
 			new SettingsPage();
 			new OnboardingWizard();
 			new GettingStarted();
-            new DebugInformationController();
+			new DebugInformationController();
 
-            new PostColumnController();
+			new PostColumnController();
 			new PostFilterController();
 			new DashboardWidgetController();
 			new PostWidgetController();
@@ -51,11 +51,11 @@ class AdminController {
 			return;
 		}
 
-        if ( isset( $_REQUEST['key']) )  {
-            $key = sanitize_key( $_REQUEST['key'] );
-        }
+		if ( isset( $_REQUEST['key'] ) ) {
+			$key = sanitize_key( $_REQUEST['key'] );
+		}
 
-        if ( isset($_REQUEST['value'] ) ) {
+		if ( isset( $_REQUEST['value'] ) ) {
 			$value = $_REQUEST['value'];
 		}
 
@@ -71,18 +71,19 @@ class AdminController {
 			$options = $_REQUEST['options'];
 		}
 
-		if ( ! empty($options) && is_array( $options ) ) {
+		if ( ! empty( $options ) && is_array( $options ) ) {
 			foreach ( $options as $key => $value ) {
-				OptionsHelper::set($key, $value);
+				OptionsHelper::set( $key, $value );
 			}
 		}
 	}
+
 	// phpcs:enable
 
 	public function loadAdminAssets( $hookSuffix ) {
 		global $post;
 
-		$assetVersion = (isset($_ENV['app_env']) && $_ENV['app_env'] === 'local') ? null : WORDPROOF_VERSION;
+		$assetVersion = ( isset( $_ENV['app_env'] ) && $_ENV['app_env'] === 'local' ) ? null : WORDPROOF_VERSION;
 
 		wp_enqueue_style( 'wordproof.admin.css', WORDPROOF_URI_CSS . '/admin.css', array(), $assetVersion );
 		wp_enqueue_script( 'wordproof.admin.js', WORDPROOF_URI_JS . '/admin.js', array(), $assetVersion, true );
@@ -126,20 +127,21 @@ class AdminController {
 				$wsfy = OptionsHelper::getWSFY();
 
 				wp_enqueue_script( 'wordproof.settings.admin.js', WORDPROOF_URI_JS . '/settings.js', array(),
-                    $assetVersion, true );
+					$assetVersion, true );
 				wp_enqueue_style( 'wordproof.settings.admin.css', WORDPROOF_URI_CSS . '/settings.css', array(),
-                    $assetVersion );
+					$assetVersion );
 
 				$hasSiteHealthInstalled = version_compare( get_bloginfo( 'version' ), '5.2', '>=' );
 
 				$counts = [];
 				foreach ( get_post_types( [ 'public' => true ] ) as $postType ) {
-					$counts[$postType] = wp_list_pluck( DashboardWidgetController::getRecentPosts( $postType,
+					$counts[ $postType ] = wp_list_pluck( DashboardWidgetController::getRecentPosts( $postType,
 						'NOT EXISTS', -1, true, false, true ), 'ID' );
 				}
 
 				wp_localize_script( 'wordproof.settings.admin.js', 'wordproofSettings', [
-					'certificateText'         => OptionsHelper::getCertificateText(),
+					'options'                 => OptionsHelper::all(),
+					'certificateText'         => OptionsHelper::get('certificate_text'),
 					'certificateDOMSelector'  => OptionsHelper::getCertificateDomSelector(),
 					'customDomain'            => OptionsHelper::getCustomDomain(),
 					'showInfoLink'            => OptionsHelper::getShowInfoLink(),
@@ -189,7 +191,7 @@ class AdminController {
 			'ajaxURL'      => admin_url( 'admin-ajax.php' ),
 			'ajaxSecurity' => wp_create_nonce( 'wordproof' ),
 			'permalink'    => ( ! empty( $post->ID ) ) ? DomainHelper::getPermalink( $post->ID ) : false,
-			'network'      => OptionsHelper::getNetwork(),
+			'network'      => OptionsHelper::get('network'),
 			'balance'      => OptionsHelper::getBalanceCache(),
 			'urls'         => [
 				'dashboard'       => admin_url( 'admin.php?page=wordproof-dashboard' ),

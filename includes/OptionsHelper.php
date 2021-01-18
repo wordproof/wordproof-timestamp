@@ -10,22 +10,26 @@ class OptionsHelper {
 
 	public static $options = [
 		'network'                    => [ 'type' => 'text' ],
-		'certificate_text'           => [ 'type' => 'text' ],
+		'certificate_text'           => [
+			'type'    => 'text',
+			'default' => "View this content's WordProof Timestamp certificate"
+		],
 		'certificate_dom_selector'   => [ 'type' => 'text' ],
-		'custom_domain'              => [ 'type' => 'text' ],
+		'custom_domain'              => [ 'type' => 'text', 'default' => false ],
 		'send_timestamps_with_order' => [ 'type' => 'text' ],
 		'timestamps_order_text'      => [ 'type' => 'text' ],
 		'show_info_link'             => [ 'type' => 'html' ],
 		'hide_post_column'           => [ 'type' => 'bool' ],
+		'hide_certificate_home'      => [ 'type' => 'bool' ],
+		'hide_certificate_all'       => [ 'type' => 'bool' ],
 		'wsfy'                       => [
 			'site_id'            => [ 'type' => 'int' ],
 			'show_revisions'     => [ 'type' => 'bool' ],
 			'allowed_post_types' => [ 'type' => 'text' ],
-			'whitelisted_ips'    => [ 'type' => 'text' ]
 		],
 		'oauth'                      => [
-			'access_token'  => [ 'type' => 'text' ],
-			'token_id'      => [ 'type' => 'text' ],
+			'access_token' => [ 'type' => 'text' ],
+			'token_id'     => [ 'type' => 'text' ],
 		],
 		'wsfy_is_active'             => [ 'type' => 'bool' ],
 		'wallet_connected'           => [ 'type' => 'bool' ],
@@ -33,24 +37,40 @@ class OptionsHelper {
 		'balance'                    => [ 'type' => 'text' ],
 	];
 
-	private static $defaultCertificateText = "View this content's WordProof Timestamp certificate";
+	public static function all(): array {
+		return [
+			'hide_certificate_home' => self::get( 'hide_certificate_home' ),
+			'hide_certificate_all'  => self::get( 'hide_certificate_all' ),
+		];
+	}
 
 	public static function get( $key ) {
 		if ( ! in_array( $key, array_keys( self::$options ) ) ) {
 			return new \Exception( 'Option not found' );
 		}
 
-		return get_option( self::$prefix . $key );
-	}
+		$option = self::$options[ $key ];
+		$value = get_option( self::$prefix . $key );
 
-	public static function getNetwork() {
-		return get_option( self::$prefix . 'network' );
-	}
+		if ( is_string( $value ) ) {
+			return stripslashes( $value );
+		}
 
-	public static function getCertificateText() {
-		$text = get_option( self::$prefix . 'certificate_text', null ) ?: self::$defaultCertificateText;
+		if ( !empty( $value ) ) {
+			return $value;
+		}
 
-		return stripslashes( $text );
+		if ( isset( $option['default'] ) ) {
+			return $option['default'];
+		}
+
+		switch ($option['type']) {
+			case 'bool':
+				return 0;
+			default:
+				return '';
+		}
+
 	}
 
 	public static function getCertificateDomSelector() {
@@ -59,10 +79,6 @@ class OptionsHelper {
 
 	public static function getHidePostColumn() {
 		return get_option( self::$prefix . 'hide_post_column' );
-	}
-
-	public static function getAccountName( $default = false ) {
-		return get_option( self::$prefix . 'accountname', $default );
 	}
 
 	public static function getBalance( $default = false ) {
@@ -118,15 +134,6 @@ class OptionsHelper {
 		return null;
 	}
 
-	public static function getWSFYAllowedIps() {
-		$whitelistedIps = self::getWSFYField( 'whitelisted_ips' );
-		if ( is_array( $whitelistedIps ) ) {
-			return array_merge( WORDPROOF_WSFY_API_IP, $whitelistedIps );
-		}
-
-		return WORDPROOF_WSFY_API_IP;
-	}
-
 	public static function isWSFYActive() {
 		return boolval( get_option( self::$prefix . 'wsfy_is_active' ) );
 	}
@@ -159,23 +166,25 @@ class OptionsHelper {
 		$wsfyKeys  = array_keys( self::$options[ self::$optionWSFY ] );
 		$oauthKeys = array_keys( self::$options[ self::$optionOAuth ] );
 
-		$value = wp_unslash($value);
+		$value = wp_unslash( $value );
 
 		if ( in_array( $key, $wsfyKeys ) ) {
 			return self::setValueOfArray( self::$optionWSFY, $wsfyKeys, $key, $value );
+		}
 
-		} elseif ( in_array( $key, $oauthKeys ) ) {
+		if ( in_array( $key, $oauthKeys ) ) {
 			return self::setValueOfArray( self::$optionOAuth, $oauthKeys, $key, $value );
+		}
 
-		} elseif ( isset( self::$options[ $key ] ) ) {
+		if ( isset( self::$options[ $key ] ) ) {
 			$type  = self::$options[ $key ]['type'];
 			$value = self::sanitizeData( $value, $type );
 
 			return update_option( self::$prefix . $key, $value );
-		} else {
-			DebugLogHelper::warning( $key . ' does not exist in $options of OptionsHelper' );
-			error_log( $key . ' does not exist in $options of OptionsHelper' );
 		}
+
+		DebugLogHelper::warning( $key . ' does not exist in $options of OptionsHelper' );
+		error_log( $key . ' does not exist in $options of OptionsHelper' );
 
 		return false;
 	}

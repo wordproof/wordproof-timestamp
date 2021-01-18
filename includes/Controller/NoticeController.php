@@ -18,7 +18,7 @@ class NoticeController {
 	}
 
 	public function initializeNotices() {
-		$this->notices[] = new UnprotectedPostsNotice();
+        //$this->notices[] = new UnprotectedPostsNotice();
 		//$this->notices[] = new NotSetupNotice();
 	}
 
@@ -38,7 +38,7 @@ class NoticeController {
 		if ( ! isset( $_REQUEST['notice_key'] ) ) {
 			return;
 		}
-		
+
         if ( in_array( wp_unslash($_REQUEST['notice_key']), $this->keys ) ) {
 			set_transient( filter_var(wp_unslash($_REQUEST['notice_key']), FILTER_SANITIZE_STRING), 'hidden' );
 		}

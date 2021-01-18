@@ -12,9 +12,9 @@ class ChainHelper {
 		$currentPage        = get_current_screen()->base;
 
 		if ( in_array( $currentPage, $balanceCheckNeeded ) ) {
-			$accountName = OptionsHelper::getAccountName();
+			$accountName = OptionsHelper::get('accountname');
 			if ( $accountName !== false ) {
-				$chain = OptionsHelper::getNetwork();
+				$chain = OptionsHelper::get('network');
 				self::sendRequest( $accountName, $chain );
 			}
 		}
@@ -25,7 +25,7 @@ class ChainHelper {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			exit;
 		}
-		$chain = OptionsHelper::getNetwork();
+		$chain = OptionsHelper::get('network');
 
 		if ( isset( $_REQUEST['accountName'] ) ) {
 			$accountName = sanitize_text_field( wp_unslash( $_REQUEST['accountName'] ) );

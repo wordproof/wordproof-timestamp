@@ -67,7 +67,7 @@ class CertificateController {
 				'link'         => [
 					'url'      => $this->getUrl(),
 					'dom'      => OptionsHelper::getCertificateDomSelector(),
-					'text'     => OptionsHelper::getCertificateText(),
+					'text'     => OptionsHelper::get('certificate_text'),
 					'infoLink' => OptionsHelper::getShowInfoLink(),
 					'postId'   => $post->ID,
 				],

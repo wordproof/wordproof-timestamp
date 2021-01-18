@@ -34,7 +34,7 @@ class OnboardingWizard {
 
 		$currentValues = array_merge(
 			[
-				'certificate_text' => OptionsHelper::getCertificateText(),
+				'certificate_text' => OptionsHelper::get('certificate_text'),
 				'isWSFYActive'     => OptionsHelper::isWSFYActive()
 			],
 			(array) OptionsHelper::getWSFY(),

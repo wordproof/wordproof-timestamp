@@ -90,7 +90,7 @@ class Manual extends Component {
                         <div className="form-group">
                             <label htmlFor="wordproof_network_telos"
                                    className={`radio-box ${this.checkActiveRadio('telos_main') ? 'selected' : ''}`}>
-                                <input type="radio" id="wordproof_network_telos" name="wordproof_network"
+                                <input type="radio" id="wordproof_network_telos" name="wordproof_settings[wordproof_network]"
                                        data-readable-name="Telos"
                                        value="telos_main"
                                        checked={this.state.network === "telos_main"} onChange={this.handleNetwork}/>
@@ -99,7 +99,7 @@ class Manual extends Component {
                             </label>
                             <label htmlFor="wordproof_network_eos"
                                    className={`radio-box ${this.checkActiveRadio('eos_main') ? 'selected' : ''}`}>
-                                <input type="radio" id="wordproof_network_eos" name="wordproof_network"
+                                <input type="radio" id="wordproof_network_eos" name="wordproof_settings[wordproof_network]"
                                        data-readable-name="EOS"
                                        value="eos_main"
                                        checked={this.state.network === "eos_main"} onChange={this.handleNetwork}/>
@@ -108,7 +108,7 @@ class Manual extends Component {
                             </label>
                             <label htmlFor="wordproof_network_jungle"
                                    className={`radio-box ${this.checkActiveRadio('eos_jungle') ? 'selected' : ''} ${this.props.hideAdvanced ? 'hidden' : ''}`}>
-                                <input type="radio" id="wordproof_network_jungle" name="wordproof_network"
+                                <input type="radio" id="wordproof_network_jungle" name="wordproof_settings[wordproof_network]"
                                        data-readable-name="EOS Jungle"
                                        value="eos_jungle"
                                        checked={this.state.network === "eos_jungle"} onChange={this.handleNetwork}/>

@@ -15,7 +15,8 @@ export default class Settings extends Component {
             hidePostColumn: wordproofSettings.hidePostColumn,
             sendTimestampsWithOrder: wordproofSettings.sendTimestampsWithOrder,
             timestampsOrderText: wordproofSettings.timestampsOrderText,
-            hideOnHomepage: wordproofSettings.hideOnHomepage,
+            hideCertificateHome: wordproofSettings.options['hide_certificate_home'],
+            hideCertificateAll: wordproofSettings.options['hide_certificate_all'],
             hideAdvanced: true
         }
     }
@@ -48,68 +49,79 @@ export default class Settings extends Component {
                 <h3>General Settings</h3>
 
                 <div className="form-group">
-                    <label htmlFor="wordproof_customize[certificate_text]" className="label" title="Certificate Text">How
-                        do you want to
-                        refer to the WordProof timestamp certificate? </label>
-                    <input type="text" className="textinput" name="wordproof_customize[certificate_text]"
+                    <label htmlFor="wordproof_settings[certificate_text]" className="label" title="Certificate Text">How
+                        do you want to refer to the WordProof timestamp certificate? </label>
+                    <input type="text" className="textinput" name="wordproof_settings[certificate_text]"
                            value={this.state.certificateText}
                            onChange={e => this.setState({certificateText: e.target.value})}
-                           id="wordproof_customize[certificate_text]"/>
+                           id="wordproof_settings[certificate_text]"/>
                 </div>
 
                 <SettingsRadioButtons
                     update={this.updateState}
-                    initialValue={this.state.sendTimestampsWithOrder}
-                    label={'Send timestamps of products and Terms & Conditions with the order confirmation email'}
-                    slug={'send_timestamps_with_order'}
+                    stateKey='hideCertificateHome'
+                    initialValue={this.state.hideCertificateHome}
+                    label={'Hide the certificate link on the homepage'}
+                    slug={'hide_certificate_home'}
                     description={''}
-                    options={{'never': 'Disable', 'always': 'Always', 'ask_user_to_disable': 'Ask the user, enabled by default', 'ask_user_to_enable': 'Ask the user, disabled by default'}}
+                    options={{1: 'Yes', 0: 'No'}}
                 />
 
                 {this.renderAdditionalSettings()}
 
+                <SettingsRadioButtons
+                    update={this.updateState}
+                    stateKey='hideCertificateAll'
+                    initialValue={this.state.hideCertificateAll}
+                    label={'Hide the certificate link on all pages'}
+                    slug={'hide_certificate_all'}
+                    description={''}
+                    options={{1: 'Yes', 0: 'No'}}
+                />
+
                 <div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>
-                    <label htmlFor="wordproof_customize[certificate_dom_selector]" className="label"
+                    <label htmlFor="wordproof_settings[certificate_dom_selector]" className="label"
                            title="Certificate DOM Selector">Certificate DOM Selector</label>
-                    <input type="text" className="textinput" name="wordproof_customize[certificate_dom_selector]"
+                    <input type="text" className="textinput" name="wordproof_settings[certificate_dom_selector]"
                            placeholder="eg. .entry-meta or #mydiv"
                            value={this.state.certificateDOMSelector}
                            onChange={e => this.setState({certificateDOMSelector: e.target.value})}
-                           id="wordproof_customize[certificate_dom_selector]"/>
+                           id="wordproof_settings[certificate_dom_selector]"/>
                 </div>
 
                 <div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>
-                    <label htmlFor="wordproof_customize[custom_domain]" className="label" title="Custom Domain">Custom
+                    <label htmlFor="wordproof_settings[custom_domain]" className="label" title="Custom Domain">Custom
                         Domain</label>
-                    <input type="text" className="textinput" name="wordproof_customize[custom_domain]" placeholder=""
+                    <input type="text" className="textinput" name="wordproof_settings[custom_domain]" placeholder=""
                            value={this.state.customDomain} onChange={e => this.setState({customDomain: e.target.value})}
-                           id="wordproof_customize[custom_domain]"/>
+                           id="wordproof_settings[custom_domain]"/>
                     <p>For some setups (eg. GetShifter.io), a custom URL should be supplied to correctly show the link
                         in the certificate.</p>
                 </div>
 
                 <div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>
-                    <label htmlFor="wordproof_customize[show_info_link]" className="label" title="Show Info Link">Show
+                    <label htmlFor="wordproof_settings[show_info_link]" className="label" title="Show Info Link">Show
                         Info Link</label>
-                    <input type="text" className="textinput" name="wordproof_customize[show_info_link]" placeholder=""
+                    <input type="text" className="textinput" name="wordproof_settings[show_info_link]" placeholder=""
                            value={this.state.showInfoLink} onChange={e => this.setState({showInfoLink: e.target.value})}
-                           id="wordproof_customize[show_info_link]"/>
+                           id="wordproof_settings[show_info_link]"/>
                     <p>Enter HTML which will be displayed behind the WordProof Certificate Link. In most cases, this is
                         used to add a link to a page which explains what WordProof is. Please add your own classes and CSS. Leave empty to hide.</p>
                 </div>
 
                 <div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>
-                    <label htmlFor="wordproof_customize[hide_post_column]" className="label" title="Display Revisions">Hide
+                    <label htmlFor="wordproof_settings[hide_post_column]" className="label" title="Display Revisions">Hide
                         Post Column</label>
-                    <input type="checkbox" value="1" className="" name="wordproof_customize[hide_post_column]"
+                    <input type="checkbox" value="1" className="" name="wordproof_settings[hide_post_column]"
                            onChange={e => this.setState({hidePostColumn: e.target.value})}
                            defaultChecked={this.state.hidePostColumn}
-                           id="wordproof_customize[hide_post_column]"/>
+                           id="wordproof_settings[hide_post_column]"/>
                 </div>
 
                 <h3>E-Commerce Settings</h3>
                 <SettingsRadioButtons
                     update={this.updateState}
+                    stateKey='sendTimestampsWithOrder'
                     initialValue={this.state.sendTimestampsWithOrder}
                     label={'Send timestamps of products and Terms & Conditions with the order confirmation email'}
                     slug={'send_timestamps_with_order'}
@@ -118,13 +130,13 @@ export default class Settings extends Component {
                 />
 
                 <div className={`form-group`}>
-                    <label htmlFor="wordproof_customize[timestamps_order_text]" className="label"
+                    <label htmlFor="wordproof_settings[timestamps_order_text]" className="label"
                            title="Add message to the timestamps">Add message to the timestamps</label>
-                    <input type="text" className="textinput" name="wordproof_customize[timestamps_order_text]"
+                    <input type="text" className="textinput" name="wordproof_settings[timestamps_order_text]"
                            placeholder=""
                            value={this.state.timestampsOrderText}
                            onChange={e => this.setState({timestampsOrderText: e.target.value})}
-                           id="wordproof_customize[timestamps_order_text]"/>
+                           id="wordproof_settings[timestamps_order_text]"/>
                 </div>
 
                 <input type="submit" name="submit" id="submit" className="wbtn wbtn-primary"

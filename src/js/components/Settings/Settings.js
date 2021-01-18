@@ -15,6 +15,7 @@ export default class Settings extends Component {
             hidePostColumn: wordproofSettings.hidePostColumn,
             sendTimestampsWithOrder: wordproofSettings.sendTimestampsWithOrder,
             timestampsOrderText: wordproofSettings.timestampsOrderText,
+            hideOnHomepage: wordproofSettings.hideOnHomepage,
             hideAdvanced: true
         }
     }
@@ -55,6 +56,15 @@ export default class Settings extends Component {
                            onChange={e => this.setState({certificateText: e.target.value})}
                            id="wordproof_customize[certificate_text]"/>
                 </div>
+
+                <SettingsRadioButtons
+                    update={this.updateState}
+                    initialValue={this.state.sendTimestampsWithOrder}
+                    label={'Send timestamps of products and Terms & Conditions with the order confirmation email'}
+                    slug={'send_timestamps_with_order'}
+                    description={''}
+                    options={{'never': 'Disable', 'always': 'Always', 'ask_user_to_disable': 'Ask the user, enabled by default', 'ask_user_to_enable': 'Ask the user, disabled by default'}}
+                />
 
                 {this.renderAdditionalSettings()}
 

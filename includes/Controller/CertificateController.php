@@ -109,7 +109,7 @@ class CertificateController {
 							'valid'    => [
 								'title'       => __( 'Content has not changed since the last timestamp',
 									'wordproof-timestamp' ),
-								'description' => __( 'Not the website nor a third party has modified the content of this page since it was last timestamped on the blockchain.',
+								'description' => __( 'Neither the website nor a third party has modified the content of this page since it was last timestamped on the blockchain.',
 									'wordproof-timestamp' ),
 							],
 							'invalid'  => [

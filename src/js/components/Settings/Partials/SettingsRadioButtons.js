@@ -7,18 +7,28 @@ export default class SettingsRadioButtons extends Component {
             <p className={'mb-2 label'}>{this.props.label}</p>
             <div className={'mb-4'}>
                 {Object.entries(this.props.options).map((value) => {
-                    let key = value[0];
-                    let label = value[1];
+                    let optionValue = value[0];
+                    let optionlabel = value[1];
+                    let domKey = this.props.slug+'['+optionValue+']';
+
+                    let initialValue = this.props.initialValue;
+                    if (typeof this.props.initialValue === "boolean") {
+                        initialValue = (this.props.initialValue) ? '1' : '0';
+                    }
+
+                    if (typeof this.props.initialValue === "number") {
+                        initialValue = this.props.initialValue + '';
+                    }
 
                     return (
-                        <div key={key}>
-                            <input key={key} type="radio" value={key}
-                                   id={key}
-                                   name={`wordproof_customize[${this.props.slug}]`}
-                                   defaultChecked={this.props.initialValue === key}
-                                   onChange={() => this.props.update('sendTimestampsWithOrder', key)}
+                        <div key={domKey}>
+                            <input key={domKey} type="radio" value={optionValue}
+                                   id={domKey}
+                                   name={`wordproof_settings[${this.props.slug}]`}
+                                   defaultChecked={initialValue === optionValue}
+                                   onChange={() => this.props.update(this.props.stateKey, optionValue)}
                             />
-                            <label htmlFor={key}>{label}</label>
+                            <label htmlFor={domKey}>{optionlabel}</label>
                         </div>
                     )
                 })}

@@ -23,7 +23,7 @@ class ECommerceController {
 	}
 
 	/**
-	 * @param  \WC_Checkout  $checkout
+	 * @param \WC_Checkout $checkout
 	 */
 	public function addCustomerForProductTimestamps( \WC_Checkout $checkout ) {
 		$option = OptionsHelper::getSendTimestampsWithOrder();
@@ -35,21 +35,21 @@ class ECommerceController {
 		$checked = ( $option === 'ask_user_to_disable' );
 
 		$response = '<div id="wordproof-ecommerce-ask-user-title"><h3>' . __( 'Do you want proof of this order?', 'wordproof-timestamp' ) . '</h3>';
-		
+
 		$response .= woocommerce_form_field( 'wordproof_receive_timestamps', array(
 			'type'     => 'checkbox',
 			'class'    => array( 'input-checkbox' ),
 			'label'    => __( 'Send me indisputable proof (via email) of the current Terms & Conditions and the products in this order.',
 				'wordproof-timestamp' ),
 			'required' => false,
-            'return' => true
+			'return'   => true
 		), $checked );
-		
-		$response .= "<input type='hidden' name='wordproof_receive_timestamps_nonce' value='".wp_create_nonce('wordproof_receive_timestamps_nonce')."'>";
+
+		$response .= "<input type='hidden' name='wordproof_receive_timestamps_nonce' value='" . wp_create_nonce( 'wordproof_receive_timestamps_nonce' ) . "'>";
 
 		$response .= '</div>';
-		
-		echo esc_html($response);
+
+		echo esc_html( $response );
 	}
 
 	/**
@@ -59,19 +59,19 @@ class ECommerceController {
 	 */
 
 	function saveReceiveTimestampPreference( $orderId ) {
-	    if (!isset($_REQUEST['wordproof_receive_timestamps_nonce'])) {
-	        return;
-        }
-	    
-	    if (!wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['wordproof_receive_timestamps_nonce'])), 'wordproof_receive_timestamps_nonce')) {
-	        return;
-        }
-	    
-		if ( empty($_POST) ) {
+		if ( ! isset( $_REQUEST['wordproof_receive_timestamps_nonce'] ) ) {
 			return;
 		}
 
-		if ( isset($_POST['wordproof_receive_timestamps']) ) {
+		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wordproof_receive_timestamps_nonce'] ) ), 'wordproof_receive_timestamps_nonce' ) ) {
+			return;
+		}
+
+		if ( empty( $_POST ) ) {
+			return;
+		}
+
+		if ( isset( $_POST['wordproof_receive_timestamps'] ) ) {
 			update_post_meta( $orderId, 'wordproof_receive_timestamps',
 				sanitize_text_field( wp_unslash( $_POST['wordproof_receive_timestamps'] ) ) );
 		}

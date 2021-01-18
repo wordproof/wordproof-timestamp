@@ -42,7 +42,7 @@ class TimestampController {
             return;
 
 		$postId        = intval( sanitize_text_field( wp_unslash( ($_REQUEST['post_id']) ? $_REQUEST['post_id'] : 0 ) ) );
-		$chain         = OptionsHelper::getNetwork();
+		$chain         = OptionsHelper::get('network');
 		$transactionId = sanitize_text_field( wp_unslash( ($_REQUEST['transaction_id']) ? $_REQUEST['transaction_id'] : '' ) );
 
 		self::saveTimestamp( $postId, $chain, $transactionId );

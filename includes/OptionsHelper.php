@@ -50,13 +50,13 @@ class OptionsHelper {
 		}
 
 		$option = self::$options[ $key ];
-		$value = get_option( self::$prefix . $key );
+		$value  = get_option( self::$prefix . $key, null );
 
-		if ( is_string( $value ) ) {
+		if ( is_string( $value ) && ! empty( $value ) ) {
 			return stripslashes( $value );
 		}
 
-		if ( !empty( $value ) ) {
+		if ( ! empty( $value ) ) {
 			return $value;
 		}
 
@@ -64,7 +64,7 @@ class OptionsHelper {
 			return $option['default'];
 		}
 
-		switch ($option['type']) {
+		switch ( $option['type'] ) {
 			case 'bool':
 				return 0;
 			default:

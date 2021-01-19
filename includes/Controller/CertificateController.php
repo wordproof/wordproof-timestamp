@@ -14,6 +14,7 @@ class CertificateController {
 	}
 
 	public function init() {
+
 		if ( is_singular() ) {
 			if ( is_main_query() ) {
 				add_filter( 'the_content', [ $this, 'addLink' ] );
@@ -31,7 +32,18 @@ class CertificateController {
 		$meta         = PostMetaHelper::getPostMeta( $post->ID, [ 'date', 'blockchain', 'type' ] );
 		$allowedTypes = [ 'WebArticleTimestamp', ARTICLE_TIMESTAMP, PRODUCT_TIMESTAMP, MEDIA_OBJECT_TIMESTAMP ];
 
-		return ( isset( $meta->date ) && ! empty( $meta->blockchain ) && in_array( $meta->type, $allowedTypes ) );
+		if (is_front_page()) {
+			if (OptionsHelper::get('hide_certificate_home')) {
+				return false;
+			}
+		}
+
+		if (OptionsHelper::get('hide_certificate_all')) {
+			return false;
+		}
+
+		$show = ( isset( $meta->date ) && ! empty( $meta->blockchain ) && in_array( $meta->type, $allowedTypes ) );
+		return $show;
 	}
 
 	public function addLink( $content ) {

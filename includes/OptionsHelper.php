@@ -12,7 +12,7 @@ class OptionsHelper {
 		'network'                    => [ 'type' => 'text' ],
 		'certificate_text'           => [
 			'type'    => 'text',
-			'default' => "View this content's WordProof Timestamp certificate"
+			'default' => 'View this content\'s WordProof Timestamp certificate'
 		],
 		'certificate_dom_selector'   => [ 'type' => 'text' ],
 		'custom_domain'              => [ 'type' => 'text', 'default' => false ],
@@ -52,25 +52,22 @@ class OptionsHelper {
 		$option = self::$options[ $key ];
 		$value  = get_option( self::$prefix . $key, null );
 
-		if ( is_string( $value ) && ! empty( $value ) ) {
-			return stripslashes( $value );
-		}
-
-		if ( ! empty( $value ) ) {
-			return $value;
-		}
-
-		if ( isset( $option['default'] ) ) {
-			return $option['default'];
-		}
-
 		switch ( $option['type'] ) {
 			case 'bool':
-				return 0;
-			default:
-				return '';
-		}
+				return boolval($value);
+			case 'text':
+				if (!empty($value))
+					return stripslashes($value);
 
+				break;
+			case 'int':
+				return intval($value);
+			default:
+				if ( isset( $option['default'] ) ) {
+					return $option['default'];
+				}
+				return false;
+		}
 	}
 
 	public static function getCertificateDomSelector() {

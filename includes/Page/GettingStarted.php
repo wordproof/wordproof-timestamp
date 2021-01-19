@@ -2,8 +2,6 @@
 
 namespace WordProofTimestamp\includes\Page;
 
-use WordProofTimestamp\includes\Controller\CertificateController;
-
 /**
  * Class SettingsPage
  * @package WordProofTimestamp\includes\Page

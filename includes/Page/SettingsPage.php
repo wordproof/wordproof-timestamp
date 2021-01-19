@@ -2,7 +2,6 @@
 
 namespace WordProofTimestamp\includes\Page;
 
-use WordProofTimestamp\includes\Controller\CertificateController;
 use WordProofTimestamp\includes\OptionsHelper;
 
 /**

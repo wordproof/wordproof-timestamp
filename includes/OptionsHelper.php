@@ -63,11 +63,14 @@ class OptionsHelper {
 			case 'int':
 				return intval($value);
 			default:
-				if ( isset( $option['default'] ) ) {
-					return $option['default'];
-				}
-				return false;
+				break;
 		}
+
+		if ( isset( $option['default'] ) ) {
+			return $option['default'];
+		}
+
+		return false;
 	}
 
 	public static function getCertificateDomSelector() {

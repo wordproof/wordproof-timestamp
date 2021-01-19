@@ -9,6 +9,8 @@ import Removed from "./Removed";
 import Added from "./Added";
 import ButtonList from "./ButtonList";
 
+const returnPlaceholder = '!!WORDPROOF_RETURN!!';
+
 export default class Compare extends React.Component {
 
     constructor(props) {
@@ -28,15 +30,27 @@ export default class Compare extends React.Component {
             document.dispatchEvent(new Event('wordproof.modal.navigate.compare.raw'));
         } else {
             this.compare();
+            console.log(this.props.items);
         }
     }
 
+    componentDidUpdate() {
+        console.log(this.state.oldText);
+        console.log(this.state.newText);
+    }
+
     compare = () => {
-        const oldContent = this.props.items[this.state.oldIndex].content;
-        const newContent = this.props.items[this.state.newIndex].content;
+        const oldContent = this.cleanup(this.props.items[this.state.oldIndex].content);
+        const newContent = this.cleanup(this.props.items[this.state.newIndex].content);
         let changes = diffWords(oldContent.toString(), newContent.toString());
         this.getSelectArrays();
         this.handleChanges(changes);
+    };
+
+    cleanup = (html) => {
+        let string = html.replaceAll('<!-- /wp:paragraph -->', returnPlaceholder);
+        string = string.replaceAll(/(<([^>]+)>)/gi, "");
+        return string;
     };
 
     handleChanges = (list) => {
@@ -45,13 +59,16 @@ export default class Compare extends React.Component {
 
         list.forEach((change) => {
             if (change.removed) {
-                oldText.push(change.value);
-                newText.push(renderToString(<Removed>{change.value}</Removed>));
+                let value = change.value.replaceAll(returnPlaceholder, '');
+                oldText.push(value);
+                newText.push(renderToString(<Removed>{value}</Removed>));
             } else if (change.added) {
-                newText.push(renderToString(<Added>{change.value}</Added>));
+                let value = change.value.replaceAll(returnPlaceholder, '');
+                newText.push(renderToString(<Added>{value}</Added>));
             } else {
-                oldText.push(change.value);
-                newText.push(change.value);
+                let value = change.value.replaceAll(returnPlaceholder, '<br/><br/>');
+                oldText.push(value);
+                newText.push(value);
             }
         });
 

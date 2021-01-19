@@ -69,15 +69,17 @@ export default class Settings extends Component {
 
                 {this.renderAdditionalSettings()}
 
-                <SettingsRadioButtons
-                    update={this.updateState}
-                    stateKey='hideCertificateAll'
-                    initialValue={this.state.hideCertificateAll}
-                    label={'Hide the certificate link on all pages'}
-                    slug={'hide_certificate_all'}
-                    description={''}
-                    options={{1: 'Yes', 0: 'No'}}
-                />
+                {!this.state.hideAdvanced && (
+                    <SettingsRadioButtons
+                        update={this.updateState}
+                        stateKey='hideCertificateAll'
+                        initialValue={this.state.hideCertificateAll}
+                        label={'Hide the certificate link on all pages'}
+                        slug={'hide_certificate_all'}
+                        description={''}
+                        options={{1: 'Yes', 0: 'No'}}
+                    />)
+                }
 
                 <div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>
                     <label htmlFor="wordproof_settings[certificate_dom_selector]" className="label"
@@ -106,7 +108,8 @@ export default class Settings extends Component {
                            value={this.state.showInfoLink} onChange={e => this.setState({showInfoLink: e.target.value})}
                            id="wordproof_settings[show_info_link]"/>
                     <p>Enter HTML which will be displayed behind the WordProof Certificate Link. In most cases, this is
-                        used to add a link to a page which explains what WordProof is. Please add your own classes and CSS. Leave empty to hide.</p>
+                        used to add a link to a page which explains what WordProof is. Please add your own classes and
+                        CSS. Leave empty to hide.</p>
                 </div>
 
                 <div className={`form-group ${this.state.hideAdvanced ? 'hidden' : ''}`}>
@@ -126,7 +129,12 @@ export default class Settings extends Component {
                     label={'Send timestamps of products and Terms & Conditions with the order confirmation email'}
                     slug={'send_timestamps_with_order'}
                     description={''}
-                    options={{'never': 'Disable', 'always': 'Always', 'ask_user_to_disable': 'Ask the user, enabled by default', 'ask_user_to_enable': 'Ask the user, disabled by default'}}
+                    options={{
+                        'never': 'Disable',
+                        'always': 'Always',
+                        'ask_user_to_disable': 'Ask the user, enabled by default',
+                        'ask_user_to_enable': 'Ask the user, disabled by default'
+                    }}
                 />
 
                 <div className={`form-group`}>

@@ -41,6 +41,8 @@ export default class Automatic extends Component {
                             <label htmlFor={`wordproof_settings[allowed_post_types][${value}]`}>{value}</label>
                         </div>
                     })}
+                    <input type="hidden" value="" name={`wordproof_settings[allowed_post_types][]`} />
+
                 </div>
             </>
         )

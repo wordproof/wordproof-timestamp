@@ -38,8 +38,10 @@ class CertificateController {
 			}
 		}
 
-		if (OptionsHelper::get('hide_certificate_all')) {
-			return false;
+		if ($types = OptionsHelper::get('hide_certificate_post_types')) {
+			if (in_array($post->post_type, $types)) {
+				return false;
+			}
 		}
 
 		$show = ( isset( $meta->date ) && ! empty( $meta->blockchain ) && in_array( $meta->type, $allowedTypes ) );

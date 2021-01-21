@@ -34,7 +34,7 @@ class DebugLogHelper {
 	public static function getContents() {
 		$file = file_exists( self::getLogFilename() );
 		if ( $file ) {
-			$file = file_get_contents( self::getLogFilename() );
+			$file = file_get_contents( self::getLogFilename(), false, null, 0, 40000);
 			if ( ! empty( $file ) ) {
 				return trim( $file );
 			}
@@ -64,8 +64,8 @@ class DebugLogHelper {
 		$datetime = gmdate( 'Y-m-d H:i:s', time() + ( get_option( 'gmt_offset', 0 ) * HOUR_IN_SECONDS ) );
 		$message  = sprintf( '[%s] %s: %s', $datetime, $level, $message ) . PHP_EOL;
 
-		//TODO archive log if too large, start a fresh one with a message
-		file_put_contents( self::getLogFilename(), $message, FILE_APPEND );
+		$flag = (filesize(self::getLogFilename()) > 3000) ? FILE_BINARY : FILE_APPEND;
+		file_put_contents( self::getLogFilename(), $message, $flag );
 	}
 
 	private static function getLogFilename() {

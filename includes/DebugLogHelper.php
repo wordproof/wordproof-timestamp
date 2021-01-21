@@ -34,7 +34,7 @@ class DebugLogHelper {
 	public static function getContents() {
 		$file = file_exists( self::getLogFilename() );
 		if ( $file ) {
-			$file = file_get_contents( self::getLogFilename(), false, null, 0, 40000);
+			$file = file_get_contents( self::getLogFilename(), false, null, 0, 4000);
 			if ( ! empty( $file ) ) {
 				return trim( $file );
 			}

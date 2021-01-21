@@ -112,8 +112,6 @@ export default class Bulk extends Component {
             postTypes[type] = data;
         }
 
-        console.log(postTypes);
-
         this.setState({postTypes: postTypes, loading: false});
 
     }

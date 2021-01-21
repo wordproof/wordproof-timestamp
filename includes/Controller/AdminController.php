@@ -124,20 +124,12 @@ class AdminController {
 			case 'wordproof_page_wordproof-support':
 			case 'wordproof_page_wordproof-bulk':
 			case 'wordproof_page_wordproof-timestamps':
-				$wsfy = OptionsHelper::getWSFY();
-
 				wp_enqueue_script( 'wordproof.settings.admin.js', WORDPROOF_URI_JS . '/settings.js', array(),
 					$assetVersion, true );
 				wp_enqueue_style( 'wordproof.settings.admin.css', WORDPROOF_URI_CSS . '/settings.css', array(),
 					$assetVersion );
 
 				$hasSiteHealthInstalled = version_compare( get_bloginfo( 'version' ), '5.2', '>=' );
-
-				$counts = [];
-				foreach ( get_post_types( [ 'public' => true ] ) as $postType ) {
-					$counts[ $postType ] = wp_list_pluck( DashboardWidgetController::getRecentPosts( $postType,
-						'NOT EXISTS', -1, true, false, true ), 'ID' );
-				}
 
 				wp_localize_script( 'wordproof.settings.admin.js', 'wordproofSettings', [
 					'options'                 => OptionsHelper::all(),
@@ -150,7 +142,7 @@ class AdminController {
 					'isWSFYActive'            => OptionsHelper::isWSFYActive(),
 					'sendTimestampsWithOrder' => OptionsHelper::getSendTimestampsWithOrder(),
 					'timestampsOrderText'     => OptionsHelper::getTimestampOrderText(),
-					'wsfy'                    => $wsfy,
+					'wsfy'                    => OptionsHelper::getWSFY(),
 					'recentlyStampedItems'    => DashboardWidgetController::getRecentlyStampedItems(),
 					'registeredPostTypes'     => get_post_types( [ 'public' => true ] ),
 					'saveChanges'             => 'Save Changes',
@@ -171,15 +163,9 @@ class AdminController {
 						'url'      => admin_url( 'admin-post.php' ),
 						'security' => wp_create_nonce( 'wordproof' ),
 					],
-					'bulk'                    => [
-						'counts' => $counts
-					],
 					'debugging'               => [
 						'log'                    => DebugLogHelper::getContents(),
-						'hasSiteHealthInstalled' => $hasSiteHealthInstalled,
-						'siteHealthUrl'          => ( $hasSiteHealthInstalled )
-							? admin_url( 'site-health.php?tab=debug' )
-							: admin_url( 'plugin-install.php?s=health+check&tab=search&type=term' )
+						'siteHealthUrl'          => admin_url( 'site-health.php?tab=debug' ),
 					]
 				] );
 				break;

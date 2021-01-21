@@ -4,6 +4,7 @@ namespace WordProofTimestamp\includes\Controller;
 
 use WordProofTimestamp\includes\AutomaticHelper;
 use WordProofTimestamp\includes\OptionsHelper;
+use WordProofTimestamp\includes\PostHelper;
 use WordProofTimestamp\includes\PostMetaHelper;
 
 class AutomaticHooksController {
@@ -17,6 +18,7 @@ class AutomaticHooksController {
 		add_action( 'wp_ajax_wordproof_get_articles', [ $this, 'getArticles' ] );
 		add_action( 'wp_ajax_wordproof_get_refreshed_balance', [ $this, 'getNewBalance' ] );
 		add_action( 'wp_ajax_wordproof_get_post_data', [ $this, 'getPostData' ] );
+		add_action( 'wp_ajax_wordproof_get_unprotected_posts', [ $this, 'getUnprotectedPosts' ] );
 
         if ( OptionsHelper::isWSFYActive() ) {
 			$this->setUpdateHooks();
@@ -43,7 +45,7 @@ class AutomaticHooksController {
 		if ( !isset( $_REQUEST ) ) {
 			return;
 		}
-		
+
 		if (!isset($_REQUEST['post_id'])) {
             return;
         }
@@ -73,19 +75,34 @@ class AutomaticHooksController {
 
 	public function getPostData() {
 		check_ajax_referer( 'wordproof', 'security' );
-        
+
         if ( !isset( $_REQUEST ) ) {
             return;
         }
-        
+
         if (!isset($_REQUEST['post_id'])) {
             return;
         }
-		
+
 		$postId     = intval( sanitize_text_field( wp_unslash( $_REQUEST['post_id'] ) ) );
 		$postData = PostMetaHelper::getPostData( $postId );
 		$meta     = PostMetaHelper::getPostMeta( $postId, [ 'date', 'blockchain' ] );
 		echo json_encode( [ 'post' => $postData, 'meta' => $meta ] );
+		die();
+	}
+
+	/**
+	 * Returns post ids without the WordPress meta field, per post type
+	 */
+	public function getUnprotectedPosts() {
+		check_ajax_referer( 'wordproof', 'security' );
+
+		$postTypes = [];
+		foreach ( get_post_types( [ 'public' => true ] ) as $postType ) {
+			$postTypes[$postType] = PostHelper::getUnprotectedPosts($postType, true);
+		}
+
+		echo json_encode( $postTypes );
 		die();
 	}
 

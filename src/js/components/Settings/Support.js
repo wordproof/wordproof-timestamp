@@ -40,16 +40,10 @@ export default class Support extends Component {
                 <h3>What to send along</h3>
 
                 <p>To help you, we need some information about your system.
-                    {(wordproofSettings.debugging.hasSiteHealthInstalled) && <span>
-                        Please copy your <a
-                        href={wordproofSettings.debugging.siteHealthUrl} target="_blank" rel="noopener noreferrer">relevant site info
-                    </a> and include the log below.
-                    </span>}
-                    {(!wordproofSettings.debugging.hasSiteHealthInstalled) && <span>
-                        Please install the official WordPress Health Check plugin <a
-                        href={wordproofSettings.debugging.siteHealthUrl} target="_blank" rel="noopener noreferrer">using this link</a>,
-                        navigate to &apos;Tools &gt; Site Health&apos; and copy the information underneath &apos;Info&apos;.
-                    </span>}
+                    <span>
+                        Please copy your <a href={wordproofSettings.debugging.siteHealthUrl} target="_blank"
+                                            rel="noopener noreferrer">relevant site info</a> and include the log below.
+                    </span>
                 </p>
 
                 <textarea ref={this.textRef} readOnly={true} onClick={() => this.selectText()} rows={`10`} cols={`100`}

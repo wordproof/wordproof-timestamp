@@ -46,7 +46,7 @@ class PostColumnController {
 			return $hidden;
 		}
 
-		$show = array_merge(OptionsHelper::getWSFYField( 'allowed_post_types' ), $defaultShow);
+		$show = array_merge(OptionsHelper::getWSFY( [],'allowed_post_types' ), $defaultShow);
 		$registered = array_values( get_post_types( [ 'public' => true ] ) );
 		$defaultHidden = array_diff($registered, $show);
 
@@ -63,7 +63,7 @@ class PostColumnController {
 		if ( ! isset( $_REQUEST ) ) {
 			return;
 		}
-        
+
         if ( ! isset( $_REQUEST['post_id'] ) ) {
             return;
         }
@@ -77,11 +77,11 @@ class PostColumnController {
 
 	public function retryWebhook() {
 		check_ajax_referer( 'wordproof', 'security' );
-        
+
         if ( ! isset( $_REQUEST['post_id'] ) ) {
             return;
         }
-		
+
 		$postId     = intval( sanitize_text_field( wp_unslash($_REQUEST['post_id'] )) );
 		$controller = new AutomaticHelper( $postId );
 		$result     = $controller->retryWebhook();

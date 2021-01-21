@@ -16,8 +16,9 @@ export default class Settings extends Component {
             sendTimestampsWithOrder: wordproofSettings.sendTimestampsWithOrder,
             timestampsOrderText: wordproofSettings.timestampsOrderText,
             hideCertificateHome: wordproofSettings.options['hide_certificate_home'],
-            hideCertificateAll: wordproofSettings.options['hide_certificate_all'],
-            hideAdvanced: true
+            hideCertificatePostTypes: wordproofSettings.options['hide_certificate_post_types'],
+            hideAdvanced: true,
+            registeredPostTypes: Object.values(wordproofSettings.registeredPostTypes),
         }
     }
 
@@ -68,6 +69,25 @@ export default class Settings extends Component {
                 />
 
                 {this.renderAdditionalSettings()}
+
+
+                {!this.state.hideAdvanced && (
+                    <div className={`form-group`}>
+                        <label htmlFor="" className="label">Hide certificate for the following post types</label>
+                        {this.state.registeredPostTypes.map((postType) => {
+                            return <div key={postType}>
+                                <input key={postType} type="checkbox" value={postType}
+                                       name={`wordproof_settings[hide_certificate_post_types][${postType}]`}
+                                       id={`wordproof_settings[hide_certificate_post_types][${postType}]`}
+                                       defaultChecked={this.state.hideCertificatePostTypes.includes(postType)}/>
+                                <label
+                                    htmlFor={`wordproof_settings[hide_certificate_post_types][${postType}]`}>{postType}</label>
+                            </div>
+                        })}
+                        <input type="hidden" value="" name={`wordproof_settings[hide_certificate_post_types][]`}/>
+                    </div>
+                }
+
 
                 {!this.state.hideAdvanced && (
                     <SettingsRadioButtons

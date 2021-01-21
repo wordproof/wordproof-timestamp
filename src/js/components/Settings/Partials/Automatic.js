@@ -30,7 +30,7 @@ export default class Automatic extends Component {
                 </div>
 
                 <div className={`form-group`}>
-                    <label htmlFor="" className="label">Post Types to timestamp automatically</label>
+                    <label htmlFor="" className="label">Post types to timestamp automatically</label>
 
                     {this.state.registeredPostTypes.map((value) => {
                         return <div key={value}>
@@ -41,6 +41,8 @@ export default class Automatic extends Component {
                             <label htmlFor={`wordproof_settings[allowed_post_types][${value}]`}>{value}</label>
                         </div>
                     })}
+                    <input type="hidden" value="" name={`wordproof_settings[allowed_post_types][]`} />
+
                 </div>
             </>
         )

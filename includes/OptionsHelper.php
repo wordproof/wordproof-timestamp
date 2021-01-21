@@ -9,38 +9,47 @@ class OptionsHelper {
 	public static $optionOAuth = 'oauth';
 
 	public static $options = [
-		'network'                    => [ 'type' => 'text' ],
-		'certificate_text'           => [
+		'network'                     => [ 'type' => 'text' ],
+		'certificate_text'            => [
 			'type'    => 'text',
 			'default' => 'View this content\'s WordProof Timestamp certificate'
 		],
-		'certificate_dom_selector'   => [ 'type' => 'text' ],
-		'custom_domain'              => [ 'type' => 'text', 'default' => false ],
-		'send_timestamps_with_order' => [ 'type' => 'text' ],
-		'timestamps_order_text'      => [ 'type' => 'text' ],
-		'show_info_link'             => [ 'type' => 'html' ],
-		'hide_post_column'           => [ 'type' => 'bool' ],
-		'hide_certificate_home'      => [ 'type' => 'bool' ],
-		'hide_certificate_all'       => [ 'type' => 'bool' ],
-		'wsfy'                       => [
-			'site_id'            => [ 'type' => 'int' ],
-			'show_revisions'     => [ 'type' => 'bool' ],
-			'allowed_post_types' => [ 'type' => 'text' ],
+		'certificate_dom_selector'    => [ 'type' => 'text' ],
+		'custom_domain'               => [
+			'type'    => 'text',
+			'default' => false
 		],
-		'oauth'                      => [
+		'send_timestamps_with_order'  => [ 'type' => 'text' ],
+		'timestamps_order_text'       => [ 'type' => 'text' ],
+		'show_info_link'              => [ 'type' => 'html' ],
+		'hide_post_column'            => [ 'type' => 'bool' ],
+		'hide_certificate_home'       => [ 'type' => 'bool' ],
+		'hide_certificate_post_types' => [ 'type' => 'text', 'default' => [] ],
+		'wsfy'                        => [
+			'site_id'            => [ 'type' => 'int' ],
+			'show_revisions'     => [
+				'type'    => 'bool',
+				'default' => true
+			],
+			'allowed_post_types' => [
+				'type'    => 'text',
+				'default' => [ 'post', 'page' ]
+			],
+		],
+		'oauth'                       => [
 			'access_token' => [ 'type' => 'text' ],
 			'token_id'     => [ 'type' => 'text' ],
 		],
-		'wsfy_is_active'             => [ 'type' => 'bool' ],
-		'wallet_connected'           => [ 'type' => 'bool' ],
-		'accountname'                => [ 'type' => 'text' ],
-		'balance'                    => [ 'type' => 'text' ],
+		'wsfy_is_active'              => [ 'type' => 'bool' ],
+		'wallet_connected'            => [ 'type' => 'bool' ],
+		'accountname'                 => [ 'type' => 'text' ],
+		'balance'                     => [ 'type' => 'text' ],
 	];
 
 	public static function all(): array {
 		return [
-			'hide_certificate_home' => self::get( 'hide_certificate_home' ),
-			'hide_certificate_all'  => self::get( 'hide_certificate_all' ),
+			'hide_certificate_home'       => self::get( 'hide_certificate_home' ),
+			'hide_certificate_post_types' => self::get( 'hide_certificate_post_types' ),
 		];
 	}
 
@@ -53,15 +62,19 @@ class OptionsHelper {
 		$value  = get_option( self::$prefix . $key, null );
 
 		switch ( $option['type'] ) {
-			case 'bool':
-				return boolval($value);
+			case 'bool': //todo get default
+				return boolval( $value );
 			case 'text':
-				if (!empty($value))
-					return stripslashes($value);
+				if (is_array($value)) {
+					return map_deep( array_values($value), 'stripslashes' );
+				}
 
+				if ( ! empty( $value ) ) {
+					return stripslashes( $value );
+				}
 				break;
 			case 'int':
-				return intval($value);
+				return intval( $value );
 			default:
 				break;
 		}
@@ -104,9 +117,13 @@ class OptionsHelper {
 		return get_option( self::$prefix . 'show_info_link', $default );
 	}
 
-	public static function getWSFY( $excludes = [] ) {
+	public static function getWSFY( $excludes = [], $field = null ) {
 		$options = get_option( self::$prefix . self::$optionWSFY, [] );
 		$options = self::prepareWSFY( $options );
+
+		if ( isset($field) && isset( $options[$field] ) ) {
+			return $options[$field];
+		}
 
 		foreach ( $excludes as $exclude ) {
 			unset( $options[ $exclude ] );
@@ -123,15 +140,6 @@ class OptionsHelper {
 		}
 
 		return (object) $options;
-	}
-
-	public static function getWSFYField( $field ) {
-		$options = self::getWSFY();
-		if ( isset( $options->$field ) ) {
-			return $options->$field;
-		}
-
-		return null;
 	}
 
 	public static function isWSFYActive() {
@@ -203,7 +211,7 @@ class OptionsHelper {
 
 	private static function sanitizeData( $value, $type ) {
 		if ( is_array( $value ) ) {
-			return array_map( [ 'self', 'sanitize' ], $value );
+			return array_map( [ 'self', 'sanitize' ], array_values($value) );
 		} else {
 			return self::sanitize( $value, $type );
 		}

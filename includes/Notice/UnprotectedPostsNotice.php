@@ -41,8 +41,9 @@ class UnprotectedPostsNotice extends Notice {
 			return;
 		}
 
-		$unprotected_count = PostHelper::getUnprotectedPostCount();
-		$this->notice['message'] = 'It looks like ' . $unprotected_count . ' of your posts, attachments and/or products are <strong>unprotected</strong>.';
+		$unprotected_count = PostHelper::getTotalUnprotectedPostCount();
+		$this->notice['message'] = 'It looks like ' . $unprotected_count . ' of your posts, attachments and other posts types are <strong>unprotected</strong>.';
+
 		if ( $unprotected_count > 0 ) {
 			$this->handle();
 		}

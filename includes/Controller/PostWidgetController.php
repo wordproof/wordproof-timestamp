@@ -56,6 +56,6 @@ class PostWidgetController {
 	public static function willBeAutoStamped() {
 		global $post;
 
-		return in_array( $post->post_type, OptionsHelper::getWSFYField( 'allowed_post_types' ) );
+		return in_array( $post->post_type, OptionsHelper::getWSFY( [], 'allowed_post_types' ) );
 	}
 }

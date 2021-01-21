@@ -70,20 +70,24 @@ export default class Settings extends Component {
 
                 {this.renderAdditionalSettings()}
 
-                <div className={`form-group`}>
-                    <label htmlFor="" className="label">Hide certificate for the following post types</label>
 
-                    {this.state.registeredPostTypes.map((postType) => {
-                        return <div key={postType}>
-                            <input key={postType} type="checkbox" value={postType}
-                                   name={`wordproof_settings[hide_certificate_post_types][${postType}]`}
-                                   id={`wordproof_settings[hide_certificate_post_types][${postType}]`}
-                                   defaultChecked={this.state.hideCertificatePostTypes.includes(postType)}/>
-                            <label htmlFor={`wordproof_settings[hide_certificate_post_types][${postType}]`}>{postType}</label>
-                        </div>
-                    })}
-                    <input type="hidden" value="" name={`wordproof_settings[hide_certificate_post_types][]`} />
-                </div>
+                {!this.state.hideAdvanced && (
+                    <div className={`form-group`}>
+                        <label htmlFor="" className="label">Hide certificate for the following post types</label>
+                        {this.state.registeredPostTypes.map((postType) => {
+                            return <div key={postType}>
+                                <input key={postType} type="checkbox" value={postType}
+                                       name={`wordproof_settings[hide_certificate_post_types][${postType}]`}
+                                       id={`wordproof_settings[hide_certificate_post_types][${postType}]`}
+                                       defaultChecked={this.state.hideCertificatePostTypes.includes(postType)}/>
+                                <label
+                                    htmlFor={`wordproof_settings[hide_certificate_post_types][${postType}]`}>{postType}</label>
+                            </div>
+                        })}
+                        <input type="hidden" value="" name={`wordproof_settings[hide_certificate_post_types][]`}/>
+                    </div>
+                }
+
 
                 {!this.state.hideAdvanced && (
                     <SettingsRadioButtons

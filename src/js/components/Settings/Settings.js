@@ -86,8 +86,7 @@ export default class Settings extends Component {
                         })}
                         <input type="hidden" value="" name={`wordproof_settings[hide_certificate_post_types][]`}/>
                     </div>
-                }
-
+                )}
 
                 {!this.state.hideAdvanced && (
                     <SettingsRadioButtons

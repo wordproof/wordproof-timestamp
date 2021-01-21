@@ -129,11 +129,9 @@ class AdminController {
 				wp_enqueue_style( 'wordproof.settings.admin.css', WORDPROOF_URI_CSS . '/settings.css', array(),
 					$assetVersion );
 
-				$hasSiteHealthInstalled = version_compare( get_bloginfo( 'version' ), '5.2', '>=' );
-
 				wp_localize_script( 'wordproof.settings.admin.js', 'wordproofSettings', [
 					'options'                 => OptionsHelper::all(),
-					'certificateText'         => OptionsHelper::get('certificate_text'),
+					'certificateText'         => OptionsHelper::get( 'certificate_text' ),
 					'certificateDOMSelector'  => OptionsHelper::getCertificateDomSelector(),
 					'customDomain'            => OptionsHelper::getCustomDomain(),
 					'showInfoLink'            => OptionsHelper::getShowInfoLink(),
@@ -164,20 +162,21 @@ class AdminController {
 						'security' => wp_create_nonce( 'wordproof' ),
 					],
 					'debugging'               => [
-						'log'                    => DebugLogHelper::getContents(),
-						'siteHealthUrl'          => admin_url( 'site-health.php?tab=debug' ),
+						'log'           => DebugLogHelper::getContents(),
+						'siteHealthUrl' => admin_url( 'site-health.php?tab=debug' ),
 					]
 				] );
 				break;
 			default:
 				break;
+
 		}
 
 		wp_localize_script( 'wordproof.admin.js', 'wordproofData', array(
 			'ajaxURL'      => admin_url( 'admin-ajax.php' ),
 			'ajaxSecurity' => wp_create_nonce( 'wordproof' ),
 			'permalink'    => ( ! empty( $post->ID ) ) ? DomainHelper::getPermalink( $post->ID ) : false,
-			'network'      => OptionsHelper::get('network'),
+			'network'      => OptionsHelper::get( 'network' ),
 			'balance'      => OptionsHelper::getBalanceCache(),
 			'urls'         => [
 				'dashboard'       => admin_url( 'admin.php?page=wordproof-dashboard' ),
@@ -201,6 +200,7 @@ class AdminController {
 			'ajaxURL'      => admin_url( 'admin-ajax.php' ),
 			'ajaxSecurity' => wp_create_nonce( 'wordproof' ),
 		) );
+
 	}
 
 

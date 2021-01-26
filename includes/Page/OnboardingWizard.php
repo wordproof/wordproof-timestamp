@@ -27,7 +27,7 @@ class OnboardingWizard {
 	}
 
 	public function generateSettingsPage() {
-        $assetVersion = (isset($_ENV['app_env']) && $_ENV['app_env'] === 'local') ? null : WORDPROOF_VERSION;
+        $assetVersion = (isset($_ENV['APP_ENV']) && $_ENV['APP_ENV'] === 'local') ? null : WORDPROOF_VERSION;
 
 		wp_enqueue_style( 'wordproof.wizard.css', WORDPROOF_URI_CSS . '/wizard.css', array(), $assetVersion );
 		wp_enqueue_script( 'wordproof.wizard.js', WORDPROOF_URI_JS . '/wizard.js', array(), $assetVersion, true );

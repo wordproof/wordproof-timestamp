@@ -83,7 +83,7 @@ class AdminController {
 	public function loadAdminAssets( $hookSuffix ) {
 		global $post;
 
-		$assetVersion = ( isset( $_ENV['app_env'] ) && $_ENV['app_env'] === 'local' ) ? null : WORDPROOF_VERSION;
+		$assetVersion = ( isset( $_ENV['APP_ENV'] ) && $_ENV['APP_ENV'] === 'local' ) ? null : WORDPROOF_VERSION;
 
 		wp_enqueue_style( 'wordproof.admin.css', WORDPROOF_URI_CSS . '/admin.css', array(), $assetVersion );
 		wp_enqueue_script( 'wordproof.admin.js', WORDPROOF_URI_JS . '/admin.js', array(), $assetVersion, true );

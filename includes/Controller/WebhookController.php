@@ -38,16 +38,22 @@ class WebhookController {
             return false;
 		}
 
+		if (isset($_ENV['DISABLE_WEBHOOK_RESPONSES'])) {
+			if (boolval($_ENV['DISABLE_WEBHOOK_RESPONSES'])) {
+				return false;
+			}
+		}
+
         // Disable warning for nonce on webhook
         // phpcs:disable
         if ( ! isset( $_REQUEST['token'] ) ) {
             $this->response = 'no_request_token_present';
             return false;
         }
-        
+
         $token = sanitize_text_field( wp_unslash( $_REQUEST['token'] ) );
         // phpcs:enable
-        
+
 		$oauth = OptionsHelper::getOAuth( [] );
 
 		if ( ! isset( $oauth->access_token ) ) {

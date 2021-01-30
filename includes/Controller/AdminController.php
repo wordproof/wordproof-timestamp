@@ -153,7 +153,7 @@ class AdminController {
 						'bulk'            => admin_url( 'admin.php?page=wordproof-bulk' ),
 						'timestamps'      => admin_url( 'admin.php?page=wordproof-timestamps' ),
 						'upgrade'         => admin_url( 'admin.php?page=wordproof-upgrade' ),
-						'upgradeExternal' => WORDPROOF_MY_URI . 'sites/upgrade',
+						'upgradeExternal' => WORDPROOF_MY_URI . 'subscription',
 						'support'         => admin_url( 'admin.php?page=wordproof-support' ),
 						'pluginDir'       => WORDPROOF_URI,
 					],
@@ -188,7 +188,7 @@ class AdminController {
 				'pagesOverview'   => admin_url( 'edit.php?post_type=page' ),
 				'site'            => get_site_url(),
 				'ajax'            => admin_url( 'admin-ajax.php' ),
-				'upgradeExternal' => WORDPROOF_MY_URI . 'sites/upgrade',
+				'upgradeExternal' => WORDPROOF_MY_URI . 'subscription',
 			],
 			'images'       => [
 				'wordpress' => WORDPROOF_URI_IMAGES . '/wordpress-logo.png',

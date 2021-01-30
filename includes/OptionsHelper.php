@@ -63,7 +63,7 @@ class OptionsHelper {
 
 		switch ( $option['type'] ) {
 			case 'bool': //todo get default
-				return boolval( $value );
+				return wp_validate_boolean( $value );
 			case 'text':
 				if (is_array($value)) {
 					return map_deep( array_values($value), 'stripslashes' );

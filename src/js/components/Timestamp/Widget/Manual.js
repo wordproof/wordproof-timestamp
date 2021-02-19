@@ -4,7 +4,6 @@ import {withCookies, Cookies} from 'react-cookie';
 import ConnectionWidget from '../../ConnectionWidget/ConnectionWidget';
 import initWallet from '../../../lib/wallet';
 import timestamp from '../../../lib/timestamp';
-import getBonus from '../../../lib/bonus';
 
 class Manual extends Component {
 
@@ -40,7 +39,6 @@ class Manual extends Component {
   timestamp = async () => {
     this.setState({timestampStatus: 'connecting', buttonsDisabled: true});
     const wallet = await this.getWallet();
-    // await this.checkBonus(wallet.auth.accountName, wordproofData.network);
 
     if (!wallet.connected) {
       await wallet.connect()
@@ -139,32 +137,8 @@ class Manual extends Component {
     .catch(error => console.error(error));
   }
 
-  checkBonus = async (accountName, chain) => {
-    const bonus = await getBonus(accountName, chain);
-    if (bonus.status === 'success') {
-      console.log('You received your bonus');
-    } else if (bonus.status === 'failed') {
-      console.log('Something went wrong');
-    }
-  }
-
-  setBalance = async (accountName) => {
-    let result = await fetch(wordproofData.ajaxURL, {
-      method: "POST",
-      headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
-      body:
-      'action=wordproof_get_balance' +
-      '&security=' + wordproofData.ajaxSecurity +
-      '&accountName=' + accountName,
-    }).then((response) => {
-      return response.json();
-    })
-    .catch(error => console.error(error));
-
-    if (result.success) {
-      const word = result.balance.replace('.0000', '');
-      this.setState({balance: word});
-    }
+  setBalance = async () => {
+      this.setState({balance: '~'});
   }
 
   disconnect = async () => {

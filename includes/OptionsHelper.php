@@ -44,6 +44,7 @@ class OptionsHelper {
 		'wallet_connected'            => [ 'type' => 'bool' ],
 		'accountname'                 => [ 'type' => 'text' ],
 		'balance'                     => [ 'type' => 'text' ],
+        'latest_migration'            => [ "type" => 'text' ]
 	];
 
 	public static function all(): array {

@@ -13,7 +13,8 @@
         "typisttech/imposter-plugin": "^0.6.2",
         "symfony/polyfill-ctype": "1.20",
         "symfony/polyfill-mbstring": "1.20",
-        "symfony/polyfill-php80": "1.20"
+        "symfony/polyfill-php80": "1.20",
+        "composer/composer": "^2.0"
     },
     "license": "GPLv3",
     "authors": [
@@ -37,5 +38,16 @@
             "namespace": "WordProofTimestamp\\Vendor",
             "excludes": []
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WordProofTimestamp\\Includes\\": "includes/",
+            "WordProofTimestamp\\Migrations\\": "migrations/"
+        }
+    },
+    "scripts": {
+        "make:migration": [
+            "WordProofTimestamp\\Includes\\Console\\MakeMigration::execute"
+        ]
     }
 }

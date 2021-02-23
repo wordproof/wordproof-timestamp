@@ -11,6 +11,7 @@ use WordProofTimestamp\includes\Controller\ECommerceController;
 use WordProofTimestamp\includes\Controller\WebhookController;
 use WordProofTimestamp\includes\Controller\TimestampController;
 
+use WordProofTimestamp\includes\MigrationHelper;
 use \WP_Error as WP_Error;
 
 /**
@@ -19,7 +20,10 @@ use \WP_Error as WP_Error;
 function init() {
     add_action('plugins_loaded', __NAMESPACE__ . "\\setup");
     add_action('activated_plugin', __NAMESPACE__ . "\\activate");
-	do_action( 'wordproof_scaffold_init' );
+    
+    new MigrationHelper();
+    
+    do_action( 'wordproof_scaffold_init' );
 }
 
 /**

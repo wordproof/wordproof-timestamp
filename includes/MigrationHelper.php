@@ -8,7 +8,8 @@ use DirectoryIterator;
 
 class MigrationHelper
 {
-    private $migrationFiles = [];
+    private $migrationFiles = array();
+    private $latestSavedMigration = array();
     
     public function __construct()
     {
@@ -25,36 +26,46 @@ class MigrationHelper
     {
         $this->fillMigrationFilesList();
         
-        $latestSavedMigration = OptionsHelper::get('latest_migration');
+        $this->latestSavedMigration = $this->getLatestSavedMigration(OptionsHelper::get('latest_migration'));
+    
+        $errors = array();
+        $latestMigrationName = "";
         
-        $latestMigration= $this->getLatestMigrationFile();
-        $latestMigrationFile = $latestMigration['fileName'] ?: "";
+        $actualMigrations = $this->getActualMigrations();
+        $this->loadFiles($actualMigrations);
         
-        if ($latestSavedMigration === $latestMigrationFile) {
-            return false;
+        foreach ($actualMigrations as $actualMigration) {
+            $migrationClass = "WordProofTimestamp\Migrations\\".$this->getMigrationClassName($actualMigration['fileName']);
+    
+            if (!class_exists($migrationClass)) {
+                $errors []= "Migration $migrationClass not found";
+                continue;
+            }
+    
+            $migration = (new $migrationClass());
+    
+            if ($migration->up()) {
+                $latestMigrationName = $actualMigration['fileName'];
+            } else {
+                $errors []= "Migration $migrationClass failed";
+            }
         }
         
-        $migrationClass = "WordProofTimestamp\Migrations\\".$this->getMigrationClassName($latestMigrationFile);
+        if ($latestMigrationName) OptionsHelper::set("latest_migration", $latestMigrationName);
         
-        if (!class_exists($migrationClass)) {
-            return false;
-        }
-        
-        $migration = (new $migrationClass());
-        
-        if ($migration->up()) {
-            OptionsHelper::set("latest_migration", $latestMigrationFile);
-            return true;
-        } else {
-            die("Wordproof Migration error");
-        }
+        if (!empty($errors)) echo implode("\n", $errors);
     }
     
+    /**
+     * Fill migrationFiles property with file list from migrations dir
+     * @return void
+     */
     private function fillMigrationFilesList()
     {
         if (!empty($this->migrationFiles)) {
             return;
         }
+        
         foreach(new DirectoryIterator(WORDPROOF_DIR_MIGRATIONS) as $migrationFile) {
             if (
                 !$migrationFile->isDot()
@@ -63,22 +74,48 @@ class MigrationHelper
             ) {
                 $this->migrationFiles []= array(
                     'fileName' => $migrationFile->getFilename(),
-                    'filePathName' => $migrationFile->getPathname()
+                    'filePathName' => $migrationFile->getPathname(),
+                    'time' => substr($migrationFile->getFilename(), 0, 12)
                 );
             }
         }
+        sort($this->migrationFiles);
     }
     
-    private function getLatestMigrationFile()
+    /**
+     * Find latest saved migration in migrationFiles property array
+     * @param string $latestMigrationFileName Filename of latest saved migration
+     * @return array
+     */
+    private function getLatestSavedMigration($latestMigrationFileName)
     {
-        asort($this->migrationFiles);
-        $latestMigration = array_pop($this->migrationFiles);
-        if (!empty($this->migrationFiles)) {
-            include $latestMigration['filePathName'];
+        $migration = [];
+        foreach ($this->migrationFiles as $migrationFile) {
+            if ($migrationFile['fileName'] === $latestMigrationFileName) {
+                $migration = $migrationFile;
+                break;
+            }
         }
-        return $latestMigration;
+        return $migration;
     }
     
+    
+    /**
+     * Get migrations that more fresh than last executed one
+     * @return array
+     */
+    private function getActualMigrations()
+    {
+        $latestSavedMigrationIndex = array_search($this->latestSavedMigration, $this->migrationFiles);
+        $offset = $latestSavedMigrationIndex === false ? 0 : $latestSavedMigrationIndex + 1;
+        return array_slice($this->migrationFiles, $offset, count($this->migrationFiles));
+    }
+    
+    /**
+     * Get class name from migration file name
+     * @param $filename
+     * @return string|string[]
+     */
     private function getMigrationClassName($filename)
     {
         preg_match("/[0-9]{12}_(.*)\.php/i", $filename, $className);
@@ -87,5 +124,17 @@ class MigrationHelper
         $className = str_replace("_", "", ucwords(strtolower($className), "\t_"));
         
         return $className;
+    }
+    
+    /**
+     * Include files from list
+     * @param $fileList
+     * @return void
+     */
+    private function loadFiles($fileList)
+    {
+        foreach ($fileList as $file) {
+            include $file['filePathName'];
+        }
     }
 }

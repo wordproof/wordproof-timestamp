@@ -69,7 +69,7 @@ class CertificateController {
 			$wsfyIsActive = OptionsHelper::isWSFYActive();
 			$wsfyOptions  = ( $wsfyIsActive ) ? OptionsHelper::getWSFY( [] ) : [];
 
-            $assetVersion = (isset($_ENV['app_env']) && $_ENV['app_env'] === 'local') ? null : WORDPROOF_VERSION;
+            $assetVersion = (isset($_ENV['APP_ENV']) && $_ENV['APP_ENV'] === 'local') ? null : WORDPROOF_VERSION;
 
             wp_enqueue_script( 'wordproof.frontend.js', WORDPROOF_URI_JS . '/frontend.js', [],
                 $assetVersion, true );

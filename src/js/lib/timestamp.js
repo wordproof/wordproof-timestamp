@@ -30,7 +30,6 @@ export default async function timestamp(wallet) {
     /**
      * The Post is timestamped
      */
-    console.log('Success', result);
     if (typeof result.processed !== 'undefined') {
       return saveTimestamp(postId, result.processed.id);
     }

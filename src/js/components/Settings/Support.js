@@ -26,7 +26,7 @@ export default class Support extends Component {
                     to help you out. The WordProof community is active in our Telegram groups, where we talk about
                     new features and help each other. Please join these groups for any support requests:</p>
                 <ul>
-                    <li><a href="https://wordproof.io/guide" target="_blank" rel="noopener noreferrer">How to:
+                    <li><a href="https://wordproof.com/guide" target="_blank" rel="noopener noreferrer">How to:
                         WordProof Timestamp Setup Guide</a></li>
                     <li><a href={'https://wordpress.org/support/plugin/wordproof-timestamp/'} target="_blank"
                            rel="noopener noreferrer">The WordPress support forum</a></li>
@@ -50,7 +50,7 @@ export default class Support extends Component {
                           defaultValue={wordproofSettings.debugging.log}></textarea>
 
                 <h3>Credits</h3>
-                <p><a href="https://wordproof.io/wordpress-plugin-wordproof/credits/" target="_blank"
+                <p><a href="wordproof.com/credits" target="_blank"
                       rel="noopener noreferrer">WordProof Timestamp plugin Credits</a></p>
             </Template>
         )

@@ -53,9 +53,18 @@ export default class Step2 extends Component {
                         this.props.nextStep();
 
                 } else {
+                    let errors = response.data.errors;
                     this.props.update(null, 'wsfy_is_active', false);
-                    if (showError) {
-                        this.setState({error: 'No connection could be established. Please re-check your Site Key.'})
+                    
+                    for (const prop in errors) {
+                        if (!showError && prop === 'authentication')
+                            return;
+
+                        if (prop === 'authentication') {
+                            this.setState({error: 'No connection could be established. Please re-check your Site Key.'});
+                        } else {
+                            this.setState({error: `${prop}: ${errors[prop]}`});
+                        }
                     }
                 }
             });
@@ -120,6 +129,7 @@ export default class Step2 extends Component {
                     update={this.saveSiteKey.bind(this)} initial={''}
                     error={this.state.error}/>
                 }
+                {(!this.state.hasKey) && <span className={'text-red-600 mt-4 inline-block'}>{ this.state.error }</span>}
 
                 {(this.state.hasKey && !this.state.connection) && <div>
                     <button

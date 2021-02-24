@@ -46,8 +46,7 @@ export default class ConnectionWidget extends Component {
     getText() {
         switch (this.props.status) {
             case 'success': {
-                const balance = (this.props.balance === null) ? '' : ' (' + this.props.balance + ')';
-                return {message: 'Connected to account', messageStrong: this.props.accountName + balance};
+                return {message: 'Connected to account', messageStrong: this.props.accountName};
             }
             case 'failed':
                 return {message: 'Failed to connect.', messageStrong: 'Please open Scatter.'};

@@ -62,7 +62,7 @@ export default class Settings extends Component {
                     update={this.updateState}
                     stateKey='hideCertificateHome'
                     initialValue={this.state.hideCertificateHome}
-                    label={'Hide the certificate link on the homepage'}
+                    label={'Hide the certificate link and certificate pop-up on the homepage'}
                     slug={'hide_certificate_home'}
                     description={''}
                     options={{1: 'Yes', 0: 'No'}}
@@ -73,7 +73,7 @@ export default class Settings extends Component {
 
                 {!this.state.hideAdvanced && (
                     <div className={`form-group`}>
-                        <label htmlFor="" className="label">Hide certificate for the following post types</label>
+                        <label htmlFor="" className="label">Hide certificate link and certificate pop-up for the following post types</label>
                         {this.state.registeredPostTypes.map((postType) => {
                             return <div key={postType}>
                                 <input key={postType} type="checkbox" value={postType}

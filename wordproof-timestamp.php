@@ -70,6 +70,9 @@ spl_autoload_register(function ($class = '') {
     if (!strstr($class, 'WordProofTimestamp')) {
         return;
     }
+    if (strstr($class, 'WordProofTimestamp\Migrations')) {
+        return;
+    }
     $result = str_replace('WordProofTimestamp\\', '', $class);
     $result = str_replace('\\', '/', $result);
     require $result . '.php';

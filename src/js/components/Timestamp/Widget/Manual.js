@@ -49,7 +49,6 @@ class Manual extends Component {
 
     timestamp(wallet).then(response => {
       try {
-        console.log(response);
         let object = response.json;
         console.log(object);
 
@@ -58,7 +57,7 @@ class Manual extends Component {
           console.log(object.error.what)
           throw object.error.what;
         }
-
+  
           this.setState({
             timestampStatus: 'success',
             timestampCertificateLink: response.data.url
@@ -92,7 +91,6 @@ class Manual extends Component {
 
         this.registerWalletConnection();
         this.registerAccountname(wallet.accountInfo.account_name);
-        this.setBalance(wallet.accountInfo.account_name);
 
         this.setState({
           wallet: wallet,
@@ -135,10 +133,6 @@ class Manual extends Component {
       return response.json();
     })
     .catch(error => console.error(error));
-  }
-
-  setBalance = async () => {
-      this.setState({balance: '~'});
   }
 
   disconnect = async () => {

@@ -40,38 +40,29 @@ class Manual extends Component {
         this.setState({timestampStatus: 'connecting', buttonsDisabled: true});
         const wallet = await this.getWallet();
 
-        if (!wallet.connected) {
-            await wallet.connect()
-        }
-        if (!wallet.authenticated) {
-            await wallet.login()
-        }
+        if (!wallet.connected)
+            await wallet.connect();
 
-        timestamp(wallet).then(response => {
-            try {
-                let object = response.json;
-                console.log(object);
+        if (!wallet.authenticated)
+            await wallet.login();
 
-                if (object.error) {
-                    console.log(object.error)
-                    console.log(object.error.what)
-                    throw object.error.what;
-                }
-
+        try {
+            timestamp(wallet).then(response => response.json()).then(response => {
                 this.setState({
                     timestampStatus: 'success',
                     timestampCertificateLink: response.data.url
                 });
-
-            } catch (e) {
-                this.setState({
-                    buttonsDisabled: false,
-                    widgetStatus: 'success',
-                    timestampStatus: null,
-                    errorMessage: e
-                });
-            }
-        });
+            }).catch((error) => {
+                throw error;
+            });
+        } catch (error) {
+            this.setState({
+                buttonsDisabled: false,
+                widgetStatus: 'success',
+                timestampStatus: null,
+                errorMessage: error
+            });
+        }
     }
 
     getWallet = async ($terminateBeforeConnect = false) => {
@@ -182,8 +173,8 @@ class Manual extends Component {
                     :
                     <div className="timestamped">
                         <p>Your post is timestamped! <a rel="noopener noreferrer" target="_blank"
-                                                        href={this.state.timestampCertificateLink}>View your
-                            certificate</a>.</p>
+                                                        href={this.state.timestampCertificateLink}> View
+                            your certificate</a>.</p>
                     </div>
                 }
 

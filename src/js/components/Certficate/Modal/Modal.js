@@ -152,7 +152,8 @@ class Modal extends React.Component {
         return (
             <root.div>
                 <div
-                    className={`modal ${(!this.state.active) ? 'opacity-0 pointer-events-none' : ''} fixed w-full h-full top-0 left-0 flex items-center justify-center`}>
+                    className={`modal ${(!this.state.active) ? 'opacity-0 pointer-events-none' : ''} fixed w-full h-full top-0 left-0 items-center justify-center`}
+                    style={{display: (this.state.active) ? 'flex' : 'none'}}>
                     <div className="modal-overlay absolute w-full h-full bg-gray-900 opacity-50" onClick={this.close}
                          aria-hidden={true}>
                     </div>

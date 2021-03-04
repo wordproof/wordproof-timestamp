@@ -14,7 +14,6 @@ class TimestampController {
 	}
 
 	public static function saveTimestamp( $postId, $chain, $transactionId, $remote = false ) {
-
 		$metaFields = HashController::getFields( $postId );
 
 		$meta               = $metaFields['properties'];
@@ -26,13 +25,12 @@ class TimestampController {
 
 		PostMetaHelper::savePostMeta( $postId, $meta, $remote );
 
-		echo json_encode( array(
+		return array(
 			'success' => true,
 			'data'    => array(
 				'url' => DomainHelper::getPermalink( $postId ) . '#wordproof'
 			),
-		) );
-		exit;
+		);
 	}
 
 	public function saveTimestampAjax() {
@@ -45,14 +43,7 @@ class TimestampController {
 		$chain         = OptionsHelper::get('network');
 		$transactionId = sanitize_text_field( wp_unslash( ($_REQUEST['transaction_id']) ? $_REQUEST['transaction_id'] : '' ) );
 
-		self::saveTimestamp( $postId, $chain, $transactionId );
-
-		echo json_encode( array(
-			'success' => true,
-			'data'    => array(
-				'url' => DomainHelper::getPermalink( $postId ) . '#wordproof'
-			),
-		) );
+		echo json_encode( self::saveTimestamp( $postId, $chain, $transactionId ) );
 		exit;
 	}
 

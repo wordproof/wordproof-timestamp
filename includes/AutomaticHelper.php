@@ -192,8 +192,7 @@ class AutomaticHelper
                     OptionsHelper::set('balance', 0);
                 }
 
-                TimestampController::saveTimestamp($this->post->ID, '', '', true);
-                break;
+                return TimestampController::saveTimestamp($this->post->ID, '', '', true);
             case 'retry_webhook':
             case 'validate_token':
             case 'get_articles':

@@ -31,3 +31,19 @@ jobs:
           asset_path: ${{github.workspace}}/${{ github.event.repository.name }}.zip
           asset_name: ${{ github.event.repository.name }}.zip
           asset_content_type: application/zip
+
+      - name: Send Telegram notification
+        if: ${{ failure() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          args: 💥 WordPress plugin; Something went wrong with release ${{ github.event.release.name }}. https://github.com/wordproof/myv2/actions/runs/${{ github.run_id }}
+
+      - name: Send Telegram notification
+        if: ${{ success() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          args: 🚀 WordPress plugin; ${{ github.event.release.name }} released!

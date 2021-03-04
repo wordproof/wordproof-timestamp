@@ -47,13 +47,12 @@ class Manual extends Component {
             await wallet.login();
 
         try {
-            timestamp(wallet).then(response => response.json()).then(response => {
+            timestamp(wallet).then(async (response) => {
+                let json = await response.json();
                 this.setState({
                     timestampStatus: 'success',
-                    timestampCertificateLink: response.data.url
+                    timestampCertificateLink: json.data.url
                 });
-            }).catch((error) => {
-                throw error;
             });
         } catch (error) {
             this.setState({
@@ -79,8 +78,6 @@ class Manual extends Component {
                 if (!wallet.authenticated) {
                     await wallet.login();
                 }
-
-                this.registerWalletConnection();
 
                 this.setState({
                     wallet: wallet,

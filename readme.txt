@@ -2,9 +2,9 @@
 Contributors: wordproof
 Tags: blockchain, timestamp, eosio, eos, telos, web30, copyright, scatter, decentralisation, proof
 Requires at least: 4.6
-Tested up to: 5.6
+Tested up to: 5.7
 Requires PHP: 7.1.3
-Stable tag: 2.9.8
+Stable tag: 2.9.9
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -80,6 +80,12 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 4. Change the settings in the WordProof Timestamp plugin options panel.
 
 == Changelog ==
+= 2.9.9 =
+*Release date: March 4th, 2021*
+* Fix the cron to stop running after the first timestamp, thanks to @dnwjn. Relevant PR: https://github.com/wordproof/wordproof-timestamp/pull/37
+* Added support for WordPress 5.7
+* Fixed bug with Telos blockchain
+
 = 2.9.8 =
 *Release date: February 27th, 2021*
 * Fix for Google Lightspeed CLS score

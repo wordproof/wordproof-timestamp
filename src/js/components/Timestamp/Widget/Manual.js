@@ -81,7 +81,6 @@ class Manual extends Component {
                 }
 
                 this.registerWalletConnection();
-                this.registerAccountname(wallet.accountInfo.account_name);
 
                 this.setState({
                     wallet: wallet,
@@ -100,32 +99,6 @@ class Manual extends Component {
         return this.state.wallet;
     }
 
-    registerWalletConnection = () => {
-        return fetch(wordproofData.ajaxURL, {
-            method: "POST",
-            headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
-            body: 'action=wordproof_wallet_connection&security=' + wordproofData.ajaxSecurity,
-        }).then((response) => {
-            return response.json();
-        })
-            .catch(error => console.error(error));
-    }
-
-    registerAccountname = (accountName) => {
-        return fetch(wordproofData.ajaxURL, {
-            method: "POST",
-            headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
-            body:
-                'action=wordproof_save_option' +
-                '&security=' + wordproofData.ajaxSecurity +
-                '&option=' + 'wordproof_accountname' +
-                '&value=' + accountName,
-        }).then((response) => {
-            return response.json();
-        })
-            .catch(error => console.error(error));
-    }
-
     disconnect = async () => {
         this.setState({buttonsDisabled: true});
         const wallet = await this.getWallet();
@@ -138,8 +111,7 @@ class Manual extends Component {
         } catch (error) {
             console.log(error)
         }
-        console.log('done');
-
+        console.log('Wallet disconnected');
     }
 
     connect = async () => {

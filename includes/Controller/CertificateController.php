@@ -49,7 +49,11 @@ class CertificateController {
 	}
 
 	public function addLink( $content ) {
-		if ( $this->showCertificate() && empty( OptionsHelper::getCertificateDomSelector() ) ) {
+
+		global $post;
+		$hideLink = boolval(get_post_meta($post->ID, '_wordproof_hide_certificate', true));
+
+		if ( !$hideLink && $this->showCertificate() && empty( OptionsHelper::getCertificateDomSelector() ) ) {
 			$content .= '<div id="wordproof-certificate-link"></div>';
 		}
 

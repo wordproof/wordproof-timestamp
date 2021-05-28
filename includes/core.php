@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace WordProofTimestamp\Core;
 
@@ -14,11 +14,12 @@ use WordProofTimestamp\includes\Controller\TimestampController;
 use \WP_Error as WP_Error;
 
 /**
- * Initialize plugin 
+ * Initialize plugin
  */
 function init() {
     add_action('plugins_loaded', __NAMESPACE__ . "\\setup");
-    add_action('activated_plugin', __NAMESPACE__ . "\\activate");
+	add_action('activated_plugin', __NAMESPACE__ . "\\activate");
+	add_action('init', __NAMESPACE__ . "\\onInit");
 	do_action( 'wordproof_scaffold_init' );
 }
 
@@ -27,6 +28,21 @@ function init() {
  *
  * @return void
  */
+function onInit() {
+	$postTypes = ['post', 'page'];
+
+	foreach ($postTypes as $postType) {
+		register_post_meta( $postType, '_wordproof_hide_certificate', [
+			'show_in_rest' => true,
+			'single'       => true,
+			'type'         => 'boolean',
+			'auth_callback' => function() {
+				return current_user_can( 'edit_posts' );
+			}
+		] );
+	}
+}
+
 function setup() {
 
     new WebhookController();
@@ -49,7 +65,7 @@ function setup() {
  */
 function activate($plugin) {
     flush_rewrite_rules();
-    
+
     if ( isset($_REQUEST['_wpnonce']) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'activate-plugin_' . WORDPROOF_BASENAME ) ) {
         if ($plugin === WORDPROOF_BASENAME && !isset($_GET['activate-multi'])) {
             wp_safe_redirect(admin_url('admin.php?page=wordproof-getting-started'));

@@ -13,6 +13,7 @@ module.exports = {
     'wizard': './src/js/wizard.js',
     'getting-started': './src/js/gettingStarted.js',
     'polyfill': './src/js/polyfill.js',
+    'gutenberg': './src/js/gutenberg/post_meta.js',
   },
   output: {
     filename: '[name].js',

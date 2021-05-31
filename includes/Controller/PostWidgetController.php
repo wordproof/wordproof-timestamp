@@ -12,6 +12,17 @@ class PostWidgetController {
 		if ( current_user_can( 'manage_options' ) ) {
 			add_action( 'add_meta_boxes', [ $this, 'hook' ] );
 		}
+
+
+		add_action( 'enqueue_block_editor_assets', function () {
+			wp_enqueue_script(
+				'wordproof_gutenberg_post_meta',
+				WORDPROOF_URI_JS . '/gutenberg.js',
+				[ 'wp-edit-post' ],
+				false,
+				false
+			);
+		} );
 	}
 
 	public function hook() {

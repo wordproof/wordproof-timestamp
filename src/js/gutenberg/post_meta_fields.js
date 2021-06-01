@@ -8,6 +8,7 @@ const { ToggleControl, PanelRow } = wp.components;
 const WordProof_Post_Meta = ( { postType, postMeta, setPostMeta } ) => {
     if ( 'post' !== postType ) return null;  // Will only render component for post type 'post'
 
+    /* eslint-disable */
     return(
         <PluginDocumentSettingPanel title={ __( 'WordProof Post Settings', 'txtdomain') } icon="edit" initialOpen="false">
             <PanelRow>
@@ -19,6 +20,8 @@ const WordProof_Post_Meta = ( { postType, postMeta, setPostMeta } ) => {
             </PanelRow>
         </PluginDocumentSettingPanel>
     );
+    /* eslint-enable */
+
 }
 
 export default compose( [

@@ -97,12 +97,14 @@ class PostColumnController {
 
 	public function addColumnContent( $column_name ) {
 		global $post;
-		if ( $column_name == 'wordproof' ) {
-
-			$meta     = PostMetaHelper::getPostMeta( $post->ID, [ 'date', 'blockchain' ] );
-			$postData = PostMetaHelper::getPostData( $post );
-
-			echo '<div class="wordproof-timestamp-button" data-automate="' . json_encode( OptionsHelper::isWSFYActive() ) . '" data-post="' . urlencode( json_encode( $postData ) ) . '" data-meta="' . urlencode( json_encode( $meta ) ) . '"></div>';
+		if ( $column_name !== 'wordproof' ) {
+			return;
 		}
+
+		$meta     = PostMetaHelper::getPostMeta( $post->ID, [ 'date', 'blockchain' ] );
+		$postData = PostMetaHelper::getPostData( $post );
+
+		echo '<div class="wordproof-timestamp-button" data-automate="' . json_encode( OptionsHelper::isWSFYActive() ) . '" data-post="' . urlencode( json_encode( $postData ) ) . '" data-meta="' . urlencode( json_encode( $meta ) ) . '"></div>';
+		
 	}
 }

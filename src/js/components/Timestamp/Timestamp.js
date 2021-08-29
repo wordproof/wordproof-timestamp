@@ -26,9 +26,7 @@ export default class Timestamp extends Component {
 
         if (this.state.postId === null) {
             if (this.state.post && this.state.post.id) {
-                this.setState({postId: this.state.post.id}, () => {
-                    this.refreshPostData();
-                });
+                this.setState({postId: this.state.post.id}, () => {} );
             } else if ("wordproofPost" in window) {
                 this.setState({postId: wordproofPost.postId}, () => {
                     this.refreshPostData();

@@ -91,7 +91,7 @@ class CertificateController {
 				],
 				'modal'        => [
 					'uid'          => $post->ID,
-					'css'          => WORDPROOF_URI_CSS . '/frontend.css',
+					'css'          => WORDPROOF_URI_CSS . '/frontend.css' . ($assetVersion ? '?v=' . $assetVersion : ''),
 					'locale'       => get_locale(),
 					'lastModified' => get_the_modified_date( 'c', $post->ID ),
 				],

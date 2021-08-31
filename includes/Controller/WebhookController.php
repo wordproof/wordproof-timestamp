@@ -40,6 +40,7 @@ class WebhookController {
 
 		if (isset($_ENV['DISABLE_WEBHOOK_RESPONSES'])) {
 			if (wp_validate_boolean($_ENV['DISABLE_WEBHOOK_RESPONSES'])) {
+				error_log('DISABLE_WEBHOOK_RESPONSES is turned on.');
 				return false;
 			}
 		}

@@ -17,7 +17,9 @@ use \WP_Error as WP_Error;
  * Initialize plugin
  */
 function init() {
-    add_action('plugins_loaded', __NAMESPACE__ . "\\setup");
+	register_activation_hook( WORDPROOF_ROOT_FILE, __NAMESPACE__ . "\\activate" );
+
+	add_action('plugins_loaded', __NAMESPACE__ . "\\setup");
 	add_action('activated_plugin', __NAMESPACE__ . "\\activate");
 	add_action('init', __NAMESPACE__ . "\\onInit");
 	do_action( 'wordproof_scaffold_init' );
@@ -65,6 +67,19 @@ function setup() {
  */
 function activate($plugin) {
     flush_rewrite_rules();
+
+	if ( is_plugin_active( 'wordpress-seo/wp-seo.php' ) ) {
+
+		$options = get_option( 'wpseo', [] );
+
+		if ( is_array( $options ) && isset( $options['wordproof_integration_active'] ) && $options['wordproof_integration_active'] === true ) {
+			$integrationsUrl = admin_url( 'admin.php?page=wpseo_dashboard#top#integrations' );
+			$pluginsUrl      = admin_url( 'plugins.php' );
+
+			wp_die( 'Please disable the Yoast WordProof integration before install this plugin. Go to the <a href="' . $integrationsUrl . '">Yoast SEO settings</a> and disable the \'WordProof integration\'. <br/><br/><a href="'.$pluginsUrl.'">Go back</a>' );
+		}
+
+	}
 
     if ( isset($_REQUEST['_wpnonce']) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'activate-plugin_' . WORDPROOF_BASENAME ) ) {
         if ($plugin === WORDPROOF_BASENAME && !isset($_GET['activate-multi'])) {

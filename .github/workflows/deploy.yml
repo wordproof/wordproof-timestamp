@@ -12,8 +12,8 @@ jobs:
       - name: Build
         run: |
           composer install --no-dev
-          npm install
-          npm run build
+          yarn
+          yarn run build
       - name: WordPress Plugin Deploy
         id: deploy
         uses: 10up/action-wordpress-plugin-deploy@stable

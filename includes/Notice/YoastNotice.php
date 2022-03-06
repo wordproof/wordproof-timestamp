@@ -29,7 +29,7 @@ class YoastNotice extends Notice {
 		}
 
 		if ( isset( $_REQUEST['wordproof_nonce'] ) ) {
-			if (wp_verify_nonce(wp_unslash($_GET['wordproof_nonce']), 'wordproof_notice')) {
+			if (wp_verify_nonce(sanitize_key($_REQUEST['wordproof_nonce']), 'wordproof_notice')) {
 				$this->handle();
 
 				deactivate_plugins(WORDPROOF_BASENAME, true);

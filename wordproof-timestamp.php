@@ -30,7 +30,7 @@ if (is_readable(__DIR__ . '/vendor/autoload.php')) {
 
 }
 
-define('WORDPROOF_VERSION', '2.9.12');
+define('WORDPROOF_VERSION', '2.9.13');
 define('WORDPROOF_SLUG', 'wordproof');
 define('WORDPROOF_ROOT_FILE', __FILE__);
 define('WORDPROOF_BASENAME', plugin_basename(WORDPROOF_ROOT_FILE));

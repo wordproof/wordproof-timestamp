@@ -3,6 +3,7 @@
 namespace WordProofTimestamp\App;
 
 use WordProofTimestamp\App\Config\SdkAppConfig;
+use WordProofTimestamp\App\Controllers\AdminPageController;
 use WordProofTimestamp\App\Controllers\NoticeController;
 use WordProofTimestamp\App\Controllers\ScheduledActionController;
 use WordProofTimestamp\App\Vendor\WordProof\SDK\Translations\DefaultTranslations;
@@ -63,6 +64,7 @@ class Core {
 
 		new ScheduledActionController();
 		new NoticeController();
+		new AdminPageController();
 
 	}
 }

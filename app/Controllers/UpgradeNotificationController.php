@@ -9,9 +9,9 @@ class UpgradeNotificationController {
 	}
 
 	public function display( $currentPluginMetadata, $newPluginMetadata ) {
-		if ( isset( $currentPluginMetadata->upgrade_notice ) && strlen( trim( $currentPluginMetadata->upgrade_notice ) ) > 0 ) {
+		if ( isset( $newPluginMetadata->upgrade_notice ) && strlen( trim( $newPluginMetadata->upgrade_notice ) ) > 0 ) {
 			echo '<p style="background-color: #d54e21; padding: 10px; color: #f9f9f9; margin-top: 10px"><strong>Important Upgrade Notice:</strong> ';
-			echo esc_html( $currentPluginMetadata->upgrade_notice ), '</p>';
+			echo esc_html( $newPluginMetadata->upgrade_notice ), '</p>';
 		}
 	}
 }

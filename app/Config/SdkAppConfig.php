@@ -2,7 +2,7 @@
 
 namespace WordProofTimestamp\App\Config;
 
-use WordProofTimestamp\App\Vendor\WordProof\SDK\Config\DefaultAppConfig;
+use WordProof\SDK\Config\DefaultAppConfig;
 
 /**
  * Class SdkAppConfig.

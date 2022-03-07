@@ -7,8 +7,8 @@ use WordProofTimestamp\App\Controllers\AdminPageController;
 use WordProofTimestamp\App\Controllers\NoticeController;
 use WordProofTimestamp\App\Controllers\ScheduledActionController;
 use WordProofTimestamp\App\Controllers\UpgradeNotificationController;
-use WordProofTimestamp\App\Vendor\WordProof\SDK\Translations\DefaultTranslations;
-use WordProofTimestamp\App\Vendor\WordProof\SDK\WordPressSDK;
+use WordProof\SDK\Translations\DefaultTranslations;
+use WordProof\SDK\WordPressSDK;
 
 class Core {
 

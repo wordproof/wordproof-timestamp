@@ -14,7 +14,8 @@
         "symfony/polyfill-ctype": "1.20",
         "symfony/polyfill-mbstring": "1.20",
         "symfony/polyfill-php80": "1.20",
-        "wordproof/wordpress-sdk": "^1.2"
+        "wordproof/wordpress-sdk": "^1.2",
+        "woocommerce/action-scheduler": "^3.4"
     },
     "license": "GPLv3",
     "authors": [
@@ -41,7 +42,10 @@
     "extra": {
         "imposter": {
             "namespace": "WordProofTimestamp\\App\\Vendor",
-            "excludes": []
+            "excludes": ["woocommerce/action-scheduler"]
+        },
+        "installer-paths": {
+            "vendor/{$vendor}/{$name}/": ["woocommerce/action-scheduler"]
         }
     }
 }

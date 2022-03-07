@@ -3,6 +3,7 @@
 namespace WordProofTimestamp\App;
 
 use WordProofTimestamp\App\Config\SdkAppConfig;
+use WordProofTimestamp\App\Controllers\ScheduledActionController;
 use WordProofTimestamp\App\Vendor\WordProof\SDK\Translations\DefaultTranslations;
 use WordProofTimestamp\App\Vendor\WordProof\SDK\WordPressSDK;
 
@@ -12,8 +13,9 @@ class Core {
 	 * Initialize the WordProof timestamp app
 	 */
 	public function __construct() {
-		add_action('activated_plugin', [$this, 'activate']);
 		add_action('init', [$this, 'init']);
+		add_action('activated_plugin', [$this, 'activate']);
+		add_action('plugins_loaded', [$this, 'setup'], -10);
 
 		do_action( 'wordproof_scaffold_init' );
 	}
@@ -51,6 +53,15 @@ class Core {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Setup the controllers
+	 */
+	public function setup() {
+
+		new ScheduledActionController();
+
 	}
 }
 

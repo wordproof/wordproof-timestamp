@@ -2,12 +2,17 @@
 
 namespace WordProofTimestamp\App\Controllers;
 
+use WordProofTimestamp\App\Helpers\AssetHelper;
+
 class AdminPageController {
+
+    private $page = 'admin_page_wordproof-about';
 
 	public function __construct() {
 
 		//TODO Display if not shown before.
 		add_action( 'admin_menu', [$this, 'updateOrInstallPage'] );
+		add_action( 'admin_enqueue_scripts', [$this, 'enqueue'] );
 		add_filter( 'wordproof_load_data_on_pages', [$this, 'loadDataOnPageHook']);
 	}
 
@@ -22,8 +27,14 @@ class AdminPageController {
 		);
 	}
 
+	public function enqueue($page) {
+		if ($page === $this->page) {
+		    AssetHelper::enqueue('about');
+        }
+    }
+
 	public function loadDataOnPageHook($pages) {
-		$pages[] = 'admin_page_wordproof-about';
+		$pages[] = $this->page;
 	    return $pages;
     }
 

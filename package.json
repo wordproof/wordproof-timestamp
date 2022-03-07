@@ -4,11 +4,11 @@
   "description": "Timestamp your WordPress content on the blockchain for protection and trust. No blockchain knowledge required.",
   "main": "src/js/index.js",
   "scripts": {
-    "lint": "wp-scripts lint-js ./resources/js",
-    "format": "wp-scripts format ./resources/js",
-    "build": "wp-scripts build ./resources/js",
-    "watch": "wp-scripts start ./resources/js",
-    "watch:hot": "wp-scripts start ./resources/js --hot"
+    "lint": "wp-scripts lint-js ./resources/js/about.js",
+    "format": "wp-scripts format ./resources/js/about.js",
+    "build": "wp-scripts build ./resources/js/about.js",
+    "watch": "wp-scripts start ./resources/js/about.js",
+    "watch:hot": "wp-scripts start ./resources/js/about.js --hot"
   },
   "author": "WordProof",
   "license": "GPL-3.0-or-later",

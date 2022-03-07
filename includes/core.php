@@ -21,6 +21,7 @@ function init() {
 	add_action('activated_plugin', __NAMESPACE__ . "\\activate");
 	add_action('init', __NAMESPACE__ . "\\onInit");
 	do_action( 'wordproof_scaffold_init' );
+	add_action('in_plugin_update_message-' . WORDPROOF_BASENAME, __NAMESPACE__ . '\\displayUpgradeNotification', 10, 2);
 }
 
 /**
@@ -94,4 +95,17 @@ function activate($plugin) {
  */
 function deactivate() {
 
+}
+
+/**
+ * Display a upgrade notifications on plugins.php according to line in readme.
+ *
+ * @param $currentPluginMetadata
+ * @param $newPluginMetadata
+ */
+function displayUpgradeNotification( $currentPluginMetadata, $newPluginMetadata ) {
+	if ( isset( $newPluginMetadata->upgrade_notice ) && strlen( trim( $newPluginMetadata->upgrade_notice ) ) > 0 ) {
+		echo '<p style="background-color: #d54e21; padding: 10px; color: #f9f9f9; margin-top: 10px"><strong>Important Upgrade Notice:</strong> ';
+		echo esc_html( $newPluginMetadata->upgrade_notice ), '</p>';
+	}
 }

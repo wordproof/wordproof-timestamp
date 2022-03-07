@@ -6,6 +6,7 @@ use WordProofTimestamp\App\Config\SdkAppConfig;
 use WordProofTimestamp\App\Controllers\AdminPageController;
 use WordProofTimestamp\App\Controllers\NoticeController;
 use WordProofTimestamp\App\Controllers\ScheduledActionController;
+use WordProofTimestamp\App\Controllers\UpgradeNotificationController;
 use WordProofTimestamp\App\Vendor\WordProof\SDK\Translations\DefaultTranslations;
 use WordProofTimestamp\App\Vendor\WordProof\SDK\WordPressSDK;
 
@@ -15,9 +16,9 @@ class Core {
 	 * Initialize the WordProof timestamp app
 	 */
 	public function __construct() {
-		add_action('init', [$this, 'init']);
-		add_action('activated_plugin', [$this, 'activate']);
-		add_action('plugins_loaded', [$this, 'setup'], -10);
+		add_action( 'init', [ $this, 'init' ] );
+		add_action( 'plugins_loaded', [ $this, 'setup' ], - 10 );
+		add_action( 'activated_plugin', [ $this, 'activate' ] );
 
 		do_action( 'wordproof_scaffold_init' );
 	}
@@ -32,21 +33,35 @@ class Core {
 		$translations = new DefaultTranslations();
 
 		WordPressSDK::getInstance( $config, $translations )
-            ->certificate()
-			->timestampInPostEditor()
-            ->initialize();
+		            ->certificate()
+		            ->timestampInPostEditor()
+		            ->initialize();
+	}
+
+	/**
+	 * Setup the controllers
+	 */
+	public function setup() {
+		if ( ! is_admin() ) {
+			return;
+		}
+
+		new ScheduledActionController();
+		new NoticeController();
+		new AdminPageController();
+		new UpgradeNotificationController();
 	}
 
 	/**
 	 * Add logic on activation of this plugin.
 	 */
-	public function activate($plugin) {
+	public function activate( $plugin ) {
 
-		if ($plugin !== WORDPROOF_BASENAME) {
+		if ( $plugin !== WORDPROOF_BASENAME ) {
 			return;
 		}
 
-		if ( isset($_REQUEST['_wpnonce']) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'activate-plugin_' . $plugin ) ) {
+		if ( isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'activate-plugin_' . $plugin ) ) {
 
 			if ( is_plugin_active( 'wordpress-seo/wp-seo.php' ) ) {
 
@@ -55,29 +70,18 @@ class Core {
 				if ( is_array( $options ) && isset( $options['wordproof_integration_active'] ) && $options['wordproof_integration_active'] === true ) {
 					flush_rewrite_rules();
 
-					wp_safe_redirect(wp_nonce_url(admin_url('plugins.php'), 'wordproof_yoast_notice' ,'wordproof_nonce'));
+					wp_safe_redirect( wp_nonce_url( admin_url( 'plugins.php' ), 'wordproof_yoast_notice', 'wordproof_nonce' ) );
 					exit();
 				}
 			}
 
-			if (!isset($_GET['activate-multi'])) {
+			if ( ! isset( $_GET['activate-multi'] ) ) {
 				flush_rewrite_rules();
 
-				wp_safe_redirect(admin_url('admin.php?page=wordproof-about'));
+				wp_safe_redirect( admin_url( 'admin.php?page=wordproof-about' ) );
 				exit();
 			}
 		}
-	}
-
-	/**
-	 * Setup the controllers
-	 */
-	public function setup() {
-
-		new ScheduledActionController();
-		new NoticeController();
-		new AdminPageController();
-
 	}
 }
 

@@ -80,3 +80,7 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 = 3.0.0 =
 *Release date: March 6st, 2022*
 * A lot of work went into making this our best release yet. Enjoy the new certificate and improved user experience.
+
+== Upgrade Notice ==
+= 3.0.0 =
+The is a major overhaul of the plugin. After upgrading, you need to login with your WordProof account again. On sites with a large number of timestamps the migration will take longer. This process will be done in the background.

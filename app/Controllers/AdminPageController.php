@@ -41,7 +41,7 @@ class AdminPageController {
 	public function updateOrInstallPageContent() {
 		?>
 
-		<div class="wordproof-page-upgrade"></div>
+		<div id="wordproof-about"></div>
 
 		<?php
 	}

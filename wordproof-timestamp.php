@@ -38,8 +38,9 @@ define('WORDPROOF_SLUG', 'wordproof');
 define('WORDPROOF_ROOT_FILE', __FILE__);
 define('WORDPROOF_BASENAME', plugin_basename(WORDPROOF_ROOT_FILE));
 define('WORDPROOF_DIR', plugin_dir_path(WORDPROOF_ROOT_FILE));
-define('WORDPROOF_DIR_VENDOR', WORDPROOF_DIR . 'vendor');
+define('WORDPROOF_DIR_VENDOR', WORDPROOF_DIR . 'vendor/');
 define('WORDPROOF_URI', plugin_dir_url(WORDPROOF_ROOT_FILE));
+define('WORDPROOF_URI_BUILD', WORDPROOF_URI . 'build/');
 
 /**
  * Construct new app.

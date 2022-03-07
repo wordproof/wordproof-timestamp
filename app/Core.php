@@ -3,6 +3,7 @@
 namespace WordProofTimestamp\App;
 
 use WordProofTimestamp\App\Config\SdkAppConfig;
+use WordProofTimestamp\App\Controllers\NoticeController;
 use WordProofTimestamp\App\Controllers\ScheduledActionController;
 use WordProofTimestamp\App\Vendor\WordProof\SDK\Translations\DefaultTranslations;
 use WordProofTimestamp\App\Vendor\WordProof\SDK\WordPressSDK;
@@ -48,7 +49,7 @@ class Core {
 				$options = get_option( 'wpseo', [] );
 
 				if ( is_array( $options ) && isset( $options['wordproof_integration_active'] ) && $options['wordproof_integration_active'] === true ) {
-					wp_safe_redirect(wp_nonce_url(admin_url('plugins.php'), 'wordproof_notice' ,'wordproof_nonce'));
+					wp_safe_redirect(wp_nonce_url(admin_url('plugins.php'), 'wordproof_yoast_notice' ,'wordproof_nonce'));
 					exit();
 				}
 			}
@@ -61,6 +62,7 @@ class Core {
 	public function setup() {
 
 		new ScheduledActionController();
+		new NoticeController();
 
 	}
 }

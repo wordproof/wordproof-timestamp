@@ -14,7 +14,7 @@
 namespace WordProofTimestamp;
 
 use WordProofTimestamp\App\Core;
-use WordProofTimestamp\Vendor\Dotenv\Dotenv;
+use WordProofTimestamp\App\Vendor\Dotenv\Dotenv;
 
 if (!defined('WPINC')) {
     die();

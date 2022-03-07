@@ -3,10 +3,11 @@
     "description": "Timestamp your content onto the blockchain",
     "type": "wordpress-plugin",
     "require-dev": {
-        "wpengine/wpengine-coding-standards": "dev-master"
+        "wpengine/wpengine-coding-standards": "dev-master",
+        "wp-cli/wp-cli": "^2.6.0"
     },
     "require": {
-        "php": "^7.1.3 || ^8.0",
+        "php": "^7.3 || ^8.0",
         "composer/installers": "~1.0",
         "vlucas/phpdotenv": "^5.2",
         "typisttech/imposter-plugin": "^0.6.2",
@@ -39,7 +40,7 @@
     ],
     "extra": {
         "imposter": {
-            "namespace": "WordProofTimestamp\\Vendor",
+            "namespace": "WordProofTimestamp\\App\\Vendor",
             "excludes": []
         }
     }

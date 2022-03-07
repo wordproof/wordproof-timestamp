@@ -3,8 +3,8 @@
 namespace WordProofTimestamp\App;
 
 use WordProofTimestamp\App\Config\SdkAppConfig;
-use WordProofTimestamp\Vendor\WordProof\SDK\Translations\DefaultTranslations;
-use WordProofTimestamp\Vendor\WordProof\SDK\WordPressSDK;
+use WordProofTimestamp\App\Vendor\WordProof\SDK\Translations\DefaultTranslations;
+use WordProofTimestamp\App\Vendor\WordProof\SDK\WordPressSDK;
 
 class Core {
 

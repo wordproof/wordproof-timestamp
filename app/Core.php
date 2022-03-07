@@ -40,22 +40,29 @@ class Core {
 	/**
 	 * Add logic on activation of this plugin.
 	 */
-	public function activate() {
-		flush_rewrite_rules();
+	public function activate($plugin) {
 
-		if ( isset($_REQUEST['_wpnonce']) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'activate-plugin_' . WORDPROOF_BASENAME ) ) {
+		if ($plugin !== WORDPROOF_BASENAME) {
+			return;
+		}
+
+		if ( isset($_REQUEST['_wpnonce']) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'activate-plugin_' . $plugin ) ) {
 
 			if ( is_plugin_active( 'wordpress-seo/wp-seo.php' ) ) {
 
 				$options = get_option( 'wpseo', [] );
 
 				if ( is_array( $options ) && isset( $options['wordproof_integration_active'] ) && $options['wordproof_integration_active'] === true ) {
+					flush_rewrite_rules();
+
 					wp_safe_redirect(wp_nonce_url(admin_url('plugins.php'), 'wordproof_yoast_notice' ,'wordproof_nonce'));
 					exit();
 				}
 			}
 
 			if (!isset($_GET['activate-multi'])) {
+				flush_rewrite_rules();
+
 				wp_safe_redirect(admin_url('admin.php?page=wordproof-about'));
 				exit();
 			}

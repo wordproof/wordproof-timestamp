@@ -54,6 +54,11 @@ class Core {
 					exit();
 				}
 			}
+
+			if (!isset($_GET['activate-multi'])) {
+				wp_safe_redirect(admin_url('admin.php?page=wordproof-about'));
+				exit();
+			}
 		}
 	}
 

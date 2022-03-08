@@ -2,13 +2,15 @@
   "name": "wordproof-timestamp",
   "version": "3.0.0",
   "description": "Timestamp your WordPress content on the blockchain for protection and trust. No blockchain knowledge required.",
-  "main": "src/js/index.js",
+  "main": "resources/js/index.js",
   "scripts": {
-    "lint": "wp-scripts lint-js ./resources/js/about.js",
-    "format": "wp-scripts format ./resources/js/about.js",
-    "build": "wp-scripts build ./resources/js/about.js",
-    "watch": "wp-scripts start ./resources/js/about.js",
-    "watch:hot": "wp-scripts start ./resources/js/about.js --hot"
+    "lint": "wp-scripts lint-js resources/js/index.js",
+    "lint:css": "wp-scripts lint-css resources/css/main.css",
+    "format": "wp-scripts format",
+    "build": "wp-scripts build resources/js/index.js resources/css/main.css",
+    "watch": "wp-scripts start resources/js/index.js resources/css/main.css",
+    "watch:hot": "wp-scripts start resources/js/index.js resources/css/main.css --hot",
+    "zip": "wp-scripts plugin-zip"
   },
   "author": "WordProof",
   "license": "GPL-3.0-or-later",
@@ -16,5 +18,10 @@
     "@wordpress/scripts": "^20.0.2"
   },
   "dependencies": {
+    "autoprefixer": "^10.4.2",
+    "tailwindcss": "^2.0"
+  },
+  "peerDependencies": {
+    "cssnano": "^5.0.7"
   }
 }

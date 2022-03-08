@@ -1,11 +1,10 @@
 module.exports = {
-    corePlugins: {
-        preflight: false,
-    },
-    theme: {
-        fill: theme => ({
-            'white': theme('colors.white'),
-        }),
-        extend: {},
-    }
+	content: ['./resources/**/*.{html,js}'],
+	purge: [ './resources/**/*.{html,js}' ],
+	corePlugins: {
+		preflight: false,
+	},
+	theme: {
+		extend: {},
+	},
 };

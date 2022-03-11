@@ -2,7 +2,6 @@
 
 namespace WordProofTimestamp\Core;
 
-
 use WordProofTimestamp\includes\AnalyticsHelper;
 use WordProofTimestamp\includes\Controller\AdminController;
 use WordProofTimestamp\includes\Controller\AutomaticHooksController;
@@ -65,27 +64,35 @@ function setup() {
  * @return void
  */
 function activate($plugin) {
-    flush_rewrite_rules();
 
-    if ( isset($_REQUEST['_wpnonce']) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'activate-plugin_' . WORDPROOF_BASENAME ) ) {
+	if ( isset($_REQUEST['_wpnonce']) ) {
 
-	    if ( is_plugin_active( 'wordpress-seo/wp-seo.php' ) ) {
+		$nonce = sanitize_key( $_REQUEST['_wpnonce'] );
 
-		    $options = get_option( 'wpseo', [] );
+		if ( wp_verify_nonce( $nonce , 'bulk-plugins' ) || wp_verify_nonce( $nonce , 'activate-plugin_' . WORDPROOF_BASENAME ) ) {
 
-		    if ( is_array( $options ) && isset( $options['wordproof_integration_active'] ) && $options['wordproof_integration_active'] === true ) {
-			    wp_safe_redirect(wp_nonce_url(admin_url('plugins.php'), 'wordproof_notice' ,'wordproof_nonce'));
-			    exit();
-		    }
-	    }
+			if ( is_plugin_active( 'wordpress-seo/wp-seo.php' ) ) {
 
-        if ($plugin === WORDPROOF_BASENAME && !isset($_GET['activate-multi'])) {
-            wp_safe_redirect(admin_url('admin.php?page=wordproof-getting-started'));
-            exit();
-        }
-    }
+				$options = get_option( 'wpseo', [] );
 
-    return;
+				if ( is_array( $options ) && isset( $options['wordproof_integration_active'] ) && $options['wordproof_integration_active'] === true ) {
+					flush_rewrite_rules();
+					wp_safe_redirect( wp_nonce_url( admin_url( 'plugins.php' ), 'wordproof_notice', 'wordproof_nonce' ) );
+					exit();
+				}
+			}
+		}
+
+		if ( wp_verify_nonce( $nonce , 'activate-plugin_' . WORDPROOF_BASENAME ) ) {
+
+			if ($plugin === WORDPROOF_BASENAME) {
+				flush_rewrite_rules();
+				wp_safe_redirect(admin_url('admin.php?page=wordproof-getting-started'));
+				exit();
+			}
+
+		}
+	}
 }
 
 /**

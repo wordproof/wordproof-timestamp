@@ -61,7 +61,13 @@ class Core {
 			return;
 		}
 
-		if ( isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'activate-plugin_' . $plugin ) ) {
+		if ( ! isset( $_REQUEST['_wpnonce'] ) ) {
+			return;
+		}
+
+		$nonce = sanitize_key( $_REQUEST['_wpnonce'] );
+
+		if (wp_verify_nonce($nonce , 'activate-plugin_' . $plugin ) || wp_verify_nonce( $nonce, 'bulk-plugins' )) {
 
 			if ( is_plugin_active( 'wordpress-seo/wp-seo.php' ) ) {
 
@@ -75,12 +81,11 @@ class Core {
 				}
 			}
 
-			if ( ! isset( $_GET['activate-multi'] ) ) {
-				flush_rewrite_rules();
+			flush_rewrite_rules();
 
-				wp_safe_redirect( admin_url( 'admin.php?page=wordproof-about' ) );
-				exit();
-			}
+			wp_safe_redirect( admin_url( 'admin.php?page=wordproof-about' ) );
+			exit();
+
 		}
 	}
 }

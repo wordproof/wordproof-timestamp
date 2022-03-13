@@ -2,7 +2,7 @@
 
 namespace WordProofTimestamp\App\Config\Conditionals;
 
-use WordProofTimestamp\App\Vendor\WordProof\SDK\Helpers\AuthenticationHelper;
+use WordProof\SDK\Helpers\AuthenticationHelper;
 
 class IsAuthenticatedConditional extends Conditional {
 

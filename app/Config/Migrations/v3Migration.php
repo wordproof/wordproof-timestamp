@@ -2,7 +2,7 @@
 
 namespace WordProofTimestamp\App\Config\Migrations;
 
-use WordProofTimestamp\App\Vendor\WordProof\SDK\Helpers\TransientHelper;
+use WordProof\SDK\Helpers\TransientHelper;
 
 class v3Migration extends Migration {
 

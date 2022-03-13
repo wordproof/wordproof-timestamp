@@ -2,8 +2,8 @@
 
 namespace WordProofTimestamp\App\Notices;
 
-use WordProofTimestamp\App\Vendor\WordProof\SDK\Helpers\AuthenticationHelper;
-use WordProofTimestamp\App\Vendor\WordProof\SDK\Helpers\TransientHelper;
+use WordProof\SDK\Helpers\AuthenticationHelper;
+use WordProof\SDK\Helpers\TransientHelper;
 
 class AuthenticateAfterMigrationNotice extends Notice {
 

@@ -2,13 +2,10 @@
 
 namespace WordProofTimestamp\App\Controllers;
 
-use WordProofTimestamp\App\Actions\Action;
+use WordProof\SDK\Helpers\AuthenticationHelper;
 use WordProofTimestamp\App\Actions\MigrateToNewSchema;
-use WordProofTimestamp\App\Config\Conditionals\IsAuthenticatedConditional;
 use WordProofTimestamp\App\Config\Migrations\v3Migration;
-use WordProofTimestamp\App\Helpers\ActionHelper;
-use WordProofTimestamp\App\Vendor\WordProof\SDK\Helpers\AuthenticationHelper;
-use WordProofTimestamp\App\Vendor\WordProof\SDK\Helpers\TransientHelper;
+use WordProof\SDK\Helpers\TransientHelper;
 
 class MigrationController {
 

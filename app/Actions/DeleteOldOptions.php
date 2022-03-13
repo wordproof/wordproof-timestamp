@@ -7,9 +7,9 @@ class DeleteOldOptions extends Action {
 	/**
 	 * Delete the old WordProof post meta.
 	 *
-	 * @param array $data
+	 * @param array|null $data
 	 */
-	public function execute( $data ) {
+	public function execute( $data = null ) {
 		$options = [
 			"wordproof_network",
 			"wordproof_certificate_text",

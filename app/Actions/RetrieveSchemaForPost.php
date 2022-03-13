@@ -2,6 +2,9 @@
 
 namespace WordProofTimestamp\App\Actions;
 
+use WordProof\SDK\Helpers\OptionsHelper;
+use WordProof\SDK\Support\Api;
+
 class RetrieveSchemaForPost extends Action {
 
 	/**
@@ -9,6 +12,15 @@ class RetrieveSchemaForPost extends Action {
 	 */
 	public function execute( $data = null ) {
 
-		//Sent post request to WordProof for post id.
+		if (!isset($data) || !isset($data['id'])) {
+			return;
+		}
+
+		$sourceId = OptionsHelper::sourceId();
+		$itemId = intval($data['id']);
+
+		$endpoint = '/api/sources/' . $sourceId . '/timestamps/dump';
+		Api::post($endpoint, ['uid' => $itemId]);
+
 	}
 }

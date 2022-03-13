@@ -43,7 +43,7 @@
     "extra": {
         "imposter": {
             "namespace": "WordProofTimestamp\\App\\Vendor",
-            "excludes": ["woocommerce/action-scheduler"]
+            "excludes": ["woocommerce/action-scheduler", "wordproof/wordpress-sdk"]
         },
         "installer-paths": {
             "vendor/{$vendor}/{$name}/": ["woocommerce/action-scheduler"]

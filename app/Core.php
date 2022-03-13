@@ -4,6 +4,8 @@ namespace WordProofTimestamp\App;
 
 use WordProofTimestamp\App\Config\SdkAppConfig;
 use WordProofTimestamp\App\Controllers\AdminPageController;
+use WordProofTimestamp\App\Controllers\ActionController;
+use WordProofTimestamp\App\Controllers\MigrationController;
 use WordProofTimestamp\App\Controllers\NoticeController;
 use WordProofTimestamp\App\Controllers\ScheduledActionController;
 use WordProofTimestamp\App\Controllers\UpgradeNotificationController;
@@ -30,9 +32,9 @@ class Core {
 	 */
 	public function init() {
 		$config       = new SdkAppConfig();
-		$translations = new DefaultTranslations();
+		$translations = new \WordProofTimestamp\App\Vendor\WordProof\SDK\Translations\DefaultTranslations();
 
-		WordPressSDK::getInstance( $config, $translations )
+		\WordProofTimestamp\App\Vendor\WordProof\SDK\WordPressSDK::getInstance( $config, $translations )
 		            ->certificate()
 		            ->timestampInPostEditor()
 		            ->initialize();
@@ -50,6 +52,8 @@ class Core {
 		new NoticeController();
 		new AdminPageController();
 		new UpgradeNotificationController();
+		new ActionController();
+		new MigrationController();
 	}
 
 	/**
@@ -69,14 +73,14 @@ class Core {
 
 		if (wp_verify_nonce($nonce , 'activate-plugin_' . $plugin ) || wp_verify_nonce( $nonce, 'bulk-plugins' )) {
 
-			if ( is_plugin_active( 'wordpress-seo/wp-seo.php' ) ) {
+			if ( is_plugin_active( 'wordpress-seo/wp-seo' ) ) {
 
 				$options = get_option( 'wpseo', [] );
 
 				if ( is_array( $options ) && isset( $options['wordproof_integration_active'] ) && $options['wordproof_integration_active'] === true ) {
 					flush_rewrite_rules();
 
-					wp_safe_redirect( wp_nonce_url( admin_url( 'plugins.php' ), 'wordproof_yoast_notice', 'wordproof_nonce' ) );
+					wp_safe_redirect( wp_nonce_url( admin_url( 'plugins' ), 'wordproof_yoast_notice', 'wordproof_nonce' ) );
 					exit();
 				}
 			}

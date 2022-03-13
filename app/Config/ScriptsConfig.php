@@ -17,7 +17,7 @@ class ScriptsConfig extends Config
                 'type'         => 'js'
             ],
             'main.css'             => [
-	            'dependencies' => [],
+	            'dependencies' => ['wp-components'],
                 'type'         => 'css'
             ],
         ];

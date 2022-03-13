@@ -32,6 +32,7 @@ class MigrationController {
 				$action = new MigrateToNewSchema();
 				$action->execute();
 
+				TransientHelper::getOnce('wordproof_v2_authenticate_with_token');
 				TransientHelper::getOnce('wordproof_waiting_for_authentication_to_start_post_migration');
 
 			}

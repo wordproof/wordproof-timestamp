@@ -2,7 +2,10 @@
 
 namespace WordProofTimestamp\App\Config;
 
+use http\Env;
 use WordProof\SDK\Config\DefaultAppConfig;
+use WordProofTimestamp\App\Helpers\DotenvHelper;
+use WordProofTimestamp\App\Vendor\Dotenv\Dotenv;
 
 /**
  * Class SdkAppConfig.
@@ -24,21 +27,18 @@ class SdkAppConfig extends DefaultAppConfig {
 	 * @return string The environment.
 	 */
 	public function getEnvironment() {
-		return 'development';
+		return DotenvHelper::get('APP_ENV', 'production');
 	}
 
-
 	public function getOauthClient() {
-		return 3;
-		// return 81;
+		return DotenvHelper::get('WORDPROOF_CLIENT', null);
 	}
 
 	public function getWordProofUrl() {
-		return 'https://myv2.test';
-		// return 'https://staging.wordproof.com';
+		return DotenvHelper::get('WORDPROOF_ENDPOINT', null);
 	}
 
 	public function getScriptsFileOverwrite() {
-		return 'https://wproof.test/wp-content/plugins/wordproof-timestamp/vendor/wordproof/wordpress-sdk/app/';
+		return DotenvHelper::get('WORDPROOF_SDK_OVERWRITE', null);
 	}
 }

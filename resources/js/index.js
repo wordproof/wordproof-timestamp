@@ -1,7 +1,7 @@
 const { render } = wp.element;
 
 import About from './Components/Pages/About';
-import Migrate from './Components/Pages/Migrate';
+import Bulk from './Components/Pages/Bulk';
 
 document.addEventListener( 'DOMContentLoaded', function ( event ) {
 	const page = document.getElementById( 'wordproof-about' )
@@ -11,8 +11,8 @@ document.addEventListener( 'DOMContentLoaded', function ( event ) {
 } );
 
 document.addEventListener( 'DOMContentLoaded', function ( event ) {
-	const page = document.getElementById( 'wordproof-migrate' )
+	const page = document.getElementById( 'wordproof-bulk' )
 	if (page) {
-		render( <Migrate />, page);
+		render( <Bulk />, page);
 	}
 } );

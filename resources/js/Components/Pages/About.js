@@ -30,7 +30,7 @@ const About = (props) => {
 
     const openSettings = useCallback((event) => {
         event.preventDefault();
-        dispatch('wordproof:open_authentication');
+        dispatch('wordproof:open_settings');
     });
 
     return (

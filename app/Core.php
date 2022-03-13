@@ -9,8 +9,8 @@ use WordProofTimestamp\App\Controllers\MigrationController;
 use WordProofTimestamp\App\Controllers\NoticeController;
 use WordProofTimestamp\App\Controllers\ScheduledActionController;
 use WordProofTimestamp\App\Controllers\UpgradeNotificationController;
-use WordProof\SDK\Translations\DefaultTranslations;
 use WordProof\SDK\WordPressSDK;
+use WordProof\SDK\Translations\DefaultTranslations;
 
 class Core {
 
@@ -32,9 +32,9 @@ class Core {
 	 */
 	public function init() {
 		$config       = new SdkAppConfig();
-		$translations = new \WordProofTimestamp\App\Vendor\WordProof\SDK\Translations\DefaultTranslations();
+		$translations = new DefaultTranslations();
 
-		\WordProofTimestamp\App\Vendor\WordProof\SDK\WordPressSDK::getInstance( $config, $translations )
+		WordPressSDK::getInstance( $config, $translations )
 		            ->certificate()
 		            ->timestampInPostEditor()
 		            ->initialize();

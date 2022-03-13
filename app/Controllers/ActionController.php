@@ -10,7 +10,6 @@ class ActionController {
 
 	public function __construct() {
 		add_action( 'wordproof_action', [ $this, 'execute' ] );
-		add_action( 'init', [ $this, 'init' ] );
 	}
 
 	public function execute( $data ) {
@@ -25,20 +24,5 @@ class ActionController {
 		/** @var $class Action */
 		(new $action)->execute($data);
 	}
-
-	public function init() {
-
-//		(new v3Migration)->up();
-
-//		$this->execute( [
-//			"action" => "RetrieveSchemaForPost",
-//			"id"     => "1",
-//		] );
-
-//		ActionHelper::now('MigrateToNewSchema');
-//		ActionHelper::now('RetrieveSchemaForPost', ['id' => '1', 'more' => true]);
-
-	}
-
 
 }

@@ -2,6 +2,7 @@
 
 namespace WordProofTimestamp\App\Controllers;
 
+use WordProofTimestamp\App\Notices\AuthenticateAfterMigrationNotice;
 use WordProofTimestamp\App\Notices\YoastNotice;
 
 class NoticeController {
@@ -18,6 +19,7 @@ class NoticeController {
 
 	public function initializeNotices() {
 		$this->notices[] = new YoastNotice();
+		$this->notices[] = new AuthenticateAfterMigrationNotice();
 	}
 
 	public function getKeys() {

@@ -23,18 +23,18 @@ import PropTypes from 'prop-types';
 
 const Bulk = (props) => {
 
-    useEffect(() => {
-        initializeAuthentication();
-    }, []);
-
-    const {isAuthenticated} = props;
-
+    const {isAuthenticated, balance} = props;
     const postTypes = getData('post_types');
 
     const [selectedPostTypes, setSelectedPostTypes] = useState([]);
     const [loading, setLoading] = useState(false);
     const [totalCount, setTotalCount] = useState(0);
     const [progressCount, setProgressCount] = useState(0);
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        initializeAuthentication();
+    }, []);
 
     const openAuthentication = useCallback((event) => {
         event.preventDefault();
@@ -51,35 +51,23 @@ const Bulk = (props) => {
 
         setLoading(true);
 
-        let postIds = [];
-
-        selectedPostTypes.forEach((postType) => {
-            const data = postTypes[postType];
-            postIds = postIds.concat(data.postIds);
-        });
-
-        setTotalCount(postIds.length);
-
-        let count = 0;
-        for (const id of postIds) {
-            count++;
-            setProgressCount(count);
+        let count = 1;
+        for (const id of posts) {
+            setProgressCount(count++);
 
             postTimestampRequest(id);
-            
+
             await wait(1000);
         }
 
         setLoading(false);
     });
 
-
     const getToggles = useCallback(() => {
 
         return Object.entries(postTypes).map(([postType, data]) => {
             return <CheckboxControl
                 label={postType + ' (' + data.count + ')'}
-                // checked={ isChecked }
                 onChange={() => {
                     toggle(postType)
                 }
@@ -88,9 +76,31 @@ const Bulk = (props) => {
         })
     });
 
-    function toggle(postType) {
-        setSelectedPostTypes(xor(selectedPostTypes, [postType]));
-    }
+    const toggle = useCallback((postType) => {
+        const selected = xor(selectedPostTypes, [postType]);
+        setSelectedPostTypes(selected);
+
+        let postIds = [];
+        selected.forEach((postType) => {
+            const data = postTypes[postType];
+            postIds = postIds.concat(data.postIds);
+        });
+
+        setTotalCount(postIds.length);
+        setPosts(postIds);
+    });
+
+    const isDisabled = useCallback(() => {
+        if (loading) {
+            return true;
+        }
+
+        return selectedHigherThanBalance()
+    });
+
+    const selectedHigherThanBalance = useCallback(() => {
+        return totalCount > balance;
+    });
 
     return (
         <div className={'mt-6'}>
@@ -112,10 +122,16 @@ const Bulk = (props) => {
 
                 {getToggles()}
 
-                <Button variant={'primary'} onClick={startTimestamping} disabled={loading}>Start timestamping</Button>
+                <Button variant={'primary'} onClick={startTimestamping} disabled={isDisabled()}>Start
+                    timestamping</Button>
 
-                { loading &&
-                    <span><Spinner/> {progressCount} / {totalCount}</span>
+                {selectedHigherThanBalance() &&
+                <Notice isDismissible={false} status={'warning'} className={'mt-4 mx-0'}>Sorry mate</Notice>
+                }
+
+
+                {loading &&
+                <span><Spinner/> {progressCount} / {totalCount}</span>
                 }
 
             </>}
@@ -127,9 +143,12 @@ const Bulk = (props) => {
 };
 
 export default compose([
-    withSelect((select) => {
-        return {
-            isAuthenticated: select('wordproof').getIsAuthenticated(),
-        };
-    }),
+withSelect((select) =>
+{
+    return {
+        isAuthenticated: select('wordproof').getIsAuthenticated(),
+        balance: select('wordproof').getBalance(),
+    };
+}
+),
 ])(Bulk);

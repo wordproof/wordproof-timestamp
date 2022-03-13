@@ -35,7 +35,7 @@ class AuthenticateAfterMigrationNotice extends Notice {
 		$this->notice['type']    = 'warning';
 		$this->notice['message'] = 'WordProof is upgraded to version 3.0. We need you perform one manual step before the plugin working properly again.';
 		$this->button['text']    = 'Authenticate with WordProof';
-		$this->button['link']    = admin_url( 'admin.php?page=wordproof_about' );
+		$this->button['link']    = admin_url( 'admin.php?page=wordproof-about' );
 	}
 
 	/**
@@ -46,6 +46,15 @@ class AuthenticateAfterMigrationNotice extends Notice {
 	public function show() {
 		if ( $this->isHidden() ) {
 			return false;
+		}
+
+		global $screen;
+
+		$screen = get_current_screen();
+		if (isset($screen) && is_object($screen)) {
+			if (isset($screen->base) && $screen->base === 'admin_page_wordproof-about') {
+				return false;
+			}
 		}
 
 		$hadVersion200Installed = get_option('wordproof_migration_200_completed');

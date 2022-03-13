@@ -34,7 +34,7 @@ const About = (props) => {
     });
 
     return (
-        <div className={'m-6'}>
+        <div className={'mt-6'}>
             <Notice isDismissible={false} status={'info'} className={'mb-6 mx-0'}>If you are upgrading from WordProof
                 Timestamp v2 you will be automatically signed in
                 when authenticating with WordProof.</Notice>

@@ -23,128 +23,126 @@ import PropTypes from 'prop-types';
 
 const Bulk = (props) => {
 
-        const {isAuthenticated, balance} = props;
-        const postTypes = getData('post_types');
+    const {isAuthenticated, balance} = props;
+    const postTypes = getData('post_types');
 
-        const [selectedPostTypes, setSelectedPostTypes] = useState([]);
-        const [loading, setLoading] = useState(false);
-        const [totalCount, setTotalCount] = useState(0);
-        const [progressCount, setProgressCount] = useState(0);
-        const [posts, setPosts] = useState([]);
+    const [selectedPostTypes, setSelectedPostTypes] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [totalCount, setTotalCount] = useState(0);
+    const [progressCount, setProgressCount] = useState(0);
+    const [posts, setPosts] = useState([]);
 
-        useEffect(() => {
-            initializeAuthentication();
-        }, []);
+    useEffect(() => {
+        initializeAuthentication();
+    }, []);
 
-        const openAuthentication = useCallback((event) => {
-            event.preventDefault();
-            dispatch('wordproof:open_authentication');
+    const openAuthentication = useCallback((event) => {
+        event.preventDefault();
+        dispatch('wordproof:open_authentication');
+    });
+
+    const openSettings = useCallback((event) => {
+        event.preventDefault();
+        dispatch('wordproof:open_settings');
+    });
+
+    const startTimestamping = useCallback(async (event) => {
+        event.preventDefault();
+
+        setLoading(true);
+
+        let count = 1;
+        for (const id of posts) {
+            setProgressCount(count++);
+
+            postTimestampRequest(id);
+
+            await wait(1000);
+        }
+
+        setLoading(false);
+    });
+
+    const getToggles = useCallback(() => {
+
+        return Object.entries(postTypes).map(([postType, data]) => {
+            return <CheckboxControl
+                label={postType + ' (' + data.count + ')'}
+                onChange={() => {
+                    toggle(postType)
+                }
+                }
+            />
+        })
+    });
+
+    const toggle = useCallback((postType) => {
+        const selected = xor(selectedPostTypes, [postType]);
+        setSelectedPostTypes(selected);
+
+        let postIds = [];
+        selected.forEach((postType) => {
+            const data = postTypes[postType];
+            postIds = postIds.concat(data.postIds);
         });
 
-        const openSettings = useCallback((event) => {
-            event.preventDefault();
-            dispatch('wordproof:open_settings');
-        });
+        setTotalCount(postIds.length);
+        setPosts(postIds);
+    });
 
-        const startTimestamping = useCallback(async (event) => {
-            event.preventDefault();
+    const isDisabled = useCallback(() => {
+        if (loading) {
+            return true;
+        }
 
-            setLoading(true);
+        return selectedHigherThanBalance()
+    });
 
-            let count = 1;
-            for (const id of posts) {
-                setProgressCount(count++);
+    const selectedHigherThanBalance = useCallback(() => {
+        return totalCount > balance;
+    });
 
-                postTimestampRequest(id);
+    return (
+        <div className={'mt-6'}>
+            <Heading>Bulk timestamper</Heading>
 
-                await wait(1000);
-            }
+            {!isAuthenticated && <>
 
-            setLoading(false);
-        });
-
-        const getToggles = useCallback(() => {
-
-            return Object.entries(postTypes).map(([postType, data]) => {
-                return <CheckboxControl
-                    label={postType + ' (' + data.count + ')'}
-                    onChange={() => {
-                        toggle(postType)
-                    }
-                    }
-                />
-            })
-        });
-
-        const toggle = useCallback((postType) => {
-            const selected = xor(selectedPostTypes, [postType]);
-            setSelectedPostTypes(selected);
-
-            let postIds = [];
-            selected.forEach((postType) => {
-                const data = postTypes[postType];
-                postIds = postIds.concat(data.postIds);
-            });
-
-            setTotalCount(postIds.length);
-            setPosts(postIds);
-        });
-
-        const isDisabled = useCallback(() => {
-            if (loading) {
-                return true;
-            }
-
-            return selectedHigherThanBalance()
-        });
-
-        const selectedHigherThanBalance = useCallback(() => {
-            return totalCount > balance;
-        });
-
-        return (
-            <div className={'mt-6'}>
-                <Heading>Bulk timestamper</Heading>
-
-                {!isAuthenticated && <>
-
-                    <p>We just need to do one more thing. Using the button below, register a new account or log-in with
-                        your existing account. After authentication you are ready to timestamp your posts and pages.</p>
+                <p>We just need to do one more thing. Using the button below, register a new account or log-in with
+                    your existing account. After authentication you are ready to timestamp your posts and pages.</p>
 
 
-                    <Button variant={'primary'} onClick={openAuthentication}>Authenticate with WordProof</Button>
+                <Button variant={'primary'} onClick={openAuthentication}>Authenticate with WordProof</Button>
 
-                </>}
+            </>}
 
-                {isAuthenticated && <>
+            {isAuthenticated && <>
 
-                    <p>Start timestamping all of your posts. You can select what post types you want to start with.</p>
+                <p>Start timestamping all of your posts. You can select what post types you want to start with.</p>
 
-                    {getToggles()}
+                {getToggles()}
 
-                    <Button variant={'primary'} onClick={startTimestamping} disabled={isDisabled()}>Start
-                        timestamping</Button>
+                <Button variant={'primary'} onClick={startTimestamping} disabled={isDisabled()}>Start
+                    timestamping</Button>
 
-                    {selectedHigherThanBalance() &&
-                    <Notice isDismissible={false} status={'warning'} className={'mt-4 mx-0'}>You want to
-                        timestamp {totalCount} items, but you have only {balance} timestamps left.
-                        <span className={'ml-4'}><Button variant={'primary'} onClick={openSettings}>Upgrade your subscription</Button></span></Notice>
-                    }
+                {selectedHigherThanBalance() &&
+                <Notice isDismissible={false} status={'warning'} className={'mt-4 mx-0'}>You want to
+                    timestamp {totalCount} items, but you have only {balance} timestamps left.
+                    <span className={'ml-4'}><Button variant={'primary'} onClick={openSettings}>Upgrade your subscription</Button></span></Notice>
+                }
 
 
+                {loading &&
+                <span><Spinner/> {progressCount} / {totalCount}</span>
+                }
 
-                    {loading &&
-                    <span><Spinner/> {progressCount} / {totalCount}</span>
-                    }
+            </>}
 
-                </>}
+            <AuthenticationModals/>
 
-                <AuthenticationModals/>
-
-            </div>
-        );
-    }
-;
+        </div>
+    );
+};
 
 export default compose([
     withSelect((select) => {

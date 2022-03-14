@@ -2,6 +2,8 @@
 
 namespace WordProofTimestamp\App\Controllers;
 
+use WordProof\SDK\Helpers\RedirectHelper;
+use WordProof\SDK\Helpers\TransientHelper;
 use WordProofTimestamp\App\Notices\AuthenticateAfterMigrationNotice;
 use WordProofTimestamp\App\Notices\YoastNotice;
 
@@ -20,6 +22,10 @@ class NoticeController {
 	public function initializeNotices() {
 		$this->notices[] = new YoastNotice();
 		$this->notices[] = new AuthenticateAfterMigrationNotice();
+
+		if ( TransientHelper::getOnce( 'wordproof_upgraded' ) ) {
+			RedirectHelper::safe( admin_url( 'admin.php?page=wordproof-about' ) );
+		}
 	}
 
 	public function getKeys() {
@@ -39,8 +45,8 @@ class NoticeController {
 			return;
 		}
 
-		if ( in_array( wp_unslash($_REQUEST['notice_key']), $this->keys ) ) {
-			set_transient( filter_var(wp_unslash($_REQUEST['notice_key']), FILTER_SANITIZE_STRING), 'hidden' );
+		if ( in_array( wp_unslash( $_REQUEST['notice_key'] ), $this->keys ) ) {
+			set_transient( filter_var( wp_unslash( $_REQUEST['notice_key'] ), FILTER_SANITIZE_STRING ), 'hidden' );
 		}
 
 	}

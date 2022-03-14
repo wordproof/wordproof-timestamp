@@ -1,10 +1,7 @@
 const { render } = wp.element;
-import { ray } from 'node-ray';
 
 import About from './Components/Pages/About';
 import Bulk from './Components/Pages/Bulk';
-
-Ray.useDefaultSettings();
 
 document.addEventListener( 'DOMContentLoaded', function ( event ) {
 	const page = document.getElementById( 'wordproof-about' );

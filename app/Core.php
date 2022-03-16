@@ -13,6 +13,7 @@ use WordProofTimestamp\App\Controllers\ScheduledActionController;
 use WordProofTimestamp\App\Controllers\UpgradeNotificationController;
 use WordProof\SDK\WordPressSDK;
 use WordProof\SDK\Translations\DefaultTranslations;
+use WordProofTimestamp\App\Helpers\CliHelper;
 
 class Core {
 
@@ -64,31 +65,42 @@ class Core {
 	 */
 	public function activate( $plugin ) {
 
-		ray($plugin);
-		ray(TransientHelper::get('wordproof_upgraded'));
-
 		if ( $plugin !== WORDPROOF_BASENAME ) {
 			return;
 		}
+
+		$cli = CliHelper::running();
 
 		if ( ! isset( $_REQUEST['_wpnonce'] ) ) {
 			return;
 		}
 
-		$nonce = sanitize_key( $_REQUEST['_wpnonce'] );
+		if (!$cli) {
+			$nonce = sanitize_key( $_REQUEST['_wpnonce'] );
+		}
 
-		if ( wp_verify_nonce( $nonce, 'activate-plugin_' . $plugin ) || wp_verify_nonce( $nonce, 'bulk-plugins' ) ) {
+
+		if ( $cli || wp_verify_nonce( $nonce, 'activate-plugin_' . $plugin ) || wp_verify_nonce( $nonce, 'bulk-plugins' ) ) {
 
 			if ( is_plugin_active( 'wordpress-seo/wp-seo' ) ) {
 
 				$options = get_option( 'wpseo', [] );
 
 				if ( is_array( $options ) && isset( $options['wordproof_integration_active'] ) && $options['wordproof_integration_active'] === true ) {
+
+					if ($cli) {
+						\WP_CLI::error('Cannot be activated if the WordProof integration in Yoast SEO is turned on.');
+					}
+
 					flush_rewrite_rules();
 
 					RedirectHelper::safe( wp_nonce_url( admin_url( 'plugins' ), 'wordproof_yoast_notice', 'wordproof_nonce' ) );
 					exit();
 				}
+			}
+
+			if ($cli) {
+				return;
 			}
 
 			flush_rewrite_rules();

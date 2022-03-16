@@ -3,6 +3,7 @@
 namespace WordProofTimestamp\Core;
 
 use WordProofTimestamp\includes\AnalyticsHelper;
+use WordProofTimestamp\includes\CliHelper;
 use WordProofTimestamp\includes\Controller\AdminController;
 use WordProofTimestamp\includes\Controller\AutomaticHooksController;
 use WordProofTimestamp\includes\Controller\CertificateController;
@@ -65,22 +66,35 @@ function setup() {
  */
 function activate($plugin) {
 
-	if ( isset($_REQUEST['_wpnonce']) ) {
+	$cli = CliHelper::running();
 
-		$nonce = sanitize_key( $_REQUEST['_wpnonce'] );
+	if ( isset($_REQUEST['_wpnonce']) || $cli ) {
 
-		if ( wp_verify_nonce( $nonce , 'bulk-plugins' ) || wp_verify_nonce( $nonce , 'activate-plugin_' . WORDPROOF_BASENAME ) ) {
+		if (!$cli) {
+			$nonce = sanitize_key( $_REQUEST['_wpnonce'] );
+		}
+
+		if ( $cli || wp_verify_nonce( $nonce , 'bulk-plugins' ) || wp_verify_nonce( $nonce , 'activate-plugin_' . WORDPROOF_BASENAME ) ) {
 
 			if ( is_plugin_active( 'wordpress-seo/wp-seo.php' ) ) {
 
 				$options = get_option( 'wpseo', [] );
 
 				if ( is_array( $options ) && isset( $options['wordproof_integration_active'] ) && $options['wordproof_integration_active'] === true ) {
+
+					if ($cli ) {
+						\WP_CLI::error('Cannot be activated if the WordProof integration in Yoast SEO is turned on.');
+					}
+
 					flush_rewrite_rules();
 					wp_safe_redirect( wp_nonce_url( admin_url( 'plugins.php' ), 'wordproof_notice', 'wordproof_nonce' ) );
 					exit();
 				}
 			}
+		}
+
+		if ($cli) {
+			return;
 		}
 
 		if ( wp_verify_nonce( $nonce , 'activate-plugin_' . WORDPROOF_BASENAME ) ) {

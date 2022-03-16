@@ -71,18 +71,19 @@ class Core {
 
 		$cli = CliHelper::running();
 
-		if ( ! isset( $_REQUEST['_wpnonce'] ) ) {
-			return;
-		}
-
 		if (!$cli) {
-			$nonce = sanitize_key( $_REQUEST['_wpnonce'] );
-		}
 
+			if ( ! isset( $_REQUEST['_wpnonce'] ) ) {
+				return;
+			}
+
+			$nonce = sanitize_key( $_REQUEST['_wpnonce'] );
+
+		}
 
 		if ( $cli || wp_verify_nonce( $nonce, 'activate-plugin_' . $plugin ) || wp_verify_nonce( $nonce, 'bulk-plugins' ) ) {
 
-			if ( is_plugin_active( 'wordpress-seo/wp-seo' ) ) {
+			if ( is_plugin_active( 'wordpress-seo/wp-seo.php' ) ) {
 
 				$options = get_option( 'wpseo', [] );
 
@@ -94,7 +95,7 @@ class Core {
 
 					flush_rewrite_rules();
 
-					RedirectHelper::safe( wp_nonce_url( admin_url( 'plugins' ), 'wordproof_yoast_notice', 'wordproof_nonce' ) );
+					RedirectHelper::safe( wp_nonce_url( admin_url( 'plugins.php' ), 'wordproof_yoast_notice', 'wordproof_nonce' ) );
 					exit();
 				}
 			}

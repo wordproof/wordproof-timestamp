@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WordProofTimestamp\App\Config;
 
 abstract class Config
@@ -19,9 +21,9 @@ abstract class Config
         }
 
         if ($dotNotation) {
-	        $keys = explode( '.', $key );
+            $keys = explode('.', $key);
         } else {
-	        $keys = [$key];
+            $keys = [$key];
         }
 
         $value = static::values();

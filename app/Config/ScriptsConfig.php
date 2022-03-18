@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WordProofTimestamp\App\Config;
 
 class ScriptsConfig extends Config
@@ -13,11 +15,11 @@ class ScriptsConfig extends Config
     {
         return [
             'index'             => [
-	            'dependencies' => ['wp-i18n', 'wp-element', 'wp-components', 'wp-data', 'lodash', 'wordproof-data'],
+                'dependencies' => ['wp-i18n', 'wp-element', 'wp-components', 'wp-data', 'lodash', 'wordproof-data'],
                 'type'         => 'js'
             ],
             'main.css'             => [
-	            'dependencies' => ['wp-components'],
+                'dependencies' => ['wp-components'],
                 'type'         => 'css'
             ],
         ];

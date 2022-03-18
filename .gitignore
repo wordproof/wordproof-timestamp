@@ -13,3 +13,5 @@
 
 build
 yarn-error.log
+
+.php-cs-fixer.cache

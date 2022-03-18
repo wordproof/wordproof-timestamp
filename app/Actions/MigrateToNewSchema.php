@@ -1,54 +1,55 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WordProofTimestamp\App\Actions;
 
 use WordProofTimestamp\App\Helpers\ActionHelper;
 
-class MigrateToNewSchema extends Action {
+class MigrateToNewSchema extends Action
+{
+    private $key = 'wordproof_migrate_to_new_schema';
 
-	private $key = 'wordproof_migrate_to_new_schema';
+    public function getKey()
+    {
+        return $this->key;
+    }
 
-	public function getKey() {
-		return $this->key;
-	}
+    /**
+     * @param null $data
+     */
+    public function execute($data = null): void
+    {
+        $postsIds = $this->getPosts();
 
-	/**
-	 * @param null $data
-	 */
-	public function execute($data = null) {
+        $i = 60;
 
-		$postsIds = $this->getPosts();
+        foreach ($postsIds as $id) {
+            $timestamp = time() + $i;
 
-		$i = 60;
+            ActionHelper::later($timestamp, 'RetrieveSchemaForPost', ['id' => $id]);
+            ActionHelper::later($timestamp, 'DeleteOldPostMeta', ['id' => $id]);
 
-		foreach ($postsIds as $id) {
+            $i++;
+        }
 
-			$timestamp = time() + $i;
+        ActionHelper::later(strtotime('+1 day'), 'DeleteOldOptions');
+    }
 
-			ActionHelper::later($timestamp, 'RetrieveSchemaForPost', ['id' => $id]);
-			ActionHelper::later($timestamp, 'DeleteOldPostMeta', ['id' => $id]);
+    /**
+     * Get list of posts with old WordProof meta key.
+     *
+     * @return array
+     */
+    private function getPosts()
+    {
+        $arguments = [
+            'meta_key' => 'wordproof_last_timestamped_on',
+        ];
 
-			$i++;
+        $query = new \WP_Query($arguments);
+        $posts = $query->get_posts();
 
-		}
-
-		ActionHelper::later(strtotime('+1 day'), 'DeleteOldOptions');
-
-	}
-
-	/**
-	 * Get list of posts with old WordProof meta key.
-	 *
-	 * @return array
-	 */
-	private function getPosts() {
-		$arguments = [
-			'meta_key' => 'wordproof_last_timestamped_on',
-		];
-
-		$query = new \WP_Query( $arguments );
-		$posts = $query->get_posts();
-
-		return wp_list_pluck( $posts, 'ID' );
-	}
+        return wp_list_pluck($posts, 'ID');
+    }
 }

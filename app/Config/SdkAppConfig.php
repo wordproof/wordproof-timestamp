@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WordProofTimestamp\App\Config;
 
 use http\Env;
@@ -10,35 +12,40 @@ use WordProofTimestamp\App\Vendor\Dotenv\Dotenv;
 /**
  * Class SdkAppConfig.
  */
-class SdkAppConfig extends DefaultAppConfig {
+class SdkAppConfig extends DefaultAppConfig
+{
+    /**
+     * Returns the partner.
+     *
+     * @return string The partner.
+     */
+    public function getPartner()
+    {
+        return 'wordproof';
+    }
 
-	/**
-	 * Returns the partner.
-	 *
-	 * @return string The partner.
-	 */
-	public function getPartner() {
-		return 'wordproof';
-	}
+    /**
+     * Returns the environment.
+     *
+     * @return string The environment.
+     */
+    public function getEnvironment()
+    {
+        return DotenvHelper::get('APP_ENV', 'production');
+    }
 
-	/**
-	 * Returns the environment.
-	 *
-	 * @return string The environment.
-	 */
-	public function getEnvironment() {
-		return DotenvHelper::get('APP_ENV', 'production');
-	}
+    public function getOauthClient()
+    {
+        return DotenvHelper::get('WORDPROOF_CLIENT', null);
+    }
 
-	public function getOauthClient() {
-		return DotenvHelper::get('WORDPROOF_CLIENT', null);
-	}
+    public function getWordProofUrl()
+    {
+        return DotenvHelper::get('WORDPROOF_ENDPOINT', null);
+    }
 
-	public function getWordProofUrl() {
-		return DotenvHelper::get('WORDPROOF_ENDPOINT', null);
-	}
-
-	public function getScriptsFileOverwrite() {
-		return DotenvHelper::get('WORDPROOF_SDK_OVERWRITE', null);
-	}
+    public function getScriptsFileOverwrite()
+    {
+        return DotenvHelper::get('WORDPROOF_SDK_OVERWRITE', null);
+    }
 }

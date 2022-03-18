@@ -3,20 +3,21 @@
     "description": "Timestamp your content onto the blockchain",
     "type": "wordpress-plugin",
     "require-dev": {
-        "wpengine/wpengine-coding-standards": "dev-master",
-        "wp-cli/wp-cli": "^2.6.0"
+        "friendsofphp/php-cs-fixer": "^3.7.0",
+        "spatie/ray": "^1.34",
+        "wp-cli/wp-cli": "^2.6.0",
+        "wpengine/wpengine-coding-standards": "dev-master"
     },
     "require": {
         "php": "^7.3 || ^8.0",
         "composer/installers": "~1.0",
         "vlucas/phpdotenv": "^5.2",
         "typisttech/imposter-plugin": "^0.6.2",
-        "symfony/polyfill-ctype": "1.20",
-        "symfony/polyfill-mbstring": "1.20",
-        "symfony/polyfill-php80": "1.20",
+        "symfony/polyfill-ctype": "^1.25",
+        "symfony/polyfill-mbstring": "^1.25",
+        "symfony/polyfill-php80": "^1.25",
         "wordproof/wordpress-sdk": "^1.2",
-        "woocommerce/action-scheduler": "^3.4",
-        "spatie/ray": "^1.34"
+        "woocommerce/action-scheduler": "^3.4"
     },
     "license": "GPLv3",
     "authors": [
@@ -27,6 +28,11 @@
     ],
     "config": {
         "platform-check": false
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "wordpress-cs": "./vendor/bin/phpcs --standard=WP-Engine app",
+        "cs": "php-cs-fixer fix app --allow-risky=yes"
     },
     "autoload": {
         "psr-4": {

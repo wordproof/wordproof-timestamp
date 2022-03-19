@@ -83,6 +83,10 @@ function activate($plugin) {
 				if ( is_array( $options ) && isset( $options['wordproof_integration_active'] ) && $options['wordproof_integration_active'] === true ) {
 
 					if ($cli ) {
+						if ( is_plugin_active( WORDPROOF_BASENAME ) ) {
+							\deactivate_plugins(WORDPROOF_BASENAME, true);
+						}
+
 						\WP_CLI::error('Cannot be activated if the WordProof integration in Yoast SEO is turned on.');
 					}
 

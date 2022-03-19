@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace WordProofTimestamp\App\Notices;
 
+use WordProofTimestamp\App\Helpers\PluginHelper;
+
 class YoastNotice extends Notice
 {
     /**
@@ -26,7 +28,7 @@ class YoastNotice extends Notice
 
             echo $this->getNotice();
 
-            deactivate_plugins(WORDPROOF_BASENAME, true);
+            PluginHelper::deactivate();
         }
     }
 

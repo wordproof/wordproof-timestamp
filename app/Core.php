@@ -16,6 +16,7 @@ use WordProofTimestamp\App\Controllers\NoticeController;
 use WordProofTimestamp\App\Controllers\ScheduledActionController;
 use WordProofTimestamp\App\Controllers\UpgradeNotificationController;
 use WordProofTimestamp\App\Helpers\CliHelper;
+use WordProofTimestamp\App\Helpers\PluginHelper;
 
 class Core
 {
@@ -93,6 +94,7 @@ class Core
 
                 if (\is_array($options) && isset($options['wordproof_integration_active']) && true === $options['wordproof_integration_active']) {
                     if ($cli) {
+                        PluginHelper::deactivate();
                         \WP_CLI::error('Cannot be activated if the WordProof integration in Yoast SEO is turned on.');
                     }
 

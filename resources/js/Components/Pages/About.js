@@ -5,7 +5,7 @@ const {compose} = wp.compose;
 
 import AuthenticationModals
     from "../../../../vendor/wordproof/wordpress-sdk/resources/js/components/AuthenticationModals";
-import {dispatch} from "../../../../vendor/wordproof/wordpress-sdk/resources/js/helpers/event";
+import {dispatchOpenAuthenticationEvent, dispatchOpenSettingsEvent} from "../../../../vendor/wordproof/wordpress-sdk/resources/js/helpers/event";
 import initializeAuthentication
     from "../../../../vendor/wordproof/wordpress-sdk/resources/js/initializers/authentication";
 
@@ -26,12 +26,12 @@ const About = (props) => {
 
         const openAuthentication = useCallback((event) => {
             event.preventDefault();
-            dispatch('wordproof:open_authentication');
+            dispatchOpenAuthenticationEvent();
         });
 
         const openSettings = useCallback((event) => {
             event.preventDefault();
-            dispatch('wordproof:open_settings');
+            dispatchOpenSettingsEvent();
         });
 
         return (

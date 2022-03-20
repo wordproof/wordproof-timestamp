@@ -7,7 +7,7 @@ import {CheckboxControl, Spinner} from '@wordpress/components';
 
 import AuthenticationModals
     from "../../../../vendor/wordproof/wordpress-sdk/resources/js/components/AuthenticationModals";
-import {dispatch} from "../../../../vendor/wordproof/wordpress-sdk/resources/js/helpers/event";
+import {dispatchOpenSettingsEvent, dispatchOpenAuthenticationEvent} from "../../../../vendor/wordproof/wordpress-sdk/resources/js/helpers/event";
 import initializeAuthentication
     from "../../../../vendor/wordproof/wordpress-sdk/resources/js/initializers/authentication";
 import {postTimestampRequest} from "../../../../vendor/wordproof/wordpress-sdk/resources/js/helpers/endpoints";
@@ -38,12 +38,12 @@ const Bulk = (props) => {
 
     const openAuthentication = useCallback((event) => {
         event.preventDefault();
-        dispatch('wordproof:open_authentication');
+        dispatchOpenAuthenticationEvent();
     });
 
     const openSettings = useCallback((event) => {
         event.preventDefault();
-        dispatch('wordproof:open_settings');
+        dispatchOpenSettingsEvent();
     });
 
     const startTimestamping = useCallback(async (event) => {

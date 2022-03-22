@@ -15,7 +15,7 @@ class UpgradeNotificationController
     {
         if (isset($newPluginMetadata->upgrade_notice) && trim($newPluginMetadata->upgrade_notice) !== '') {
             echo '<p style="border: 4px solid #d54e21; padding: 10px; color: #000000; margin-top: 10px"><strong>Upgrade Notice:</strong> ';
-            echo esc_html('Hello'), '</p>';
+            echo esc_html($newPluginMetadata->upgrade_notice), '</p>';
         }
     }
 }

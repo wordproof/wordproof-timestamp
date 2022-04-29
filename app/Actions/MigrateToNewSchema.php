@@ -22,10 +22,10 @@ class MigrateToNewSchema extends Action
     {
         $postsIds = $this->getPosts();
 
-        $i = 60;
+        $i = 0;
 
         foreach ($postsIds as $id) {
-            $timestamp = time() + $i;
+            $timestamp = strtotime('+' . $i . ' minute');
 
             ActionHelper::later($timestamp, 'RetrieveSchemaForPost', ['id' => $id]);
             ActionHelper::later($timestamp, 'DeleteOldPostMeta', ['id' => $id]);
@@ -45,6 +45,8 @@ class MigrateToNewSchema extends Action
     {
         $arguments = [
             'meta_key' => 'wordproof_last_timestamped_on',
+            'post_type' => 'any',
+            'posts_per_page' => -1,
         ];
 
         $query = new \WP_Query($arguments);

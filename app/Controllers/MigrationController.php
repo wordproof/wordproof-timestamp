@@ -6,7 +6,6 @@ namespace WordProofTimestamp\App\Controllers;
 
 use WordProof\SDK\Helpers\AuthenticationHelper;
 use WordProofTimestamp\App\Actions\MigrateToNewSchema;
-use WordProofTimestamp\App\Actions\RetrieveSchemaForPost;
 use WordProofTimestamp\App\Config\Migrations\v3Migration;
 use WordProof\SDK\Helpers\TransientHelper;
 

@@ -27,7 +27,12 @@
         }
     ],
     "config": {
-        "platform-check": false
+        "platform-check": false,
+        "allow-plugins": {
+            "composer/installers": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "typisttech/imposter-plugin": true
+        }
     },
     "scripts": {
         "test": "vendor/bin/phpunit",

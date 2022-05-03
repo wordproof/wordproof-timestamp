@@ -112,7 +112,7 @@ class Core
 
             flush_rewrite_rules();
 
-            RedirectHelper::safe(admin_url('admin.php?page=wordproof-about'));
+            RedirectHelper::safe(admin_url('options-general.php?page=wordproof'));
 
             exit();
         }

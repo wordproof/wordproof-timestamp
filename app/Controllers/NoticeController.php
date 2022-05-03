@@ -28,7 +28,7 @@ class NoticeController
         $this->notices[] = new AuthenticateAfterMigrationNotice();
 
         if (TransientHelper::getOnce('wordproof_upgraded')) {
-            RedirectHelper::safe(admin_url('admin.php?page=wordproof-about'));
+            RedirectHelper::safe(admin_url('options-general.php?page=wordproof'));
         }
     }
 

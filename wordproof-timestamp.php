@@ -3,7 +3,7 @@
  * Plugin Name: WordProof Timestamp
  * Plugin URI:  https://wordproof.io/wordproof-timestamp-plugin/
  * Description: Timestamp your WordPress content into the blockchain. Instant and without fees. For EOSIO, EOS, Ethereum &amp; Telos.
- * Version:     2.9.17
+ * Version:     3.0.0
  * Author:      WordProof
  * Author URI:  https://wordproof.com
  * License:     GPL2
@@ -13,80 +13,41 @@
 
 namespace WordProofTimestamp;
 
+use WordProofTimestamp\App\Core;
+use WordProofTimestamp\App\Vendor\Dotenv\Dotenv;
+
 if (!defined('WPINC')) {
     die();
 }
 
-// Load Composer
-if (is_readable(__DIR__ . '/vendor/autoload.php')) {
-    require __DIR__ . '/vendor/autoload.php';
+/**
+ * Load Composer and Dotenv
+ */
+if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	require __DIR__ . '/vendor/autoload.php';
 
-    try {
-    	if (file_exists(__DIR__ . '/.env')) {
-		    $dotenv = \WordProofTimestamp\Vendor\Dotenv\Dotenv::createImmutable( __DIR__ );
-		    $dotenv->load();
-	    }
-    } catch(\Exception $e) {}
-
+	$dotenv = Dotenv::createImmutable(__DIR__);
+	$dotenv->safeLoad();
 }
 
-define('WORDPROOF_VERSION', '2.9.17');
+/**
+ * Define the plugin constants
+ */
+define('WORDPROOF_VERSION', '3.0.0');
 define('WORDPROOF_SLUG', 'wordproof');
 define('WORDPROOF_ROOT_FILE', __FILE__);
 define('WORDPROOF_BASENAME', plugin_basename(WORDPROOF_ROOT_FILE));
 define('WORDPROOF_DIR', plugin_dir_path(WORDPROOF_ROOT_FILE));
-define('WORDPROOF_DIR_INC', WORDPROOF_DIR . 'includes');
-define('WORDPROOF_DIR_ASSETS', WORDPROOF_DIR . 'assets');
-define('WORDPROOF_DIR_JS', WORDPROOF_DIR_ASSETS . '/js');
-define('WORDPROOF_DIR_CSS', WORDPROOF_DIR_ASSETS . '/css');
+define('WORDPROOF_DIR_VENDOR', WORDPROOF_DIR . 'vendor/');
 define('WORDPROOF_URI', plugin_dir_url(WORDPROOF_ROOT_FILE));
-define('WORDPROOF_URI_ASSETS', WORDPROOF_URI . 'assets');
-define('WORDPROOF_URI_JS', WORDPROOF_URI_ASSETS . '/js');
-define('WORDPROOF_URI_CSS', WORDPROOF_URI_ASSETS . '/css');
-define('WORDPROOF_URI_IMAGES', WORDPROOF_URI_ASSETS . '/images');
-define('WORDPROOF_WSFY_ENDPOINT_ITEM', 'sites/$siteId/items/');
-define('WORDPROOF_WSFY_ENDPOINT_RETRY_WEBHOOK', 'sites/$siteId/items/$postId/callback/retry');
-define('WORDPROOF_WSFY_ENDPOINT_GET_ARTICLES', 'sites/$siteId/items/$postId');
-define('WORDPROOF_WSFY_ENDPOINT_TOKEN_VALIDATE', 'sites/$siteId/validate/token');
-
-define('WORDPROOF_WSFY_CRON_HOOK', 'wsfy_save_post_on_cron');
-
-define('WORDPROOF_WSFY_API_IP', ['167.71.143.38']);
-define('WORDPROOF_MY_URI', wordproof_get_env('WORDPROOF_ENDPOINT', 'https://my.wordproof.com/'));
-define('WORDPROOF_API_URI', WORDPROOF_MY_URI . 'api/');
-
-define('WORDPROOF_REST_NAMESPACE', 'wordproof-timestamp/v1');
-define('WORDPROOF_REST_TIMESTAMP_ENDPOINT', 'posts');
-
-// Web Standards
-define('ARTICLE_TIMESTAMP', 'ArticleTimestamp');
-define('MEDIA_OBJECT_TIMESTAMP', 'MediaObjectTimestamp');
-define('PRODUCT_TIMESTAMP', 'ProductTimestamp');
-define('CURRENT_TIMESTAMP_STANDARD_VERSION', '0.2.0');
-
-// Load plugin
-spl_autoload_register(function ($class = '') {
-    if (!strstr($class, 'WordProofTimestamp')) {
-        return;
-    }
-    $result = str_replace('WordProofTimestamp\\', '', $class);
-    $result = str_replace('\\', '/', $result);
-    require $result . '.php';
-});
-
-//Setup Plugin
-require_once WORDPROOF_DIR_INC . '/core.php';
-\WordProofTimestamp\Core\init();
+define('WORDPROOF_URI_BUILD', WORDPROOF_URI . 'build/');
 
 /**
- * Return environment value, or default if false
- * @param $key
- * @param $default
- * @return mixed
+ * Construct new app.
  */
+new Core();
 
-function wordproof_get_env($key, $default)
-{
-    return ( isset($_ENV[$key]) ) ? $_ENV[$key] : $default;
-}
+/**
+ * That's all. Happy timestamping!
+ */
 

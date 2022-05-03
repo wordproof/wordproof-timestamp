@@ -1,10 +1,10 @@
 === WordProof Timestamp ===
 Contributors: wordproof
 Tags: blockchain, timestamp, eosio, eos, telos, web30, copyright, scatter, decentralisation, proof
-Requires at least: 4.6
+Requires at least: 5.8
 Tested up to: 5.9.1
-Requires PHP: 7.1.3
-Stable tag: 2.9.17
+Requires PHP: 7.3
+Stable tag: 3.0.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -33,7 +33,6 @@ WordProof Timestamp does everything in its power to bring the benefits of blockc
 - Show the blockchain certificate pop-up on your website
 - Let your visitors verify when and how your content changed
 - Downloadable blockchain certificate as proof of existence
-- Copyright Infringement Claim Tools
 
 ### How does WordProof Timestamp work?
 
@@ -68,9 +67,7 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 
 === After activation ===
 
-1. Launch the Setup Wizard
-1. Choose which mode you want to use (manual or automatic)
-1. Follow the steps for either mode
+1. Authenticate using your WordProof account
 
 == Screenshots ==
 
@@ -80,12 +77,9 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 4. Change the settings in the WordProof Timestamp plugin options panel.
 
 == Changelog ==
-= 2.9.17 =
-*Release date: March 19th, 2022*
-* Show notice if activated using CLI while Yoast integration is active.
-
-= Earlier versions =
-For the changelog of earlier versions, please refer to the version in question.
+= 3.0.0 =
+*Release date: March 6st, 2022*
+* A lot of work went into making this our best release yet. Enjoy the new certificate and improved user experience.
 
 == Upgrade Notice ==
 = 3.0.0 =

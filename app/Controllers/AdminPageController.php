@@ -7,12 +7,10 @@ use WordProofTimestamp\App\Helpers\AssetHelper;
 
 class AdminPageController
 {
-    private $pages = [ 'admin_page_wordproof-about', 'admin_page_wordproof-bulk' ];
+    private $pages = [ 'settings_page_wordproof', 'admin_page_wordproof-bulk' ];
 
     public function __construct()
     {
-
-        //TODO Display if not shown before.
         add_action('admin_menu', [ $this, 'addPages' ]);
         add_action('admin_enqueue_scripts', [ $this, 'enqueue' ]);
         add_filter('wordproof_load_data_on_pages', [ $this, 'loadDataOnPageHook' ]);
@@ -21,21 +19,22 @@ class AdminPageController
 
     public function addPages(): void
     {
-        add_submenu_page(
-            null,
-            'WordProof ' . WORDPROOF_VERSION,
-            'WordProof' . WORDPROOF_VERSION,
+	    add_submenu_page(
+            'options-general.php',
+            'WordProof',
+            'WordProof',
             'manage_options',
-            'wordproof-about',
-            [ $this, 'aboutPageContent' ],
-        );
+            'wordproof',
+		    [ $this, 'aboutPageContent' ],
+	    );
+
         add_submenu_page(
-            null,
-            'WordProof ' . WORDPROOF_VERSION,
-            'WordProof' . WORDPROOF_VERSION,
+	        null,
+            'Bulk',
+            'Bulk',
             'manage_options',
             'wordproof-bulk',
-            [ $this, 'migratePageContent' ],
+            [ $this, 'bulkPageContent' ],
         );
     }
 
@@ -74,7 +73,7 @@ class AdminPageController
         return $data;
     }
 
-    public function migratePageContent(): void
+    public function bulkPageContent(): void
     {
         ?>
 

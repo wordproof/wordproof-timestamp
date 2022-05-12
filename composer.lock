@@ -834,16 +834,16 @@
         },
         {
             "name": "wordproof/wordpress-sdk",
-            "version": "1.2.19",
+            "version": "1.2.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wordproof/wordpress-sdk.git",
-                "reference": "df31eed3ace2cc12a9edba21ea98f701c7544b6a"
+                "reference": "e7dc13426622dc557a06772103d6b6d179ec20fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wordproof/wordpress-sdk/zipball/df31eed3ace2cc12a9edba21ea98f701c7544b6a",
-                "reference": "df31eed3ace2cc12a9edba21ea98f701c7544b6a",
+                "url": "https://api.github.com/repos/wordproof/wordpress-sdk/zipball/e7dc13426622dc557a06772103d6b6d179ec20fd",
+                "reference": "e7dc13426622dc557a06772103d6b6d179ec20fd",
                 "shasum": ""
             },
             "require": {
@@ -880,9 +880,9 @@
             "description": "WordPress SDK",
             "support": {
                 "issues": "https://github.com/wordproof/wordpress-sdk/issues",
-                "source": "https://github.com/wordproof/wordpress-sdk/tree/1.2.19"
+                "source": "https://github.com/wordproof/wordpress-sdk/tree/1.2.20"
             },
-            "time": "2022-05-03T03:32:25+00:00"
+            "time": "2022-05-12T07:59:35+00:00"
         }
     ],
     "packages-dev": [

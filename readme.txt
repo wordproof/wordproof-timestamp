@@ -78,7 +78,7 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 
 == Changelog ==
 = 3.0.3 =
-*Release date: May 12th, 2022*
+*Release date: June 9th, 2022*
 * Small visual enhancements.
 
 == Upgrade Notice ==

@@ -19,17 +19,17 @@ class AdminPageController
 
     public function addPages(): void
     {
-	    add_submenu_page(
+        add_submenu_page(
             'options-general.php',
             'WordProof',
             'WordProof',
             'manage_options',
             'wordproof',
-		    [ $this, 'aboutPageContent' ],
-	    );
+            [ $this, 'aboutPageContent' ],
+        );
 
         add_submenu_page(
-	        null,
+            null,
             'Bulk',
             'Bulk',
             'manage_options',

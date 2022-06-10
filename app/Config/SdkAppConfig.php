@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace WordProofTimestamp\App\Config;
 
-use http\Env;
 use WordProof\SDK\Config\DefaultAppConfig;
 use WordProofTimestamp\App\Helpers\DotenvHelper;
-use WordProofTimestamp\App\Vendor\Dotenv\Dotenv;
 
 /**
  * Class SdkAppConfig.

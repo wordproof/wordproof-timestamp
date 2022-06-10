@@ -89,17 +89,18 @@ class Core
         }
 
         if ($cli || wp_verify_nonce($nonce, 'activate-plugin_'.$plugin) || wp_verify_nonce($nonce, 'bulk-plugins')) {
-            if (is_plugin_active('wordpress-seo/wp-seo.php')) {
+            if (\defined('WPSEO_VERSION')) {
                 $options = get_option('wpseo', []);
 
-                if (\is_array($options) && isset($options['wordproof_integration_active']) && $options['wordproof_integration_active'] === true) {
-					if ($cli) {
+                if (\is_array($options) && isset($options['wordproof_integration_active']) && true === $options['wordproof_integration_active']) {
+                    if ($cli) {
                         PluginHelper::deactivate();
                         \WP_CLI::error('Cannot be activated if the WordProof integration in Yoast SEO is turned on.');
                     }
 
                     flush_rewrite_rules();
                     RedirectHelper::safe(wp_nonce_url(admin_url('plugins.php'), 'wordproof_yoast_notice', 'wordproof_nonce'));
+
                     exit();
                 }
             }

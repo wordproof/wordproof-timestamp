@@ -77,9 +77,9 @@ Special thanks to the Telos Foundation for co-funding a first version WordProof 
 4. Change the settings in the WordProof Timestamp plugin options panel.
 
 == Changelog ==
-= 3.0.3 =
-*Release date: June 9th, 2022*
-* Small visual enhancements.
+= 3.0.4 =
+*Release date: June Xth, 2022*
+* Decrease local Javascript files by loading user-facing files from an CDN.
 
 == Upgrade Notice ==
 = 3.0.0 =

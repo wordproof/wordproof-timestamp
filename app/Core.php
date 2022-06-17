@@ -79,6 +79,8 @@ class Core
         }
 
         $cli = CliHelper::running();
+        $single = false;
+        $bulk = false;
 
         if (!$cli) {
             if (!isset($_REQUEST['_wpnonce'])) {
@@ -86,9 +88,12 @@ class Core
             }
 
             $nonce = sanitize_key($_REQUEST['_wpnonce']);
+
+            $single = wp_verify_nonce($nonce, 'activate-plugin_'.$plugin);
+            $bulk = wp_verify_nonce($nonce, 'bulk-plugins');
         }
 
-        if ($cli || wp_verify_nonce($nonce, 'activate-plugin_'.$plugin) || wp_verify_nonce($nonce, 'bulk-plugins')) {
+        if ($cli || $single || $bulk) {
             if (\defined('WPSEO_VERSION')) {
                 $options = get_option('wpseo', []);
 
@@ -109,8 +114,11 @@ class Core
                 return;
             }
 
-            flush_rewrite_rules();
+            if ($bulk) {
+                return;
+            }
 
+            flush_rewrite_rules();
             RedirectHelper::safe(admin_url('options-general.php?page=wordproof'));
 
             exit();

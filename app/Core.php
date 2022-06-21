@@ -20,6 +20,11 @@ use WordProofTimestamp\App\Helpers\PluginHelper;
 
 class Core
 {
+    public const YOAST_PLUGINS = [
+        'wordpress-seo/wp-seo.php',
+        'artifact/wp-seo.php',
+    ];
+
     /**
      * Initialize the WordProof timestamp app.
      */
@@ -74,7 +79,10 @@ class Core
      */
     public function activate($plugin): void
     {
-        if (WORDPROOF_BASENAME !== $plugin) {
+        $yoast = in_array($plugin, self::YOAST_PLUGINS, true);
+		$wordproof = WORDPROOF_BASENAME === $plugin;
+
+	    if (!$wordproof && !$yoast) {
             return;
         }
 

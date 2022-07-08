@@ -3,7 +3,7 @@
  * Plugin Name: WordProof Timestamp
  * Plugin URI:  https://wordproof.io/wordproof-timestamp-plugin/
  * Description: Timestamp your WordPress content into the blockchain. Instant and without fees. For EOSIO, EOS, Ethereum &amp; Telos.
- * Version:     3.0.8
+ * Version:     3.0.9
  * Author:      WordProof
  * Author URI:  https://wordproof.com
  * License:     GPL2
@@ -36,7 +36,7 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 /**
  * Define the plugin constants
  */
-define('WORDPROOF_VERSION', '3.0.8');
+define('WORDPROOF_VERSION', '3.0.9');
 define('WORDPROOF_SLUG', 'wordproof');
 define('WORDPROOF_ROOT_FILE', __FILE__);
 define('WORDPROOF_BASENAME', plugin_basename(WORDPROOF_ROOT_FILE));

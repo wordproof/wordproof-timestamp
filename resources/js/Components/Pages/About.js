@@ -8,6 +8,7 @@ import AuthenticationModals
 import {dispatchOpenAuthenticationEvent, dispatchOpenSettingsEvent} from "../../../../vendor/wordproof/wordpress-sdk/resources/js/helpers/event";
 import initializeAuthentication
     from "../../../../vendor/wordproof/wordpress-sdk/resources/js/initializers/authentication";
+import {getData} from "../../../../vendor/wordproof/wordpress-sdk/resources/js/helpers/data";
 
 import {
     __experimentalHeading as Heading,
@@ -22,6 +23,7 @@ const About = (props) => {
         }, []);
 
         const {isAuthenticated} = props;
+        const bulkUrl = getData('bulk_url');
 
         const openAuthentication = useCallback((event) => {
             event.preventDefault();
@@ -61,6 +63,12 @@ const About = (props) => {
                 </>}
 
                 <AuthenticationModals/>
+
+                <p className={'max-w-xl'}>{__('To timestamp all of your posts, pages or other post types, you can use our bulk timestamper.', 'wordproof')}</p>
+
+                <Button variant={'secondary'} href={bulkUrl}>
+                    {__('Bulk timestamp', 'wordproof')}
+                </Button>
 
             </div>
         );

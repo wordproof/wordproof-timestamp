@@ -58,10 +58,14 @@ class AdminPageController
         }
 
         $screen = get_current_screen();
+
+        if (isset($screen->base) && $screen->base === 'settings_page_wordproof') {
+            return ['data' => array_merge($data['data'], ['bulk_url' => admin_url('options.php?page=wordproof-bulk') ]) ];
+        }
+
         if (isset($screen->base) && $screen->base === 'admin_page_wordproof-bulk') {
             $postTypes     = PostTypeHelper::getPublicPostTypes();
             $postTypesData = [];
-
 
             foreach ($postTypes as $postType) {
                 $postTypesData[ $postType ] = PostTypeHelper::getUnprotectedPosts($postType);
